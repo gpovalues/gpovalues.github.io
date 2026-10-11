@@ -1,0 +1,957 @@
+// =====================================================================
+// GRAND PIECE ONLINE (GPO) TRADING VALUES & TRADE CALCULATOR
+// Interactive Application Logic & i18n
+// =====================================================================
+
+(function () {
+  'use strict';
+
+  // --- AUDIO SYNTHESIS ENGINE (Web Audio API) ---
+  let audioCtx = null;
+  let audioEnabled = true;
+
+  function initAudio() {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        audioCtx = new AudioContext();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }
+
+  function playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.1) {
+    if (!audioEnabled) return;
+    try {
+      initAudio();
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {
+      // Audio fallback silent
+    }
+  }
+
+  function playCoinSound() {
+    playTone(987.77, 'triangle', 0.08, 0.12);
+    setTimeout(() => playTone(1318.51, 'triangle', 0.15, 0.12), 80);
+  }
+
+  function playClickSound() {
+    playTone(440, 'sine', 0.04, 0.06);
+  }
+
+  function playRemoveSound() {
+    playTone(260, 'sawtooth', 0.08, 0.08);
+  }
+
+  function playWinFanfare() {
+    playTone(523.25, 'triangle', 0.1, 0.15);
+    setTimeout(() => playTone(659.25, 'triangle', 0.1, 0.15), 100);
+    setTimeout(() => playTone(783.99, 'triangle', 0.12, 0.15), 200);
+    setTimeout(() => playTone(1046.50, 'triangle', 0.25, 0.2), 300);
+  }
+
+  function playLoseSound() {
+    playTone(392.00, 'sawtooth', 0.12, 0.1);
+    setTimeout(() => playTone(329.63, 'sawtooth', 0.18, 0.12), 120);
+  }
+
+  // --- I18N DICTIONARY ---
+  let currentLang = localStorage.getItem('gpo_lang') || 'ru';
+
+  const translations = {
+    ru: {
+      brand_subtext: "Официальный Трейд Калькулятор",
+      tab_calculator: "Калькулятор Трейдов",
+      tab_tierlist: "Тир Лист & Цены",
+      tab_merchant: "Странствующий Торговец",
+      tab_guide: "Гайд по Спросу",
+      hero_title: "Grand Piece Online <span>Трейдинг Хаб</span>",
+      hero_desc: "Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!",
+      badge_updated: "📅 Обновление: 10/7/2026",
+      badge_items_count: "⚔️ 213 Предметов",
+      badge_official_doc: "⭐ Официальный GPO Doc",
+      badge_currency: "🪙 Валюта: Очки & LC (Leg Chests)",
+      verdict_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
+      verdict_big_win: "🔥 ОГРОМНЫЙ ВИН!",
+      verdict_win: "✅ ВИН (ВЫГОДНО)!",
+      verdict_fair: "🤝 РАВНЫЙ ТРЕЙД",
+      verdict_lose: "❌ ЛУЗ (В УБЫТОК)!",
+      verdict_big_lose: "💀 ОГРОМНЫЙ СЛИВ!",
+      demand_neutral_note: "Равновесный спрос по обе стороны",
+      demand_warning_you: "⚠️ Предупреждение: вы отдаете предметы с очень высоким спросом за менее ликвидные вещи!",
+      demand_bonus_them: "💎 Отличный трейд: вам предлагают высоколиквидные предметы с отличным спросом!",
+      btn_swap: "Поменять стороны",
+      btn_clear: "Очистить всё",
+      btn_share: "Поделиться трейдом",
+      you_give_title: "ТЫ ОТДАЕШЬ (ТВОЙ ПРЕДЛОГ)",
+      they_offer_title: "ДРУГОЙ ИГРОК ПРЕДЛАГАЕТ",
+      total_val_label: "Общая ценность",
+      click_to_add: "Нажми, чтобы добавить",
+      btn_add_to_you: "Добавить предмет (Ты)",
+      btn_add_to_them: "Добавить предмет (Другой игрок)",
+      search_placeholder: "Поиск предмета по названию или аббревиатуре (ASE, CC, PWE, Mochi, Око...)",
+      sort_tier_desc: "По тиру (Сверху вниз)",
+      sort_val_desc: "По ценности: Высокая → Низкая",
+      sort_val_asc: "По ценности: Низкая → Высокая",
+      sort_demand_desc: "По спросу (Высокий спрос)",
+      sort_name_asc: "По алфавиту (А-Я)",
+      label_category: "Категория:",
+      label_tier: "Тир:",
+      cat_all: "Все (213)",
+      cat_fruits: "Дьявольские Фрукты 🍎",
+      cat_weapons: "Оружие ⚔️",
+      cat_chests: "Сундуки 📦",
+      cat_accessories: "Аксессуары 👑",
+      cat_outfits: "Костюмы & Броня 🥋",
+      cat_boats: "Лодки & Ховеры ⛵",
+      cat_misc: "Разное & Расходники 📜",
+      tier_all: "Все Тиры",
+      merchant_title: "🛒 Странствующий Торговец (Traveling Merchant)",
+      merchant_desc: "Странствующий торговец появляется каждые 30 минут на случайном острове в Первом и Втором Море и остается всего 10 минут. Он продает сундуки с фруктами и редкие предметы за игровую валюту Peli (Бели).",
+      guide_title: "📖 Правила и Советы по Трейдингу GPO",
+      guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
+      detail_value: "Ценность в очках:",
+      detail_lc: "Эквивалент в LC:",
+      detail_demand: "Спрос (Demand):",
+      detail_trend: "Тренд на рынке:",
+      detail_wiki_btn: "Открыть страницу на GPO Fandom Wiki ↗",
+      add_to_you: "Добавить Себе",
+      add_to_them: "Добавить Игроку",
+      picker_title: "Выберите предмет для трейда",
+      catalog_title: "КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)",
+      catalog_hint: "💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
+      footer_text: "Создано сообществом игроков Grand Piece Online. Цены ориентированы на официальный Trading Tier List Google Doc. Игра Grand Piece Online принадлежит Grand Quest Games на платформе Roblox.",
+      share_copied: "Ссылка на трейд скопирована в буфер обмена!",
+      demand_labels: {
+        "Extremely High": "Огромный спрос 🔥",
+        "High": "Высокий спрос ⭐",
+        "Medium": "Средний спрос",
+        "Low": "Низкий спрос 💤",
+        "Unstable": "Нестабильный ⚡"
+      },
+      trend_labels: {
+        "Rising": "Растет ↗",
+        "Stable": "Стабилен →",
+        "Dropping": "Падает ↘",
+        "Fluctuating": "Колеблется ⚡"
+      }
+    },
+    en: {
+      brand_subtext: "Official Trade Calculator",
+      tab_calculator: "Trade Calculator",
+      tab_tierlist: "Tier List & Values",
+      tab_merchant: "Traveling Merchant",
+      tab_guide: "Trading Guide",
+      hero_title: "Grand Piece Online <span>Trading Hub</span>",
+      hero_desc: "All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!",
+      badge_updated: "📅 Updated: 10/7/2026",
+      badge_items_count: "⚔️ 213 Items",
+      badge_official_doc: "⭐ Official GPO Doc",
+      badge_currency: "🪙 Currency: Points & LC (Leg Chests)",
+      verdict_empty: "ADD ITEMS TO TRADE",
+      verdict_big_win: "🔥 BIG WIN!",
+      verdict_win: "✅ WIN (PROFIT)!",
+      verdict_fair: "🤝 FAIR TRADE",
+      verdict_lose: "❌ LOSE (LOSS)!",
+      verdict_big_lose: "💀 HUGE LOSE!",
+      demand_neutral_note: "Equal demand on both sides",
+      demand_warning_you: "⚠️ Warning: You are giving high demand items for low liquidity items!",
+      demand_bonus_them: "💎 Great deal: They are offering highly liquid high-demand items!",
+      btn_swap: "Swap Sides",
+      btn_clear: "Clear All",
+      btn_share: "Share Trade",
+      you_give_title: "YOU GIVE (YOUR OFFER)",
+      they_offer_title: "THEY OFFER (THEIR OFFER)",
+      total_val_label: "Total Value",
+      click_to_add: "Click to add item",
+      btn_add_to_you: "Add Item (You)",
+      btn_add_to_them: "Add Item (Them)",
+      search_placeholder: "Search item by name or abbreviation (ASE, CC, PWE, Mochi, Eye...)",
+      sort_tier_desc: "By Tier (Top to Bottom)",
+      sort_val_desc: "By Value: High → Low",
+      sort_val_asc: "By Value: Low → High",
+      sort_demand_desc: "By Demand (High Demand)",
+      sort_name_asc: "Alphabetical (A-Z)",
+      label_category: "Category:",
+      label_tier: "Tier:",
+      cat_all: "All (213)",
+      cat_fruits: "Devil Fruits 🍎",
+      cat_weapons: "Weapons ⚔️",
+      cat_chests: "Chests 📦",
+      cat_accessories: "Accessories 👑",
+      cat_outfits: "Outfits & Armor 🥋",
+      cat_boats: "Boats & Mounts ⛵",
+      cat_misc: "Misc & Items 📜",
+      tier_all: "All Tiers",
+      catalog_title: "ITEM CATALOG FOR TRADE (213 ITEMS)",
+      catalog_hint: "💡 Click [+ You] or [+ Them] on any card for instant adding!",
+      merchant_title: "🛒 Traveling Merchant",
+      merchant_desc: "The Traveling Merchant is an NPC that spawns every 30 minutes on First and Second Sea and stays for only 10 minutes. He sells Fruit Chests and rare items for Peli.",
+      guide_title: "📖 GPO Trading Rules & Guide",
+      guide_desc: "Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.",
+      detail_value: "Value in points:",
+      detail_lc: "LC equivalent:",
+      detail_demand: "Demand:",
+      detail_trend: "Market trend:",
+      detail_wiki_btn: "Open page on GPO Fandom Wiki ↗",
+      add_to_you: "Add to You",
+      add_to_them: "Add to Them",
+      picker_title: "Select an item to trade",
+      footer_text: "Created by the Grand Piece Online community. Prices calibrated to the official Trading Tier List Google Doc. Grand Piece Online belongs to Grand Quest Games on Roblox.",
+      share_copied: "Trade link copied to clipboard!",
+      demand_labels: {
+        "Extremely High": "Extremely High 🔥",
+        "High": "High Demand ⭐",
+        "Medium": "Medium Demand",
+        "Low": "Low Demand 💤",
+        "Unstable": "Unstable ⚡"
+      },
+      trend_labels: {
+        "Rising": "Rising ↗",
+        "Stable": "Stable →",
+        "Dropping": "Dropping ↘",
+        "Fluctuating": "Fluctuating ⚡"
+      }
+    }
+  };
+
+  function t(key) {
+    return translations[currentLang][key] || key;
+  }
+
+  function applyLanguage() {
+    document.documentElement.lang = currentLang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const k = el.getAttribute('data-i18n');
+      if (translations[currentLang][k]) {
+        el.innerHTML = translations[currentLang][k];
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const k = el.getAttribute('data-i18n-placeholder');
+      if (translations[currentLang][k]) {
+        el.placeholder = translations[currentLang][k];
+      }
+    });
+
+    const flagEl = document.getElementById('langFlag');
+    const codeEl = document.getElementById('langCode');
+    if (flagEl && codeEl) {
+      flagEl.textContent = currentLang === 'ru' ? '🇷🇺' : '🇬🇧';
+      codeEl.textContent = currentLang.toUpperCase();
+    }
+
+    renderItemsGrid();
+    renderQuickItemsGrid();
+    renderCalculatorSlots();
+    renderMerchantGrid();
+    updateTradeVerdict();
+  }
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'ru' ? 'en' : 'ru';
+    localStorage.setItem('gpo_lang', currentLang);
+    playClickSound();
+    applyLanguage();
+  }
+
+  // --- TRADE CALCULATOR STATE ---
+  let tradeState = {
+    you: [],   // [ { item, qty } ]
+    they: []   // [ { item, qty } ]
+  };
+
+  let activePickerSide = 'you'; // 'you' or 'they'
+
+  // Demand numerical scores for balance check
+  const demandScores = {
+    "Extremely High": 5,
+    "High": 4,
+    "Medium": 3,
+    "Low": 2,
+    "Unstable": 1
+  };
+
+  function calculateSideTotal(side) {
+    let pts = 0;
+    let totalDemandScore = 0;
+    let totalItems = 0;
+
+    tradeState[side].forEach(entry => {
+      pts += entry.item.value * entry.qty;
+      const score = demandScores[entry.item.demand] || 3;
+      totalDemandScore += score * entry.qty;
+      totalItems += entry.qty;
+    });
+
+    const avgDemand = totalItems > 0 ? (totalDemandScore / totalItems) : 3;
+    const lc = (pts / 2800).toFixed(2);
+    return { pts, lc, avgDemand, count: totalItems };
+  }
+
+  function updateTradeVerdict() {
+    const you = calculateSideTotal('you');
+    const they = calculateSideTotal('they');
+
+    // Update UI numbers
+    document.getElementById('youTotalPts').textContent = you.pts.toLocaleString() + ' pts';
+    document.getElementById('youTotalLc').textContent = you.lc + ' LC';
+    document.getElementById('theyTotalPts').textContent = they.pts.toLocaleString() + ' pts';
+    document.getElementById('theyTotalLc').textContent = they.lc + ' LC';
+
+    const stamp = document.getElementById('verdictStamp');
+    const icon = document.getElementById('verdictIcon');
+    const text = document.getElementById('verdictText');
+    const diffText = document.getElementById('verdictDiffText');
+    const demandNote = document.getElementById('verdictDemandNote');
+
+    // If both sides empty
+    if (you.pts === 0 && they.pts === 0) {
+      stamp.className = 'verdict-stamp fair';
+      icon.textContent = '🤝';
+      text.textContent = t('verdict_empty');
+      diffText.className = 'verdict-diff-text neutral';
+      diffText.textContent = '±0 pts (0%)';
+      demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      return;
+    }
+
+    const diffPts = they.pts - you.pts;
+    let diffPct = 0;
+    if (you.pts > 0) {
+      diffPct = ((diffPts / you.pts) * 100);
+    } else if (they.pts > 0) {
+      diffPct = 100;
+    }
+
+    const sign = diffPts >= 0 ? '+' : '';
+    diffText.textContent = `${sign}${diffPts.toLocaleString()} pts (${sign}${diffPct.toFixed(1)}%)`;
+
+    // Verdict Stamp logic
+    if (diffPct >= 25) {
+      stamp.className = 'verdict-stamp win-huge';
+      icon.textContent = '🔥';
+      text.textContent = t('verdict_big_win');
+      diffText.className = 'verdict-diff-text positive';
+    } else if (diffPct >= 5) {
+      stamp.className = 'verdict-stamp win';
+      icon.textContent = '✅';
+      text.textContent = t('verdict_win');
+      diffText.className = 'verdict-diff-text positive';
+    } else if (diffPct >= -5) {
+      stamp.className = 'verdict-stamp fair';
+      icon.textContent = '⚖️';
+      text.textContent = t('verdict_fair');
+      diffText.className = 'verdict-diff-text neutral';
+    } else if (diffPct >= -25) {
+      stamp.className = 'verdict-stamp lose';
+      icon.textContent = '⚠️';
+      text.textContent = t('verdict_lose');
+      diffText.className = 'verdict-diff-text negative';
+    } else {
+      stamp.className = 'verdict-stamp lose-huge';
+      icon.textContent = '💀';
+      text.textContent = t('verdict_big_lose');
+      diffText.className = 'verdict-diff-text negative';
+    }
+
+    // Demand Warning analysis
+    if (you.avgDemand >= 4.0 && they.avgDemand <= 2.2 && you.count > 0 && they.count > 0) {
+      demandNote.innerHTML = `<span style="color: #ef4444;">⚠️</span> <span style="color: #f87171;">${t('demand_warning_you')}</span>`;
+    } else if (they.avgDemand >= 4.0 && you.avgDemand <= 2.5 && you.count > 0 && they.count > 0) {
+      demandNote.innerHTML = `<span style="color: #10b981;">💎</span> <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
+    } else {
+      demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+    }
+  }
+
+  function addItemToTrade(side, item, qty = 1) {
+    const existing = tradeState[side].find(x => x.item.id === item.id);
+    if (existing) {
+      existing.qty += qty;
+    } else {
+      tradeState[side].push({ item, qty });
+    }
+    playCoinSound();
+    renderCalculatorSlots();
+    updateTradeVerdict();
+    saveTradeToUrl();
+  }
+
+  function removeItemFromTrade(side, itemId) {
+    tradeState[side] = tradeState[side].filter(x => x.item.id !== itemId);
+    playRemoveSound();
+    renderCalculatorSlots();
+    updateTradeVerdict();
+    saveTradeToUrl();
+  }
+
+  function changeItemQty(side, itemId, delta) {
+    const entry = tradeState[side].find(x => x.item.id === itemId);
+    if (entry) {
+      entry.qty += delta;
+      if (entry.qty <= 0) {
+        removeItemFromTrade(side, itemId);
+        return;
+      }
+      playClickSound();
+      renderCalculatorSlots();
+      updateTradeVerdict();
+      saveTradeToUrl();
+    }
+  }
+
+  function renderCalculatorSlots() {
+    ['you', 'they'].forEach(side => {
+      const container = document.getElementById(`${side}SlotsGrid`);
+      if (!container) return;
+      container.innerHTML = '';
+
+      tradeState[side].forEach(entry => {
+        const it = entry.item;
+        const name = currentLang === 'ru' ? it.nameRu : it.name;
+        const slotEl = document.createElement('div');
+        slotEl.className = 'trade-slot-card';
+        slotEl.innerHTML = `
+          <button class="slot-remove-btn" title="Удалить" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">✕</button>
+          <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy">
+          <div class="slot-item-name" title="${name}">${name}</div>
+          <div class="slot-item-val">${(it.value * entry.qty).toLocaleString()} pts</div>
+          <div class="slot-qty-controls">
+            <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', -1)">-</button>
+            <span class="qty-num">x${entry.qty}</span>
+            <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', 1)">+</button>
+          </div>
+        `;
+        container.appendChild(slotEl);
+      });
+
+      // Add slot placeholder button
+      const addBtn = document.createElement('div');
+      addBtn.className = 'add-slot-placeholder';
+      addBtn.onclick = () => openPickerModal(side);
+      addBtn.innerHTML = `
+        <span class="add-slot-icon">➕</span>
+        <span class="add-slot-text">${t('click_to_add')}</span>
+      `;
+      container.appendChild(addBtn);
+    });
+  }
+
+  function swapTradeSides() {
+    const temp = tradeState.you;
+    tradeState.you = tradeState.they;
+    tradeState.they = temp;
+    playCoinSound();
+    renderCalculatorSlots();
+    updateTradeVerdict();
+    saveTradeToUrl();
+  }
+
+  function clearAllTrade() {
+    tradeState.you = [];
+    tradeState.they = [];
+    playRemoveSound();
+    renderCalculatorSlots();
+    updateTradeVerdict();
+    saveTradeToUrl();
+  }
+
+  function saveTradeToUrl() {
+    try {
+      const data = {
+        y: tradeState.you.map(x => [x.item.id, x.qty]),
+        t: tradeState.they.map(x => [x.item.id, x.qty])
+      };
+      const json = JSON.stringify(data);
+      const b64 = btoa(encodeURIComponent(json));
+      window.location.hash = `trade=${b64}`;
+    } catch (e) {
+      // Hash state fallback
+    }
+  }
+
+  function loadTradeFromUrl() {
+    try {
+      const hash = window.location.hash;
+      if (!hash || !hash.includes('trade=')) return;
+      const b64 = hash.split('trade=')[1];
+      if (!b64) return;
+      const json = decodeURIComponent(atob(b64));
+      const data = JSON.parse(json);
+      const all = window.GPO_ITEMS || [];
+
+      if (data.y && Array.isArray(data.y)) {
+        tradeState.you = data.y.map(([id, qty]) => {
+          const it = all.find(x => x.id === id);
+          return it ? { item: it, qty: qty || 1 } : null;
+        }).filter(Boolean);
+      }
+
+      if (data.t && Array.isArray(data.t)) {
+        tradeState.they = data.t.map(([id, qty]) => {
+          const it = all.find(x => x.id === id);
+          return it ? { item: it, qty: qty || 1 } : null;
+        }).filter(Boolean);
+      }
+    } catch (e) {
+      console.warn('Could not parse trade from URL', e);
+    }
+  }
+
+  function copyTradeShareLink() {
+    saveTradeToUrl();
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      playCoinSound();
+      alert(t('share_copied'));
+    }).catch(() => {
+      prompt("Copy trade URL:", url);
+    });
+  }
+
+  // --- ITEM BROWSER & TIER LIST LOGIC ---
+  let currentCategory = 'all';
+  let currentTier = 'all';
+  let searchQuery = '';
+  let currentSort = 'tier_desc';
+
+  let quickCategory = 'all';
+  let quickSearch = '';
+  let quickSort = 'tier_desc';
+
+  function filterItemsList(items, q, cat, tier, sort) {
+    let result = items.slice();
+
+    if (q && q.trim()) {
+      const query = q.toLowerCase().trim();
+      result = result.filter(it => {
+        const en = it.name.toLowerCase();
+        const ru = (it.nameRu || '').toLowerCase();
+        const abbr = (it.abbreviation || '').toLowerCase();
+        return en.includes(query) || ru.includes(query) || abbr.includes(query);
+      });
+    }
+
+    if (cat && cat !== 'all') {
+      result = result.filter(it => it.category === cat);
+    }
+
+    if (tier && tier !== 'all') {
+      result = result.filter(it => it.tier === tier);
+    }
+
+    if (sort === 'val_desc') {
+      result.sort((a, b) => b.value - a.value);
+    } else if (sort === 'val_asc') {
+      result.sort((a, b) => a.value - b.value);
+    } else if (sort === 'demand_desc') {
+      result.sort((a, b) => (demandScores[b.demand] || 0) - (demandScores[a.demand] || 0));
+    } else if (sort === 'name_asc') {
+      result.sort((a, b) => {
+        const nameA = currentLang === 'ru' ? a.nameRu : a.name;
+        const nameB = currentLang === 'ru' ? b.nameRu : b.name;
+        return nameA.localeCompare(nameB);
+      });
+    }
+
+    return result;
+  }
+
+  function createCardElement(it) {
+    const name = currentLang === 'ru' ? it.nameRu : it.name;
+    const tierClass = `tier-${it.tier.replace(/[\s+]/g, '-')}`;
+    const demandClass = `demand-${it.demand.replace(/[\s+]/g, '-')}`;
+    const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
+
+    const card = document.createElement('div');
+    card.className = 'item-comic-card';
+    card.innerHTML = `
+      <span class="card-tier-tag ${tierClass}">${it.tier}</span>
+      <span class="card-demand-tag ${demandClass}">${demandLabel}</span>
+
+      <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
+        <img src="${it.image}" alt="${name}" loading="lazy" onerror="this.src='https://static.wikia.nocookie.net/grand-piece-online/images/b/b3/Legendary_Chest.png/revision/latest'">
+      </div>
+
+      <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">${name}</h4>
+      ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
+
+      <div class="card-values-row">
+        <span class="val-pts-text">${it.value.toLocaleString()} pts</span>
+        <span class="val-lc-text">~${it.lcValue} LC</span>
+      </div>
+
+      <div class="card-actions-row">
+        <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')" title="Добавить себе">
+          <span>➕</span> <span>Ты</span>
+        </button>
+        <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')" title="Добавить другому">
+          <span>➕</span> <span>Игрок</span>
+        </button>
+      </div>
+    `;
+    return card;
+  }
+
+  function renderItemsGrid() {
+    const grid = document.getElementById('itemsCardsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const items = filterItemsList(window.GPO_ITEMS || [], searchQuery, currentCategory, currentTier, currentSort);
+
+    if (items.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+          <h3>🔍 Предметы не найдены</h3>
+          <p>Попробуйте изменить поисковый запрос или фильтры</p>
+        </div>
+      `;
+      return;
+    }
+
+    items.forEach(it => {
+      grid.appendChild(createCardElement(it));
+    });
+  }
+
+  function renderQuickItemsGrid() {
+    const grid = document.getElementById('quickItemsCardsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    const items = filterItemsList(window.GPO_ITEMS || [], quickSearch, quickCategory, 'all', quickSort);
+
+    if (items.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
+          <h3>🔍 Предметы не найдены</h3>
+        </div>
+      `;
+      return;
+    }
+
+    // Show up to 80 items in quick catalog for blazing speed, or all when searching
+    const renderLimit = quickSearch.trim() ? items.length : 120;
+    items.slice(0, renderLimit).forEach(it => {
+      grid.appendChild(createCardElement(it));
+    });
+  }
+
+  function renderMerchantGrid() {
+    const grid = document.getElementById('merchantCardsGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    // Traveling merchant items: Chests, Rods, Tokens, Baits, Steampunk, Iceborn
+    const merchantKeywords = ['Chest', 'Rod', 'Token', 'Bait', 'Steampunk', 'Shadowrunner', 'Powderpunk', 'Iceborn', 'Outfit', 'Boat', 'Striker', 'Hoverboard'];
+    const items = (window.GPO_ITEMS || []).filter(it => {
+      return merchantKeywords.some(kw => it.name.includes(kw));
+    }).slice(0, 36);
+
+    items.forEach(it => {
+      const name = currentLang === 'ru' ? it.nameRu : it.name;
+      const tierClass = `tier-${it.tier.replace(/[\s+]/g, '-')}`;
+
+      const card = document.createElement('div');
+      card.className = 'item-comic-card';
+      card.innerHTML = `
+        <span class="card-tier-tag ${tierClass}">${it.tier}</span>
+        <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
+          <img src="${it.image}" alt="${name}" loading="lazy">
+        </div>
+        <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')">${name}</h4>
+        <div class="card-values-row">
+          <span class="val-pts-text">${it.value.toLocaleString()} pts</span>
+          <span class="val-lc-text">~${it.lcValue} LC</span>
+        </div>
+        <div class="card-actions-row">
+          <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')">
+            <span>➕</span> <span>Себе</span>
+          </button>
+          <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')">
+            <span>➕</span> <span>Игроку</span>
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // --- ITEM PICKER MODAL LOGIC ---
+  let pickerCategory = 'all';
+
+  function openPickerModal(side) {
+    activePickerSide = side;
+    playClickSound();
+    const modal = document.getElementById('itemPickerModal');
+    const title = document.getElementById('pickerModalTitle');
+    if (title) {
+      title.textContent = side === 'you'
+        ? (currentLang === 'ru' ? 'Выберите предмет: ТЫ ОТДАЕШЬ' : 'Select Item: YOU GIVE')
+        : (currentLang === 'ru' ? 'Выберите предмет: ДРУГОЙ ИГРОК' : 'Select Item: THEY OFFER');
+    }
+    modal.classList.add('open');
+    filterPickerItems();
+    document.getElementById('pickerSearchInput').focus();
+  }
+
+  function closePickerModal() {
+    playClickSound();
+    document.getElementById('itemPickerModal').classList.remove('open');
+  }
+
+  function filterPickerItems() {
+    const q = (document.getElementById('pickerSearchInput').value || '').toLowerCase().trim();
+    const grid = document.getElementById('pickerItemsGrid');
+    if (!grid) return;
+
+    let items = (window.GPO_ITEMS || []).slice();
+
+    if (q) {
+      items = items.filter(it => {
+        const en = it.name.toLowerCase();
+        const ru = (it.nameRu || '').toLowerCase();
+        const abbr = (it.abbreviation || '').toLowerCase();
+        return en.includes(q) || ru.includes(q) || abbr.includes(q);
+      });
+    }
+
+    if (pickerCategory !== 'all') {
+      items = items.filter(it => it.category === pickerCategory);
+    }
+
+    grid.innerHTML = '';
+    items.slice(0, 60).forEach(it => {
+      const name = currentLang === 'ru' ? it.nameRu : it.name;
+      const btn = document.createElement('div');
+      btn.className = 'picker-item-btn';
+      btn.onclick = () => {
+        addItemToTrade(activePickerSide, it, 1);
+        closePickerModal();
+      };
+      btn.innerHTML = `
+        <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy">
+        <div class="picker-item-name" title="${name}">${name}</div>
+        <div class="picker-item-val">${it.value.toLocaleString()} pts</div>
+      `;
+      grid.appendChild(btn);
+    });
+  }
+
+  // --- ITEM DETAIL MODAL ---
+  let currentDetailItem = null;
+
+  function openDetailModal(itemId) {
+    const it = (window.GPO_ITEMS || []).find(x => x.id === itemId);
+    if (!it) return;
+    currentDetailItem = it;
+    playClickSound();
+
+    const name = currentLang === 'ru' ? it.nameRu : it.name;
+    document.getElementById('detailImg').src = it.image;
+    document.getElementById('detailName').textContent = name;
+    document.getElementById('detailValuePts').textContent = it.value.toLocaleString() + ' pts';
+    document.getElementById('detailValueLc').textContent = it.lcValue + ' LC';
+
+    const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
+    const trendLabel = translations[currentLang].trend_labels[it.trend] || it.trend;
+
+    document.getElementById('detailDemandVal').textContent = demandLabel;
+    document.getElementById('detailTrendVal').textContent = trendLabel;
+    document.getElementById('detailWikiLink').href = it.wikiUrl;
+
+    const tagsBox = document.getElementById('detailTags');
+    tagsBox.innerHTML = `
+      <span class="hero-badge" style="background: #1e293b; color: #fff;">${it.tier}</span>
+      <span class="hero-badge" style="background: #090e1b; color: var(--gold-beli);">${it.subTier}</span>
+      ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
+    `;
+
+    document.getElementById('detailAddYouBtn').onclick = () => {
+      addItemToTrade('you', it, 1);
+      closeDetailModal();
+      switchTab('calculator');
+    };
+
+    document.getElementById('detailAddThemBtn').onclick = () => {
+      addItemToTrade('they', it, 1);
+      closeDetailModal();
+      switchTab('calculator');
+    };
+
+    document.getElementById('itemDetailModal').classList.add('open');
+  }
+
+  function closeDetailModal() {
+    playClickSound();
+    document.getElementById('itemDetailModal').classList.remove('open');
+  }
+
+  // --- TAB NAVIGATION ---
+  function switchTab(tabId) {
+    playClickSound();
+    document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-section').forEach(s => s.style.display = 'none');
+
+    const btn = document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`);
+    if (btn) btn.classList.add('active');
+
+    if (tabId === 'calculator') {
+      document.getElementById('sectionCalculator').style.display = 'flex';
+    } else if (tabId === 'tierlist') {
+      document.getElementById('sectionTierlist').style.display = 'flex';
+      renderItemsGrid();
+    } else if (tabId === 'merchant') {
+      document.getElementById('sectionMerchant').style.display = 'flex';
+      renderMerchantGrid();
+    } else if (tabId === 'guide') {
+      document.getElementById('sectionGuide').style.display = 'block';
+    }
+  }
+
+  // --- INITIALIZATION ---
+  document.addEventListener('DOMContentLoaded', () => {
+    // Nav Tabs click
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        switchTab(tab);
+      });
+    });
+
+    document.getElementById('brandHomeBtn').addEventListener('click', () => switchTab('calculator'));
+
+    // Language toggle
+    document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
+
+    // Audio toggle
+    document.getElementById('audioToggleBtn').addEventListener('click', () => {
+      audioEnabled = !audioEnabled;
+      document.getElementById('audioToggleBtn').textContent = audioEnabled ? '🔊' : '🔇';
+      if (audioEnabled) playCoinSound();
+    });
+
+    // Trade actions
+    document.getElementById('btnSwapSides').addEventListener('click', swapTradeSides);
+    document.getElementById('btnClearTrade').addEventListener('click', clearAllTrade);
+    document.getElementById('btnShareTrade').addEventListener('click', copyTradeShareLink);
+
+    // Search & Sort filters
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderItemsGrid();
+    });
+
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+      currentSort = e.target.value;
+      renderItemsGrid();
+    });
+
+    // Category pills
+    document.querySelectorAll('#categoryPillsRow .filter-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#categoryPillsRow .filter-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.getAttribute('data-cat');
+        playClickSound();
+        renderItemsGrid();
+      });
+    });
+
+    // Tier pills
+    document.querySelectorAll('#tierPillsRow .tier-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#tierPillsRow .tier-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTier = btn.getAttribute('data-tier');
+        playClickSound();
+        renderItemsGrid();
+      });
+    });
+
+    // Picker Category pills inside modal
+    document.querySelectorAll('#pickerCategoryPills .filter-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#pickerCategoryPills .filter-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        pickerCategory = btn.getAttribute('data-pcat');
+        playClickSound();
+        filterPickerItems();
+      });
+    });
+
+    // Close modals on clicking overlay outside card
+    document.querySelectorAll('.comic-modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('open');
+        }
+      });
+    });
+
+    // Load from URL hash if present
+    loadTradeFromUrl();
+
+    // Quick Category pills in calculator
+    document.querySelectorAll('#quickCategoryPillsRow .filter-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#quickCategoryPillsRow .filter-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        quickCategory = btn.getAttribute('data-qcat');
+        playClickSound();
+        renderQuickItemsGrid();
+      });
+    });
+
+    // Initial render
+    applyLanguage();
+    renderQuickItemsGrid();
+  });
+
+  function handleQuickSearch(e) {
+    quickSearch = e.target.value;
+    renderQuickItemsGrid();
+  }
+
+  function handleQuickSort(e) {
+    quickSort = e.target.value;
+    renderQuickItemsGrid();
+  }
+
+  // Export globally for HTML onclick handlers
+  window.GPO_APP = {
+    removeItem: (side, id) => removeItemFromTrade(side, id),
+    changeQty: (side, id, delta) => changeItemQty(side, id, delta),
+    quickAdd: (side, id) => {
+      const it = (window.GPO_ITEMS || []).find(x => x.id === id);
+      if (it) {
+        addItemToTrade(side, it, 1);
+      }
+    },
+    openDetail: (id) => openDetailModal(id),
+    openPicker: (side) => openPickerModal(side)
+  };
+
+  window.openPickerModal = openPickerModal;
+  window.closePickerModal = closePickerModal;
+  window.closeDetailModal = closeDetailModal;
+  window.filterPickerItems = filterPickerItems;
+  window.handleQuickSearch = handleQuickSearch;
+  window.handleQuickSort = handleQuickSort;
+
+})();

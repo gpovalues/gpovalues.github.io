@@ -1,0 +1,44 @@
+﻿# Non-project files in D:\gag
+Godot*
+fifthpiece*
+steam*
+*.zip
+*.exe
+test_inspect/
+*.log
+
+# Scratch and extraction files
+all_google_doc_text.txt
+c1_sample.json
+ch1_text.txt
+ch3_text.txt
+ch5_text.txt
+check_*.js
+chunk2.txt
+clean_*.txt
+doc_images.json
+doc_slice.txt
+download_all_images.js
+download_real_item_images.js
+dump_full_text.js
+extract_blob_map.js
+extract_tier_list.js
+extracted_matches.txt
+fetch_fandom_images.js
+find_*.js
+fix_user_items.js
+gpo_full_tier_list.txt
+images_test_*.png
+inspect_text.js
+parse_*.js
+sample_matches.json
+test_map_images.js
+tierlist.txt
+translation_helpers.js
+wiki_links.json
+build_*.js
+blob_mappings.json
+
+# Dependencies
+node_modules/
+.DS_Store
