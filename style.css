@@ -2921,3 +2921,94 @@ body.drawer-open {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* =====================================================================
+   COMMUNITY NOTICE & GUIDE MISSION BANNERS
+   ===================================================================== */
+.hero-community-callout {
+  margin: 1.25rem 0 1.5rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(15, 23, 42, 0.85) 100%);
+  border: 2px solid var(--gold-beli);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.hero-community-callout .callout-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5));
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.hero-community-callout .callout-content {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #e2e8f0;
+}
+
+.hero-community-callout .callout-content strong {
+  display: inline;
+  color: var(--gold-beli);
+  font-weight: 800;
+  margin-right: 0.35rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.guide-intro-banner {
+  margin-top: 1.5rem;
+  padding: 1.4rem 1.6rem;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.35) 0%, rgba(15, 23, 42, 0.9) 100%);
+  border: 2px solid #38bdf8;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(56, 189, 248, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-intro-badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1.5px solid #38bdf8;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #7dd3fc;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
+.guide-intro-banner h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 0 0 0.6rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-intro-banner p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-community-callout {
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+  }
+  .guide-intro-banner {
+    padding: 1.1rem 1.2rem;
+  }
+}
