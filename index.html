@@ -37,8 +37,8 @@
         <button class="nav-tab-btn" id="tabBtnTierlist" data-tab="tierlist">
           <span>📜</span> <span class="tab-label" data-i18n="tab_tierlist">Tier List & Values</span>
         </button>
-        <button class="nav-tab-btn" id="tabBtnMerchant" data-tab="merchant">
-          <span>🛒</span> <span class="tab-label" data-i18n="tab_merchant">Traveling Merchant</span>
+        <button class="nav-tab-btn" id="tabBtnCommunity" data-tab="community">
+          <span>💬</span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnGuide" data-tab="guide">
           <span>💡</span> <span class="tab-label" data-i18n="tab_guide">Trading Guide</span>
@@ -285,25 +285,136 @@
 
     </section>
 
-    <!-- SECTION 3: TRAVELING MERCHANT -->
-    <section id="sectionMerchant" class="tab-section merchant-view-container" style="display: none;">
+    <!-- SECTION 3: COMMUNITY & CHANNELS -->
+    <section id="sectionCommunity" class="tab-section community-view-container" style="display: none;">
       
-      <div class="merchant-hero-card">
-        <h2 data-i18n="merchant_title">🛒 Traveling Merchant</h2>
-        <p data-i18n="merchant_desc">
-          The Traveling Merchant is an NPC that spawns every 30 minutes on First and Second Sea and stays for only 10 minutes. He sells Fruit Chests and rare items for Peli.
+      <div class="community-hero-card">
+        <div class="gpo-tracker-badge">🌐 OUR COMMUNITY</div>
+        <h2 data-i18n="community_title">💬 Community & Trading Chats</h2>
+        <p data-i18n="community_desc">
+          Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!
         </p>
-        <div class="merchant-stats-pills">
-          <span class="merchant-pill" data-i18n="merchant_pill_spawn">⏱️ Spawn: Every 30 min</span>
-          <span class="merchant-pill" data-i18n="merchant_pill_duration">⏳ Duration: 10 min</span>
-          <span class="merchant-pill" data-i18n="merchant_pill_theme">⚙️ Special Shop: Steampunk (5% chance)</span>
-          <span class="merchant-pill" data-i18n="merchant_pill_winter">❄️ Winter Shop: Iceborn</span>
+        <div class="community-stats-pills">
+          <span class="community-pill" data-i18n="community_pill_active">⚡ Active Trading & Discussions</span>
+          <span class="community-pill" data-i18n="community_pill_rules">🛡️ Safe Trades & Moderation</span>
+          <span class="community-pill" data-i18n="community_pill_giveaways">🎁 Events & Giveaways</span>
         </div>
       </div>
 
-      <!-- Merchant Item Stock Cards -->
-      <div class="items-cards-grid" id="merchantCardsGrid">
-        <!-- Filtered merchant items -->
+      <!-- Community Channels Grid -->
+      <div class="community-channels-grid">
+        
+        <!-- Telegram Chat Card -->
+        <div class="channel-comic-card tg-card">
+          <div class="channel-card-top-glow"></div>
+          <div class="channel-card-header">
+            <div class="channel-badge-pill tg-badge">
+              <span>✈️</span> <span>Telegram Chat</span>
+            </div>
+            <div class="channel-badge-pill lang-badge" data-i18n="chat_lang_badge">
+              <span>🇷🇺</span> <span>Russian (Русский)</span>
+            </div>
+            <div class="channel-badge-pill status-badge">
+              <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
+            </div>
+          </div>
+
+          <div class="channel-profile-row">
+            <div class="channel-avatar-box">
+              <img src="images/gpocha_avatar.jpg" alt="Grand Piece Chat Avatar" class="channel-avatar-img" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
+              <span class="tg-mini-icon">✈️</span>
+            </div>
+            <div class="channel-meta-box">
+              <h3 class="channel-title-text">(公婆) Grand Piece Chat</h3>
+              <div class="channel-handle-text">@GPOcHa</div>
+              <div class="channel-counts-row">
+                <span class="count-item-pill">
+                  <span class="count-icon">👥</span>
+                  <strong class="count-number">190+</strong>
+                  <span class="count-lbl" data-i18n="members_label">Members</span>
+                </span>
+                <span class="count-item-pill online-pill">
+                  <span class="count-icon">🟢</span>
+                  <strong class="count-number">35+</strong>
+                  <span class="count-lbl" data-i18n="online_label">Online</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="channel-desc-text" data-i18n="chat_desc">
+            Grand Piece Online chat: here you can chat, find profitable trades, check latest prices, and team up for bosses and dungeons! Respect server rules and good luck!
+          </p>
+
+          <div class="channel-specs-box">
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_lang_label">🗣️ Language:</span>
+              <span class="spec-value" data-i18n="chat_spec_lang_val">🇷🇺 Russian (Русский язык)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_topic_label">🎯 Focus:</span>
+              <span class="spec-value" data-i18n="chat_spec_topic_val">Trading, Values, Boss Raids & Co-op</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_access_label">🔓 Access:</span>
+              <span class="spec-value" data-i18n="chat_spec_access_val">Public & Free to Join</span>
+            </div>
+          </div>
+
+          <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="channel-join-btn tg-join-btn">
+            <span class="btn-icon">✈️</span>
+            <span class="btn-text" data-i18n="btn_join_tg">Join Telegram Chat (@GPOcHa)</span>
+            <span class="btn-arrow">➔</span>
+          </a>
+        </div>
+
+        <!-- Community Coming Soon Card (Discord & Giveaways) -->
+        <div class="channel-comic-card coming-soon-card">
+          <div class="channel-card-top-glow" style="background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.4) 0%, transparent 70%);"></div>
+          <div class="channel-card-header">
+            <div class="channel-badge-pill" style="background: #312e81; color: #a5b4fc;">
+              <span>🎮</span> <span>Discord Hub</span>
+            </div>
+            <div class="channel-badge-pill" style="background: #064e3b; color: #6ee7b7;" data-i18n="card_coming_soon_badge">
+              <span>🚀</span> <span>Coming Soon</span>
+            </div>
+          </div>
+
+          <div class="channel-profile-row">
+            <div class="channel-avatar-box" style="background: #1e1b4b; border-color: #6366f1;">
+              <span style="font-size: 2.2rem;">👾</span>
+            </div>
+            <div class="channel-meta-box">
+              <h3 class="channel-title-text" data-i18n="discord_card_title">Official Discord Community</h3>
+              <div class="channel-handle-text">@gpovalues_discord</div>
+              <div class="channel-counts-row">
+                <span class="count-item-pill" style="border-color: #6366f1;">
+                  <span>⭐</span> <span data-i18n="discord_card_feature">Voice, Roles, Giveaways</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="channel-desc-text" data-i18n="discord_card_desc">
+            We are preparing our official Discord server featuring automated trade-reputation bots, price alert notifications, and exclusive weekly fruit giveaways!
+          </p>
+
+          <div class="channel-specs-box">
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="discord_spec_giveaways">🎁 Events:</span>
+              <span class="spec-value">Legendary & Mythical Fruit Giveaways</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="discord_spec_roles">⚔️ Trading:</span>
+              <span class="spec-value">Reputation system & Cross-server trades</span>
+            </div>
+          </div>
+
+          <button class="channel-join-btn disabled-btn" disabled>
+            <span>⏳</span> <span data-i18n="btn_discord_soon">In Development (Coming Soon)</span>
+          </button>
+        </div>
+
       </div>
 
     </section>

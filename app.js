@@ -75,7 +75,7 @@
       brand_subtext: "Official Trade Calculator",
       tab_calculator: "Trade Calculator",
       tab_tierlist: "Tier List & Values",
-      tab_merchant: "Traveling Merchant",
+      tab_community: "Community & Chats",
       tab_guide: "Trading Guide",
       hero_title: "Grand Piece Online <span>Trading Hub</span>",
       hero_desc: "All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!",
@@ -127,12 +127,30 @@
       catalog_hint: "💡 Click [+ You] or [+ Them] on any card for instant adding!",
       no_items_found: "🔍 No items found",
       no_items_sub: "Try adjusting your search query or filters",
-      merchant_title: "🛒 Traveling Merchant",
-      merchant_desc: "The Traveling Merchant is an NPC that spawns every 30 minutes on First and Second Sea and stays for only 10 minutes. He sells Fruit Chests and rare items for Peli.",
-      merchant_pill_spawn: "⏱️ Spawn: Every 30 min",
-      merchant_pill_duration: "⏳ Duration: 10 min",
-      merchant_pill_theme: "⚙️ Special Shop: Steampunk (5% chance)",
-      merchant_pill_winter: "❄️ Winter Shop: Iceborn",
+      community_title: "💬 Community & Trading Chats",
+      community_desc: "Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!",
+      community_pill_active: "⚡ Active Trading & Discussions",
+      community_pill_rules: "🛡️ Safe Trades & Moderation",
+      community_pill_giveaways: "🎁 Events & Giveaways",
+      chat_lang_badge: "Russian (Русский) 🇷🇺",
+      chat_active_badge: "Active",
+      members_label: "Members",
+      online_label: "Online",
+      chat_desc: "Grand Piece Online chat: here you can chat, find profitable trades, check latest prices, and team up for bosses and dungeons! Respect server rules and good luck!",
+      chat_spec_lang_label: "🗣️ Language:",
+      chat_spec_lang_val: "🇷🇺 Russian (Русский язык)",
+      chat_spec_topic_label: "🎯 Focus:",
+      chat_spec_topic_val: "Trading, Values, Boss Raids & Co-op",
+      chat_spec_access_label: "🔓 Access:",
+      chat_spec_access_val: "Public & Free to Join",
+      btn_join_tg: "Join Telegram Chat (@GPOcHa)",
+      card_coming_soon_badge: "Coming Soon",
+      discord_card_title: "Official Discord Community",
+      discord_card_feature: "Voice, Roles, Giveaways",
+      discord_card_desc: "We are preparing our official Discord server featuring automated trade-reputation bots, price alert notifications, and exclusive weekly fruit giveaways!",
+      discord_spec_giveaways: "🎁 Events:",
+      discord_spec_roles: "⚔️ Trading:",
+      btn_discord_soon: "In Development (Coming Soon)",
       guide_title: "📖 GPO Trading Rules & Guide",
       guide_desc: "Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.",
       guide_rule1_title: "1. Hierarchy & Ranking Order",
@@ -181,7 +199,7 @@
       brand_subtext: "Официальный Трейд Калькулятор",
       tab_calculator: "Калькулятор Трейдов",
       tab_tierlist: "Тир Лист & Цены",
-      tab_merchant: "Странствующий Торговец",
+      tab_community: "Сообщество & Чаты",
       tab_guide: "Гайд по Спросу",
       hero_title: "Grand Piece Online <span>Трейдинг Хаб</span>",
       hero_desc: "Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!",
@@ -233,12 +251,30 @@
       catalog_hint: "💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
       no_items_found: "🔍 Предметы не найдены",
       no_items_sub: "Попробуйте изменить поисковый запрос или фильтры",
-      merchant_title: "🛒 Странствующий Торговец (Traveling Merchant)",
-      merchant_desc: "Странствующий торговец появляется каждые 30 минут на случайном острове в Первом и Втором Море и остается всего 10 минут. Он продает сундуки с фруктами и редкие предметы за игровую валюту Peli (Бели).",
-      merchant_pill_spawn: "⏱️ Спавн: Каждые 30 мин",
-      merchant_pill_duration: "⏳ Время стоянки: 10 мин",
-      merchant_pill_theme: "⚙️ Тематический магазин: Стимпинк (5% шанс)",
-      merchant_pill_winter: "❄️ Зимний магазин: Iceborn",
+      community_title: "💬 Сообщество и Трейдинг Чаты GPO",
+      community_desc: "Присоединяйтесь к нашему официальному сообществу, трейдитесь с игроками, находите пати на рейды и следите за актуальными ценами!",
+      community_pill_active: "⚡ Активные трейды и общение",
+      community_pill_rules: "🛡️ Безопасные сделки и правила",
+      community_pill_giveaways: "🎁 Ивенты и раздачи",
+      chat_lang_badge: "Русский язык 🇷🇺",
+      chat_active_badge: "Активен",
+      members_label: "Участников",
+      online_label: "Онлайн",
+      chat_desc: "Чат по Grand Piece Online: здесь можно пообщаться, найти выгодный трейд, узнать свежие цены и собрать команду на боссов и данжи! Самое главное — соблюдать правила сервера.",
+      chat_spec_lang_label: "🗣️ Язык:",
+      chat_spec_lang_val: "🇷🇺 Русский язык",
+      chat_spec_topic_label: "🎯 Тематика:",
+      chat_spec_topic_val: "Трейдинг, Цены, Рейды на боссов и общение",
+      chat_spec_access_label: "🔓 Доступ:",
+      chat_spec_access_val: "Открытый чат для всех",
+      btn_join_tg: "Войти в Telegram Чат (@GPOcHa)",
+      card_coming_soon_badge: "Скоро",
+      discord_card_title: "Официальный Discord Сервер",
+      discord_card_feature: "Голосовые каналы, роли, раздачи",
+      discord_card_desc: "Мы готовим официальный Discord-сервер с ботами репутации трейдов, уведомлениями об изменениях цен и еженедельными раздачами редких фруктов!",
+      discord_spec_giveaways: "🎁 Ивенты:",
+      discord_spec_roles: "⚔️ Трейдинг:",
+      btn_discord_soon: "В разработке (Скоро)",
       guide_title: "📖 Правила и Советы по Трейдингу GPO",
       guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
       guide_rule1_title: "1. Иерархия и Порядковый номер",
@@ -316,7 +352,6 @@
     renderItemsGrid();
     renderQuickItemsGrid();
     renderCalculatorSlots();
-    renderMerchantGrid();
     updateTradeVerdict();
   }
 
@@ -748,21 +783,6 @@
     });
   }
 
-  function renderMerchantGrid() {
-    const grid = document.getElementById('merchantCardsGrid');
-    if (!grid) return;
-    grid.innerHTML = '';
-
-    const merchantKeywords = ['Chest', 'Rod', 'Token', 'Bait', 'Steampunk', 'Shadowrunner', 'Powderpunk', 'Iceborn', 'Outfit', 'Boat', 'Striker', 'Hoverboard'];
-    const items = (window.GPO_ITEMS || []).filter(it => {
-      return merchantKeywords.some(kw => it.name.includes(kw));
-    }).slice(0, 36);
-
-    items.forEach(it => {
-      grid.appendChild(createCardElement(it));
-    });
-  }
-
   // --- ITEM PICKER MODAL LOGIC ---
   let pickerCategory = 'all';
 
@@ -889,9 +909,8 @@
     } else if (tabId === 'tierlist') {
       document.getElementById('sectionTierlist').style.display = 'flex';
       renderItemsGrid();
-    } else if (tabId === 'merchant') {
-      document.getElementById('sectionMerchant').style.display = 'flex';
-      renderMerchantGrid();
+    } else if (tabId === 'community') {
+      document.getElementById('sectionCommunity').style.display = 'flex';
     } else if (tabId === 'guide') {
       document.getElementById('sectionGuide').style.display = 'block';
     }
