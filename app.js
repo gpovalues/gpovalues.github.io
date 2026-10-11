@@ -82,7 +82,27 @@
       badge_updated: "📅 Updated: 10/7/2026",
       badge_items_count: "⚔️ 213 Items",
       badge_official_doc: "⭐ Official GPO Doc",
-      badge_currency: "🪙 Currency: Points & LC (Leg Chests)",
+      badge_currency: "🪙 SP Reset = 1 pt | 1 LC = 233 pts",
+      label_demand_short: "Demand",
+      rec_badge_title: "🤔 WORTH TRADING?",
+      rec_status_empty: "ADD ITEMS",
+      rec_status_big_win: "🔥 BIG WIN! HIGHLY RECOMMENDED",
+      rec_status_win: "✅ PROFITABLE! WORTH TRADING",
+      rec_status_upgrade: "💎 GREAT UPGRADE! WORTH OVERPAYING",
+      rec_status_fair: "🤝 FAIR TRADE! BALANCED",
+      rec_status_trap: "⚠️ DEMAND TRAP! DO NOT TRADE",
+      rec_status_lose: "❌ NOT WORTH TRADING (LOSS)",
+      rec_status_big_lose: "💀 HUGE LOSS! TERRIBLE TRADE",
+      rec_advice_empty: "Add items to both sides to evaluate nominal points profit and item demand / liquidity risk.",
+      rec_advice_big_win: "Great trade! You gain a solid value profit and receive items with strong liquidity. Highly recommended to accept!",
+      rec_advice_win: "Profitable trade! You gain points and the demand of offered items is good. Safe and worthy trade.",
+      rec_advice_upgrade: "Slight point overpay, but you are trading up for an elite high-demand item! In GPO trading, upgrading liquidity is considered a great move.",
+      rec_advice_fair: "Well-balanced trade in both value and demand. Accept if you want or need the offered items for your character.",
+      rec_advice_trap: "Warning! Even if nominal points look fair, you are giving away top-tier liquid items for hard-to-sell low-demand items. You will struggle to resell them!",
+      rec_advice_lose: "You are losing points and value. Not recommended unless you desperately need the item and are willing to overpay.",
+      rec_advice_big_lose: "Significant loss in value! You are severely overpaying. Decline this offer immediately!",
+      rec_your_demand: "Your Demand:",
+      rec_their_demand: "Their Demand:",
       verdict_empty: "ADD ITEMS TO TRADE",
       verdict_big_win: "🔥 BIG WIN!",
       verdict_win: "✅ WIN (PROFIT)!",
@@ -216,7 +236,27 @@
       badge_updated: "📅 Обновление: 10/7/2026",
       badge_items_count: "⚔️ 213 Предметов",
       badge_official_doc: "⭐ Официальный GPO Doc",
-      badge_currency: "🪙 Валюта: Очки & LC (Leg Chests)",
+      badge_currency: "🪙 SP Reset = 1 pt | 1 LC = 233 pts",
+      label_demand_short: "Спрос",
+      rec_badge_title: "🤔 СТОИТ ЛИ ТРЕЙДИТЬСЯ?",
+      rec_status_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
+      rec_status_big_win: "🔥 ОТЛИЧНЫЙ ВИН! ОДНОЗНАЧНО ДА",
+      rec_status_win: "✅ ВЫГОДНО! СТОИТ ТРЕЙДИТЬСЯ",
+      rec_status_upgrade: "💎 ВЫГОДНЫЙ АПГРЕЙД! СТОИТ ПЕРЕПЛАТИТЬ",
+      rec_status_fair: "🤝 РАВНЫЙ ТРЕЙД! СБАЛАНСИРОВАНО",
+      rec_status_trap: "⚠️ ЛОВУШКА СПРОСА! НЕ СТОИТ ТРЕЙДИТЬСЯ",
+      rec_status_lose: "❌ НЕ СТОИТ ТРЕЙДИТЬСЯ (УБЫТОК)",
+      rec_status_big_lose: "💀 ОГРОМНЫЙ СЛИВ! ОТКЛОНЯЙТЕ",
+      rec_advice_empty: "Добавьте предметы с обеих сторон, чтобы оценить прибыль по очкам и риски ликвидности / спроса.",
+      rec_advice_big_win: "Отличный трейд! Вы получаете солидный плюс по очкам и предметы с высоким спросом. Однозначно принимайте!",
+      rec_advice_win: "Выгодная сделка! Вы в плюсе по очкам, а спрос полученных предметов на хорошем уровне. Стоит соглашаться.",
+      rec_advice_upgrade: "Небольшая переплата по очкам, но вы получаете элитный предмет с максимальным спросом (Trade Up)! В GPO такая переплата полностью оправдана.",
+      rec_advice_fair: "Сбалансированная сделка по очкам и спросу. Трейдитесь, если вам нужен данный предмет для игры или билда.",
+      rec_advice_trap: "Осторожно! Хотя по очкам кажется честно, вы отдаете высоколиквидные ходовые вещи за тяжело продаваемый 'мертвый груз'. Не рекомендуется!",
+      rec_advice_lose: "Вы уходите в минус по очкам. Не стоит соглашаться, если только этот предмет не нужен вам любой ценой.",
+      rec_advice_big_lose: "Критический убыток! Вы сильно переплачиваете и теряете ценность. Отклоняйте этот трейд!",
+      rec_your_demand: "Ваш спрос:",
+      rec_their_demand: "Их спрос:",
       verdict_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
       verdict_big_win: "🔥 ОГРОМНЫЙ ВИН!",
       verdict_win: "✅ ВИН (ВЫГОДНО)!",
@@ -397,29 +437,28 @@
 
   let activePickerSide = 'you'; // 'you' or 'they'
 
-  // Demand numerical scores for balance check
-  const demandScores = {
-    "Extremely High": 5,
-    "High": 4,
-    "Medium": 3,
-    "Low": 2,
-    "Unstable": 1
-  };
+  // Helper to format points cleanly
+  function formatPts(pts) {
+    if (pts === undefined || pts === null) return '0';
+    if (pts % 1 === 0) return pts.toLocaleString();
+    return (+pts.toFixed(1)).toLocaleString();
+  }
 
   function calculateSideTotal(side) {
     let pts = 0;
-    let totalDemandScore = 0;
+    let totalWeightedDemand = 0;
     let totalItems = 0;
 
     tradeState[side].forEach(entry => {
-      pts += entry.item.value * entry.qty;
-      const score = demandScores[entry.item.demand] || 3;
-      totalDemandScore += score * entry.qty;
+      const itemVal = entry.item.value * entry.qty;
+      pts += itemVal;
+      const score = (entry.item.demandScore !== undefined && entry.item.demandScore !== null) ? entry.item.demandScore : 5.0;
+      totalWeightedDemand += score * itemVal;
       totalItems += entry.qty;
     });
 
-    const avgDemand = totalItems > 0 ? (totalDemandScore / totalItems) : 3;
-    const lc = (pts / 2800).toFixed(2);
+    const avgDemand = pts > 0 ? +(totalWeightedDemand / pts).toFixed(1) : (totalItems > 0 ? 5.0 : 0.0);
+    const lc = (pts / 233.33).toFixed(2);
     return { pts, lc, avgDemand, count: totalItems };
   }
 
@@ -428,10 +467,16 @@
     const they = calculateSideTotal('they');
 
     // Update UI numbers
-    document.getElementById('youTotalPts').textContent = you.pts.toLocaleString() + ' pts';
+    document.getElementById('youTotalPts').textContent = formatPts(you.pts) + ' pts';
     document.getElementById('youTotalLc').textContent = you.lc + ' LC';
-    document.getElementById('theyTotalPts').textContent = they.pts.toLocaleString() + ' pts';
+    document.getElementById('theyTotalPts').textContent = formatPts(they.pts) + ' pts';
     document.getElementById('theyTotalLc').textContent = they.lc + ' LC';
+
+    // Update Side Demand Badges
+    const youPill = document.getElementById('youDemandPill');
+    const theyPill = document.getElementById('theyDemandPill');
+    if (youPill) youPill.innerHTML = `⭐ ${t('label_demand_short')}: <strong>${you.count > 0 ? you.avgDemand : '0.0'}/10</strong>`;
+    if (theyPill) theyPill.innerHTML = `⭐ ${t('label_demand_short')}: <strong>${they.count > 0 ? they.avgDemand : '0.0'}/10</strong>`;
 
     const stamp = document.getElementById('verdictStamp');
     const icon = document.getElementById('verdictIcon');
@@ -439,14 +484,32 @@
     const diffText = document.getElementById('verdictDiffText');
     const demandNote = document.getElementById('verdictDemandNote');
 
+    // Recommendation card elements
+    const recBadge = document.getElementById('recVerdictBadge');
+    const recAdvice = document.getElementById('recVerdictAdvice');
+    const recYouText = document.getElementById('recYouDemandText');
+    const recTheyText = document.getElementById('recTheyDemandText');
+    const recYouBar = document.getElementById('recYouDemandBar');
+    const recTheyBar = document.getElementById('recTheyDemandBar');
+
+    if (recYouText) recYouText.textContent = `${you.count > 0 ? you.avgDemand : '0.0'} / 10`;
+    if (recTheyText) recTheyText.textContent = `${they.count > 0 ? they.avgDemand : '0.0'} / 10`;
+    if (recYouBar) recYouBar.style.width = `${Math.min(100, (you.avgDemand / 10) * 100)}%`;
+    if (recTheyBar) recTheyBar.style.width = `${Math.min(100, (they.avgDemand / 10) * 100)}%`;
+
     // If both sides empty
-    if (you.pts === 0 && they.pts === 0) {
+    if (you.count === 0 && they.count === 0) {
       stamp.className = 'verdict-stamp fair';
       icon.textContent = '🤝';
       text.textContent = t('verdict_empty');
       diffText.className = 'verdict-diff-text neutral';
       diffText.textContent = '±0 pts (0%)';
       demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-empty';
+        recBadge.textContent = t('rec_status_empty');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_empty');
       return;
     }
 
@@ -459,7 +522,7 @@
     }
 
     const sign = diffPts >= 0 ? '+' : '';
-    diffText.textContent = `${sign}${diffPts.toLocaleString()} pts (${sign}${diffPct.toFixed(1)}%)`;
+    diffText.textContent = `${sign}${formatPts(diffPts)} pts (${sign}${diffPct.toFixed(1)}%)`;
 
     // Verdict Stamp logic
     if (diffPct >= 25) {
@@ -495,13 +558,81 @@
       else if (diffPct <= -15) playLoseSound();
     }
 
-    // Demand Warning analysis
-    if (you.avgDemand >= 4.0 && they.avgDemand <= 2.2 && you.count > 0 && they.count > 0) {
-      demandNote.innerHTML = `<span style="color: #ef4444;">⚠️</span> <span style="color: #f87171;">${t('demand_warning_you')}</span>`;
-    } else if (they.avgDemand >= 4.0 && you.avgDemand <= 2.5 && you.count > 0 && they.count > 0) {
-      demandNote.innerHTML = `<span style="color: #10b981;">💎</span> <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
-    } else {
+    // Trade Worth & Demand Evaluation Logic
+    if (you.count === 0 || they.count === 0) {
       demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-empty';
+        recBadge.textContent = t('rec_status_empty');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_empty');
+      return;
+    }
+
+    const diffDemand = they.avgDemand - you.avgDemand;
+
+    // 1. Demand Trap: You give high liquid items for low liquid junk, even if points look OK or slightly positive
+    if ((you.avgDemand >= 7.5 && they.avgDemand <= 5.2 && diffPct >= -5) || (diffDemand <= -2.5 && diffPct < 25)) {
+      demandNote.innerHTML = `<span style="color: #ef4444;">⚠️</span> <span style="color: #f87171;">${t('demand_warning_you')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-trap';
+        recBadge.textContent = t('rec_status_trap');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_trap');
+    }
+    // 2. Big Win
+    else if (diffPct >= 12 && they.avgDemand >= 6.0) {
+      demandNote.innerHTML = `<span style="color: #10b981;">💎</span> <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-win-big';
+        recBadge.textContent = t('rec_status_big_win');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_big_win');
+    }
+    // 3. Trade Up / Upgrade to Meta
+    else if (diffPct >= -10 && diffPct < 5 && they.avgDemand >= 8.8 && diffDemand >= 1.5) {
+      demandNote.innerHTML = `<span style="color: #38bdf8;">💎</span> <span style="color: #7dd3fc;">${t('demand_bonus_them')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-upgrade';
+        recBadge.textContent = t('rec_status_upgrade');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_upgrade');
+    }
+    // 4. Solid Win
+    else if (diffPct >= 5 && diffDemand >= -1.5) {
+      demandNote.innerHTML = `<span style="color: #10b981;">✅</span> <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-win';
+        recBadge.textContent = t('rec_status_win');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_win');
+    }
+    // 5. Fair Trade
+    else if (diffPct >= -6 && diffPct <= 6 && Math.abs(diffDemand) < 2.0) {
+      demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-fair';
+        recBadge.textContent = t('rec_status_fair');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_fair');
+    }
+    // 6. Huge Loss
+    else if (diffPct < -20) {
+      demandNote.innerHTML = `<span style="color: #ef4444;">💀</span> <span style="color: #f87171;">${t('rec_status_big_lose')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-lose-big';
+        recBadge.textContent = t('rec_status_big_lose');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_big_lose');
+    }
+    // 7. Regular Loss
+    else {
+      demandNote.innerHTML = `<span style="color: #f97316;">❌</span> <span style="color: #fb923c;">${t('verdict_lose')}</span>`;
+      if (recBadge) {
+        recBadge.className = 'rec-verdict-badge rec-lose';
+        recBadge.textContent = t('rec_status_lose');
+      }
+      if (recAdvice) recAdvice.textContent = t('rec_advice_lose');
     }
   }
 
@@ -556,7 +687,7 @@
           <button class="slot-remove-btn" title="${t('slot_btn_remove')}" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">✕</button>
           <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy">
           <div class="slot-item-name" title="${name}">${name}</div>
-          <div class="slot-item-val">${(it.value * entry.qty).toLocaleString()} pts</div>
+          <div class="slot-item-val">${formatPts(it.value * entry.qty)} pts <span style="color: var(--gold-glow); font-size: 0.74rem;">(⭐${it.demandScore})</span></div>
           <div class="slot-qty-controls">
             <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', -1)">-</button>
             <span class="qty-num">x${entry.qty}</span>
@@ -718,7 +849,7 @@
     } else if (sort === 'val_asc') {
       result.sort((a, b) => a.value - b.value);
     } else if (sort === 'demand_desc') {
-      result.sort((a, b) => (demandScores[b.demand] || 0) - (demandScores[a.demand] || 0));
+      result.sort((a, b) => (b.demandScore || 0) - (a.demandScore || 0));
     } else if (sort === 'name_asc') {
       result.sort((a, b) => {
         const nameA = currentLang === 'ru' ? (a.nameRu || a.name) : a.name;
@@ -740,7 +871,7 @@
     card.className = 'item-comic-card';
     card.innerHTML = `
       <span class="card-tier-tag ${tierClass}">${it.tier}</span>
-      <span class="card-demand-tag ${demandClass}">${demandLabel}</span>
+      <span class="card-demand-tag ${demandClass}">⭐ ${it.demandScore}/10 • ${demandLabel}</span>
 
       <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
         <img src="${it.image}" alt="${name}" loading="lazy" onerror="this.src='https://static.wikia.nocookie.net/grand-piece-online/images/b/b3/Legendary_Chest.png/revision/latest'">
@@ -750,7 +881,7 @@
       ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
 
       <div class="card-values-row">
-        <span class="val-pts-text">${it.value.toLocaleString()} pts</span>
+        <span class="val-pts-text">${formatPts(it.value)} pts</span>
         <span class="val-lc-text">~${it.lcValue} LC</span>
       </div>
 
@@ -867,7 +998,7 @@
       btn.innerHTML = `
         <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy">
         <div class="picker-item-name" title="${name}">${name}</div>
-        <div class="picker-item-val">${it.value.toLocaleString()} pts</div>
+        <div class="picker-item-val">${formatPts(it.value)} pts <small style="color: var(--gold-glow); font-size: 0.72rem;">(⭐${it.demandScore})</small></div>
       `;
       grid.appendChild(btn);
     });
@@ -885,13 +1016,13 @@
     const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
     document.getElementById('detailImg').src = it.image;
     document.getElementById('detailName').textContent = name;
-    document.getElementById('detailValuePts').textContent = it.value.toLocaleString() + ' pts';
+    document.getElementById('detailValuePts').textContent = formatPts(it.value) + ' pts';
     document.getElementById('detailValueLc').textContent = it.lcValue + ' LC';
 
     const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
     const trendLabel = translations[currentLang].trend_labels[it.trend] || it.trend;
 
-    document.getElementById('detailDemandVal').textContent = demandLabel;
+    document.getElementById('detailDemandVal').textContent = `${demandLabel} (⭐ ${it.demandScore}/10)`;
     document.getElementById('detailTrendVal').textContent = trendLabel;
     document.getElementById('detailWikiLink').href = it.wikiUrl;
 

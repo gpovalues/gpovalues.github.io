@@ -503,6 +503,210 @@ body {
   flex-wrap: wrap;
 }
 
+/* =====================================================================
+   TRADE RECOMMENDATION / SHOULD YOU TRADE CARD
+   ===================================================================== */
+.verdict-recommendation-card {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1.1rem 1.35rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(13, 19, 33, 0.95) 0%, rgba(23, 32, 54, 0.95) 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    0 4px 14px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.rec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rec-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.rec-badge-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--gold-glow);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.rec-verdict-badge {
+  font-size: 0.92rem;
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  border-radius: 6px;
+  border: 1.5px solid #000;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.25s ease;
+}
+
+.rec-verdict-badge.rec-empty {
+  background: #1e293b;
+  color: #94a3b8;
+  border-color: #334155;
+}
+
+.rec-verdict-badge.rec-win-big {
+  background: linear-gradient(180deg, #15803d 0%, #22c55e 100%);
+  color: #fff;
+  border-color: #052e16;
+  box-shadow: 0 0 14px rgba(34, 197, 94, 0.45);
+}
+
+.rec-verdict-badge.rec-win {
+  background: linear-gradient(180deg, #166534 0%, #15803d 100%);
+  color: #fff;
+  border-color: #052e16;
+}
+
+.rec-verdict-badge.rec-upgrade {
+  background: linear-gradient(180deg, #0284c7 0%, #38bdf8 100%);
+  color: #fff;
+  border-color: #0369a1;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.rec-verdict-badge.rec-fair {
+  background: var(--gpo-gold-grad);
+  color: #fff;
+  border-color: #241401;
+}
+
+.rec-verdict-badge.rec-trap {
+  background: linear-gradient(180deg, #b45309 0%, #f59e0b 50%, #d97706 100%);
+  color: #000;
+  font-weight: 900;
+  border-color: #451a03;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
+  animation: pulse-verdict 1.5s infinite;
+}
+
+.rec-verdict-badge.rec-lose {
+  background: linear-gradient(180deg, #9a3412 0%, #ea580c 100%);
+  color: #fff;
+  border-color: #431407;
+}
+
+.rec-verdict-badge.rec-lose-big {
+  background: var(--gpo-red-grad);
+  color: #fff;
+  border-color: #200000;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.5);
+  animation: shake-verdict 2s infinite;
+}
+
+.rec-verdict-advice {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.rec-demand-meter-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.rec-demand-col {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.rec-demand-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.rec-demand-meta strong {
+  color: #fff;
+  font-weight: 800;
+}
+
+.rec-demand-vs {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  padding: 0.2rem 0.55rem;
+  background: #090c12;
+  border-radius: 4px;
+  border: 1px solid #1e293b;
+}
+
+.rec-bar-track {
+  width: 100%;
+  height: 7px;
+  background: #090c12;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rec-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rec-bar-fill.you {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.rec-bar-fill.they {
+  background: linear-gradient(90deg, #8b5cf6 0%, #c084fc 100%);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+}
+
+.side-sub-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.side-demand-score-pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: var(--gold-beli);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
 .action-comic-btn {
   background: var(--gpo-dark-grad);
   color: #fff;

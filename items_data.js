@@ -7,13 +7,14 @@ window.GPO_ITEMS = [
     "tier": "Exclusive",
     "subTier": "Standard",
     "rankInTier": 1,
-    "value": 30000000,
-    "lcValue": 10714.29,
+    "value": 2500000,
+    "lcValue": 10714.44,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_1.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cool_Shades"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cool_Shades",
+    "demandScore": 9.8
   },
   {
     "id": "item_2",
@@ -23,13 +24,14 @@ window.GPO_ITEMS = [
     "tier": "Exclusive",
     "subTier": "Standard",
     "rankInTier": 2,
-    "value": 24000000,
-    "lcValue": 8571.43,
+    "value": 2000000,
+    "lcValue": 8571.55,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_2.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Marine_Cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Marine_Cape",
+    "demandScore": 9.8
   },
   {
     "id": "item_3",
@@ -39,13 +41,14 @@ window.GPO_ITEMS = [
     "tier": "Exclusive",
     "subTier": "Standard",
     "rankInTier": 3,
-    "value": 18000000,
-    "lcValue": 6428.57,
+    "value": 1500000,
+    "lcValue": 6428.66,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_3.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Marine_Cap"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Marine_Cap",
+    "demandScore": 9.5
   },
   {
     "id": "item_4",
@@ -55,13 +58,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 8500000,
-    "lcValue": 3035.71,
+    "value": 708333,
+    "lcValue": 3035.76,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_4.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sakamoto_Glasses"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sakamoto_Glasses",
+    "demandScore": 9.6
   },
   {
     "id": "item_5",
@@ -71,13 +75,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 7600000,
-    "lcValue": 2714.29,
+    "value": 633333,
+    "lcValue": 2714.32,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_5.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Cupid%27s_Chakram"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Cupid%27s_Chakram",
+    "demandScore": 9.4
   },
   {
     "id": "item_6",
@@ -87,13 +92,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 6700000,
-    "lcValue": 2392.86,
+    "value": 558333,
+    "lcValue": 2392.89,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_6.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Candy_Cane"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Candy_Cane",
+    "demandScore": 10
   },
   {
     "id": "item_7",
@@ -103,13 +109,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 5800000,
-    "lcValue": 2071.43,
+    "value": 483333,
+    "lcValue": 2071.46,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "outfits",
     "image": "images/item_7.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Maid_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Maid_Outfit",
+    "demandScore": 9.6
   },
   {
     "id": "item_8",
@@ -119,13 +126,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 4500000,
-    "lcValue": 1607.14,
+    "value": 375000,
+    "lcValue": 1607.17,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_8.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_World_Ender"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_World_Ender",
+    "demandScore": 10
   },
   {
     "id": "item_9",
@@ -135,13 +143,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 3900000,
-    "lcValue": 1392.86,
+    "value": 325000,
+    "lcValue": 1392.88,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_9.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Firework_Lancer"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Firework_Lancer",
+    "demandScore": 9.2
   },
   {
     "id": "item_10",
@@ -151,13 +160,14 @@ window.GPO_ITEMS = [
     "tier": "Tier SS",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 3300000,
-    "lcValue": 1178.57,
-    "demand": "Extremely High",
+    "value": 275000,
+    "lcValue": 1178.59,
+    "demand": "High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_10.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Inferno_Rocket_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Inferno_Rocket_Blade",
+    "demandScore": 9
   },
   {
     "id": "item_11",
@@ -167,13 +177,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 1600000,
-    "lcValue": 571.43,
-    "demand": "Extremely High",
+    "value": 133333,
+    "lcValue": 571.44,
+    "demand": "High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_11.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Candy_Cane"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Candy_Cane",
+    "demandScore": 8.8
   },
   {
     "id": "item_12",
@@ -183,13 +194,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 1460000,
-    "lcValue": 521.43,
-    "demand": "Extremely High",
+    "value": 121667,
+    "lcValue": 521.44,
+    "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_12.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Fruit_Bag"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Fruit_Bag",
+    "demandScore": 8.8
   },
   {
     "id": "item_13",
@@ -199,13 +211,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 1320000,
-    "lcValue": 471.43,
-    "demand": "Extremely High",
+    "value": 110000,
+    "lcValue": 471.44,
+    "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_13.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Fruit_Bag"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Fruit_Bag",
+    "demandScore": 8.8
   },
   {
     "id": "item_14",
@@ -215,13 +228,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 1180000,
-    "lcValue": 421.43,
+    "value": 14000,
+    "lcValue": 60,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_14.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Chromatic_All_Seeing_Eye"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Chromatic_All_Seeing_Eye",
+    "demandScore": 9.8
   },
   {
     "id": "item_15",
@@ -231,13 +245,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 1040000,
-    "lcValue": 371.43,
-    "demand": "Extremely High",
+    "value": 86667,
+    "lcValue": 371.44,
+    "demand": "High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_15.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Candy_Cane"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Candy_Cane",
+    "demandScore": 8.8
   },
   {
     "id": "item_16",
@@ -247,13 +262,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "High",
     "rankInTier": 6,
-    "value": 900000,
-    "lcValue": 321.43,
+    "value": 18000,
+    "lcValue": 77.14,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "weapons",
     "image": "images/item_16.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Candy_Cane"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Candy_Cane",
+    "demandScore": 9.9
   },
   {
     "id": "item_17",
@@ -263,13 +279,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 750000,
+    "value": 62500,
     "lcValue": 267.86,
-    "demand": "Extremely High",
+    "demand": "High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_17.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Leo%27s_Inferno_Hagoromo"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Leo%27s_Inferno_Hagoromo",
+    "demandScore": 8.8
   },
   {
     "id": "item_18",
@@ -279,13 +296,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 700000,
+    "value": 58333,
     "lcValue": 250,
-    "demand": "Extremely High",
+    "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_18.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Shamrock"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Shamrock",
+    "demandScore": 8.8
   },
   {
     "id": "item_19",
@@ -295,13 +313,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 650000,
-    "lcValue": 232.14,
-    "demand": "Extremely High",
+    "value": 54167,
+    "lcValue": 232.15,
+    "demand": "High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_19.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dominus_Ultimus"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dominus_Ultimus",
+    "demandScore": 8.8
   },
   {
     "id": "item_20",
@@ -311,13 +330,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 600000,
+    "value": 50000,
     "lcValue": 214.29,
-    "demand": "Extremely High",
+    "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_20.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Outfit",
+    "demandScore": 8.8
   },
   {
     "id": "item_21",
@@ -327,13 +347,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Mid",
     "rankInTier": 5,
-    "value": 550000,
+    "value": 45833,
     "lcValue": 196.43,
-    "demand": "Extremely High",
+    "demand": "High",
     "trend": "Rising",
     "category": "outfits",
     "image": "images/item_21.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Outfit",
+    "demandScore": 8.8
   },
   {
     "id": "item_22",
@@ -343,13 +364,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 450000,
-    "lcValue": 160.71,
+    "value": 37500,
+    "lcValue": 160.72,
     "demand": "High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_22.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Titan_Shifter%27s_Aura"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Titan_Shifter%27s_Aura",
+    "demandScore": 8.8
   },
   {
     "id": "item_23",
@@ -359,13 +381,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 425000,
+    "value": 35417,
     "lcValue": 151.79,
     "demand": "High",
     "trend": "Rising",
     "category": "accessories",
     "image": "images/item_23.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Exalted_Cupid_Queen%27s_Wings"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Exalted_Cupid_Queen%27s_Wings",
+    "demandScore": 8.8
   },
   {
     "id": "item_24",
@@ -375,13 +398,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 400000,
+    "value": 33333,
     "lcValue": 142.86,
     "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_24.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Egg"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Egg",
+    "demandScore": 8.8
   },
   {
     "id": "item_25",
@@ -391,13 +415,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 375000,
+    "value": 31250,
     "lcValue": 133.93,
     "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_25.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest",
+    "demandScore": 8.8
   },
   {
     "id": "item_26",
@@ -407,13 +432,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 5,
-    "value": 340000,
-    "lcValue": 121.43,
+    "value": 10500,
+    "lcValue": 45,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "chests",
     "image": "images/item_26.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest",
+    "demandScore": 9.8
   },
   {
     "id": "item_27",
@@ -423,13 +449,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 6,
-    "value": 325000,
+    "value": 27083,
     "lcValue": 116.07,
     "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_27.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
+    "demandScore": 8.8
   },
   {
     "id": "item_28",
@@ -439,13 +466,14 @@ window.GPO_ITEMS = [
     "tier": "Tier S",
     "subTier": "Low",
     "rankInTier": 7,
-    "value": 300000,
+    "value": 25000,
     "lcValue": 107.14,
     "demand": "High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_28.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Holly"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Holly",
+    "demandScore": 8.8
   },
   {
     "id": "item_29",
@@ -455,13 +483,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 260000,
-    "lcValue": 92.86,
-    "demand": "High",
+    "value": 11200,
+    "lcValue": 48,
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_29.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid%27s_All_Seeing_Eye"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid%27s_All_Seeing_Eye",
+    "demandScore": 9.5
   },
   {
     "id": "item_30",
@@ -471,13 +500,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 242000,
+    "value": 20167,
     "lcValue": 86.43,
     "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_30.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_King%27s_Scarf"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_King%27s_Scarf",
+    "demandScore": 8
   },
   {
     "id": "item_31",
@@ -487,13 +517,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 224000,
-    "lcValue": 80,
+    "value": 9500,
+    "lcValue": 40.71,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "misc",
     "image": "images/item_31.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Eye"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Eye",
+    "demandScore": 10
   },
   {
     "id": "item_32",
@@ -503,13 +534,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 206000,
+    "value": 17167,
     "lcValue": 73.57,
     "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_32.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Troll_Face"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Troll_Face",
+    "demandScore": 8
   },
   {
     "id": "item_33",
@@ -519,13 +551,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 188000,
-    "lcValue": 67.14,
+    "value": 15667,
+    "lcValue": 67.15,
     "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_33.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Troll_Face"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Troll_Face",
+    "demandScore": 8
   },
   {
     "id": "item_34",
@@ -535,13 +568,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 160000,
+    "value": 13333,
     "lcValue": 57.14,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_34.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System",
+    "demandScore": 8
   },
   {
     "id": "item_35",
@@ -551,13 +585,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 152000,
-    "lcValue": 54.29,
-    "demand": "Medium",
+    "value": 4400,
+    "lcValue": 18.86,
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_35.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System",
+    "demandScore": 9.6
   },
   {
     "id": "item_36",
@@ -567,13 +602,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 144000,
+    "value": 12000,
     "lcValue": 51.43,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_36.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Flower_Bouquet"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Flower_Bouquet",
+    "demandScore": 8
   },
   {
     "id": "item_37",
@@ -583,13 +619,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 136000,
+    "value": 11333,
     "lcValue": 48.57,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_37.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 8
   },
   {
     "id": "item_38",
@@ -599,13 +636,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 5,
-    "value": 128000,
-    "lcValue": 45.71,
-    "demand": "Medium",
+    "value": 10667,
+    "lcValue": 45.72,
+    "demand": "High",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_38.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7.5
   },
   {
     "id": "item_39",
@@ -615,13 +653,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 6,
-    "value": 120000,
+    "value": 10000,
     "lcValue": 42.86,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_39.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 8
   },
   {
     "id": "item_40",
@@ -631,13 +670,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 7,
-    "value": 112000,
+    "value": 9333,
     "lcValue": 40,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_40.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Nightfall_Aura"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Nightfall_Aura",
+    "demandScore": 8.8
   },
   {
     "id": "item_41",
@@ -647,13 +687,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 8,
-    "value": 104000,
+    "value": 8667,
     "lcValue": 37.14,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_41.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cleaver"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cleaver",
+    "demandScore": 8
   },
   {
     "id": "item_42",
@@ -663,13 +704,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 9,
-    "value": 96000,
+    "value": 8000,
     "lcValue": 34.29,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_42.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Snowcap_Scepter"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Snowcap_Scepter",
+    "demandScore": 8
   },
   {
     "id": "item_43",
@@ -679,13 +721,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Mid",
     "rankInTier": 10,
-    "value": 88000,
+    "value": 7333,
     "lcValue": 31.43,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_43.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Cupid_Queen%27s_Scarf"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Cupid_Queen%27s_Scarf",
+    "demandScore": 8.7
   },
   {
     "id": "item_44",
@@ -695,13 +738,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 75000,
+    "value": 6250,
     "lcValue": 26.79,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_44.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Tung_Tung_Thunder_Club"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Tung_Tung_Thunder_Club",
+    "demandScore": 8.5
   },
   {
     "id": "item_45",
@@ -711,13 +755,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 71000,
+    "value": 5917,
     "lcValue": 25.36,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_45.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Thunder_Club"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Thunder_Club",
+    "demandScore": 8.3
   },
   {
     "id": "item_46",
@@ -727,13 +772,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 67000,
+    "value": 5583,
     "lcValue": 23.93,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_46.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Inverted_Spear_Of_Heaven"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Inverted_Spear_Of_Heaven",
+    "demandScore": 8.7
   },
   {
     "id": "item_47",
@@ -743,13 +789,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A+",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 63000,
+    "value": 5250,
     "lcValue": 22.5,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_47.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruit_Rod"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruit_Rod",
+    "demandScore": 8
   },
   {
     "id": "item_48",
@@ -759,13 +806,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 56000,
+    "value": 4667,
     "lcValue": 20,
     "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_48.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Cupid's_Bow"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Cupid's_Bow",
+    "demandScore": 8.4
   },
   {
     "id": "item_49",
@@ -775,13 +823,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 53800,
+    "value": 4483,
     "lcValue": 19.21,
     "demand": "High",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_49.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Exalted_Cupid_Queen's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blessed_Exalted_Cupid_Queen's_Outfit",
+    "demandScore": 8.6
   },
   {
     "id": "item_50",
@@ -791,13 +840,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 51600,
+    "value": 4300,
     "lcValue": 18.43,
     "demand": "High",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_50.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Coyote_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Coyote_Outfit",
+    "demandScore": 8.4
   },
   {
     "id": "item_51",
@@ -807,13 +857,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 49400,
+    "value": 4117,
     "lcValue": 17.64,
     "demand": "High",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_51.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Nightfall_Shroud"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Nightfall_Shroud",
+    "demandScore": 8.3
   },
   {
     "id": "item_52",
@@ -823,13 +874,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 47200,
+    "value": 3933,
     "lcValue": 16.86,
-    "demand": "High",
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_52.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow%27s_World_Ender"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow%27s_World_Ender",
+    "demandScore": 9.2
   },
   {
     "id": "item_53",
@@ -839,13 +891,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 6,
-    "value": 45000,
+    "value": 3750,
     "lcValue": 16.07,
     "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_53.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade",
+    "demandScore": 7.5
   },
   {
     "id": "item_54",
@@ -855,13 +908,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 7,
-    "value": 42800,
+    "value": 3567,
     "lcValue": 15.29,
     "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_54.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade",
+    "demandScore": 8.6
   },
   {
     "id": "item_55",
@@ -871,13 +925,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 8,
-    "value": 40600,
+    "value": 3383,
     "lcValue": 14.5,
     "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_55.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Time-Rift_Capsule"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Time-Rift_Capsule",
+    "demandScore": 7.5
   },
   {
     "id": "item_56",
@@ -887,13 +942,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 9,
-    "value": 38400,
+    "value": 3200,
     "lcValue": 13.71,
     "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_56.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sickle_of_Sorrow"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sickle_of_Sorrow",
+    "demandScore": 7.5
   },
   {
     "id": "item_57",
@@ -903,13 +959,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 10,
-    "value": 36200,
+    "value": 3017,
     "lcValue": 12.93,
     "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_57.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest",
+    "demandScore": 8.2
   },
   {
     "id": "item_58",
@@ -919,13 +976,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 11,
-    "value": 34000,
-    "lcValue": 12.14,
+    "value": 1050,
+    "lcValue": 4.5,
     "demand": "Extremely High",
     "trend": "Rising",
     "category": "chests",
     "image": "images/item_58.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest",
+    "demandScore": 9.5
   },
   {
     "id": "item_59",
@@ -935,13 +993,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 12,
-    "value": 31800,
+    "value": 2650,
     "lcValue": 11.36,
     "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_59.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
+    "demandScore": 8.5
   },
   {
     "id": "item_60",
@@ -951,13 +1010,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 13,
-    "value": 28000,
+    "value": 2333,
     "lcValue": 10,
-    "demand": "High",
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "chests",
     "image": "images/item_60.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Legendary_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Legendary_Fruit_Chest",
+    "demandScore": 9.8
   },
   {
     "id": "item_61",
@@ -967,13 +1027,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 24000,
+    "value": 2000,
     "lcValue": 8.57,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_61.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Stark_Gun"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Stark_Gun",
+    "demandScore": 8
   },
   {
     "id": "item_62",
@@ -983,13 +1044,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 22200,
-    "lcValue": 7.93,
-    "demand": "Medium",
+    "value": 6300,
+    "lcValue": 27,
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_62.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kikoku"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kikoku",
+    "demandScore": 9.7
   },
   {
     "id": "item_63",
@@ -999,13 +1061,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 20400,
+    "value": 1700,
     "lcValue": 7.29,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_63.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7
   },
   {
     "id": "item_64",
@@ -1015,13 +1078,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 18600,
+    "value": 1550,
     "lcValue": 6.64,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_64.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7.5
   },
   {
     "id": "item_65",
@@ -1031,13 +1095,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 16000,
+    "value": 1333,
     "lcValue": 5.71,
     "demand": "Medium",
     "trend": "Stable",
     "category": "boats",
     "image": "images/item_65.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hover_Pod"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hover_Pod",
+    "demandScore": 7
   },
   {
     "id": "item_66",
@@ -1047,13 +1112,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 15000,
+    "value": 1250,
     "lcValue": 5.36,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_66.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Hat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Hat",
+    "demandScore": 8
   },
   {
     "id": "item_67",
@@ -1063,13 +1129,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 14000,
+    "value": 1167,
     "lcValue": 5,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_67.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Exalted_Cupid_Queen%27s_Wings"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Exalted_Cupid_Queen%27s_Wings",
+    "demandScore": 7.8
   },
   {
     "id": "item_68",
@@ -1079,13 +1146,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 14000,
+    "value": 1167,
     "lcValue": 5,
     "demand": "Medium",
     "trend": "Stable",
     "category": "boats",
     "image": "images/item_68.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Inferno_Rocket_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Inferno_Rocket_Blade",
+    "demandScore": 7.2
   },
   {
     "id": "item_69",
@@ -1095,13 +1163,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 13300,
+    "value": 1108,
     "lcValue": 4.75,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_69.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Inferno_Rocket_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Inferno_Rocket_Blade",
+    "demandScore": 7.8
   },
   {
     "id": "item_70",
@@ -1111,13 +1180,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 12600,
+    "value": 1050,
     "lcValue": 4.5,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_70.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Firework_Lancer"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Firework_Lancer",
+    "demandScore": 7.8
   },
   {
     "id": "item_71",
@@ -1127,13 +1197,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 11900,
+    "value": 992,
     "lcValue": 4.25,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_71.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Head_of_Ba'al"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Head_of_Ba'al",
+    "demandScore": 8.4
   },
   {
     "id": "item_72",
@@ -1143,13 +1214,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 10500,
+    "value": 875,
     "lcValue": 3.75,
-    "demand": "High",
+    "demand": "Extremely High",
     "trend": "Rising",
     "category": "fruits",
     "image": "images/item_72.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mochi_Mochi_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mochi_Mochi_no_Mi",
+    "demandScore": 10
   },
   {
     "id": "item_73",
@@ -1159,13 +1231,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 10050,
+    "value": 838,
     "lcValue": 3.59,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_73.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7
   },
   {
     "id": "item_74",
@@ -1175,13 +1248,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 9600,
+    "value": 800,
     "lcValue": 3.43,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_74.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
+    "demandScore": 7.5
   },
   {
     "id": "item_75",
@@ -1191,13 +1265,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 9150,
+    "value": 763,
     "lcValue": 3.27,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_75.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7
   },
   {
     "id": "item_76",
@@ -1207,13 +1282,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Mid",
     "rankInTier": 5,
-    "value": 8700,
+    "value": 725,
     "lcValue": 3.11,
-    "demand": "High",
+    "demand": "Extremely High",
     "trend": "Rising",
     "category": "fruits",
     "image": "images/item_76.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 9.6
   },
   {
     "id": "item_77",
@@ -1223,13 +1299,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Mid",
     "rankInTier": 6,
-    "value": 8250,
+    "value": 688,
     "lcValue": 2.95,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_77.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7.6
   },
   {
     "id": "item_78",
@@ -1239,13 +1316,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 7800,
+    "value": 650,
     "lcValue": 2.79,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_78.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Wings"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Wings",
+    "demandScore": 7.5
   },
   {
     "id": "item_79",
@@ -1255,13 +1333,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 7620,
+    "value": 635,
     "lcValue": 2.72,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_79.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Outfit",
+    "demandScore": 8
   },
   {
     "id": "item_80",
@@ -1271,13 +1350,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 7440,
+    "value": 620,
     "lcValue": 2.66,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_80.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Shield"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Shield",
+    "demandScore": 7.6
   },
   {
     "id": "item_81",
@@ -1287,13 +1367,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 7260,
+    "value": 605,
     "lcValue": 2.59,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_81.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Shield"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Shield",
+    "demandScore": 7.5
   },
   {
     "id": "item_82",
@@ -1303,13 +1384,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 5,
-    "value": 7080,
+    "value": 590,
     "lcValue": 2.53,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_82.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Elo%27s_Sledgehammer"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Elo%27s_Sledgehammer",
+    "demandScore": 8.8
   },
   {
     "id": "item_83",
@@ -1319,13 +1401,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 6,
-    "value": 6900,
+    "value": 575,
     "lcValue": 2.46,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_83.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7.4
   },
   {
     "id": "item_84",
@@ -1335,13 +1418,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 7,
-    "value": 6720,
+    "value": 560,
     "lcValue": 2.4,
     "demand": "High",
     "trend": "Rising",
     "category": "fruits",
     "image": "images/item_84.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 8.8
   },
   {
     "id": "item_85",
@@ -1351,13 +1435,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 8,
-    "value": 6540,
+    "value": 545,
     "lcValue": 2.34,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_85.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7
   },
   {
     "id": "item_86",
@@ -1367,13 +1452,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 9,
-    "value": 6360,
+    "value": 530,
     "lcValue": 2.27,
-    "demand": "High",
+    "demand": "Extremely High",
     "trend": "Rising",
     "category": "fruits",
     "image": "images/item_86.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Pika_Pika_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Pika_Pika_no_Mi",
+    "demandScore": 9.4
   },
   {
     "id": "item_87",
@@ -1383,13 +1469,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 10,
-    "value": 6180,
+    "value": 515,
     "lcValue": 2.21,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_87.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Pika_Pika_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Pika_Pika_no_Mi",
+    "demandScore": 6.8
   },
   {
     "id": "item_88",
@@ -1399,13 +1486,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 11,
-    "value": 6000,
+    "value": 500,
     "lcValue": 2.14,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_88.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 7.2
   },
   {
     "id": "item_89",
@@ -1415,13 +1503,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 12,
-    "value": 5820,
+    "value": 485,
     "lcValue": 2.08,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_89.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Anniversary_Lantern"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Anniversary_Lantern",
+    "demandScore": 7
   },
   {
     "id": "item_90",
@@ -1431,13 +1520,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 13,
-    "value": 5640,
+    "value": 470,
     "lcValue": 2.01,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_90.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blo's_Crimson_Sledgehammer"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blo's_Crimson_Sledgehammer",
+    "demandScore": 7.6
   },
   {
     "id": "item_91",
@@ -1447,13 +1537,14 @@ window.GPO_ITEMS = [
     "tier": "Tier A-",
     "subTier": "Low",
     "rankInTier": 14,
-    "value": 5460,
+    "value": 455,
     "lcValue": 1.95,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_91.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Skeletal_Shark_Mask"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Skeletal_Shark_Mask",
+    "demandScore": 7
   },
   {
     "id": "item_92",
@@ -1463,13 +1554,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 4600,
+    "value": 383,
     "lcValue": 1.64,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_92.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Armor_Set"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Armor_Set",
+    "demandScore": 7.5
   },
   {
     "id": "item_93",
@@ -1479,13 +1571,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 4490,
+    "value": 374,
     "lcValue": 1.6,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_93.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Blade",
+    "demandScore": 7.4
   },
   {
     "id": "item_94",
@@ -1495,13 +1588,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 4380,
+    "value": 365,
     "lcValue": 1.56,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_94.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow's_Fang"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow's_Fang",
+    "demandScore": 7.4
   },
   {
     "id": "item_95",
@@ -1511,13 +1605,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 4270,
-    "lcValue": 1.52,
+    "value": 356,
+    "lcValue": 1.53,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_95.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow's_Fang"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow's_Fang",
+    "demandScore": 6.5
   },
   {
     "id": "item_96",
@@ -1527,13 +1622,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 4160,
+    "value": 347,
     "lcValue": 1.49,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_96.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blo's_Sledgehammer"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Blo's_Sledgehammer",
+    "demandScore": 7.5
   },
   {
     "id": "item_97",
@@ -1543,13 +1639,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 6,
-    "value": 4050,
+    "value": 338,
     "lcValue": 1.45,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_97.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Demon_Jester's_Scythe"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Demon_Jester's_Scythe",
+    "demandScore": 7.4
   },
   {
     "id": "item_98",
@@ -1559,13 +1656,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 7,
-    "value": 3940,
+    "value": 328,
     "lcValue": 1.41,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_98.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/True_Ba'al's_Guard"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/True_Ba'al's_Guard",
+    "demandScore": 7.3
   },
   {
     "id": "item_99",
@@ -1575,13 +1673,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 8,
-    "value": 3830,
+    "value": 319,
     "lcValue": 1.37,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_99.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/True_Ba'al's_Guard"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/True_Ba'al's_Guard",
+    "demandScore": 7.2
   },
   {
     "id": "item_100",
@@ -1591,13 +1690,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 9,
-    "value": 3720,
+    "value": 310,
     "lcValue": 1.33,
     "demand": "High",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_100.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ope_Ope_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ope_Ope_no_Mi",
+    "demandScore": 9
   },
   {
     "id": "item_101",
@@ -1607,13 +1707,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 10,
-    "value": 3610,
+    "value": 301,
     "lcValue": 1.29,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_101.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ope_Ope_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ope_Ope_no_Mi",
+    "demandScore": 6.5
   },
   {
     "id": "item_102",
@@ -1623,13 +1724,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 11,
-    "value": 2800,
+    "value": 233,
     "lcValue": 1,
-    "demand": "High",
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "chests",
     "image": "images/item_102.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Legendary_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Legendary_Fruit_Chest",
+    "demandScore": 9.8
   },
   {
     "id": "item_103",
@@ -1639,13 +1741,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 12,
-    "value": 3390,
+    "value": 283,
     "lcValue": 1.21,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_103.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
+    "demandScore": 7.3
   },
   {
     "id": "item_104",
@@ -1655,13 +1758,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 13,
-    "value": 3280,
+    "value": 273,
     "lcValue": 1.17,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_104.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dragon_Emperor%27s_Cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dragon_Emperor%27s_Cape",
+    "demandScore": 7
   },
   {
     "id": "item_105",
@@ -1671,13 +1775,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 14,
-    "value": 3170,
+    "value": 264,
     "lcValue": 1.13,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_105.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ace"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ace",
+    "demandScore": 6.8
   },
   {
     "id": "item_106",
@@ -1687,13 +1792,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 15,
-    "value": 3060,
+    "value": 255,
     "lcValue": 1.09,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_106.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ace"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ace",
+    "demandScore": 7.2
   },
   {
     "id": "item_107",
@@ -1703,13 +1809,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 16,
-    "value": 2950,
+    "value": 246,
     "lcValue": 1.05,
     "demand": "High",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_107.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Peli"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Peli",
+    "demandScore": 8.7
   },
   {
     "id": "item_108",
@@ -1719,13 +1826,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 17,
-    "value": 2840,
-    "lcValue": 1.01,
+    "value": 237,
+    "lcValue": 1.02,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_108.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 6.8
   },
   {
     "id": "item_109",
@@ -1735,13 +1843,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "High",
     "rankInTier": 18,
-    "value": 2730,
-    "lcValue": 0.97,
+    "value": 228,
+    "lcValue": 0.98,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_109.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Maid_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Maid_Outfit",
+    "demandScore": 7.2
   },
   {
     "id": "item_110",
@@ -1751,13 +1860,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 2000,
-    "lcValue": 0.71,
+    "value": 167,
+    "lcValue": 0.72,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_110.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Firework_Dagger"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Firework_Dagger",
+    "demandScore": 6.5
   },
   {
     "id": "item_111",
@@ -1767,13 +1877,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 1950,
+    "value": 163,
     "lcValue": 0.7,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_111.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Firework_Dagger"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Firework_Dagger",
+    "demandScore": 7
   },
   {
     "id": "item_112",
@@ -1783,13 +1894,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 1900,
+    "value": 158,
     "lcValue": 0.68,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_112.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Tung_Sahur_Costume"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Tung_Sahur_Costume",
+    "demandScore": 6.5
   },
   {
     "id": "item_113",
@@ -1799,13 +1911,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 2000,
-    "lcValue": 0.71,
-    "demand": "Medium",
+    "value": 167,
+    "lcValue": 0.72,
+    "demand": "High",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_113.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mochi_Trident"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mochi_Trident",
+    "demandScore": 7.5
   },
   {
     "id": "item_114",
@@ -1815,13 +1928,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 1950,
+    "value": 163,
     "lcValue": 0.7,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_114.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Hat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Hat",
+    "demandScore": 7.5
   },
   {
     "id": "item_115",
@@ -1831,13 +1945,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 1900,
+    "value": 158,
     "lcValue": 0.68,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_115.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Hat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Hat",
+    "demandScore": 6.8
   },
   {
     "id": "item_116",
@@ -1847,13 +1962,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 1850,
+    "value": 154,
     "lcValue": 0.66,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_116.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Lovestruck_Rod"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Lovestruck_Rod",
+    "demandScore": 6.8
   },
   {
     "id": "item_117",
@@ -1863,13 +1979,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 1650,
-    "lcValue": 0.59,
+    "value": 120,
+    "lcValue": 0.51,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_117.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Gura_Gura_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Gura_Gura_no_Mi",
+    "demandScore": 6.5
   },
   {
     "id": "item_118",
@@ -1879,13 +1996,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 1610,
+    "value": 134,
     "lcValue": 0.57,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_118.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Gura_Gura_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Gura_Gura_no_Mi",
+    "demandScore": 6.5
   },
   {
     "id": "item_119",
@@ -1895,13 +2013,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 1570,
+    "value": 131,
     "lcValue": 0.56,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_119.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Big_Mama%27s_Cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Big_Mama%27s_Cape",
+    "demandScore": 6.4
   },
   {
     "id": "item_120",
@@ -1911,13 +2030,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 1530,
+    "value": 128,
     "lcValue": 0.55,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_120.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Big_Mama%27s_Outfit_(Male)"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Big_Mama%27s_Outfit_(Male)",
+    "demandScore": 6.2
   },
   {
     "id": "item_121",
@@ -1927,13 +2047,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 5,
-    "value": 1490,
+    "value": 124,
     "lcValue": 0.53,
-    "demand": "Medium",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_121.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi",
+    "demandScore": 8.5
   },
   {
     "id": "item_122",
@@ -1943,13 +2064,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 6,
-    "value": 1450,
-    "lcValue": 0.52,
-    "demand": "Medium",
+    "value": 145,
+    "lcValue": 0.62,
+    "demand": "High",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_122.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi",
+    "demandScore": 8.2
   },
   {
     "id": "item_123",
@@ -1959,13 +2081,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 7,
-    "value": 1410,
-    "lcValue": 0.5,
+    "value": 118,
+    "lcValue": 0.51,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_123.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi",
+    "demandScore": 6.2
   },
   {
     "id": "item_124",
@@ -1975,13 +2098,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 8,
-    "value": 1370,
+    "value": 114,
     "lcValue": 0.49,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_124.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 6
   },
   {
     "id": "item_125",
@@ -1991,13 +2115,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 9,
-    "value": 1330,
-    "lcValue": 0.47,
+    "value": 111,
+    "lcValue": 0.48,
     "demand": "Medium",
     "trend": "Stable",
     "category": "outfits",
     "image": "images/item_125.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Roger's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Roger's_Outfit",
+    "demandScore": 6
   },
   {
     "id": "item_126",
@@ -2007,13 +2132,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 10,
-    "value": 1290,
+    "value": 108,
     "lcValue": 0.46,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_126.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mera_Mera_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mera_Mera_no_Mi",
+    "demandScore": 6.5
   },
   {
     "id": "item_127",
@@ -2023,13 +2149,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 11,
-    "value": 1250,
-    "lcValue": 0.45,
-    "demand": "Medium",
+    "value": 100,
+    "lcValue": 0.43,
+    "demand": "High",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_127.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mera_Mera_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mera_Mera_no_Mi",
+    "demandScore": 7.6
   },
   {
     "id": "item_128",
@@ -2039,13 +2166,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 12,
-    "value": 1210,
-    "lcValue": 0.43,
+    "value": 95,
+    "lcValue": 0.41,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_128.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 6
   },
   {
     "id": "item_129",
@@ -2055,13 +2183,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 13,
-    "value": 1170,
+    "value": 98,
     "lcValue": 0.42,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_129.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 6.5
   },
   {
     "id": "item_130",
@@ -2071,13 +2200,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 14,
-    "value": 1130,
+    "value": 94,
     "lcValue": 0.4,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_130.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Trading_Sign"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Trading_Sign",
+    "demandScore": 6.5
   },
   {
     "id": "item_131",
@@ -2087,13 +2217,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 15,
-    "value": 1090,
+    "value": 91,
     "lcValue": 0.39,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_131.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester_Box"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester_Box",
+    "demandScore": 6.5
   },
   {
     "id": "item_132",
@@ -2103,13 +2234,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 16,
-    "value": 1050,
+    "value": 88,
     "lcValue": 0.38,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_132.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sunken_Helmet"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sunken_Helmet",
+    "demandScore": 5.8
   },
   {
     "id": "item_133",
@@ -2119,13 +2251,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 17,
-    "value": 1010,
+    "value": 84,
     "lcValue": 0.36,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_133.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruit_Journal"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruit_Journal",
+    "demandScore": 6
   },
   {
     "id": "item_134",
@@ -2135,13 +2268,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 18,
-    "value": 970,
-    "lcValue": 0.35,
+    "value": 80,
+    "lcValue": 0.34,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_134.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Goro_Goro_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Goro_Goro_no_Mi",
+    "demandScore": 7.4
   },
   {
     "id": "item_135",
@@ -2151,13 +2285,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B+",
     "subTier": "Low",
     "rankInTier": 19,
-    "value": 930,
-    "lcValue": 0.33,
+    "value": 75,
+    "lcValue": 0.32,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_135.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Goro_Goro_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Goro_Goro_no_Mi",
+    "demandScore": 7.2
   },
   {
     "id": "item_136",
@@ -2167,13 +2302,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 750,
+    "value": 63,
     "lcValue": 0.27,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_136.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sea_Serpent's_Core"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sea_Serpent's_Core",
+    "demandScore": 5.5
   },
   {
     "id": "item_137",
@@ -2183,13 +2319,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 720,
+    "value": 60,
     "lcValue": 0.26,
     "demand": "Medium",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_137.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cane"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cane",
+    "demandScore": 5.5
   },
   {
     "id": "item_138",
@@ -2199,13 +2336,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 690,
+    "value": 58,
     "lcValue": 0.25,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_138.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cane"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cane",
+    "demandScore": 6.8
   },
   {
     "id": "item_139",
@@ -2215,13 +2353,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 660,
+    "value": 55,
     "lcValue": 0.24,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_139.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ryuma's_Scarf"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ryuma's_Scarf",
+    "demandScore": 6
   },
   {
     "id": "item_140",
@@ -2231,13 +2370,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 630,
+    "value": 53,
     "lcValue": 0.23,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_140.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Bow"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Bow",
+    "demandScore": 6.2
   },
   {
     "id": "item_141",
@@ -2247,13 +2387,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "High",
     "rankInTier": 6,
-    "value": 600,
+    "value": 50,
     "lcValue": 0.21,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_141.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Headband"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Headband",
+    "demandScore": 5.8
   },
   {
     "id": "item_142",
@@ -2263,13 +2404,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 530,
+    "value": 44,
     "lcValue": 0.19,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_142.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Rapier"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Rapier",
+    "demandScore": 6
   },
   {
     "id": "item_143",
@@ -2279,13 +2421,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 505,
+    "value": 42,
     "lcValue": 0.18,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_143.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi",
+    "demandScore": 5.8
   },
   {
     "id": "item_144",
@@ -2295,13 +2438,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 480,
+    "value": 40,
     "lcValue": 0.17,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_144.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi",
+    "demandScore": 5.8
   },
   {
     "id": "item_145",
@@ -2311,13 +2455,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 455,
+    "value": 38,
     "lcValue": 0.16,
     "demand": "Medium",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_145.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi",
+    "demandScore": 5.6
   },
   {
     "id": "item_146",
@@ -2327,13 +2472,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Mid",
     "rankInTier": 5,
-    "value": 430,
+    "value": 36,
     "lcValue": 0.15,
-    "demand": "Medium",
+    "demand": "Low",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_146.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
+    "demandScore": 5.2
   },
   {
     "id": "item_147",
@@ -2343,13 +2489,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 410,
+    "value": 34,
     "lcValue": 0.15,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_147.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sunken_Anchor"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sunken_Anchor",
+    "demandScore": 5.5
   },
   {
     "id": "item_148",
@@ -2359,13 +2506,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 395,
+    "value": 33,
     "lcValue": 0.14,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_148.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa's_Bells"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa's_Bells",
+    "demandScore": 5.5
   },
   {
     "id": "item_149",
@@ -2375,13 +2523,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 380,
+    "value": 32,
     "lcValue": 0.14,
     "demand": "Medium",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_149.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Katana"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Katana",
+    "demandScore": 5.5
   },
   {
     "id": "item_150",
@@ -2391,13 +2540,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 365,
+    "value": 30,
     "lcValue": 0.13,
     "demand": "Medium",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_150.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hawk_Eye's_Hat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hawk_Eye's_Hat",
+    "demandScore": 5.6
   },
   {
     "id": "item_151",
@@ -2407,13 +2557,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 5,
-    "value": 350,
-    "lcValue": 0.13,
-    "demand": "Medium",
+    "value": 29,
+    "lcValue": 0.12,
+    "demand": "Low",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_151.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Roger's_Hat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Roger's_Hat",
+    "demandScore": 5.4
   },
   {
     "id": "item_152",
@@ -2423,13 +2574,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 6,
-    "value": 335,
+    "value": 28,
     "lcValue": 0.12,
-    "demand": "Medium",
+    "demand": "Low",
     "trend": "Stable",
     "category": "weapons",
     "image": "images/item_152.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Boneshiver"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Boneshiver",
+    "demandScore": 5.2
   },
   {
     "id": "item_153",
@@ -2439,13 +2591,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B",
     "subTier": "Low",
     "rankInTier": 7,
-    "value": 320,
-    "lcValue": 0.11,
-    "demand": "Medium",
+    "value": 27,
+    "lcValue": 0.12,
+    "demand": "Low",
     "trend": "Stable",
     "category": "accessories",
     "image": "images/item_153.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Megalodon_Helmet"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Megalodon_Helmet",
+    "demandScore": 5
   },
   {
     "id": "item_154",
@@ -2455,13 +2608,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 300,
+    "value": 25,
     "lcValue": 0.11,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_154.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moria's_Necklace"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moria's_Necklace",
+    "demandScore": 4.5
   },
   {
     "id": "item_155",
@@ -2471,13 +2625,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 290,
+    "value": 24,
     "lcValue": 0.1,
     "demand": "Low",
     "trend": "Dropping",
     "category": "fruits",
     "image": "images/item_155.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moku_Moku_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moku_Moku_no_Mi",
+    "demandScore": 4.5
   },
   {
     "id": "item_156",
@@ -2487,13 +2642,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 280,
+    "value": 23,
     "lcValue": 0.1,
     "demand": "Low",
     "trend": "Dropping",
     "category": "fruits",
     "image": "images/item_156.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moku_Moku_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moku_Moku_no_Mi",
+    "demandScore": 4.4
   },
   {
     "id": "item_157",
@@ -2503,13 +2659,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 270,
+    "value": 23,
     "lcValue": 0.1,
     "demand": "Low",
     "trend": "Dropping",
     "category": "fruits",
     "image": "images/item_157.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Nikyu_Nikyu_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Nikyu_Nikyu_no_Mi",
+    "demandScore": 4.2
   },
   {
     "id": "item_158",
@@ -2519,13 +2676,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 260,
+    "value": 22,
     "lcValue": 0.09,
     "demand": "Low",
     "trend": "Dropping",
     "category": "fruits",
     "image": "images/item_158.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Yami_Yami_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Yami_Yami_no_Mi",
+    "demandScore": 4
   },
   {
     "id": "item_159",
@@ -2535,13 +2693,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "High",
     "rankInTier": 6,
-    "value": 250,
+    "value": 21,
     "lcValue": 0.09,
     "demand": "Low",
     "trend": "Dropping",
     "category": "fruits",
     "image": "images/item_159.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Yuki_Yuki_no_Mi"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Yuki_Yuki_no_Mi",
+    "demandScore": 4
   },
   {
     "id": "item_160",
@@ -2551,13 +2710,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 240,
+    "value": 20,
     "lcValue": 0.09,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_160.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Zorana's_Robe"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Zorana's_Robe",
+    "demandScore": 4.8
   },
   {
     "id": "item_161",
@@ -2567,13 +2727,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 232,
+    "value": 19,
     "lcValue": 0.08,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_161.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Zorana's_Haori"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Zorana's_Haori",
+    "demandScore": 4.5
   },
   {
     "id": "item_162",
@@ -2583,13 +2744,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 224,
+    "value": 19,
     "lcValue": 0.08,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_162.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Titan_of_justice_cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Titan_of_justice_cape",
+    "demandScore": 4.6
   },
   {
     "id": "item_163",
@@ -2599,13 +2761,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 216,
+    "value": 18,
     "lcValue": 0.08,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_163.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Titan_of_Justice%C2%B4s_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Titan_of_Justice%C2%B4s_Outfit",
+    "demandScore": 4.4
   },
   {
     "id": "item_164",
@@ -2615,13 +2778,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 5,
-    "value": 208,
+    "value": 17,
     "lcValue": 0.07,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_164.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Neptune's_Trident"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Neptune's_Trident",
+    "demandScore": 5
   },
   {
     "id": "item_165",
@@ -2631,13 +2795,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 6,
-    "value": 200,
+    "value": 17,
     "lcValue": 0.07,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_165.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ashen_cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ashen_cape",
+    "demandScore": 4.2
   },
   {
     "id": "item_166",
@@ -2647,13 +2812,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 7,
-    "value": 192,
+    "value": 16,
     "lcValue": 0.07,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_166.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Radiant_Admiral's_Cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Radiant_Admiral's_Cape",
+    "demandScore": 4.2
   },
   {
     "id": "item_167",
@@ -2663,13 +2829,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Mid",
     "rankInTier": 8,
-    "value": 184,
-    "lcValue": 0.07,
+    "value": 15,
+    "lcValue": 0.06,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_167.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Radiant_Admiral's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Radiant_Admiral's_Outfit",
+    "demandScore": 4.5
   },
   {
     "id": "item_168",
@@ -2679,13 +2846,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 160,
+    "value": 13,
     "lcValue": 0.06,
     "demand": "Low",
     "trend": "Dropping",
     "category": "misc",
     "image": "images/item_168.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
+    "demandScore": 5
   },
   {
     "id": "item_169",
@@ -2695,13 +2863,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 155,
+    "value": 13,
     "lcValue": 0.06,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_169.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
+    "demandScore": 4.8
   },
   {
     "id": "item_170",
@@ -2711,13 +2880,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 150,
-    "lcValue": 0.05,
+    "value": 13,
+    "lcValue": 0.06,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_170.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Daggers"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Daggers",
+    "demandScore": 4.6
   },
   {
     "id": "item_171",
@@ -2727,13 +2897,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 145,
+    "value": 12,
     "lcValue": 0.05,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_171.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Daggers"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Daggers",
+    "demandScore": 4.5
   },
   {
     "id": "item_172",
@@ -2743,13 +2914,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 5,
-    "value": 140,
+    "value": 12,
     "lcValue": 0.05,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_172.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Battleaxe"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Battleaxe",
+    "demandScore": 4.4
   },
   {
     "id": "item_173",
@@ -2759,13 +2931,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 6,
-    "value": 135,
+    "value": 11,
     "lcValue": 0.05,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_173.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Mask"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid's_Mask",
+    "demandScore": 4
   },
   {
     "id": "item_174",
@@ -2775,13 +2948,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 7,
-    "value": 130,
+    "value": 11,
     "lcValue": 0.05,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_174.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sunken_Armor"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sunken_Armor",
+    "demandScore": 4
   },
   {
     "id": "item_175",
@@ -2791,13 +2965,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 8,
-    "value": 125,
+    "value": 10,
     "lcValue": 0.04,
     "demand": "Low",
     "trend": "Dropping",
     "category": "misc",
     "image": "images/item_175.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Triple_Strongest_Slash_Scroll"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Triple_Strongest_Slash_Scroll",
+    "demandScore": 4.5
   },
   {
     "id": "item_176",
@@ -2807,13 +2982,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 9,
-    "value": 120,
+    "value": 10,
     "lcValue": 0.04,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_176.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ghost_Princess%E2%80%99s_Crown"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ghost_Princess%E2%80%99s_Crown",
+    "demandScore": 4.5
   },
   {
     "id": "item_177",
@@ -2823,13 +2999,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 10,
-    "value": 115,
+    "value": 9.6,
     "lcValue": 0.04,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_177.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ghost_Princess%E2%80%99s_Crown"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ghost_Princess%E2%80%99s_Crown",
+    "demandScore": 4.5
   },
   {
     "id": "item_178",
@@ -2839,13 +3016,14 @@ window.GPO_ITEMS = [
     "tier": "Tier B-",
     "subTier": "Low",
     "rankInTier": 11,
-    "value": 110,
+    "value": 9.2,
     "lcValue": 0.04,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_178.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ashen_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ashen_Outfit",
+    "demandScore": 4.5
   },
   {
     "id": "item_179",
@@ -2855,13 +3033,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "High",
     "rankInTier": 1,
-    "value": 110,
+    "value": 9.2,
     "lcValue": 0.04,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_179.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Shusui"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Shusui",
+    "demandScore": 5.2
   },
   {
     "id": "item_180",
@@ -2871,13 +3050,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "High",
     "rankInTier": 2,
-    "value": 105,
+    "value": 8.8,
     "lcValue": 0.04,
-    "demand": "Low",
+    "demand": "Medium",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_180.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Tomoe_Drums"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Tomoe_Drums",
+    "demandScore": 5.5
   },
   {
     "id": "item_181",
@@ -2887,13 +3067,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "High",
     "rankInTier": 3,
-    "value": 100,
+    "value": 8.3,
     "lcValue": 0.04,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_181.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Vrael's_Pipe"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Vrael's_Pipe",
+    "demandScore": 4.8
   },
   {
     "id": "item_182",
@@ -2903,13 +3084,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "High",
     "rankInTier": 4,
-    "value": 95,
+    "value": 7.9,
     "lcValue": 0.03,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_182.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hawk_Eye's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hawk_Eye's_Outfit",
+    "demandScore": 4.6
   },
   {
     "id": "item_183",
@@ -2919,13 +3101,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "High",
     "rankInTier": 5,
-    "value": 90,
+    "value": 7.5,
     "lcValue": 0.03,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_183.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Donmingo%27s_Shades"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Donmingo%27s_Shades",
+    "demandScore": 4.4
   },
   {
     "id": "item_184",
@@ -2935,13 +3118,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Mid",
     "rankInTier": 1,
-    "value": 80,
+    "value": 6.7,
     "lcValue": 0.03,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_184.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Captain_Zhen's_Cape"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Captain_Zhen's_Cape",
+    "demandScore": 4
   },
   {
     "id": "item_185",
@@ -2951,13 +3135,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Mid",
     "rankInTier": 2,
-    "value": 76,
+    "value": 6.3,
     "lcValue": 0.03,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_185.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Megalodon_Armor_Set"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Megalodon_Armor_Set",
+    "demandScore": 3.8
   },
   {
     "id": "item_186",
@@ -2967,13 +3152,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Mid",
     "rankInTier": 3,
-    "value": 72,
+    "value": 6,
     "lcValue": 0.03,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_186.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Armor_Set"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Armor_Set",
+    "demandScore": 3.6
   },
   {
     "id": "item_187",
@@ -2983,13 +3169,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Mid",
     "rankInTier": 4,
-    "value": 68,
+    "value": 5.7,
     "lcValue": 0.02,
     "demand": "Low",
     "trend": "Dropping",
     "category": "weapons",
     "image": "images/item_187.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Blade"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kraken_Blade",
+    "demandScore": 4.2
   },
   {
     "id": "item_188",
@@ -2999,13 +3186,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Low",
     "rankInTier": 1,
-    "value": 50,
+    "value": 4.2,
     "lcValue": 0.02,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_188.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Resurrected_Ba%27al%27s_Outfit_2.0"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Resurrected_Ba%27al%27s_Outfit_2.0",
+    "demandScore": 3.4
   },
   {
     "id": "item_189",
@@ -3015,13 +3203,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Low",
     "rankInTier": 2,
-    "value": 47,
+    "value": 3.9,
     "lcValue": 0.02,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_189.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Donmingo's_Outfit"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Donmingo's_Outfit",
+    "demandScore": 3.2
   },
   {
     "id": "item_190",
@@ -3031,13 +3220,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Low",
     "rankInTier": 3,
-    "value": 44,
+    "value": 3.7,
     "lcValue": 0.02,
     "demand": "Low",
     "trend": "Dropping",
     "category": "outfits",
     "image": "images/item_190.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Turtleback_Armor"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Turtleback_Armor",
+    "demandScore": 2.8
   },
   {
     "id": "item_191",
@@ -3047,13 +3237,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Low",
     "rankInTier": 4,
-    "value": 41,
+    "value": 3.4,
     "lcValue": 0.01,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_191.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_King's_Tophat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_King's_Tophat",
+    "demandScore": 2.8
   },
   {
     "id": "item_192",
@@ -3063,13 +3254,14 @@ window.GPO_ITEMS = [
     "tier": "Tier C",
     "subTier": "Low",
     "rankInTier": 5,
-    "value": 38,
+    "value": 3.2,
     "lcValue": 0.01,
     "demand": "Low",
     "trend": "Dropping",
     "category": "accessories",
     "image": "images/item_192.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Turtleback_Helmet"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Turtleback_Helmet",
+    "demandScore": 2.5
   },
   {
     "id": "item_193",
@@ -3079,13 +3271,14 @@ window.GPO_ITEMS = [
     "tier": "Tier F",
     "subTier": "Standard",
     "rankInTier": 1,
-    "value": 15,
+    "value": 1.3,
     "lcValue": 0.01,
-    "demand": "Low",
+    "demand": "High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_193.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Root"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Root",
+    "demandScore": 8.8
   },
   {
     "id": "item_194",
@@ -3095,13 +3288,14 @@ window.GPO_ITEMS = [
     "tier": "Tier F",
     "subTier": "Standard",
     "rankInTier": 2,
-    "value": 12,
+    "value": 1,
     "lcValue": 0,
-    "demand": "Low",
+    "demand": "Extremely High",
     "trend": "Stable",
     "category": "misc",
     "image": "images/item_194.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/SP_Reset_Essence"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/SP_Reset_Essence",
+    "demandScore": 9.2
   },
   {
     "id": "item_195",
@@ -3111,13 +3305,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 1,
-    "value": 1500000,
-    "lcValue": 535.71,
+    "value": 125000,
+    "lcValue": 535.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_195.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dominus_Empyreus"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dominus_Empyreus",
+    "demandScore": 5.2
   },
   {
     "id": "item_196",
@@ -3127,13 +3322,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 2,
-    "value": 1360000,
-    "lcValue": 485.71,
+    "value": 113333,
+    "lcValue": 485.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_196.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 5
   },
   {
     "id": "item_197",
@@ -3143,13 +3339,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 3,
-    "value": 1220000,
-    "lcValue": 435.71,
+    "value": 101667,
+    "lcValue": 435.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_197.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 4.8
   },
   {
     "id": "item_198",
@@ -3159,13 +3356,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 4,
-    "value": 1080000,
-    "lcValue": 385.71,
+    "value": 90000,
+    "lcValue": 385.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_198.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 4.8
   },
   {
     "id": "item_199",
@@ -3175,13 +3373,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 5,
-    "value": 940000,
-    "lcValue": 335.71,
+    "value": 78333,
+    "lcValue": 335.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_199.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 4.6
   },
   {
     "id": "item_200",
@@ -3191,13 +3390,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 6,
-    "value": 800000,
-    "lcValue": 285.71,
+    "value": 66667,
+    "lcValue": 285.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "misc",
     "image": "images/item_200.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 4.5
   },
   {
     "id": "item_201",
@@ -3207,13 +3407,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 7,
-    "value": 660000,
-    "lcValue": 235.71,
+    "value": 55000,
+    "lcValue": 235.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_201.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 4.4
   },
   {
     "id": "item_202",
@@ -3223,13 +3424,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 8,
-    "value": 520000,
-    "lcValue": 185.71,
+    "value": 43333,
+    "lcValue": 185.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "misc",
     "image": "images/item_202.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
+    "demandScore": 4.2
   },
   {
     "id": "item_203",
@@ -3239,13 +3441,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 9,
-    "value": 380000,
-    "lcValue": 135.71,
+    "value": 31667,
+    "lcValue": 135.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "misc",
     "image": "images/item_203.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Clown_Wig"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Clown_Wig",
+    "demandScore": 3.8
   },
   {
     "id": "item_204",
@@ -3255,13 +3458,14 @@ window.GPO_ITEMS = [
     "tier": "Very Unstable",
     "subTier": "Standard",
     "rankInTier": 10,
-    "value": 240000,
-    "lcValue": 85.71,
+    "value": 20000,
+    "lcValue": 85.72,
     "demand": "Unstable",
     "trend": "Fluctuating",
     "category": "misc",
     "image": "images/item_204.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Epic_Banana"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Epic_Banana",
+    "demandScore": 3.5
   },
   {
     "id": "item_205",
@@ -3271,13 +3475,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 1,
-    "value": 7000,
+    "value": 583,
     "lcValue": 2.5,
     "demand": "High",
     "trend": "Fluctuating",
     "category": "weapons",
     "image": "images/item_205.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Lancer"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Lancer",
+    "demandScore": 7.8
   },
   {
     "id": "item_206",
@@ -3287,13 +3492,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 2,
-    "value": 4200,
+    "value": 350,
     "lcValue": 1.5,
-    "demand": "High",
+    "demand": "Medium",
     "trend": "Fluctuating",
     "category": "misc",
     "image": "images/item_206.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest",
+    "demandScore": 6
   },
   {
     "id": "item_207",
@@ -3303,13 +3509,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 3,
-    "value": 2400,
+    "value": 200,
     "lcValue": 0.86,
     "demand": "Medium",
     "trend": "Fluctuating",
     "category": "chests",
     "image": "images/item_207.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest",
+    "demandScore": 6.5
   },
   {
     "id": "item_208",
@@ -3319,13 +3526,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 4,
-    "value": 240,
+    "value": 20,
     "lcValue": 0.09,
-    "demand": "Low",
+    "demand": "Medium",
     "trend": "Fluctuating",
     "category": "chests",
     "image": "images/item_208.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest",
+    "demandScore": 5.5
   },
   {
     "id": "item_209",
@@ -3335,13 +3543,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 5,
-    "value": 840,
+    "value": 70,
     "lcValue": 0.3,
-    "demand": "High",
+    "demand": "Medium",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_209.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Love_Shades"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Love_Shades",
+    "demandScore": 5.5
   },
   {
     "id": "item_210",
@@ -3351,13 +3560,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 6,
-    "value": 700,
+    "value": 58,
     "lcValue": 0.25,
-    "demand": "High",
+    "demand": "Low",
     "trend": "Fluctuating",
     "category": "accessories",
     "image": "images/item_210.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Coffin_Boat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Coffin_Boat",
+    "demandScore": 5
   },
   {
     "id": "item_211",
@@ -3367,13 +3577,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 7,
-    "value": 2800,
+    "value": 233,
     "lcValue": 1,
     "demand": "High",
     "trend": "Fluctuating",
     "category": "boats",
     "image": "images/item_211.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Coffin_Boat"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Coffin_Boat",
+    "demandScore": 7.8
   },
   {
     "id": "item_212",
@@ -3383,13 +3594,14 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 8,
-    "value": 2240,
+    "value": 187,
     "lcValue": 0.8,
-    "demand": "High",
+    "demand": "Medium",
     "trend": "Fluctuating",
     "category": "boats",
     "image": "images/item_212.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Striker"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Striker",
+    "demandScore": 7.2
   },
   {
     "id": "item_213",
@@ -3399,12 +3611,13 @@ window.GPO_ITEMS = [
     "tier": "New Items",
     "subTier": "Standard",
     "rankInTier": 9,
-    "value": 1960,
+    "value": 163,
     "lcValue": 0.7,
     "demand": "High",
     "trend": "Fluctuating",
     "category": "boats",
     "image": "images/item_213.png",
-    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hoverboard"
+    "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hoverboard",
+    "demandScore": 8
   }
 ];

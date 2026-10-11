@@ -227,7 +227,7 @@
             <span class="hero-badge live-update" data-i18n="badge_updated">📅 Updated: 10/7/2026</span>
             <span class="hero-badge" data-i18n="badge_items_count">⚔️ 213 Items</span>
             <span class="hero-badge" data-i18n="badge_official_doc">⭐ Official GPO Doc</span>
-            <span class="hero-badge" data-i18n="badge_currency">🪙 Currency: Points & LC (Leg Chests)</span>
+            <span class="hero-badge" data-i18n="badge_currency">🪙 SP Reset = 1 pt | 1 LC = 233 pts</span>
           </div>
         </div>
       </div>
@@ -263,6 +263,40 @@
             <span>🔗</span> <span data-i18n="btn_share">Share Trade</span>
           </button>
         </div>
+
+        <!-- Trade Recommendation / Should You Trade -->
+        <div class="verdict-recommendation-card" id="verdictRecCard">
+          <div class="rec-header">
+            <div class="rec-title-wrap">
+              <span class="rec-badge-label" data-i18n="rec_badge_title">🤔 WORTH TRADING?</span>
+              <span class="rec-verdict-badge rec-empty" id="recVerdictBadge" data-i18n="rec_status_empty">ADD ITEMS</span>
+            </div>
+          </div>
+          <p class="rec-verdict-advice" id="recVerdictAdvice" data-i18n="rec_advice_empty">
+            Add items to both sides to evaluate nominal points profit and item demand / liquidity risk.
+          </p>
+          <div class="rec-demand-meter-row" id="recDemandMeterRow">
+            <div class="rec-demand-col you">
+              <div class="rec-demand-meta">
+                <span data-i18n="rec_your_demand">Your Demand:</span>
+                <strong id="recYouDemandText">0.0 / 10</strong>
+              </div>
+              <div class="rec-bar-track">
+                <div class="rec-bar-fill you" id="recYouDemandBar" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="rec-demand-vs">VS</div>
+            <div class="rec-demand-col they">
+              <div class="rec-demand-meta">
+                <span data-i18n="rec_their_demand">Their Demand:</span>
+                <strong id="recTheyDemandText">0.0 / 10</strong>
+              </div>
+              <div class="rec-bar-track">
+                <div class="rec-bar-fill they" id="recTheyDemandBar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Trade Arena: Left (You Give) vs Right (They Offer) -->
@@ -276,7 +310,10 @@
               <span class="side-icon-tag">🎒</span>
               <div>
                 <h3 class="side-title" data-i18n="you_give_title">YOU GIVE (YOUR OFFER)</h3>
-                <span class="side-total-lc" id="youTotalLc">0.00 LC</span>
+                <div class="side-sub-badges-row">
+                  <span class="side-total-lc" id="youTotalLc">0.00 LC</span>
+                  <span class="side-demand-score-pill" id="youDemandPill">⭐ Demand: 0.0/10</span>
+                </div>
               </div>
             </div>
             <div class="side-value-summary">
@@ -306,7 +343,10 @@
               <span class="side-icon-tag">🎁</span>
               <div>
                 <h3 class="side-title" data-i18n="they_offer_title">THEY OFFER (THEIR OFFER)</h3>
-                <span class="side-total-lc" id="theyTotalLc">0.00 LC</span>
+                <div class="side-sub-badges-row">
+                  <span class="side-total-lc" id="theyTotalLc">0.00 LC</span>
+                  <span class="side-demand-score-pill" id="theyDemandPill">⭐ Demand: 0.0/10</span>
+                </div>
               </div>
             </div>
             <div class="side-value-summary">
