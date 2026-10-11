@@ -1,6 +1,6 @@
 // =====================================================================
 // GRAND PIECE ONLINE (GPO) TRADING VALUES & TRADE CALCULATOR
-// Interactive Application Logic & i18n
+// Interactive Application Logic & Multi-language Support (EN / RU)
 // =====================================================================
 
 (function () {
@@ -67,87 +67,10 @@
     setTimeout(() => playTone(329.63, 'sawtooth', 0.18, 0.12), 120);
   }
 
-  // --- I18N DICTIONARY ---
-  let currentLang = localStorage.getItem('gpo_lang') || 'ru';
+  // --- I18N DICTIONARY (Default: English) ---
+  let currentLang = localStorage.getItem('gpo_lang') || 'en';
 
   const translations = {
-    ru: {
-      brand_subtext: "Официальный Трейд Калькулятор",
-      tab_calculator: "Калькулятор Трейдов",
-      tab_tierlist: "Тир Лист & Цены",
-      tab_merchant: "Странствующий Торговец",
-      tab_guide: "Гайд по Спросу",
-      hero_title: "Grand Piece Online <span>Трейдинг Хаб</span>",
-      hero_desc: "Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!",
-      badge_updated: "📅 Обновление: 10/7/2026",
-      badge_items_count: "⚔️ 213 Предметов",
-      badge_official_doc: "⭐ Официальный GPO Doc",
-      badge_currency: "🪙 Валюта: Очки & LC (Leg Chests)",
-      verdict_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
-      verdict_big_win: "🔥 ОГРОМНЫЙ ВИН!",
-      verdict_win: "✅ ВИН (ВЫГОДНО)!",
-      verdict_fair: "🤝 РАВНЫЙ ТРЕЙД",
-      verdict_lose: "❌ ЛУЗ (В УБЫТОК)!",
-      verdict_big_lose: "💀 ОГРОМНЫЙ СЛИВ!",
-      demand_neutral_note: "Равновесный спрос по обе стороны",
-      demand_warning_you: "⚠️ Предупреждение: вы отдаете предметы с очень высоким спросом за менее ликвидные вещи!",
-      demand_bonus_them: "💎 Отличный трейд: вам предлагают высоколиквидные предметы с отличным спросом!",
-      btn_swap: "Поменять стороны",
-      btn_clear: "Очистить всё",
-      btn_share: "Поделиться трейдом",
-      you_give_title: "ТЫ ОТДАЕШЬ (ТВОЙ ПРЕДЛОГ)",
-      they_offer_title: "ДРУГОЙ ИГРОК ПРЕДЛАГАЕТ",
-      total_val_label: "Общая ценность",
-      click_to_add: "Нажми, чтобы добавить",
-      btn_add_to_you: "Добавить предмет (Ты)",
-      btn_add_to_them: "Добавить предмет (Другой игрок)",
-      search_placeholder: "Поиск предмета по названию или аббревиатуре (ASE, CC, PWE, Mochi, Око...)",
-      sort_tier_desc: "По тиру (Сверху вниз)",
-      sort_val_desc: "По ценности: Высокая → Низкая",
-      sort_val_asc: "По ценности: Низкая → Высокая",
-      sort_demand_desc: "По спросу (Высокий спрос)",
-      sort_name_asc: "По алфавиту (А-Я)",
-      label_category: "Категория:",
-      label_tier: "Тир:",
-      cat_all: "Все (213)",
-      cat_fruits: "Дьявольские Фрукты 🍎",
-      cat_weapons: "Оружие ⚔️",
-      cat_chests: "Сундуки 📦",
-      cat_accessories: "Аксессуары 👑",
-      cat_outfits: "Костюмы & Броня 🥋",
-      cat_boats: "Лодки & Ховеры ⛵",
-      cat_misc: "Разное & Расходники 📜",
-      tier_all: "Все Тиры",
-      merchant_title: "🛒 Странствующий Торговец (Traveling Merchant)",
-      merchant_desc: "Странствующий торговец появляется каждые 30 минут на случайном острове в Первом и Втором Море и остается всего 10 минут. Он продает сундуки с фруктами и редкие предметы за игровую валюту Peli (Бели).",
-      guide_title: "📖 Правила и Советы по Трейдингу GPO",
-      guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
-      detail_value: "Ценность в очках:",
-      detail_lc: "Эквивалент в LC:",
-      detail_demand: "Спрос (Demand):",
-      detail_trend: "Тренд на рынке:",
-      detail_wiki_btn: "Открыть страницу на GPO Fandom Wiki ↗",
-      add_to_you: "Добавить Себе",
-      add_to_them: "Добавить Игроку",
-      picker_title: "Выберите предмет для трейда",
-      catalog_title: "КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)",
-      catalog_hint: "💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
-      footer_text: "Создано сообществом игроков Grand Piece Online. Цены ориентированы на официальный Trading Tier List Google Doc. Игра Grand Piece Online принадлежит Grand Quest Games на платформе Roblox.",
-      share_copied: "Ссылка на трейд скопирована в буфер обмена!",
-      demand_labels: {
-        "Extremely High": "Огромный спрос 🔥",
-        "High": "Высокий спрос ⭐",
-        "Medium": "Средний спрос",
-        "Low": "Низкий спрос 💤",
-        "Unstable": "Нестабильный ⚡"
-      },
-      trend_labels: {
-        "Rising": "Растет ↗",
-        "Stable": "Стабилен →",
-        "Dropping": "Падает ↘",
-        "Fluctuating": "Колеблется ⚡"
-      }
-    },
     en: {
       brand_subtext: "Official Trade Calculator",
       tab_calculator: "Trade Calculator",
@@ -178,7 +101,12 @@
       click_to_add: "Click to add item",
       btn_add_to_you: "Add Item (You)",
       btn_add_to_them: "Add Item (Them)",
-      search_placeholder: "Search item by name or abbreviation (ASE, CC, PWE, Mochi, Eye...)",
+      card_btn_you: "You",
+      card_btn_them: "Them",
+      card_title_add_you: "Add to You",
+      card_title_add_them: "Add to Them",
+      slot_btn_remove: "Remove",
+      search_placeholder: "Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)",
       sort_tier_desc: "By Tier (Top to Bottom)",
       sort_val_desc: "By Value: High → Low",
       sort_val_asc: "By Value: Low → High",
@@ -197,10 +125,31 @@
       tier_all: "All Tiers",
       catalog_title: "ITEM CATALOG FOR TRADE (213 ITEMS)",
       catalog_hint: "💡 Click [+ You] or [+ Them] on any card for instant adding!",
+      no_items_found: "🔍 No items found",
+      no_items_sub: "Try adjusting your search query or filters",
       merchant_title: "🛒 Traveling Merchant",
       merchant_desc: "The Traveling Merchant is an NPC that spawns every 30 minutes on First and Second Sea and stays for only 10 minutes. He sells Fruit Chests and rare items for Peli.",
+      merchant_pill_spawn: "⏱️ Spawn: Every 30 min",
+      merchant_pill_duration: "⏳ Duration: 10 min",
+      merchant_pill_theme: "⚙️ Special Shop: Steampunk (5% chance)",
+      merchant_pill_winter: "❄️ Winter Shop: Iceborn",
       guide_title: "📖 GPO Trading Rules & Guide",
       guide_desc: "Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.",
+      guide_rule1_title: "1. Hierarchy & Ranking Order",
+      guide_rule1_desc: "An item's position within its tier strictly determines its value! Items placed higher in a tier are always worth more than those below. Being in the same tier does NOT guarantee equal value.",
+      guide_rule1_example: "💡 Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.",
+      guide_rule2_title: "2. The Unstable Items Trap",
+      guide_rule2_desc: "Items in the Very Unstable category (e.g. Valkyrie Helmets, Gift of Fruit, Clown Wig) do not have fixed values. Their price fluctuates heavily based on hype and individual buyers.",
+      guide_rule2_example: "⚠️ Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!",
+      guide_rule3_title: "3. Trading Currency: Chests (LC & MC)",
+      guide_rule3_desc: "Legendary Fruit Chest (LC) is the universally accepted standard currency in the game. Most traders express values in number of LC chests. A Mythical Chest (MC) is usually valued at 10-12 LC.",
+      guide_rule4_title: "4. Demand Over Nominal Value",
+      guide_rule4_desc: "An item with High Demand can easily be traded for an overpay (+20% value). Items with Low Demand often have to be traded at a discount.",
+      picker_title: "Select Item to Trade",
+      picker_title_you: "Select Item: YOU GIVE",
+      picker_title_they: "Select Item: THEY OFFER",
+      picker_search_placeholder: "Search item by name or abbreviation...",
+      detail_modal_title: "Item Details",
       detail_value: "Value in points:",
       detail_lc: "LC equivalent:",
       detail_demand: "Demand:",
@@ -208,8 +157,11 @@
       detail_wiki_btn: "Open page on GPO Fandom Wiki ↗",
       add_to_you: "Add to You",
       add_to_them: "Add to Them",
-      picker_title: "Select an item to trade",
+      footer_title: "⚓ GRAND PIECE ONLINE TRADING VALUE HUB",
       footer_text: "Created by the Grand Piece Online community. Prices calibrated to the official Trading Tier List Google Doc. Grand Piece Online belongs to Grand Quest Games on Roblox.",
+      footer_link_doc: "📄 Official Google Doc Tier List",
+      footer_link_roblox: "🎮 GPO Roblox Page",
+      footer_link_wiki: "📚 Grand Piece Online Wiki",
       share_copied: "Trade link copied to clipboard!",
       demand_labels: {
         "Extremely High": "Extremely High 🔥",
@@ -224,6 +176,112 @@
         "Dropping": "Dropping ↘",
         "Fluctuating": "Fluctuating ⚡"
       }
+    },
+    ru: {
+      brand_subtext: "Официальный Трейд Калькулятор",
+      tab_calculator: "Калькулятор Трейдов",
+      tab_tierlist: "Тир Лист & Цены",
+      tab_merchant: "Странствующий Торговец",
+      tab_guide: "Гайд по Спросу",
+      hero_title: "Grand Piece Online <span>Трейдинг Хаб</span>",
+      hero_desc: "Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!",
+      badge_updated: "📅 Обновление: 10/7/2026",
+      badge_items_count: "⚔️ 213 Предметов",
+      badge_official_doc: "⭐ Официальный GPO Doc",
+      badge_currency: "🪙 Валюта: Очки & LC (Leg Chests)",
+      verdict_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
+      verdict_big_win: "🔥 ОГРОМНЫЙ ВИН!",
+      verdict_win: "✅ ВИН (ВЫГОДНО)!",
+      verdict_fair: "🤝 РАВНЫЙ ТРЕЙД",
+      verdict_lose: "❌ ЛУЗ (В УБЫТОК)!",
+      verdict_big_lose: "💀 ОГРОМНЫЙ СЛИВ!",
+      demand_neutral_note: "Равновесный спрос по обе стороны",
+      demand_warning_you: "⚠️ Предупреждение: вы отдаете предметы с очень высоким спросом за менее ликвидные вещи!",
+      demand_bonus_them: "💎 Отличный трейд: вам предлагают высоколиквидные предметы с отличным спросом!",
+      btn_swap: "Поменять стороны",
+      btn_clear: "Очистить всё",
+      btn_share: "Поделиться трейдом",
+      you_give_title: "ТЫ ОТДАЕШЬ (ТВОЙ ПРЕДЛОГ)",
+      they_offer_title: "ДРУГОЙ ИГРОК ПРЕДЛАГАЕТ",
+      total_val_label: "Общая ценность",
+      click_to_add: "Нажми, чтобы добавить",
+      btn_add_to_you: "Добавить предмет (Ты)",
+      btn_add_to_them: "Добавить предмет (Другой игрок)",
+      card_btn_you: "Ты",
+      card_btn_them: "Игрок",
+      card_title_add_you: "Добавить себе",
+      card_title_add_them: "Добавить другому",
+      slot_btn_remove: "Удалить",
+      search_placeholder: "Поиск предмета по названию или аббревиатуре (BOS, ASE, CC, Mochi, Око, Леденец...)",
+      sort_tier_desc: "По тиру (Сверху вниз)",
+      sort_val_desc: "По ценности: Высокая → Низкая",
+      sort_val_asc: "По ценности: Низкая → Высокая",
+      sort_demand_desc: "По спросу (Высокий спрос)",
+      sort_name_asc: "По алфавиту (А-Я / A-Z)",
+      label_category: "Категория:",
+      label_tier: "Тир:",
+      cat_all: "Все (213)",
+      cat_fruits: "Дьявольские Фрукты 🍎",
+      cat_weapons: "Оружие ⚔️",
+      cat_chests: "Сундуки 📦",
+      cat_accessories: "Аксессуары 👑",
+      cat_outfits: "Костюмы & Броня 🥋",
+      cat_boats: "Лодки & Ховеры ⛵",
+      cat_misc: "Разное & Расходники 📜",
+      tier_all: "Все Тиры",
+      catalog_title: "КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)",
+      catalog_hint: "💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
+      no_items_found: "🔍 Предметы не найдены",
+      no_items_sub: "Попробуйте изменить поисковый запрос или фильтры",
+      merchant_title: "🛒 Странствующий Торговец (Traveling Merchant)",
+      merchant_desc: "Странствующий торговец появляется каждые 30 минут на случайном острове в Первом и Втором Море и остается всего 10 минут. Он продает сундуки с фруктами и редкие предметы за игровую валюту Peli (Бели).",
+      merchant_pill_spawn: "⏱️ Спавн: Каждые 30 мин",
+      merchant_pill_duration: "⏳ Время стоянки: 10 мин",
+      merchant_pill_theme: "⚙️ Тематический магазин: Стимпинк (5% шанс)",
+      merchant_pill_winter: "❄️ Зимний магазин: Iceborn",
+      guide_title: "📖 Правила и Советы по Трейдингу GPO",
+      guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
+      guide_rule1_title: "1. Иерархия и Порядковый номер",
+      guide_rule1_desc: "Положение вещи в тире строго определяет её ценность! Первые предметы в тире всегда ценнее тех, что находятся ниже. Нахождение в одном тире НЕ гарантирует одинаковую цену.",
+      guide_rule1_example: "💡 Пример: All Seeing Eye (ASE) стоит выше, чем Troll Face и World Ender в том же тире A+.",
+      guide_rule2_title: "2. Ловушка Нестабильных предметов (Unstable)",
+      guide_rule2_desc: "Предметы из категории Very Unstable (например, Valkyrie Helmets, Gift of Fruit, Clown Wig) не имеют фиксированной стоимости. Их цена колеблется в зависимости от хайпа и конкретного покупателя.",
+      guide_rule2_example: "⚠️ Будьте осторожны: не отдавайте стабильные ликвидные фрукты (Mochi, Venom, Pika) за вещи с нестабильным спросом!",
+      guide_rule3_title: "3. Валюта Обмена: Сундуки (LC и MC)",
+      guide_rule3_desc: "Legendary Fruit Chest (LC) — общепринятая стандартная валюта в игре. Большинство трейдеров выражают стоимость предметов в количестве сундуков LC. Мифический сундук (MC) обычно приравнивается к 10-12 LC.",
+      guide_rule4_title: "4. Спрос (Demand) важнее номинала",
+      guide_rule4_desc: "Предмет с высоким спросом (High Demand) всегда можно легко продать с оверпеем (+20% к цене). Предметы с низким спросом (Low Demand) часто приходится отдавать со скидкой.",
+      picker_title: "Выберите предмет для трейда",
+      picker_title_you: "Выберите предмет: ТЫ ОТДАЕШЬ",
+      picker_title_they: "Выберите предмет: ДРУГОЙ ИГРОК",
+      picker_search_placeholder: "Поиск предмета по названию или аббревиатуре...",
+      detail_modal_title: "Информация о предмете",
+      detail_value: "Ценность в очках:",
+      detail_lc: "Эквивалент в LC:",
+      detail_demand: "Спрос (Demand):",
+      detail_trend: "Тренд на рынке:",
+      detail_wiki_btn: "Открыть страницу на GPO Fandom Wiki ↗",
+      add_to_you: "Добавить Себе",
+      add_to_them: "Добавить Игроку",
+      footer_title: "⚓ GRAND PIECE ONLINE TRADING VALUE HUB",
+      footer_text: "Создано сообществом игроков Grand Piece Online. Цены ориентированы на официальный Trading Tier List Google Doc. Игра Grand Piece Online принадлежит Grand Quest Games на платформе Roblox.",
+      footer_link_doc: "📄 Официальный Google Doc Tier List",
+      footer_link_roblox: "🎮 Страница GPO в Roblox",
+      footer_link_wiki: "📚 Grand Piece Online Wiki",
+      share_copied: "Ссылка на трейд скопирована в буфер обмена!",
+      demand_labels: {
+        "Extremely High": "Огромный спрос 🔥",
+        "High": "Высокий спрос ⭐",
+        "Medium": "Средний спрос",
+        "Low": "Низкий спрос 💤",
+        "Unstable": "Нестабильный ⚡"
+      },
+      trend_labels: {
+        "Rising": "Растет ↗",
+        "Stable": "Стабилен →",
+        "Dropping": "Падает ↘",
+        "Fluctuating": "Колеблется ⚡"
+      }
     }
   };
 
@@ -233,6 +291,7 @@
 
   function applyLanguage() {
     document.documentElement.lang = currentLang;
+
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const k = el.getAttribute('data-i18n');
       if (translations[currentLang][k]) {
@@ -262,7 +321,7 @@
   }
 
   function toggleLanguage() {
-    currentLang = currentLang === 'ru' ? 'en' : 'ru';
+    currentLang = currentLang === 'en' ? 'ru' : 'en';
     localStorage.setItem('gpo_lang', currentLang);
     playClickSound();
     applyLanguage();
@@ -351,21 +410,27 @@
       icon.textContent = '✅';
       text.textContent = t('verdict_win');
       diffText.className = 'verdict-diff-text positive';
-    } else if (diffPct >= -5) {
-      stamp.className = 'verdict-stamp fair';
-      icon.textContent = '⚖️';
-      text.textContent = t('verdict_fair');
-      diffText.className = 'verdict-diff-text neutral';
-    } else if (diffPct >= -25) {
-      stamp.className = 'verdict-stamp lose';
-      icon.textContent = '⚠️';
-      text.textContent = t('verdict_lose');
-      diffText.className = 'verdict-diff-text negative';
-    } else {
+    } else if (diffPct <= -25) {
       stamp.className = 'verdict-stamp lose-huge';
       icon.textContent = '💀';
       text.textContent = t('verdict_big_lose');
       diffText.className = 'verdict-diff-text negative';
+    } else if (diffPct <= -5) {
+      stamp.className = 'verdict-stamp lose';
+      icon.textContent = '❌';
+      text.textContent = t('verdict_lose');
+      diffText.className = 'verdict-diff-text negative';
+    } else {
+      stamp.className = 'verdict-stamp fair';
+      icon.textContent = '🤝';
+      text.textContent = t('verdict_fair');
+      diffText.className = 'verdict-diff-text neutral';
+    }
+
+    // Audio fanfare on completion
+    if (you.count > 0 && they.count > 0) {
+      if (diffPct >= 10) playWinFanfare();
+      else if (diffPct <= -15) playLoseSound();
     }
 
     // Demand Warning analysis
@@ -422,11 +487,11 @@
 
       tradeState[side].forEach(entry => {
         const it = entry.item;
-        const name = currentLang === 'ru' ? it.nameRu : it.name;
+        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
         const slotEl = document.createElement('div');
         slotEl.className = 'trade-slot-card';
         slotEl.innerHTML = `
-          <button class="slot-remove-btn" title="Удалить" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">✕</button>
+          <button class="slot-remove-btn" title="${t('slot_btn_remove')}" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">✕</button>
           <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy">
           <div class="slot-item-name" title="${name}">${name}</div>
           <div class="slot-item-val">${(it.value * entry.qty).toLocaleString()} pts</div>
@@ -523,6 +588,44 @@
     });
   }
 
+  // --- SMART BILINGUAL SEARCH HELPER ---
+  function normalizeSearchStr(str) {
+    if (!str) return '';
+    return str.toLowerCase()
+      .replace(/['’"`\-–—()]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function matchItemQuery(it, rawQuery) {
+    if (!rawQuery || !rawQuery.trim()) return true;
+    const qRaw = rawQuery.toLowerCase().trim();
+    const qNorm = normalizeSearchStr(rawQuery);
+
+    const en = (it.name || '').toLowerCase();
+    const ru = (it.nameRu || '').toLowerCase();
+    const abbr = (it.abbreviation || '').toLowerCase();
+    const enNorm = normalizeSearchStr(it.name);
+    const ruNorm = normalizeSearchStr(it.nameRu);
+    const abbrNorm = normalizeSearchStr(it.abbreviation);
+
+    // 1. Direct matches
+    if (en.includes(qRaw) || ru.includes(qRaw) || abbr.includes(qRaw)) return true;
+    if (enNorm.includes(qNorm) || ruNorm.includes(qNorm) || abbrNorm.includes(qNorm)) return true;
+
+    // 2. Exact abbreviation check
+    if (abbr.toLowerCase() === qRaw || abbrNorm === qNorm) return true;
+
+    // 3. Multi-word token match
+    const tokens = qNorm.split(' ').filter(Boolean);
+    if (tokens.length > 1) {
+      const combined = `${enNorm} ${ruNorm} ${abbrNorm}`;
+      if (tokens.every(token => combined.includes(token))) return true;
+    }
+
+    return false;
+  }
+
   // --- ITEM BROWSER & TIER LIST LOGIC ---
   let currentCategory = 'all';
   let currentTier = 'all';
@@ -537,13 +640,7 @@
     let result = items.slice();
 
     if (q && q.trim()) {
-      const query = q.toLowerCase().trim();
-      result = result.filter(it => {
-        const en = it.name.toLowerCase();
-        const ru = (it.nameRu || '').toLowerCase();
-        const abbr = (it.abbreviation || '').toLowerCase();
-        return en.includes(query) || ru.includes(query) || abbr.includes(query);
-      });
+      result = result.filter(it => matchItemQuery(it, q));
     }
 
     if (cat && cat !== 'all') {
@@ -562,8 +659,8 @@
       result.sort((a, b) => (demandScores[b.demand] || 0) - (demandScores[a.demand] || 0));
     } else if (sort === 'name_asc') {
       result.sort((a, b) => {
-        const nameA = currentLang === 'ru' ? a.nameRu : a.name;
-        const nameB = currentLang === 'ru' ? b.nameRu : b.name;
+        const nameA = currentLang === 'ru' ? (a.nameRu || a.name) : a.name;
+        const nameB = currentLang === 'ru' ? (b.nameRu || b.name) : b.name;
         return nameA.localeCompare(nameB);
       });
     }
@@ -572,7 +669,7 @@
   }
 
   function createCardElement(it) {
-    const name = currentLang === 'ru' ? it.nameRu : it.name;
+    const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
     const tierClass = `tier-${it.tier.replace(/[\s+]/g, '-')}`;
     const demandClass = `demand-${it.demand.replace(/[\s+]/g, '-')}`;
     const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
@@ -596,11 +693,11 @@
       </div>
 
       <div class="card-actions-row">
-        <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')" title="Добавить себе">
-          <span>➕</span> <span>Ты</span>
+        <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')" title="${t('card_title_add_you')}">
+          <span>➕</span> <span>${t('card_btn_you')}</span>
         </button>
-        <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')" title="Добавить другому">
-          <span>➕</span> <span>Игрок</span>
+        <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')" title="${t('card_title_add_them')}">
+          <span>➕</span> <span>${t('card_btn_them')}</span>
         </button>
       </div>
     `;
@@ -617,8 +714,8 @@
     if (items.length === 0) {
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-          <h3>🔍 Предметы не найдены</h3>
-          <p>Попробуйте изменить поисковый запрос или фильтры</p>
+          <h3>${t('no_items_found')}</h3>
+          <p>${t('no_items_sub')}</p>
         </div>
       `;
       return;
@@ -639,13 +736,12 @@
     if (items.length === 0) {
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
-          <h3>🔍 Предметы не найдены</h3>
+          <h3>${t('no_items_found')}</h3>
         </div>
       `;
       return;
     }
 
-    // Show up to 80 items in quick catalog for blazing speed, or all when searching
     const renderLimit = quickSearch.trim() ? items.length : 120;
     items.slice(0, renderLimit).forEach(it => {
       grid.appendChild(createCardElement(it));
@@ -657,38 +753,13 @@
     if (!grid) return;
     grid.innerHTML = '';
 
-    // Traveling merchant items: Chests, Rods, Tokens, Baits, Steampunk, Iceborn
     const merchantKeywords = ['Chest', 'Rod', 'Token', 'Bait', 'Steampunk', 'Shadowrunner', 'Powderpunk', 'Iceborn', 'Outfit', 'Boat', 'Striker', 'Hoverboard'];
     const items = (window.GPO_ITEMS || []).filter(it => {
       return merchantKeywords.some(kw => it.name.includes(kw));
     }).slice(0, 36);
 
     items.forEach(it => {
-      const name = currentLang === 'ru' ? it.nameRu : it.name;
-      const tierClass = `tier-${it.tier.replace(/[\s+]/g, '-')}`;
-
-      const card = document.createElement('div');
-      card.className = 'item-comic-card';
-      card.innerHTML = `
-        <span class="card-tier-tag ${tierClass}">${it.tier}</span>
-        <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
-          <img src="${it.image}" alt="${name}" loading="lazy">
-        </div>
-        <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')">${name}</h4>
-        <div class="card-values-row">
-          <span class="val-pts-text">${it.value.toLocaleString()} pts</span>
-          <span class="val-lc-text">~${it.lcValue} LC</span>
-        </div>
-        <div class="card-actions-row">
-          <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')">
-            <span>➕</span> <span>Себе</span>
-          </button>
-          <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')">
-            <span>➕</span> <span>Игроку</span>
-          </button>
-        </div>
-      `;
-      grid.appendChild(card);
+      grid.appendChild(createCardElement(it));
     });
   }
 
@@ -701,9 +772,7 @@
     const modal = document.getElementById('itemPickerModal');
     const title = document.getElementById('pickerModalTitle');
     if (title) {
-      title.textContent = side === 'you'
-        ? (currentLang === 'ru' ? 'Выберите предмет: ТЫ ОТДАЕШЬ' : 'Select Item: YOU GIVE')
-        : (currentLang === 'ru' ? 'Выберите предмет: ДРУГОЙ ИГРОК' : 'Select Item: THEY OFFER');
+      title.textContent = side === 'you' ? t('picker_title_you') : t('picker_title_they');
     }
     modal.classList.add('open');
     filterPickerItems();
@@ -716,19 +785,14 @@
   }
 
   function filterPickerItems() {
-    const q = (document.getElementById('pickerSearchInput').value || '').toLowerCase().trim();
+    const q = (document.getElementById('pickerSearchInput').value || '').trim();
     const grid = document.getElementById('pickerItemsGrid');
     if (!grid) return;
 
     let items = (window.GPO_ITEMS || []).slice();
 
     if (q) {
-      items = items.filter(it => {
-        const en = it.name.toLowerCase();
-        const ru = (it.nameRu || '').toLowerCase();
-        const abbr = (it.abbreviation || '').toLowerCase();
-        return en.includes(q) || ru.includes(q) || abbr.includes(q);
-      });
+      items = items.filter(it => matchItemQuery(it, q));
     }
 
     if (pickerCategory !== 'all') {
@@ -736,8 +800,17 @@
     }
 
     grid.innerHTML = '';
-    items.slice(0, 60).forEach(it => {
-      const name = currentLang === 'ru' ? it.nameRu : it.name;
+    if (items.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-muted);">
+          <h4>${t('no_items_found')}</h4>
+        </div>
+      `;
+      return;
+    }
+
+    items.forEach(it => {
+      const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
       const btn = document.createElement('div');
       btn.className = 'picker-item-btn';
       btn.onclick = () => {
@@ -762,7 +835,7 @@
     currentDetailItem = it;
     playClickSound();
 
-    const name = currentLang === 'ru' ? it.nameRu : it.name;
+    const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
     document.getElementById('detailImg').src = it.image;
     document.getElementById('detailName').textContent = name;
     document.getElementById('detailValuePts').textContent = it.value.toLocaleString() + ' pts';
@@ -918,7 +991,7 @@
       });
     });
 
-    // Initial render
+    // Initial render with English default
     applyLanguage();
     renderQuickItemsGrid();
   });
