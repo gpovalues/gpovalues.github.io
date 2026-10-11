@@ -74,7 +74,7 @@
         <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="brand-logo-img">
         <div class="brand-text-box">
           <h1>GPO <span>VALUES</span></h1>
-          <div class="brand-subtext" id="brandSubtext" data-i18n="brand_subtext">Official Trade Calculator</div>
+          <div class="brand-subtext" id="brandSubtext" data-i18n="brand_subtext">Community Trade Calculator</div>
         </div>
       </div>
 
@@ -177,6 +177,24 @@
           </div>
         </div>
         <span class="drawer-tg-join-badge" data-i18n="drawer_btn_join">Join ➔</span>
+      </a>
+
+      <!-- Discord Quick Card in Drawer -->
+      <div class="drawer-group-label" style="margin-top: 0.5rem;" data-i18n="drawer_discord_label">🎮 DISCORD SERVER</div>
+      <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="drawer-tg-card drawer-discord-card">
+        <div class="drawer-tg-avatar-box" style="border-color: #5865f2; background: #23272a;">
+          <span style="font-size: 1.3rem; display: flex; align-items: center; justify-content: center; height: 100%;">👾</span>
+          <span class="drawer-tg-pin" style="background: #5865f2;">🎮</span>
+        </div>
+        <div class="drawer-tg-details">
+          <div class="drawer-tg-name" data-i18n="discord_card_title">GPO Discord Server</div>
+          <div class="drawer-tg-handle" style="color: #a5b4fc;">discord.gg/AxkxVfSnY</div>
+          <div class="drawer-tg-stats">
+            <span class="drawer-badge-lang">RU/EN</span>
+            <span data-i18n="discord_card_feature">Trades & Voice</span>
+          </div>
+        </div>
+        <span class="drawer-tg-join-badge" style="background: #5865f2;" data-i18n="drawer_btn_join">Join ➔</span>
       </a>
 
       <div class="drawer-divider"></div>
@@ -505,51 +523,66 @@
           </a>
         </div>
 
-        <!-- Community Coming Soon Card (Discord & Giveaways) -->
-        <div class="channel-comic-card coming-soon-card">
-          <div class="channel-card-top-glow" style="background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.4) 0%, transparent 70%);"></div>
+        <!-- Discord Server Card -->
+        <div class="channel-comic-card discord-card">
+          <div class="channel-card-top-glow" style="background: radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.4) 0%, transparent 70%);"></div>
           <div class="channel-card-header">
-            <div class="channel-badge-pill" style="background: #312e81; color: #a5b4fc;">
-              <span>🎮</span> <span>Discord Hub</span>
+            <div class="channel-badge-pill discord-badge">
+              <span>🎮</span> <span>Discord Server</span>
             </div>
-            <div class="channel-badge-pill" style="background: #064e3b; color: #6ee7b7;" data-i18n="card_coming_soon_badge">
-              <span>🚀</span> <span>Coming Soon</span>
+            <div class="channel-badge-pill lang-badge" data-i18n="discord_lang_badge">
+              <span>🇷🇺 🇬🇧</span> <span>RU & EN</span>
+            </div>
+            <div class="channel-badge-pill status-badge">
+              <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
             </div>
           </div>
 
           <div class="channel-profile-row">
-            <div class="channel-avatar-box" style="background: #1e1b4b; border-color: #6366f1;">
-              <span style="font-size: 2.2rem;">👾</span>
+            <div class="channel-avatar-box discord-avatar-box">
+              <span class="discord-big-icon">🎮</span>
+              <span class="discord-mini-badge">👾</span>
             </div>
             <div class="channel-meta-box">
-              <h3 class="channel-title-text" data-i18n="discord_card_title">Official Discord Community</h3>
-              <div class="channel-handle-text">@gpovalues_discord</div>
+              <h3 class="channel-title-text" data-i18n="discord_card_title">Grand Piece Discord Server</h3>
+              <div class="channel-handle-text">discord.gg/AxkxVfSnY</div>
               <div class="channel-counts-row">
-                <span class="count-item-pill" style="border-color: #6366f1;">
-                  <span>⭐</span> <span data-i18n="discord_card_feature">Voice, Roles, Giveaways</span>
+                <span class="count-item-pill">
+                  <span class="count-icon">💬</span>
+                  <span class="count-lbl" data-i18n="discord_card_feature">Trading, Voice, Raids</span>
+                </span>
+                <span class="count-item-pill online-pill">
+                  <span class="count-icon">🟢</span>
+                  <span class="count-lbl" data-i18n="chat_active_badge">Active</span>
                 </span>
               </div>
             </div>
           </div>
 
           <p class="channel-desc-text" data-i18n="discord_card_desc">
-            We are preparing our official Discord server featuring automated trade-reputation bots, price alert notifications, and exclusive weekly fruit giveaways!
+            Join our active Discord community for Grand Piece Online! Trade items, check values, hang out in voice channels, and team up for boss raids and dungeons.
           </p>
 
           <div class="channel-specs-box">
             <div class="spec-row">
-              <span class="spec-label" data-i18n="discord_spec_giveaways">🎁 Events:</span>
-              <span class="spec-value">Legendary & Mythical Fruit Giveaways</span>
+              <span class="spec-label" data-i18n="chat_spec_lang_label">🗣️ Language:</span>
+              <span class="spec-value" data-i18n="discord_spec_lang_val">🇷🇺 Russian & 🇬🇧 English</span>
             </div>
             <div class="spec-row">
-              <span class="spec-label" data-i18n="discord_spec_roles">⚔️ Trading:</span>
-              <span class="spec-value">Reputation system & Cross-server trades</span>
+              <span class="spec-label" data-i18n="chat_spec_topic_label">🎯 Focus:</span>
+              <span class="spec-value" data-i18n="discord_spec_topic_val">Trading, Values, Boss Raids & Voice</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_access_label">🔓 Access:</span>
+              <span class="spec-value" data-i18n="chat_spec_access_val">Public & Free to Join</span>
             </div>
           </div>
 
-          <button class="channel-join-btn disabled-btn" disabled>
-            <span>⏳</span> <span data-i18n="btn_discord_soon">In Development (Coming Soon)</span>
-          </button>
+          <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="channel-join-btn discord-join-btn">
+            <span class="btn-icon">🎮</span>
+            <span class="btn-text" data-i18n="btn_join_discord">Join Discord Server (discord.gg/AxkxVfSnY)</span>
+            <span class="btn-arrow">➔</span>
+          </a>
         </div>
 
       </div>
