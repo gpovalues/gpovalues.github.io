@@ -22,6 +22,13 @@
   <!-- Top Sticky Navigation Bar -->
   <header class="header-banner">
     <div class="header-container">
+      <!-- Left: Mobile Menu Toggle Button (visible on mobile only) -->
+      <button class="mobile-menu-toggle-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu" title="Open Navigation Menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
       <div class="brand-wrapper" id="brandHomeBtn">
         <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="brand-logo-img">
         <div class="brand-text-box">
@@ -55,6 +62,95 @@
       </div>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer Backdrop -->
+  <div class="mobile-drawer-backdrop" id="mobileNavBackdrop"></div>
+
+  <!-- Mobile Slide-In Navigation Drawer (Slides from Right) -->
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <div class="mobile-drawer-header">
+      <div class="drawer-header-brand" id="drawerBrandHomeBtn">
+        <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="drawer-brand-img">
+        <div class="drawer-brand-info">
+          <div class="drawer-title">GPO <span>VALUES</span></div>
+          <div class="drawer-subtitle" data-i18n="drawer_subtitle">Navigation Menu</div>
+        </div>
+      </div>
+      <button class="drawer-close-btn" id="mobileDrawerCloseBtn" aria-label="Close Menu">✕</button>
+    </div>
+
+    <div class="mobile-drawer-body">
+      <div class="drawer-group-label" data-i18n="drawer_nav_label">🧭 TABS & SECTIONS</div>
+      <nav class="drawer-nav-list">
+        <button class="drawer-tab-btn active" data-tab="calculator">
+          <span class="d-tab-icon">⚖️</span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_calculator">Trade Calculator</span>
+            <small class="d-tab-desc" data-i18n="drawer_calc_desc">Calculate win/loss trades</small>
+          </div>
+          <span class="d-tab-arrow">➔</span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="tierlist">
+          <span class="d-tab-icon">📜</span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_tierlist">Tier List & Values</span>
+            <small class="d-tab-desc" data-i18n="drawer_tier_desc">213 items with abbreviations</small>
+          </div>
+          <span class="d-tab-arrow">➔</span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="community">
+          <span class="d-tab-icon">💬</span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_community">Community & Chats</span>
+            <small class="d-tab-desc" data-i18n="drawer_comm_desc">Telegram @GPOcHa chat & trade</small>
+          </div>
+          <span class="d-tab-badge">NEW</span>
+          <span class="d-tab-arrow">➔</span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="guide">
+          <span class="d-tab-icon">💡</span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_guide">Trading Guide</span>
+            <small class="d-tab-desc" data-i18n="drawer_guide_desc">Rules & tips from official doc</small>
+          </div>
+          <span class="d-tab-arrow">➔</span>
+        </button>
+      </nav>
+
+      <div class="drawer-divider"></div>
+
+      <!-- Telegram Chat Card in Drawer -->
+      <div class="drawer-group-label" data-i18n="drawer_comm_label">✈️ TELEGRAM CHAT</div>
+      <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="drawer-tg-card">
+        <div class="drawer-tg-avatar-box">
+          <img src="images/gpocha_avatar.jpg" alt="Chat Avatar" class="drawer-tg-avatar" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
+          <span class="drawer-tg-pin">✈️</span>
+        </div>
+        <div class="drawer-tg-details">
+          <div class="drawer-tg-name">(公婆) Grand Piece Chat</div>
+          <div class="drawer-tg-handle">@GPOcHa</div>
+          <div class="drawer-tg-stats">
+            <span class="drawer-badge-lang">🇷🇺 RU</span>
+            <span>👥 190+</span>
+            <span style="color: #4ade80;">🟢 35+</span>
+          </div>
+        </div>
+        <span class="drawer-tg-join-badge" data-i18n="drawer_btn_join">Join ➔</span>
+      </a>
+
+      <div class="drawer-divider"></div>
+
+      <!-- Drawer Quick Controls -->
+      <div class="drawer-controls-row">
+        <button class="drawer-ctrl-btn" id="drawerLangToggleBtn">
+          <span id="drawerLangFlag">🇬🇧</span> <span id="drawerLangCode">English</span>
+        </button>
+        <button class="drawer-ctrl-btn" id="drawerAudioToggleBtn">
+          <span id="drawerAudioIcon">🔊</span> <span data-i18n="drawer_sound">Sound</span>
+        </button>
+      </div>
+    </div>
+  </aside>
 
   <main class="main-wrapper">
 

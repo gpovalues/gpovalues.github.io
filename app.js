@@ -151,6 +151,15 @@
       discord_spec_giveaways: "🎁 Events:",
       discord_spec_roles: "⚔️ Trading:",
       btn_discord_soon: "In Development (Coming Soon)",
+      drawer_subtitle: "Navigation Menu",
+      drawer_nav_label: "🧭 TABS & SECTIONS",
+      drawer_calc_desc: "Calculate win/loss trades",
+      drawer_tier_desc: "213 items with abbreviations",
+      drawer_comm_desc: "Telegram @GPOcHa chat & trade",
+      drawer_guide_desc: "Rules & tips from official doc",
+      drawer_comm_label: "✈️ TELEGRAM CHAT",
+      drawer_btn_join: "Join ➔",
+      drawer_sound: "Sound",
       guide_title: "📖 GPO Trading Rules & Guide",
       guide_desc: "Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.",
       guide_rule1_title: "1. Hierarchy & Ranking Order",
@@ -275,6 +284,15 @@
       discord_spec_giveaways: "🎁 Ивенты:",
       discord_spec_roles: "⚔️ Трейдинг:",
       btn_discord_soon: "В разработке (Скоро)",
+      drawer_subtitle: "Меню навигации",
+      drawer_nav_label: "🧭 ВКЛАДКИ И РАЗДЕЛЫ",
+      drawer_calc_desc: "Расчёт трейдов на выгоду",
+      drawer_tier_desc: "213 предметов с аббревиатурами",
+      drawer_comm_desc: "Чат и трейды @GPOcHa",
+      drawer_guide_desc: "Правила и советы из тир-листа",
+      drawer_comm_label: "✈️ НАШ ТЕЛЕГРАМ ЧАТ",
+      drawer_btn_join: "Войти ➔",
+      drawer_sound: "Звук",
       guide_title: "📖 Правила и Советы по Трейдингу GPO",
       guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
       guide_rule1_title: "1. Иерархия и Порядковый номер",
@@ -347,6 +365,13 @@
     if (flagEl && codeEl) {
       flagEl.textContent = currentLang === 'ru' ? '🇷🇺' : '🇬🇧';
       codeEl.textContent = currentLang.toUpperCase();
+    }
+
+    const drawerFlagEl = document.getElementById('drawerLangFlag');
+    const drawerCodeEl = document.getElementById('drawerLangCode');
+    if (drawerFlagEl && drawerCodeEl) {
+      drawerFlagEl.textContent = currentLang === 'ru' ? '🇷🇺' : '🇬🇧';
+      drawerCodeEl.textContent = currentLang === 'ru' ? 'Русский' : 'English';
     }
 
     renderItemsGrid();
@@ -895,14 +920,54 @@
     document.getElementById('itemDetailModal').classList.remove('open');
   }
 
+  // --- MOBILE DRAWER NAVIGATION ---
+  function openMobileDrawer() {
+    playClickSound();
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    if (drawer) {
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+    if (backdrop) backdrop.classList.add('open');
+    if (menuBtn) menuBtn.classList.add('active');
+    document.body.classList.add('drawer-open');
+  }
+
+  function closeMobileDrawer() {
+    const drawer = document.getElementById('mobileNavDrawer');
+    const backdrop = document.getElementById('mobileNavBackdrop');
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    if (drawer) {
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+    if (backdrop) backdrop.classList.remove('open');
+    if (menuBtn) menuBtn.classList.remove('active');
+    document.body.classList.remove('drawer-open');
+  }
+
+  function toggleMobileDrawer() {
+    const drawer = document.getElementById('mobileNavDrawer');
+    if (drawer && drawer.classList.contains('open')) {
+      closeMobileDrawer();
+    } else {
+      openMobileDrawer();
+    }
+  }
+
   // --- TAB NAVIGATION ---
   function switchTab(tabId) {
     playClickSound();
     document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.drawer-tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-section').forEach(s => s.style.display = 'none');
 
     const btn = document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`);
     if (btn) btn.classList.add('active');
+    const drawerBtn = document.querySelector(`.drawer-tab-btn[data-tab="${tabId}"]`);
+    if (drawerBtn) drawerBtn.classList.add('active');
 
     if (tabId === 'calculator') {
       document.getElementById('sectionCalculator').style.display = 'flex';
@@ -914,11 +979,13 @@
     } else if (tabId === 'guide') {
       document.getElementById('sectionGuide').style.display = 'block';
     }
+
+    closeMobileDrawer();
   }
 
   // --- INITIALIZATION ---
   document.addEventListener('DOMContentLoaded', () => {
-    // Nav Tabs click
+    // Nav Tabs click (Desktop)
     document.querySelectorAll('.nav-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.getAttribute('data-tab');
@@ -926,15 +993,53 @@
       });
     });
 
+    // Mobile Drawer buttons
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    if (menuBtn) menuBtn.addEventListener('click', toggleMobileDrawer);
+
+    const drawerCloseBtn = document.getElementById('mobileDrawerCloseBtn');
+    if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeMobileDrawer);
+
+    const drawerBackdrop = document.getElementById('mobileNavBackdrop');
+    if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileDrawer);
+
+    const drawerBrandHomeBtn = document.getElementById('drawerBrandHomeBtn');
+    if (drawerBrandHomeBtn) drawerBrandHomeBtn.addEventListener('click', () => switchTab('calculator'));
+
+    document.querySelectorAll('.drawer-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-tab');
+        switchTab(tab);
+      });
+    });
+
+    const drawerLangBtn = document.getElementById('drawerLangToggleBtn');
+    if (drawerLangBtn) drawerLangBtn.addEventListener('click', toggleLanguage);
+
+    const drawerAudioBtn = document.getElementById('drawerAudioToggleBtn');
+    if (drawerAudioBtn) {
+      drawerAudioBtn.addEventListener('click', () => {
+        audioEnabled = !audioEnabled;
+        const icon = audioEnabled ? '🔊' : '🔇';
+        document.getElementById('audioToggleBtn').textContent = icon;
+        const dIcon = document.getElementById('drawerAudioIcon');
+        if (dIcon) dIcon.textContent = icon;
+        if (audioEnabled) playCoinSound();
+      });
+    }
+
     document.getElementById('brandHomeBtn').addEventListener('click', () => switchTab('calculator'));
 
-    // Language toggle
+    // Language toggle (Desktop Header)
     document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
 
-    // Audio toggle
+    // Audio toggle (Desktop Header)
     document.getElementById('audioToggleBtn').addEventListener('click', () => {
       audioEnabled = !audioEnabled;
-      document.getElementById('audioToggleBtn').textContent = audioEnabled ? '🔊' : '🔇';
+      const icon = audioEnabled ? '🔊' : '🔇';
+      document.getElementById('audioToggleBtn').textContent = icon;
+      const dIcon = document.getElementById('drawerAudioIcon');
+      if (dIcon) dIcon.textContent = icon;
       if (audioEnabled) playCoinSound();
     });
 
