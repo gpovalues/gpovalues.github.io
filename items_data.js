@@ -1,3 +1,5 @@
+// Official Grand Piece Online Trading Database
+// Synchronized with Official GPO Tier List & In-Game Economy
 window.GPO_ITEMS = [
   {
     "id": "item_1",
@@ -130,7 +132,7 @@ window.GPO_ITEMS = [
     "lcValue": 1258.06,
     "demand": "Extremely High",
     "trend": "Rising",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_8.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_World_Ender",
     "demandScore": 10
@@ -198,7 +200,7 @@ window.GPO_ITEMS = [
     "lcValue": 440.86,
     "demand": "High",
     "trend": "Rising",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_12.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Fruit_Bag",
     "demandScore": 8.8
@@ -334,7 +336,7 @@ window.GPO_ITEMS = [
     "lcValue": 161.29,
     "demand": "High",
     "trend": "Rising",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_20.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Jester's_Outfit",
     "demandScore": 8.8
@@ -538,7 +540,7 @@ window.GPO_ITEMS = [
     "lcValue": 50.54,
     "demand": "High",
     "trend": "Stable",
-    "category": "weapons",
+    "category": "accessories",
     "image": "images/item_33.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Troll_Face",
     "demandScore": 8
@@ -555,7 +557,7 @@ window.GPO_ITEMS = [
     "lcValue": 43.01,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_34.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System",
     "demandScore": 8
@@ -572,7 +574,7 @@ window.GPO_ITEMS = [
     "lcValue": 40.86,
     "demand": "Extremely High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_35.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System",
     "demandScore": 9.6
@@ -589,7 +591,7 @@ window.GPO_ITEMS = [
     "lcValue": 38.71,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_36.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Flower_Bouquet",
     "demandScore": 8
@@ -606,7 +608,7 @@ window.GPO_ITEMS = [
     "lcValue": 36.56,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_37.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 8
@@ -640,7 +642,7 @@ window.GPO_ITEMS = [
     "lcValue": 32.26,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_41.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cleaver",
     "demandScore": 8
@@ -657,7 +659,7 @@ window.GPO_ITEMS = [
     "lcValue": 30.11,
     "demand": "High",
     "trend": "Stable",
-    "category": "accessories",
+    "category": "weapons",
     "image": "images/item_42.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Snowcap_Scepter",
     "demandScore": 8
@@ -691,7 +693,7 @@ window.GPO_ITEMS = [
     "lcValue": 20.16,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_39.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 8
@@ -844,7 +846,7 @@ window.GPO_ITEMS = [
     "lcValue": 12.69,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_53.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade",
     "demandScore": 7.5
@@ -861,7 +863,7 @@ window.GPO_ITEMS = [
     "lcValue": 12.1,
     "demand": "Extremely High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_52.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow%27s_World_Ender",
     "demandScore": 9.2
@@ -929,7 +931,7 @@ window.GPO_ITEMS = [
     "lcValue": 9.73,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_56.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sickle_of_Sorrow",
     "demandScore": 7.5
@@ -1150,7 +1152,7 @@ window.GPO_ITEMS = [
     "lcValue": 3.2,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_71.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Head_of_Ba'al",
     "demandScore": 8.4
@@ -1201,7 +1203,7 @@ window.GPO_ITEMS = [
     "lcValue": 2.58,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_74.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
     "demandScore": 7.5
@@ -1371,7 +1373,7 @@ window.GPO_ITEMS = [
     "lcValue": 1.81,
     "demand": "Medium",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_85.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 7
@@ -1507,7 +1509,7 @@ window.GPO_ITEMS = [
     "lcValue": 1.21,
     "demand": "Medium",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_95.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hollow's_Fang",
     "demandScore": 6.5
@@ -1575,7 +1577,7 @@ window.GPO_ITEMS = [
     "lcValue": 1.09,
     "demand": "Medium",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_99.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/True_Ba'al's_Guard",
     "demandScore": 7.2
@@ -1609,7 +1611,7 @@ window.GPO_ITEMS = [
     "lcValue": 1.03,
     "demand": "Medium",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_101.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ope_Ope_no_Mi",
     "demandScore": 6.5
@@ -2068,7 +2070,7 @@ window.GPO_ITEMS = [
     "lcValue": 0.34,
     "demand": "Medium",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_126.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mera_Mera_no_Mi",
     "demandScore": 6.5
@@ -2238,7 +2240,7 @@ window.GPO_ITEMS = [
     "lcValue": 0.2,
     "demand": "Medium",
     "trend": "Stable",
-    "category": "misc",
+    "category": "weapons",
     "image": "images/item_137.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_Cane",
     "demandScore": 5.5
@@ -2527,7 +2529,7 @@ window.GPO_ITEMS = [
     "lcValue": 0.08,
     "demand": "Low",
     "trend": "Dropping",
-    "category": "weapons",
+    "category": "accessories",
     "image": "images/item_154.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moria's_Necklace",
     "demandScore": 4.5
@@ -2901,7 +2903,7 @@ window.GPO_ITEMS = [
     "lcValue": 0.03,
     "demand": "Low",
     "trend": "Dropping",
-    "category": "accessories",
+    "category": "weapons",
     "image": "images/item_176.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ghost_Princess%E2%80%99s_Crown",
     "demandScore": 4.5
@@ -3309,7 +3311,7 @@ window.GPO_ITEMS = [
     "lcValue": 215.05,
     "demand": "Unstable",
     "trend": "Fluctuating",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_200.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Crews",
     "demandScore": 4.5
@@ -3360,7 +3362,7 @@ window.GPO_ITEMS = [
     "lcValue": 102.15,
     "demand": "Unstable",
     "trend": "Fluctuating",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_203.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Clown_Wig",
     "demandScore": 3.8
@@ -3411,7 +3413,7 @@ window.GPO_ITEMS = [
     "lcValue": 0,
     "demand": "Unstable",
     "trend": "Fluctuating",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_204.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Epic_Banana",
     "demandScore": 3.5
@@ -3615,7 +3617,7 @@ window.GPO_ITEMS = [
     "lcValue": 8.55,
     "demand": "High",
     "trend": "Stable",
-    "category": "misc",
+    "category": "accessories",
     "image": "images/item_59.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Traveling_Merchant",
     "demandScore": 8.5
