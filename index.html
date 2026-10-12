@@ -80,25 +80,25 @@
 
       <nav class="nav-tabs-wrapper">
         <button class="nav-tab-btn active" id="tabBtnCalc" data-tab="calculator">
-          <span>⚖️</span> <span class="tab-label" data-i18n="tab_calculator">Trade Calculator</span>
+          <span class="icon-slot" data-icon="scale"></span> <span class="tab-label" data-i18n="tab_calculator">Trade Calculator</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnTierlist" data-tab="tierlist">
-          <span>📜</span> <span class="tab-label" data-i18n="tab_tierlist">Tier List & Values</span>
+          <span class="icon-slot" data-icon="scroll"></span> <span class="tab-label" data-i18n="tab_tierlist">Tier List & Values</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnCommunity" data-tab="community">
-          <span>💬</span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
+          <span class="icon-slot" data-icon="message-square"></span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnGuide" data-tab="guide">
-          <span>💡</span> <span class="tab-label" data-i18n="tab_guide">Trading Guide</span>
+          <span class="icon-slot" data-icon="book-open"></span> <span class="tab-label" data-i18n="tab_guide">Trading Guide</span>
         </button>
       </nav>
 
       <div class="header-controls">
         <button class="lang-btn" id="langToggleBtn" title="Switch language / Сменить язык">
-          <span id="langFlag">🇬🇧</span> <span id="langCode">EN</span>
+          <span class="icon-slot" data-icon="globe"></span> <span id="langCode">EN</span>
         </button>
         <button class="audio-toggle-btn" id="audioToggleBtn" title="Trade sounds">
-          🔊
+          <span id="audioIcon" class="icon-slot" data-icon="volume-2"></span>
         </button>
       </div>
     </div>
@@ -117,85 +117,85 @@
           <div class="drawer-subtitle" data-i18n="drawer_subtitle">Navigation Menu</div>
         </div>
       </div>
-      <button class="drawer-close-btn" id="mobileDrawerCloseBtn" aria-label="Close Menu">✕</button>
+      <button class="drawer-close-btn" id="mobileDrawerCloseBtn" aria-label="Close Menu"><span class="icon-slot" data-icon="x"></span></button>
     </div>
 
     <div class="mobile-drawer-body">
-      <div class="drawer-group-label" data-i18n="drawer_nav_label">🧭 TABS & SECTIONS</div>
+      <div class="drawer-group-label" data-i18n="drawer_nav_label"><span class="icon-slot" data-icon="compass"></span> TABS & SECTIONS</div>
       <nav class="drawer-nav-list">
         <button class="drawer-tab-btn active" data-tab="calculator">
-          <span class="d-tab-icon">⚖️</span>
+          <span class="d-tab-icon icon-slot" data-icon="scale"></span>
           <div class="d-tab-info">
             <span class="d-tab-name" data-i18n="tab_calculator">Trade Calculator</span>
             <small class="d-tab-desc" data-i18n="drawer_calc_desc">Calculate win/loss trades</small>
           </div>
-          <span class="d-tab-arrow">➔</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
         </button>
         <button class="drawer-tab-btn" data-tab="tierlist">
-          <span class="d-tab-icon">📜</span>
+          <span class="d-tab-icon icon-slot" data-icon="scroll"></span>
           <div class="d-tab-info">
             <span class="d-tab-name" data-i18n="tab_tierlist">Tier List & Values</span>
             <small class="d-tab-desc" data-i18n="drawer_tier_desc">213 items with abbreviations</small>
           </div>
-          <span class="d-tab-arrow">➔</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
         </button>
         <button class="drawer-tab-btn" data-tab="community">
-          <span class="d-tab-icon">💬</span>
+          <span class="d-tab-icon icon-slot" data-icon="message-square"></span>
           <div class="d-tab-info">
             <span class="d-tab-name" data-i18n="tab_community">Community & Chats</span>
             <small class="d-tab-desc" data-i18n="drawer_comm_desc">Telegram @GPOcHa chat & trade</small>
           </div>
           <span class="d-tab-badge">NEW</span>
-          <span class="d-tab-arrow">➔</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
         </button>
         <button class="drawer-tab-btn" data-tab="guide">
-          <span class="d-tab-icon">💡</span>
+          <span class="d-tab-icon icon-slot" data-icon="book-open"></span>
           <div class="d-tab-info">
             <span class="d-tab-name" data-i18n="tab_guide">Trading Guide</span>
             <small class="d-tab-desc" data-i18n="drawer_guide_desc">Rules & tips from official doc</small>
           </div>
-          <span class="d-tab-arrow">➔</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
         </button>
       </nav>
 
       <div class="drawer-divider"></div>
 
       <!-- Telegram Chat Card in Drawer -->
-      <div class="drawer-group-label" data-i18n="drawer_comm_label">✈️ TELEGRAM CHAT</div>
+      <div class="drawer-group-label" data-i18n="drawer_comm_label"><span class="icon-slot" data-icon="send"></span> TELEGRAM CHAT</div>
       <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="drawer-tg-card">
         <div class="drawer-tg-avatar-box">
           <img src="images/gpocha_avatar.jpg" alt="Chat Avatar" class="drawer-tg-avatar" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
-          <span class="drawer-tg-pin">✈️</span>
+          <span class="drawer-tg-pin"><span class="icon-slot" data-icon="send"></span></span>
         </div>
         <div class="drawer-tg-details">
           <div class="drawer-tg-name">(公婆) Grand Piece Chat</div>
           <div class="drawer-tg-handle">@GPOcHa</div>
           <div class="drawer-tg-stats">
-            <span class="drawer-badge-lang">🇷🇺 RU</span>
-            <span>👥 190+</span>
-            <span style="color: #4ade80;">🟢 35+</span>
+            <span class="drawer-badge-lang">RU</span>
+            <span><span class="icon-slot" data-icon="users"></span> 190+</span>
+            <span style="color: #4ade80;"><span class="icon-slot" data-icon="check-circle-2"></span> 35+</span>
           </div>
         </div>
-        <span class="drawer-tg-join-badge" data-i18n="drawer_btn_join">Join ➔</span>
+        <span class="drawer-tg-join-badge" data-i18n="drawer_btn_join">Join &rarr;</span>
       </a>
 
       <!-- Discord Quick Card in Drawer -->
-      <div class="drawer-group-label" style="margin-top: 0.5rem;" data-i18n="drawer_discord_label">🎮 DISCORD SERVER</div>
+      <div class="drawer-group-label" style="margin-top: 0.5rem;" data-i18n="drawer_discord_label"><span class="icon-slot" data-icon="gamepad-2"></span> DISCORD SERVER</div>
       <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="drawer-tg-card drawer-discord-card">
         <div class="drawer-tg-avatar-box" style="border-color: #5865f2;">
           <img src="images/fruit_trilogy_avatar.png" alt="Fruit Trilogy" class="drawer-tg-avatar">
-          <span class="drawer-tg-pin" style="background: #5865f2;">🎮</span>
+          <span class="drawer-tg-pin" style="background: #5865f2;"><span class="icon-slot" data-icon="gamepad-2"></span></span>
         </div>
         <div class="drawer-tg-details">
           <div class="drawer-tg-name">Fruit Trilogy</div>
           <div class="drawer-tg-handle" style="color: #a5b4fc;">discord.gg/AxkxVfSnY</div>
           <div class="drawer-tg-stats">
             <span class="drawer-badge-lang">RU/EN</span>
-            <span>👥 240+</span>
-            <span style="color: #4ade80;">🟢 45+</span>
+            <span><span class="icon-slot" data-icon="users"></span> 240+</span>
+            <span style="color: #4ade80;"><span class="icon-slot" data-icon="check-circle-2"></span> 45+</span>
           </div>
         </div>
-        <span class="drawer-tg-join-badge" style="background: #5865f2;" data-i18n="drawer_btn_join">Join ➔</span>
+        <span class="drawer-tg-join-badge" style="background: #5865f2;" data-i18n="drawer_btn_join">Join &rarr;</span>
       </a>
 
       <div class="drawer-divider"></div>
@@ -203,10 +203,10 @@
       <!-- Drawer Quick Controls -->
       <div class="drawer-controls-row">
         <button class="drawer-ctrl-btn" id="drawerLangToggleBtn">
-          <span id="drawerLangFlag">🇬🇧</span> <span id="drawerLangCode">English</span>
+          <span class="icon-slot" data-icon="globe"></span> <span id="drawerLangCode">English</span>
         </button>
         <button class="drawer-ctrl-btn" id="drawerAudioToggleBtn">
-          <span id="drawerAudioIcon">🔊</span> <span data-i18n="drawer_sound">Sound</span>
+          <span id="drawerAudioIcon" class="icon-slot" data-icon="volume-2"></span> <span data-i18n="drawer_sound">Sound</span>
         </button>
       </div>
     </div>
@@ -216,7 +216,7 @@
 
     <!-- Hero Promotional & Update Banner -->
     <section class="hero-art-banner">
-      <div class="gpo-tracker-badge">⚔️ GPO VALUES HUB</div>
+      <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="swords"></span> GPO VALUES HUB</div>
       <div class="hero-content">
         <div class="hero-text">
           <h2 data-i18n="hero_title">Grand Piece Online <span>Trading Hub</span></h2>
@@ -224,7 +224,7 @@
             All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!
           </p>
           <div class="hero-community-callout">
-            <span class="callout-icon">🛡️</span>
+            <span class="callout-icon icon-slot" data-icon="shield-check" data-icon-class="icon-lg icon-gold"></span>
             <div class="callout-content">
               <strong data-i18n="hero_callout_title">Fair Trading & GPO Economy Rules:</strong>
               <span data-i18n="hero_callout_desc">
@@ -233,10 +233,10 @@
             </div>
           </div>
           <div class="hero-badges-group">
-            <span class="hero-badge live-update" data-i18n="badge_updated">📅 Updated: 10/11/2026</span>
-            <span class="hero-badge" data-i18n="badge_items_count">⚔️ 213 Items</span>
-            <span class="hero-badge" data-i18n="badge_official_doc">⭐ Official GPO Doc</span>
-            <span class="hero-badge" data-i18n="badge_currency">🪙 SP Reset = 1 pt | 1 LC = 233 pts</span>
+            <span class="hero-badge live-update" data-i18n="badge_updated"><span class="icon-slot" data-icon="calendar"></span> Updated: 10/11/2026</span>
+            <span class="hero-badge" data-i18n="badge_items_count"><span class="icon-slot" data-icon="swords"></span> 213 Items</span>
+            <span class="hero-badge" data-i18n="badge_official_doc"><span class="icon-slot" data-icon="file-text"></span> Official GPO Doc</span>
+            <span class="hero-badge" data-i18n="badge_currency"><span class="icon-slot" data-icon="coins"></span> SP Reset = 1 pt | 1 LC = 233 pts</span>
           </div>
         </div>
       </div>
@@ -247,29 +247,29 @@
       
       <!-- Trade Master Verdict Bar -->
       <div class="verdict-master-card" id="verdictMasterCard">
-        <div class="gpo-tracker-badge">⚖️ TRADE VERDICT</div>
+        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="scale"></span> TRADE VERDICT</div>
         <div class="verdict-stamp-box">
           <div class="verdict-stamp fair" id="verdictStamp">
-            <span id="verdictIcon">🤝</span>
+            <span id="verdictIcon" class="icon-slot" data-icon="scale"></span>
             <span id="verdictText" data-i18n="verdict_empty">ADD ITEMS TO TRADE</span>
           </div>
           <div class="verdict-metrics-box">
             <div class="verdict-diff-text neutral" id="verdictDiffText">±0 pts (0%)</div>
             <div class="verdict-demand-note" id="verdictDemandNote">
-              <span>⚖️</span> <span data-i18n="demand_neutral_note">Equal demand on both sides</span>
+              <span class="icon-slot" data-icon="scale"></span> <span data-i18n="demand_neutral_note">Equal demand on both sides</span>
             </div>
           </div>
         </div>
 
         <div class="verdict-quick-actions">
           <button class="action-comic-btn swap-btn" id="btnSwapSides" title="Swap Sides">
-            <span>⇄</span> <span data-i18n="btn_swap">Swap Sides</span>
+            <span class="icon-slot" data-icon="arrow-left-right"></span> <span data-i18n="btn_swap">Swap Sides</span>
           </button>
           <button class="action-comic-btn clear-btn" id="btnClearTrade" title="Clear All">
-            <span>🗑️</span> <span data-i18n="btn_clear">Clear All</span>
+            <span class="icon-slot" data-icon="trash-2"></span> <span data-i18n="btn_clear">Clear All</span>
           </button>
           <button class="action-comic-btn" id="btnShareTrade" title="Share Trade Link">
-            <span>🔗</span> <span data-i18n="btn_share">Share Trade</span>
+            <span class="icon-slot" data-icon="share-2"></span> <span data-i18n="btn_share">Share Trade</span>
           </button>
         </div>
 
@@ -277,7 +277,7 @@
         <div class="verdict-recommendation-card" id="verdictRecCard">
           <div class="rec-header">
             <div class="rec-title-wrap">
-              <span class="rec-badge-label" data-i18n="rec_badge_title">🤔 WORTH TRADING?</span>
+              <span class="rec-badge-label" data-i18n="rec_badge_title"><span class="icon-slot" data-icon="help-circle"></span> WORTH TRADING?</span>
               <span class="rec-verdict-badge rec-empty" id="recVerdictBadge" data-i18n="rec_status_empty">ADD ITEMS</span>
             </div>
           </div>
@@ -313,15 +313,15 @@
         
         <!-- You Give (Left) -->
         <div class="trade-side-panel you-side">
-          <div class="gpo-tracker-badge">🎒 YOUR OFFER</div>
+          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="package"></span> YOUR OFFER</div>
           <div class="side-header-bar">
             <div class="side-title-wrap">
-              <span class="side-icon-tag">🎒</span>
+              <span class="side-icon-tag icon-slot" data-icon="package"></span>
               <div>
                 <h3 class="side-title" data-i18n="you_give_title">YOU GIVE (YOUR OFFER)</h3>
                 <div class="side-sub-badges-row">
                   <span class="side-total-lc" id="youTotalLc">0.00 LC</span>
-                  <span class="side-demand-score-pill" id="youDemandPill">⭐ Demand: 0.0/10</span>
+                  <span class="side-demand-score-pill" id="youDemandPill"><span class="icon-slot" data-icon="star"></span> Demand: 0.0/10</span>
                 </div>
               </div>
             </div>
@@ -334,27 +334,27 @@
           <div class="slots-container" id="youSlotsGrid">
             <!-- Dynamic Slots will be rendered here -->
             <div class="add-slot-placeholder" onclick="openPickerModal('you')">
-              <span class="add-slot-icon">➕</span>
+              <span class="add-slot-icon icon-slot" data-icon="plus"></span>
               <span class="add-slot-text" data-i18n="click_to_add">Click to add item</span>
             </div>
           </div>
 
           <button class="side-bottom-add-btn" onclick="openPickerModal('you')">
-            <span>➕</span> <span data-i18n="btn_add_to_you">Add Item (You)</span>
+            <span class="icon-slot" data-icon="plus"></span> <span data-i18n="btn_add_to_you">Add Item (You)</span>
           </button>
         </div>
 
         <!-- They Offer (Right) -->
         <div class="trade-side-panel they-side">
-          <div class="gpo-tracker-badge">🤝 THEIR OFFER</div>
+          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="gift"></span> THEIR OFFER</div>
           <div class="side-header-bar">
             <div class="side-title-wrap">
-              <span class="side-icon-tag">🎁</span>
+              <span class="side-icon-tag icon-slot" data-icon="gift"></span>
               <div>
                 <h3 class="side-title" data-i18n="they_offer_title">THEY OFFER (THEIR OFFER)</h3>
                 <div class="side-sub-badges-row">
                   <span class="side-total-lc" id="theyTotalLc">0.00 LC</span>
-                  <span class="side-demand-score-pill" id="theyDemandPill">⭐ Demand: 0.0/10</span>
+                  <span class="side-demand-score-pill" id="theyDemandPill"><span class="icon-slot" data-icon="star"></span> Demand: 0.0/10</span>
                 </div>
               </div>
             </div>
@@ -367,13 +367,13 @@
           <div class="slots-container" id="theySlotsGrid">
             <!-- Dynamic Slots will be rendered here -->
             <div class="add-slot-placeholder" onclick="openPickerModal('they')">
-              <span class="add-slot-icon">➕</span>
+              <span class="add-slot-icon icon-slot" data-icon="plus"></span>
               <span class="add-slot-text" data-i18n="click_to_add">Click to add item</span>
             </div>
           </div>
 
           <button class="side-bottom-add-btn" onclick="openPickerModal('they')" style="background: var(--purple-fruit); color: #fff;">
-            <span>➕</span> <span data-i18n="btn_add_to_them">Add Item (Them)</span>
+            <span class="icon-slot" data-icon="plus"></span> <span data-i18n="btn_add_to_them">Add Item (Them)</span>
           </button>
         </div>
 
@@ -382,13 +382,13 @@
       <!-- Quick Add Item Catalog directly inside Trade View -->
       <div class="quick-catalog-section" style="margin-top: 1.5rem;">
         <div class="toolbar-panel" style="background: linear-gradient(135deg, #131929 0%, #1e263d 100%);">
-          <div class="gpo-tracker-badge">📦 QUICK CATALOG</div>
+          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="boxes"></span> QUICK CATALOG</div>
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
             <h3 style="color: var(--gold-beli); font-size: 1.25rem; text-shadow: 2px 2px 0px #000;">
-              <span>📦</span> <span data-i18n="catalog_title">ITEM CATALOG FOR TRADE (213 ITEMS)</span>
+              <span class="icon-slot" data-icon="boxes"></span> <span data-i18n="catalog_title">ITEM CATALOG FOR TRADE (213 ITEMS)</span>
             </h3>
             <span style="font-size: 0.82rem; color: var(--cyan-glow);" data-i18n="catalog_hint">
-              💡 Click [+ You] or [+ Them] on any card for instant adding!
+              <span class="icon-slot" data-icon="lightbulb"></span> Click [+ You] or [+ Them] on any card for instant adding!
             </span>
           </div>
 
@@ -411,13 +411,13 @@
           <div class="filter-pills-row" id="quickCategoryPillsRow">
             <span class="filter-category-label" data-i18n="label_category">Category:</span>
             <button class="filter-pill-btn active" data-qcat="all" data-i18n="cat_all">All (213)</button>
-            <button class="filter-pill-btn" data-qcat="fruits" data-i18n="cat_fruits">Devil Fruits 🍎</button>
-            <button class="filter-pill-btn" data-qcat="weapons" data-i18n="cat_weapons">Weapons ⚔️</button>
-            <button class="filter-pill-btn" data-qcat="chests" data-i18n="cat_chests">Chests 📦</button>
-            <button class="filter-pill-btn" data-qcat="accessories" data-i18n="cat_accessories">Accessories 👑</button>
-            <button class="filter-pill-btn" data-qcat="outfits" data-i18n="cat_outfits">Outfits & Armor 🥋</button>
-            <button class="filter-pill-btn" data-qcat="boats" data-i18n="cat_boats">Boats & Mounts ⛵</button>
-            <button class="filter-pill-btn" data-qcat="misc" data-i18n="cat_misc">Misc & Items 📜</button>
+            <button class="filter-pill-btn" data-qcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+            <button class="filter-pill-btn" data-qcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+            <button class="filter-pill-btn" data-qcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+            <button class="filter-pill-btn" data-qcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+            <button class="filter-pill-btn" data-qcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
+            <button class="filter-pill-btn" data-qcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
+            <button class="filter-pill-btn" data-qcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
           </div>
         </div>
 
@@ -434,7 +434,7 @@
       
       <!-- Filter & Search Toolbar -->
       <div class="toolbar-panel">
-        <div class="gpo-tracker-badge">📜 TIER LIST & VALUES</div>
+        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="scroll"></span> TIER LIST & VALUES</div>
         <div class="search-sort-row">
           <div class="search-input-box">
             <input type="text" id="searchInput" placeholder="Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)" data-i18n-placeholder="search_placeholder">
@@ -454,13 +454,13 @@
         <div class="filter-pills-row" id="categoryPillsRow">
           <span class="filter-category-label" data-i18n="label_category">Category:</span>
           <button class="filter-pill-btn active" data-cat="all" data-i18n="cat_all">All (213)</button>
-          <button class="filter-pill-btn" data-cat="fruits" data-i18n="cat_fruits">Devil Fruits 🍎</button>
-          <button class="filter-pill-btn" data-cat="weapons" data-i18n="cat_weapons">Weapons ⚔️</button>
-          <button class="filter-pill-btn" data-cat="chests" data-i18n="cat_chests">Chests 📦</button>
-          <button class="filter-pill-btn" data-cat="accessories" data-i18n="cat_accessories">Accessories 👑</button>
-          <button class="filter-pill-btn" data-cat="outfits" data-i18n="cat_outfits">Outfits & Armor 🥋</button>
-          <button class="filter-pill-btn" data-cat="boats" data-i18n="cat_boats">Boats & Mounts ⛵</button>
-          <button class="filter-pill-btn" data-cat="misc" data-i18n="cat_misc">Misc & Items 📜</button>
+          <button class="filter-pill-btn" data-cat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-cat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-cat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-cat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-cat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
+          <button class="filter-pill-btn" data-cat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
+          <button class="filter-pill-btn" data-cat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
         </div>
 
         <!-- Tiers Row -->
@@ -494,15 +494,15 @@
     <section id="sectionCommunity" class="tab-section community-view-container" style="display: none;">
       
       <div class="community-hero-card">
-        <div class="gpo-tracker-badge">🌐 OUR COMMUNITY</div>
-        <h2 data-i18n="community_title">💬 Community & Trading Chats</h2>
+        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="globe"></span> OUR COMMUNITY</div>
+        <h2 data-i18n="community_title"><span class="icon-slot" data-icon="message-square"></span> Community & Trading Chats</h2>
         <p data-i18n="community_desc">
           Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!
         </p>
         <div class="community-stats-pills">
-          <span class="community-pill" data-i18n="community_pill_active">⚡ Active Trading & Discussions</span>
-          <span class="community-pill" data-i18n="community_pill_rules">🛡️ Safe Trades & Moderation</span>
-          <span class="community-pill" data-i18n="community_pill_giveaways">🎁 Events & Giveaways</span>
+          <span class="community-pill" data-i18n="community_pill_active"><span class="icon-slot" data-icon="zap"></span> Active Trading & Discussions</span>
+          <span class="community-pill" data-i18n="community_pill_rules"><span class="icon-slot" data-icon="shield-check"></span> Safe Trades & Moderation</span>
+          <span class="community-pill" data-i18n="community_pill_giveaways"><span class="icon-slot" data-icon="gift"></span> Events & Giveaways</span>
         </div>
       </div>
 
@@ -514,10 +514,10 @@
           <div class="channel-card-top-glow"></div>
           <div class="channel-card-header">
             <div class="channel-badge-pill tg-badge">
-              <span>✈️</span> <span>Telegram Chat</span>
+              <span class="icon-slot" data-icon="send"></span> <span>Telegram Chat</span>
             </div>
             <div class="channel-badge-pill lang-badge" data-i18n="chat_lang_badge">
-              <span>🇷🇺</span> <span>Russian (Русский)</span>
+              <span class="icon-slot" data-icon="globe"></span> <span>Russian (Русский)</span>
             </div>
             <div class="channel-badge-pill status-badge">
               <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
@@ -527,19 +527,19 @@
           <div class="channel-profile-row">
             <div class="channel-avatar-box">
               <img src="images/gpocha_avatar.jpg" alt="Grand Piece Chat Avatar" class="channel-avatar-img" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
-              <span class="tg-mini-icon">✈️</span>
+              <span class="tg-mini-icon"><span class="icon-slot" data-icon="send"></span></span>
             </div>
             <div class="channel-meta-box">
               <h3 class="channel-title-text">(公婆) Grand Piece Chat</h3>
               <div class="channel-handle-text">@GPOcHa</div>
               <div class="channel-counts-row">
                 <span class="count-item-pill">
-                  <span class="count-icon">👥</span>
+                  <span class="count-icon"><span class="icon-slot" data-icon="users"></span></span>
                   <strong class="count-number">190+</strong>
                   <span class="count-lbl" data-i18n="members_label">Members</span>
                 </span>
                 <span class="count-item-pill online-pill">
-                  <span class="count-icon">🟢</span>
+                  <span class="count-icon"><span class="icon-slot" data-icon="check-circle-2" data-icon-class="icon-green"></span></span>
                   <strong class="count-number">35+</strong>
                   <span class="count-lbl" data-i18n="online_label">Online</span>
                 </span>
@@ -553,23 +553,23 @@
 
           <div class="channel-specs-box">
             <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_lang_label">🗣️ Language:</span>
-              <span class="spec-value" data-i18n="chat_spec_lang_val">🇷🇺 Russian (Русский язык)</span>
+              <span class="spec-label" data-i18n="chat_spec_lang_label"><span class="icon-slot" data-icon="globe"></span> Language:</span>
+              <span class="spec-value" data-i18n="chat_spec_lang_val">Russian (Русский язык)</span>
             </div>
             <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_topic_label">🎯 Focus:</span>
+              <span class="spec-label" data-i18n="chat_spec_topic_label"><span class="icon-slot" data-icon="crosshair"></span> Focus:</span>
               <span class="spec-value" data-i18n="chat_spec_topic_val">Trading, Values, Boss Raids & Co-op</span>
             </div>
             <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_access_label">🔓 Access:</span>
+              <span class="spec-label" data-i18n="chat_spec_access_label"><span class="icon-slot" data-icon="unlock"></span> Access:</span>
               <span class="spec-value" data-i18n="chat_spec_access_val">Public & Free to Join</span>
             </div>
           </div>
 
           <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="channel-join-btn tg-join-btn">
-            <span class="btn-icon">✈️</span>
+            <span class="btn-icon"><span class="icon-slot" data-icon="send"></span></span>
             <span class="btn-text" data-i18n="btn_join_tg">Join Telegram Chat (@GPOcHa)</span>
-            <span class="btn-arrow">➔</span>
+            <span class="btn-arrow icon-slot" data-icon="arrow-up-right"></span>
           </a>
         </div>
 
@@ -578,10 +578,10 @@
           <div class="channel-card-top-glow" style="background: radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.4) 0%, transparent 70%);"></div>
           <div class="channel-card-header">
             <div class="channel-badge-pill discord-badge">
-              <span>🎮</span> <span>Discord Server</span>
+              <span class="icon-slot" data-icon="gamepad-2"></span> <span>Discord Server</span>
             </div>
             <div class="channel-badge-pill lang-badge" data-i18n="discord_lang_badge">
-              <span>🇷🇺 🇬🇧</span> <span>RU & EN</span>
+              <span class="icon-slot" data-icon="globe"></span> <span>RU & EN</span>
             </div>
             <div class="channel-badge-pill status-badge">
               <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
@@ -591,19 +591,19 @@
           <div class="channel-profile-row">
             <div class="channel-avatar-box discord-avatar-box">
               <img src="images/fruit_trilogy_avatar.png" alt="Fruit Trilogy Avatar" class="channel-avatar-img">
-              <span class="discord-mini-icon">🎮</span>
+              <span class="discord-mini-icon"><span class="icon-slot" data-icon="gamepad-2"></span></span>
             </div>
             <div class="channel-meta-box">
               <h3 class="channel-title-text">Fruit Trilogy</h3>
               <div class="channel-handle-text">discord.gg/AxkxVfSnY</div>
               <div class="channel-counts-row">
                 <span class="count-item-pill">
-                  <span class="count-icon">👥</span>
+                  <span class="count-icon"><span class="icon-slot" data-icon="users"></span></span>
                   <strong class="count-number">240+</strong>
                   <span class="count-lbl" data-i18n="members_label">Members</span>
                 </span>
                 <span class="count-item-pill online-pill">
-                  <span class="count-icon">🟢</span>
+                  <span class="count-icon"><span class="icon-slot" data-icon="check-circle-2" data-icon-class="icon-green"></span></span>
                   <strong class="count-number">45+</strong>
                   <span class="count-lbl" data-i18n="online_label">Online</span>
                 </span>
@@ -617,23 +617,23 @@
 
           <div class="channel-specs-box">
             <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_lang_label">🗣️ Language:</span>
-              <span class="spec-value" data-i18n="discord_spec_lang_val">🇷🇺 Russian & 🇬🇧 English</span>
+              <span class="spec-label" data-i18n="chat_spec_lang_label"><span class="icon-slot" data-icon="globe"></span> Language:</span>
+              <span class="spec-value" data-i18n="discord_spec_lang_val">Russian & English</span>
             </div>
             <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_topic_label">🎯 Focus:</span>
+              <span class="spec-label" data-i18n="chat_spec_topic_label"><span class="icon-slot" data-icon="crosshair"></span> Focus:</span>
               <span class="spec-value" data-i18n="discord_spec_topic_val">Trading, Values, Boss Raids & Voice</span>
             </div>
             <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_access_label">🔓 Access:</span>
-              <span class="spec-value" data-i18n="chat_spec_access_val">Public & Free to Join</span>
+              <span class="spec-label" data-i18n="chat_spec_access_label"><span class="icon-slot" data-icon="unlock"></span> Access:</span>
+              <span class="spec-value" data-i18n="discord_spec_access_val">Public & Free to Join</span>
             </div>
           </div>
 
           <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="channel-join-btn discord-join-btn">
-            <span class="btn-icon">🎮</span>
+            <span class="btn-icon"><span class="icon-slot" data-icon="gamepad-2"></span></span>
             <span class="btn-text" data-i18n="btn_join_discord">Join Discord Server (discord.gg/AxkxVfSnY)</span>
-            <span class="btn-arrow">➔</span>
+            <span class="btn-arrow icon-slot" data-icon="arrow-up-right"></span>
           </a>
         </div>
 
@@ -645,7 +645,7 @@
     <section id="sectionGuide" class="tab-section guide-view-container" style="display: none;">
       
       <div class="merchant-hero-card" style="background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%);">
-        <h2 data-i18n="guide_title">📖 GPO Trading Rules & Guide</h2>
+        <h2 data-i18n="guide_title"><span class="icon-slot" data-icon="book-open"></span> GPO Trading Rules & Guide</h2>
         <p data-i18n="guide_desc">
           Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.
         </p>
@@ -653,7 +653,7 @@
 
       <!-- Fair GPO Trading Initiative Callout -->
       <div class="guide-intro-banner">
-        <div class="guide-intro-badge">🔰 FAIR GPO TRADING & NOVICE PROTECTION</div>
+        <div class="guide-intro-badge"><span class="icon-slot" data-icon="shield-check"></span> FAIR GPO TRADING & NOVICE PROTECTION</div>
         <h3 data-i18n="guide_mission_title">Official Rules & Protection for Beginner Traders</h3>
         <p data-i18n="guide_mission_desc">
           This platform strictly follows official Grand Piece Online trading rules. All item values are taken directly from the official trading tier list. Created for maximum convenience, especially for players who are just starting to trade, so they can understand accurate item prices and never make bad trades!
@@ -669,7 +669,7 @@
           </p>
           <div style="margin-top: 1rem; padding: 0.75rem; background: #090e1b; border: 2px solid #000; border-radius: 6px;">
             <p style="font-size: 0.82rem; color: var(--cyan-glow);" data-i18n="guide_rule1_example">
-              💡 Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.
+              <span class="icon-slot" data-icon="lightbulb"></span> Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.
             </p>
           </div>
         </div>
@@ -681,7 +681,7 @@
           </p>
           <div style="margin-top: 1rem; padding: 0.75rem; background: #090e1b; border: 2px solid #000; border-radius: 6px;">
             <p style="font-size: 0.82rem; color: var(--crimson-glow);" data-i18n="guide_rule2_example">
-              ⚠️ Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!
+              <span class="icon-slot" data-icon="alert-triangle"></span> Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!
             </p>
           </div>
         </div>
@@ -713,9 +713,9 @@
     <div class="comic-modal-card">
       <div class="modal-header-bar">
         <h3 class="modal-header-title">
-          <span>📦</span> <span id="pickerModalTitle" data-i18n="picker_title">Select Item to Trade</span>
+          <span class="icon-slot" data-icon="package"></span> <span id="pickerModalTitle" data-i18n="picker_title">Select Item to Trade</span>
         </h3>
-        <button class="modal-close-btn" onclick="closePickerModal()">✕</button>
+        <button class="modal-close-btn" onclick="closePickerModal()"><span class="icon-slot" data-icon="x"></span></button>
       </div>
 
       <div class="modal-search-row">
@@ -724,13 +724,13 @@
         </div>
         <div class="filter-pills-row" id="pickerCategoryPills">
           <button class="filter-pill-btn active" data-pcat="all" data-i18n="cat_all">All (213)</button>
-          <button class="filter-pill-btn" data-pcat="fruits" data-i18n="cat_fruits">Devil Fruits 🍎</button>
-          <button class="filter-pill-btn" data-pcat="weapons" data-i18n="cat_weapons">Weapons ⚔️</button>
-          <button class="filter-pill-btn" data-pcat="chests" data-i18n="cat_chests">Chests 📦</button>
-          <button class="filter-pill-btn" data-pcat="accessories" data-i18n="cat_accessories">Accessories 👑</button>
-          <button class="filter-pill-btn" data-pcat="outfits" data-i18n="cat_outfits">Outfits & Armor 🥋</button>
-          <button class="filter-pill-btn" data-pcat="boats" data-i18n="cat_boats">Boats & Mounts ⛵</button>
-          <button class="filter-pill-btn" data-pcat="misc" data-i18n="cat_misc">Misc & Items 📜</button>
+          <button class="filter-pill-btn" data-pcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-pcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-pcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-pcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-pcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
+          <button class="filter-pill-btn" data-pcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
+          <button class="filter-pill-btn" data-pcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
         </div>
       </div>
 
@@ -747,9 +747,9 @@
     <div class="comic-modal-card" style="max-width: 650px;">
       <div class="modal-header-bar">
         <h3 class="modal-header-title">
-          <span>🔍</span> <span id="detailModalTitle" data-i18n="detail_modal_title">Item Details</span>
+          <span class="icon-slot" data-icon="search"></span> <span id="detailModalTitle" data-i18n="detail_modal_title">Item Details</span>
         </h3>
-        <button class="modal-close-btn" onclick="closeDetailModal()">✕</button>
+        <button class="modal-close-btn" onclick="closeDetailModal()"><span class="icon-slot" data-icon="x"></span></button>
       </div>
 
       <div class="detail-modal-body">
@@ -781,15 +781,15 @@
           </div>
 
           <a id="detailWikiLink" href="#" target="_blank" class="detail-wiki-link">
-            <span>🌐</span> <span data-i18n="detail_wiki_btn">Open page on GPO Fandom Wiki ↗</span>
+            <span class="icon-slot" data-icon="external-link"></span> <span data-i18n="detail_wiki_btn">Open page on GPO Fandom Wiki ↗</span>
           </a>
 
           <div class="card-actions-row" style="margin-top: 0.8rem;">
             <button class="quick-add-btn add-you" id="detailAddYouBtn" style="padding: 0.6rem;">
-              <span>➕</span> <span data-i18n="add_to_you">Add to You</span>
+              <span class="icon-slot" data-icon="plus"></span> <span data-i18n="add_to_you">Add to You</span>
             </button>
             <button class="quick-add-btn add-them" id="detailAddThemBtn" style="padding: 0.6rem;">
-              <span>➕</span> <span data-i18n="add_to_them">Add to Them</span>
+              <span class="icon-slot" data-icon="plus"></span> <span data-i18n="add_to_them">Add to Them</span>
             </button>
           </div>
         </div>
@@ -800,19 +800,20 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-content">
-      <div class="footer-title" data-i18n="footer_title">⚓ GRAND PIECE ONLINE TRADING VALUE HUB</div>
+      <div class="footer-title" data-i18n="footer_title"><span class="icon-slot" data-icon="anchor"></span> GRAND PIECE ONLINE TRADING VALUE HUB</div>
       <p class="footer-desc" data-i18n="footer_text">
         Created by the Grand Piece Online community in full accordance with GPO trading rules. All prices are synchronized with the official Trading Tier List document. Designed for player convenience and beginners to help understand real item values and make fair, profitable trades.
       </p>
       <div class="footer-links-row">
-        <a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" class="footer-link-item" data-i18n="footer_link_doc">📄 Official Google Doc Tier List</a>
-        <a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" class="footer-link-item" data-i18n="footer_link_roblox">🎮 GPO Roblox Page</a>
-        <a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" class="footer-link-item" data-i18n="footer_link_wiki">📚 Grand Piece Online Wiki</a>
+        <a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" class="footer-link-item" data-i18n="footer_link_doc"><span class="icon-slot" data-icon="file-text"></span> Official Google Doc Tier List</a>
+        <a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" class="footer-link-item" data-i18n="footer_link_roblox"><span class="icon-slot" data-icon="gamepad-2"></span> GPO Roblox Page</a>
+        <a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" class="footer-link-item" data-i18n="footer_link_wiki"><span class="icon-slot" data-icon="book-open"></span> Grand Piece Online Wiki</a>
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
+  <script src="icons.js"></script>
   <script src="items_data.js"></script>
   <script src="app.js"></script>
 </body>

@@ -81,20 +81,20 @@
       hero_desc: "All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!",
       hero_callout_title: "Fair Trading & GPO Economy Rules:",
       hero_callout_desc: "This entire site follows GPO rules. All values are taken directly from the official tier list. Created for player convenience and especially for beginners to understand approximate item prices and avoid bad trades!",
-      badge_updated: "📅 Updated: 10/11/2026",
-      badge_items_count: "⚔️ 213 Items",
-      badge_official_doc: "⭐ Official GPO Doc",
-      badge_currency: "🪙 SP Reset = 1 pt | 1 LC = 233 pts",
+      badge_updated: "Updated: 10/11/2026",
+      badge_items_count: "213 Items",
+      badge_official_doc: "Official GPO Doc",
+      badge_currency: "SP Reset = 1 pt | 1 LC = 233 pts",
       label_demand_short: "Demand",
-      rec_badge_title: "🤔 WORTH TRADING?",
+      rec_badge_title: "WORTH TRADING?",
       rec_status_empty: "ADD ITEMS",
-      rec_status_big_win: "🔥 BIG WIN! HIGHLY RECOMMENDED",
-      rec_status_win: "✅ PROFITABLE! WORTH TRADING",
-      rec_status_upgrade: "💎 GREAT UPGRADE! WORTH OVERPAYING",
-      rec_status_fair: "🤝 FAIR TRADE! BALANCED",
-      rec_status_trap: "⚠️ DEMAND TRAP! DO NOT TRADE",
-      rec_status_lose: "❌ NOT WORTH TRADING (LOSS)",
-      rec_status_big_lose: "💀 HUGE LOSS! TERRIBLE TRADE",
+      rec_status_big_win: "BIG WIN! HIGHLY RECOMMENDED",
+      rec_status_win: "PROFITABLE! WORTH TRADING",
+      rec_status_upgrade: "GREAT UPGRADE! WORTH OVERPAYING",
+      rec_status_fair: "FAIR TRADE! BALANCED",
+      rec_status_trap: "DEMAND TRAP! DO NOT TRADE",
+      rec_status_lose: "NOT WORTH TRADING (LOSS)",
+      rec_status_big_lose: "HUGE LOSS! TERRIBLE TRADE",
       rec_advice_empty: "Add items to both sides to evaluate nominal points profit and item demand / liquidity risk.",
       rec_advice_big_win: "Great trade! You gain a solid value profit and receive items with strong liquidity. Highly recommended to accept!",
       rec_advice_win: "Profitable trade! You gain points and the demand of offered items is good. Safe and worthy trade.",
@@ -106,14 +106,14 @@
       rec_your_demand: "Your Demand:",
       rec_their_demand: "Their Demand:",
       verdict_empty: "ADD ITEMS TO TRADE",
-      verdict_big_win: "🔥 BIG WIN!",
-      verdict_win: "✅ WIN (PROFIT)!",
-      verdict_fair: "🤝 FAIR TRADE",
-      verdict_lose: "❌ LOSE (LOSS)!",
-      verdict_big_lose: "💀 HUGE LOSE!",
+      verdict_big_win: "BIG WIN!",
+      verdict_win: "WIN (PROFIT)!",
+      verdict_fair: "FAIR TRADE",
+      verdict_lose: "LOSE (LOSS)!",
+      verdict_big_lose: "HUGE LOSE!",
       demand_neutral_note: "Equal demand on both sides",
-      demand_warning_you: "⚠️ Warning: You are giving high demand items for low liquidity items!",
-      demand_bonus_them: "💎 Great deal: They are offering highly liquid high-demand items!",
+      demand_warning_you: "Warning: You are giving high demand items for low liquidity items!",
+      demand_bonus_them: "Great deal: They are offering highly liquid high-demand items!",
       btn_swap: "Swap Sides",
       btn_clear: "Clear All",
       btn_share: "Share Trade",
@@ -130,69 +130,69 @@
       slot_btn_remove: "Remove",
       search_placeholder: "Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)",
       sort_tier_desc: "By Tier (Top to Bottom)",
-      sort_val_desc: "By Value: High → Low",
-      sort_val_asc: "By Value: Low → High",
+      sort_val_desc: "By Value: High -> Low",
+      sort_val_asc: "By Value: Low -> High",
       sort_demand_desc: "By Demand (High Demand)",
       sort_name_asc: "Alphabetical (A-Z)",
       label_category: "Category:",
       label_tier: "Tier:",
       cat_all: "All (213)",
-      cat_fruits: "Fruits (25) 🍎",
-      cat_weapons: "Weapons (49) ⚔️",
-      cat_chests: "Chests (6) 📦",
-      cat_accessories: "Accessories (55) 👑",
-      cat_outfits: "Outfits (27) 🥋",
-      cat_boats: "Boats (5) ⛵",
-      cat_misc: "Misc (46) 📜",
+      cat_fruits: "Fruits (25)",
+      cat_weapons: "Weapons (49)",
+      cat_chests: "Chests (6)",
+      cat_accessories: "Accessories (55)",
+      cat_outfits: "Outfits (27)",
+      cat_boats: "Boats (5)",
+      cat_misc: "Misc (46)",
       tier_all: "All Tiers",
       catalog_title: "ITEM CATALOG FOR TRADE (213 ITEMS)",
-      catalog_hint: "💡 Click [+ You] or [+ Them] on any card for instant adding!",
-      no_items_found: "🔍 No items found",
+      catalog_hint: "Click [+ You] or [+ Them] on any card for instant adding!",
+      no_items_found: "No items found",
       no_items_sub: "Try adjusting your search query or filters",
-      community_title: "💬 Community & Trading Chats",
+      community_title: "Community & Trading Chats",
       community_desc: "Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!",
-      community_pill_active: "⚡ Active Trading & Discussions",
-      community_pill_rules: "🛡️ Safe Trades & Moderation",
-      community_pill_giveaways: "🎁 Events & Giveaways",
-      chat_lang_badge: "Russian (Русский) 🇷🇺",
+      community_pill_active: "Active Trading & Discussions",
+      community_pill_rules: "Safe Trades & Moderation",
+      community_pill_giveaways: "Events & Giveaways",
+      chat_lang_badge: "Russian (Русский)",
       chat_active_badge: "Active",
       members_label: "Members",
       online_label: "Online",
       chat_desc: "Grand Piece Online chat: here you can chat, find profitable trades, check latest prices, and team up for bosses and dungeons! Respect server rules and good luck!",
-      chat_spec_lang_label: "🗣️ Language:",
-      chat_spec_lang_val: "🇷🇺 Russian (Русский язык)",
-      chat_spec_topic_label: "🎯 Focus:",
+      chat_spec_lang_label: "Language:",
+      chat_spec_lang_val: "Russian (Русский язык)",
+      chat_spec_topic_label: "Focus:",
       chat_spec_topic_val: "Trading, Values, Boss Raids & Co-op",
-      chat_spec_access_label: "🔓 Access:",
+      chat_spec_access_label: "Access:",
       chat_spec_access_val: "Public & Free to Join",
       btn_join_tg: "Join Telegram Chat (@GPOcHa)",
-      discord_lang_badge: "Russian & English 🇷🇺 🇬🇧",
+      discord_lang_badge: "Russian & English",
       discord_card_title: "Fruit Trilogy",
       discord_card_feature: "Trading, Voice, Raids",
       discord_card_desc: "Fruit Trilogy Grand Piece Online Discord community: here you can trade items, check latest prices, hang out in voice channels, and team up for bosses and dungeons! Respect server rules and good luck!",
-      discord_spec_lang_val: "🇷🇺 Russian & 🇬🇧 English",
+      discord_spec_lang_val: "Russian & English",
       discord_spec_topic_val: "Trading, Values, Boss Raids & Voice",
       btn_join_discord: "Join Discord Server (Fruit Trilogy)",
-      drawer_discord_label: "🎮 DISCORD SERVER",
+      drawer_discord_label: "DISCORD SERVER",
       drawer_subtitle: "Navigation Menu",
-      drawer_nav_label: "🧭 TABS & SECTIONS",
+      drawer_nav_label: "TABS & SECTIONS",
       drawer_calc_desc: "Calculate win/loss trades",
       drawer_tier_desc: "213 items with abbreviations",
       drawer_comm_desc: "Telegram @GPOcHa chat & trade",
       drawer_guide_desc: "Rules & tips from official doc",
-      drawer_comm_label: "✈️ TELEGRAM CHAT",
-      drawer_btn_join: "Join ➔",
+      drawer_comm_label: "TELEGRAM CHAT",
+      drawer_btn_join: "Join",
       drawer_sound: "Sound",
-      guide_title: "📖 GPO Trading Rules & Guide",
+      guide_title: "GPO Trading Rules & Guide",
       guide_desc: "Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.",
       guide_mission_title: "Official GPO Rules & Beginner Trader Protection",
       guide_mission_desc: "This entire site operates strictly in accordance with official Grand Piece Online trading rules. All values are sourced directly from the official trading tier list. Built for convenient use and designed to help novice traders understand realistic item pricing so they never make bad trades!",
       guide_rule1_title: "1. Hierarchy & Ranking Order",
       guide_rule1_desc: "An item's position within its tier strictly determines its value! Items placed higher in a tier are always worth more than those below. Being in the same tier does NOT guarantee equal value.",
-      guide_rule1_example: "💡 Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.",
+      guide_rule1_example: "Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.",
       guide_rule2_title: "2. The Unstable Items Trap",
       guide_rule2_desc: "Items in the Very Unstable category (e.g. Valkyrie Helmets, Gift of Fruit, Clown Wig) do not have fixed values. Their price fluctuates heavily based on hype and individual buyers.",
-      guide_rule2_example: "⚠️ Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!",
+      guide_rule2_example: "Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!",
       guide_rule3_title: "3. Trading Currency: Chests (LC & MC)",
       guide_rule3_desc: "Legendary Fruit Chest (LC) is the universally accepted standard currency in the game. Most traders express values in number of LC chests. A Mythical Chest (MC) is usually valued at 10-12 LC.",
       guide_rule4_title: "4. Demand Over Nominal Value",
@@ -206,27 +206,27 @@
       detail_lc: "LC equivalent:",
       detail_demand: "Demand:",
       detail_trend: "Market trend:",
-      detail_wiki_btn: "Open page on GPO Fandom Wiki ↗",
+      detail_wiki_btn: "Open page on GPO Fandom Wiki",
       add_to_you: "Add to You",
       add_to_them: "Add to Them",
-      footer_title: "⚓ GRAND PIECE ONLINE TRADING VALUE HUB",
+      footer_title: "GRAND PIECE ONLINE TRADING VALUE HUB",
       footer_text: "This entire site follows GPO rules, with all prices taken directly from the official tier list. Created for convenient player use and beginner traders to help them understand approximate item values and avoid bad trades.",
-      footer_link_doc: "📄 Official Google Doc Tier List",
-      footer_link_roblox: "🎮 GPO Roblox Page",
-      footer_link_wiki: "📚 Grand Piece Online Wiki",
+      footer_link_doc: "Official Google Doc Tier List",
+      footer_link_roblox: "GPO Roblox Page",
+      footer_link_wiki: "Grand Piece Online Wiki",
       share_copied: "Trade link copied to clipboard!",
       demand_labels: {
-        "Extremely High": "Extremely High 🔥",
-        "High": "High Demand ⭐",
+        "Extremely High": "Extremely High",
+        "High": "High Demand",
         "Medium": "Medium Demand",
-        "Low": "Low Demand 💤",
-        "Unstable": "Unstable ⚡"
+        "Low": "Low Demand",
+        "Unstable": "Unstable"
       },
       trend_labels: {
-        "Rising": "Rising ↗",
-        "Stable": "Stable →",
-        "Dropping": "Dropping ↘",
-        "Fluctuating": "Fluctuating ⚡"
+        "Rising": "Rising",
+        "Stable": "Stable",
+        "Dropping": "Dropping",
+        "Fluctuating": "Fluctuating"
       }
     },
     ru: {
@@ -239,20 +239,20 @@
       hero_desc: "Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!",
       hero_callout_title: "Честные трейды по правилам GPO:",
       hero_callout_desc: "Весь этот сайт работает по правилам GPO, все цены взяты с официального тир-листа. Создано для удобного использования и игроков, которые только начинают трейдиться, чтобы понять примерные цены на вещи и не делать плохие трейды!",
-      badge_updated: "📅 Обновление: 10/11/2026",
-      badge_items_count: "⚔️ 213 Предметов",
-      badge_official_doc: "⭐ Официальный GPO Doc",
-      badge_currency: "🪙 SP Reset = 1 pt | 1 LC = 233 pts",
+      badge_updated: "Обновление: 10/11/2026",
+      badge_items_count: "213 Предметов",
+      badge_official_doc: "Официальный GPO Doc",
+      badge_currency: "SP Reset = 1 pt | 1 LC = 233 pts",
       label_demand_short: "Спрос",
-      rec_badge_title: "🤔 СТОИТ ЛИ ТРЕЙДИТЬСЯ?",
+      rec_badge_title: "СТОИТ ЛИ ТРЕЙДИТЬСЯ?",
       rec_status_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
-      rec_status_big_win: "🔥 ОТЛИЧНЫЙ ВИН! ОДНОЗНАЧНО ДА",
-      rec_status_win: "✅ ВЫГОДНО! СТОИТ ТРЕЙДИТЬСЯ",
-      rec_status_upgrade: "💎 ВЫГОДНЫЙ АПГРЕЙД! СТОИТ ПЕРЕПЛАТИТЬ",
-      rec_status_fair: "🤝 РАВНЫЙ ТРЕЙД! СБАЛАНСИРОВАНО",
-      rec_status_trap: "⚠️ ЛОВУШКА СПРОСА! НЕ СТОИТ ТРЕЙДИТЬСЯ",
-      rec_status_lose: "❌ НЕ СТОИТ ТРЕЙДИТЬСЯ (УБЫТОК)",
-      rec_status_big_lose: "💀 ОГРОМНЫЙ СЛИВ! ОТКЛОНЯЙТЕ",
+      rec_status_big_win: "ОТЛИЧНЫЙ ВИН! ОДНОЗНАЧНО ДА",
+      rec_status_win: "ВЫГОДНО! СТОИТ ТРЕЙДИТЬСЯ",
+      rec_status_upgrade: "ВЫГОДНЫЙ АПГРЕЙД! СТОИТ ПЕРЕПЛАТИТЬ",
+      rec_status_fair: "РАВНЫЙ ТРЕЙД! СБАЛАНСИРОВАНО",
+      rec_status_trap: "ЛОВУШКА СПРОСА! НЕ СТОИТ ТРЕЙДИТЬСЯ",
+      rec_status_lose: "НЕ СТОИТ ТРЕЙДИТЬСЯ (УБЫТОК)",
+      rec_status_big_lose: "ОГРОМНЫЙ СЛИВ! ОТКЛОНЯЙТЕ",
       rec_advice_empty: "Добавьте предметы с обеих сторон, чтобы оценить прибыль по очкам и риски ликвидности / спроса.",
       rec_advice_big_win: "Отличный трейд! Вы получаете солидный плюс по очкам и предметы с высоким спросом. Однозначно принимайте!",
       rec_advice_win: "Выгодная сделка! Вы в плюсе по очкам, а спрос полученных предметов на хорошем уровне. Стоит соглашаться.",
@@ -264,14 +264,14 @@
       rec_your_demand: "Ваш спрос:",
       rec_their_demand: "Их спрос:",
       verdict_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
-      verdict_big_win: "🔥 ОГРОМНЫЙ ВИН!",
-      verdict_win: "✅ ВИН (ВЫГОДНО)!",
-      verdict_fair: "🤝 РАВНЫЙ ТРЕЙД",
-      verdict_lose: "❌ ЛУЗ (В УБЫТОК)!",
-      verdict_big_lose: "💀 ОГРОМНЫЙ СЛИВ!",
+      verdict_big_win: "ОГРОМНЫЙ ВИН!",
+      verdict_win: "ВИН (ВЫГОДНО)!",
+      verdict_fair: "РАВНЫЙ ТРЕЙД",
+      verdict_lose: "ЛУЗ (В УБЫТОК)!",
+      verdict_big_lose: "ОГРОМНЫЙ СЛИВ!",
       demand_neutral_note: "Равновесный спрос по обе стороны",
-      demand_warning_you: "⚠️ Предупреждение: вы отдаете предметы с очень высоким спросом за менее ликвидные вещи!",
-      demand_bonus_them: "💎 Отличный трейд: вам предлагают высоколиквидные предметы с отличным спросом!",
+      demand_warning_you: "Предупреждение: вы отдаете предметы с очень высоким спросом за менее ликвидные вещи!",
+      demand_bonus_them: "Отличный трейд: вам предлагают высоколиквидные предметы с отличным спросом!",
       btn_swap: "Поменять стороны",
       btn_clear: "Очистить всё",
       btn_share: "Поделиться трейдом",
@@ -288,69 +288,69 @@
       slot_btn_remove: "Удалить",
       search_placeholder: "Поиск предмета по названию или аббревиатуре (BOS, ASE, CC, Mochi, Око, Леденец...)",
       sort_tier_desc: "По тиру (Сверху вниз)",
-      sort_val_desc: "По ценности: Высокая → Низкая",
-      sort_val_asc: "По ценности: Низкая → Высокая",
+      sort_val_desc: "По ценности: Высокая -> Низкая",
+      sort_val_asc: "По ценности: Низкая -> Высокая",
       sort_demand_desc: "По спросу (Высокий спрос)",
       sort_name_asc: "По алфавиту (А-Я / A-Z)",
       label_category: "Категория:",
       label_tier: "Тир:",
       cat_all: "Все (213)",
-      cat_fruits: "Фрукты (25) 🍎",
-      cat_weapons: "Оружие (49) ⚔️",
-      cat_chests: "Сундуки (6) 📦",
-      cat_accessories: "Аксессуары (55) 👑",
-      cat_outfits: "Костюмы (27) 🥋",
-      cat_boats: "Лодки (5) ⛵",
-      cat_misc: "Разное (46) 📜",
+      cat_fruits: "Фрукты (25)",
+      cat_weapons: "Оружие (49)",
+      cat_chests: "Сундуки (6)",
+      cat_accessories: "Аксессуары (55)",
+      cat_outfits: "Костюмы (27)",
+      cat_boats: "Лодки (5)",
+      cat_misc: "Разное (46)",
       tier_all: "Все Тиры",
       catalog_title: "КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)",
-      catalog_hint: "💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
-      no_items_found: "🔍 Предметы не найдены",
+      catalog_hint: "Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
+      no_items_found: "Предметы не найдены",
       no_items_sub: "Попробуйте изменить поисковый запрос или фильтры",
-      community_title: "💬 Сообщество и Трейдинг Чаты GPO",
+      community_title: "Сообщество и Трейдинг Чаты GPO",
       community_desc: "Присоединяйтесь к нашему официальному сообществу, трейдитесь с игроками, находите пати на рейды и следите за актуальными ценами!",
-      community_pill_active: "⚡ Активные трейды и общение",
-      community_pill_rules: "🛡️ Безопасные сделки и правила",
-      community_pill_giveaways: "🎁 Ивенты и раздачи",
-      chat_lang_badge: "Русский язык 🇷🇺",
+      community_pill_active: "Активные трейды и общение",
+      community_pill_rules: "Безопасные сделки и правила",
+      community_pill_giveaways: "Ивенты и раздачи",
+      chat_lang_badge: "Русский язык",
       chat_active_badge: "Активен",
       members_label: "Участников",
       online_label: "Онлайн",
       chat_desc: "Чат по Grand Piece Online: здесь можно пообщаться, найти выгодный трейд, узнать свежие цены и собрать команду на боссов и данжи! Самое главное — соблюдать правила сервера.",
-      chat_spec_lang_label: "🗣️ Язык:",
-      chat_spec_lang_val: "🇷🇺 Русский язык",
-      chat_spec_topic_label: "🎯 Тематика:",
+      chat_spec_lang_label: "Язык:",
+      chat_spec_lang_val: "Русский язык",
+      chat_spec_topic_label: "Тематика:",
       chat_spec_topic_val: "Трейдинг, Цены, Рейды на боссов и общение",
-      chat_spec_access_label: "🔓 Доступ:",
+      chat_spec_access_label: "Доступ:",
       chat_spec_access_val: "Открытый чат для всех",
       btn_join_tg: "Войти в Telegram Чат (@GPOcHa)",
-      discord_lang_badge: "Русский & English 🇷🇺 🇬🇧",
+      discord_lang_badge: "Русский & English",
       discord_card_title: "Fruit Trilogy",
       discord_card_feature: "Трейды, общение, рейды",
       discord_card_desc: "Discord-сервер Fruit Trilogy по Grand Piece Online: здесь можно пообщаться, найти выгодный трейд, узнать свежие цены и собрать команду на боссов и данжи! Самое главное — соблюдать правила сервера.",
-      discord_spec_lang_val: "🇷🇺 Русский и 🇬🇧 Английский",
+      discord_spec_lang_val: "Русский и Английский",
       discord_spec_topic_val: "Трейдинг, Цены, Рейды на боссов и голосовые каналы",
       btn_join_discord: "Войти в Discord (Fruit Trilogy)",
-      drawer_discord_label: "🎮 НАШ DISCORD",
+      drawer_discord_label: "НАШ DISCORD",
       drawer_subtitle: "Меню навигации",
-      drawer_nav_label: "🧭 ВКЛАДКИ И РАЗДЕЛЫ",
+      drawer_nav_label: "ВКЛАДКИ И РАЗДЕЛЫ",
       drawer_calc_desc: "Расчёт трейдов на выгоду",
       drawer_tier_desc: "213 предметов с аббревиатурами",
       drawer_comm_desc: "Чат и трейды @GPOcHa",
       drawer_guide_desc: "Правила и советы из тир-листа",
-      drawer_comm_label: "✈️ НАШ ТЕЛЕГРАМ ЧАТ",
-      drawer_btn_join: "Войти ➔",
+      drawer_comm_label: "НАШ ТЕЛЕГРАМ ЧАТ",
+      drawer_btn_join: "Войти",
       drawer_sound: "Звук",
-      guide_title: "📖 Правила и Советы по Трейдингу GPO",
+      guide_title: "Правила и Советы по Трейдингу GPO",
       guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
       guide_mission_title: "Официальные правила GPO и защита начинающих игроков",
       guide_mission_desc: "Весь этот сайт работает по официальным правилам торговли Grand Piece Online, все цены взяты напрямую с официального тир-листа. Проект создан для максимального удобства и в помощь игрокам, которые только начинают трейдиться, чтобы они поняли примерные цены на вещи и не делали плохие трейды!",
       guide_rule1_title: "1. Иерархия и Порядковый номер",
       guide_rule1_desc: "Положение вещи в тире строго определяет её ценность! Первые предметы в тире всегда ценнее тех, что находятся ниже. Нахождение в одном тире НЕ гарантирует одинаковую цену.",
-      guide_rule1_example: "💡 Пример: All Seeing Eye (ASE) стоит выше, чем Troll Face и World Ender в том же тире A+.",
+      guide_rule1_example: "Пример: All Seeing Eye (ASE) стоит выше, чем Troll Face и World Ender в том же тире A+.",
       guide_rule2_title: "2. Ловушка Нестабильных предметов (Unstable)",
       guide_rule2_desc: "Предметы из категории Very Unstable (например, Valkyrie Helmets, Gift of Fruit, Clown Wig) не имеют фиксированной стоимости. Их цена колеблется в зависимости от хайпа и конкретного покупателя.",
-      guide_rule2_example: "⚠️ Будьте осторожны: не отдавайте стабильные ликвидные фрукты (Mochi, Venom, Pika) за вещи с нестабильным спросом!",
+      guide_rule2_example: "Будьте осторожны: не отдавайте стабильные ликвидные фрукты (Mochi, Venom, Pika) за вещи с нестабильным спросом!",
       guide_rule3_title: "3. Валюта Обмена: Сундуки (LC и MC)",
       guide_rule3_desc: "Legendary Fruit Chest (LC) — общепринятая стандартная валюта в игре. Большинство трейдеров выражают стоимость предметов в количестве сундуков LC. Мифический сундук (MC) обычно приравнивается к 10-12 LC.",
       guide_rule4_title: "4. Спрос (Demand) важнее номинала",
@@ -364,33 +364,57 @@
       detail_lc: "Эквивалент в LC:",
       detail_demand: "Спрос (Demand):",
       detail_trend: "Тренд на рынке:",
-      detail_wiki_btn: "Открыть страницу на GPO Fandom Wiki ↗",
+      detail_wiki_btn: "Открыть страницу на GPO Fandom Wiki",
       add_to_you: "Добавить Себе",
       add_to_them: "Добавить Игроку",
-      footer_title: "⚓ GRAND PIECE ONLINE TRADING VALUE HUB",
+      footer_title: "GRAND PIECE ONLINE TRADING VALUE HUB",
       footer_text: "Весь этот сайт работает по правилам GPO, все цены взяты с официального тир-листа. Создано для удобного использования и игроков, которые только начинают трейдиться, чтобы они поняли примерные цены на вещи и не делали плохие трейды.",
-      footer_link_doc: "📄 Официальный Google Doc Tier List",
-      footer_link_roblox: "🎮 Страница GPO в Roblox",
-      footer_link_wiki: "📚 Grand Piece Online Wiki",
+      footer_link_doc: "Официальный Google Doc Tier List",
+      footer_link_roblox: "Страница GPO в Roblox",
+      footer_link_wiki: "Grand Piece Online Wiki",
       share_copied: "Ссылка на трейд скопирована в буфер обмена!",
       demand_labels: {
-        "Extremely High": "Огромный спрос 🔥",
-        "High": "Высокий спрос ⭐",
+        "Extremely High": "Огромный спрос",
+        "High": "Высокий спрос",
         "Medium": "Средний спрос",
-        "Low": "Низкий спрос 💤",
-        "Unstable": "Нестабильный ⚡"
+        "Low": "Низкий спрос",
+        "Unstable": "Нестабильный"
       },
       trend_labels: {
-        "Rising": "Растет ↗",
-        "Stable": "Стабилен →",
-        "Dropping": "Падает ↘",
-        "Fluctuating": "Колеблется ⚡"
+        "Rising": "Растет",
+        "Stable": "Стабилен",
+        "Dropping": "Падает",
+        "Fluctuating": "Колеблется"
       }
     }
   };
 
   function t(key) {
     return translations[currentLang][key] || key;
+  }
+
+  function renderIcons(container = document) {
+    if (!window.getIcon) return;
+    container.querySelectorAll('[data-icon]').forEach(el => {
+      const icon = el.getAttribute('data-icon');
+      const extraClass = el.getAttribute('data-icon-class') || '';
+      if (icon) {
+        el.innerHTML = window.getIcon(icon, extraClass);
+      }
+    });
+  }
+
+  function getCategoryIcon(cat) {
+    const map = {
+      fruits: 'apple',
+      weapons: 'swords',
+      chests: 'package',
+      accessories: 'crown',
+      outfits: 'shirt',
+      boats: 'ship',
+      misc: 'sparkles'
+    };
+    return map[cat] || 'package';
   }
 
   function applyLanguage() {
@@ -410,20 +434,17 @@
       }
     });
 
-    const flagEl = document.getElementById('langFlag');
     const codeEl = document.getElementById('langCode');
-    if (flagEl && codeEl) {
-      flagEl.textContent = currentLang === 'ru' ? '🇷🇺' : '🇬🇧';
+    if (codeEl) {
       codeEl.textContent = currentLang.toUpperCase();
     }
 
-    const drawerFlagEl = document.getElementById('drawerLangFlag');
     const drawerCodeEl = document.getElementById('drawerLangCode');
-    if (drawerFlagEl && drawerCodeEl) {
-      drawerFlagEl.textContent = currentLang === 'ru' ? '🇷🇺' : '🇬🇧';
+    if (drawerCodeEl) {
       drawerCodeEl.textContent = currentLang === 'ru' ? 'Русский' : 'English';
     }
 
+    renderIcons();
     renderItemsGrid();
     renderQuickItemsGrid();
     renderCalculatorSlots();
@@ -483,8 +504,9 @@
     // Update Side Demand Badges
     const youPill = document.getElementById('youDemandPill');
     const theyPill = document.getElementById('theyDemandPill');
-    if (youPill) youPill.innerHTML = `⭐ ${t('label_demand_short')}: <strong>${you.count > 0 ? you.avgDemand : '0.0'}/10</strong>`;
-    if (theyPill) theyPill.innerHTML = `⭐ ${t('label_demand_short')}: <strong>${they.count > 0 ? they.avgDemand : '0.0'}/10</strong>`;
+    const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
+    if (youPill) youPill.innerHTML = `${starIcon} ${t('label_demand_short')}: <strong>${you.count > 0 ? you.avgDemand : '0.0'}/10</strong>`;
+    if (theyPill) theyPill.innerHTML = `${starIcon} ${t('label_demand_short')}: <strong>${they.count > 0 ? they.avgDemand : '0.0'}/10</strong>`;
 
     const stamp = document.getElementById('verdictStamp');
     const icon = document.getElementById('verdictIcon');
@@ -508,11 +530,11 @@
     // If both sides empty
     if (you.count === 0 && they.count === 0) {
       stamp.className = 'verdict-stamp fair';
-      icon.textContent = '🤝';
+      if (icon) icon.innerHTML = window.getIcon('scale');
       text.textContent = t('verdict_empty');
       diffText.className = 'verdict-diff-text neutral';
       diffText.textContent = '±0 pts (0%)';
-      demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('scale')} <span>${t('demand_neutral_note')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-empty';
         recBadge.textContent = t('rec_status_empty');
@@ -535,27 +557,27 @@
     // Verdict Stamp logic
     if (diffPct >= 25) {
       stamp.className = 'verdict-stamp win-huge';
-      icon.textContent = '🔥';
+      if (icon) icon.innerHTML = window.getIcon('flame', 'icon-gold');
       text.textContent = t('verdict_big_win');
       diffText.className = 'verdict-diff-text positive';
     } else if (diffPct >= 5) {
       stamp.className = 'verdict-stamp win';
-      icon.textContent = '✅';
+      if (icon) icon.innerHTML = window.getIcon('check-circle-2', 'icon-green');
       text.textContent = t('verdict_win');
       diffText.className = 'verdict-diff-text positive';
     } else if (diffPct <= -25) {
       stamp.className = 'verdict-stamp lose-huge';
-      icon.textContent = '💀';
+      if (icon) icon.innerHTML = window.getIcon('skull', 'icon-crimson');
       text.textContent = t('verdict_big_lose');
       diffText.className = 'verdict-diff-text negative';
     } else if (diffPct <= -5) {
       stamp.className = 'verdict-stamp lose';
-      icon.textContent = '❌';
+      if (icon) icon.innerHTML = window.getIcon('x-circle', 'icon-crimson');
       text.textContent = t('verdict_lose');
       diffText.className = 'verdict-diff-text negative';
     } else {
       stamp.className = 'verdict-stamp fair';
-      icon.textContent = '🤝';
+      if (icon) icon.innerHTML = window.getIcon('scale');
       text.textContent = t('verdict_fair');
       diffText.className = 'verdict-diff-text neutral';
     }
@@ -568,7 +590,7 @@
 
     // Trade Worth & Demand Evaluation Logic
     if (you.count === 0 || they.count === 0) {
-      demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('scale')} <span>${t('demand_neutral_note')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-empty';
         recBadge.textContent = t('rec_status_empty');
@@ -581,7 +603,7 @@
 
     // 1. Demand Trap: You give high liquid items for low liquid junk, even if points look OK or slightly positive
     if ((you.avgDemand >= 7.5 && they.avgDemand <= 5.2 && diffPct >= -5) || (diffDemand <= -2.5 && diffPct < 25)) {
-      demandNote.innerHTML = `<span style="color: #ef4444;">⚠️</span> <span style="color: #f87171;">${t('demand_warning_you')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('alert-triangle', 'icon-crimson')} <span style="color: #f87171;">${t('demand_warning_you')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-trap';
         recBadge.textContent = t('rec_status_trap');
@@ -590,7 +612,7 @@
     }
     // 2. Big Win
     else if (diffPct >= 12 && they.avgDemand >= 6.0) {
-      demandNote.innerHTML = `<span style="color: #10b981;">💎</span> <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('sparkles', 'icon-cyan')} <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-win-big';
         recBadge.textContent = t('rec_status_big_win');
@@ -599,7 +621,7 @@
     }
     // 3. Trade Up / Upgrade to Meta
     else if (diffPct >= -10 && diffPct < 5 && they.avgDemand >= 8.8 && diffDemand >= 1.5) {
-      demandNote.innerHTML = `<span style="color: #38bdf8;">💎</span> <span style="color: #7dd3fc;">${t('demand_bonus_them')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('zap', 'icon-cyan')} <span style="color: #7dd3fc;">${t('demand_bonus_them')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-upgrade';
         recBadge.textContent = t('rec_status_upgrade');
@@ -608,7 +630,7 @@
     }
     // 4. Solid Win
     else if (diffPct >= 5 && diffDemand >= -1.5) {
-      demandNote.innerHTML = `<span style="color: #10b981;">✅</span> <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('check-circle-2', 'icon-green')} <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-win';
         recBadge.textContent = t('rec_status_win');
@@ -617,7 +639,7 @@
     }
     // 5. Fair Trade
     else if (diffPct >= -6 && diffPct <= 6 && Math.abs(diffDemand) < 2.0) {
-      demandNote.innerHTML = `<span>⚖️</span> <span>${t('demand_neutral_note')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('scale')} <span>${t('demand_neutral_note')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-fair';
         recBadge.textContent = t('rec_status_fair');
@@ -626,7 +648,7 @@
     }
     // 6. Huge Loss
     else if (diffPct < -20) {
-      demandNote.innerHTML = `<span style="color: #ef4444;">💀</span> <span style="color: #f87171;">${t('rec_status_big_lose')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('skull', 'icon-crimson')} <span style="color: #f87171;">${t('rec_status_big_lose')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-lose-big';
         recBadge.textContent = t('rec_status_big_lose');
@@ -635,7 +657,7 @@
     }
     // 7. Regular Loss
     else {
-      demandNote.innerHTML = `<span style="color: #f97316;">❌</span> <span style="color: #fb923c;">${t('verdict_lose')}</span>`;
+      demandNote.innerHTML = `${window.getIcon('x-circle', 'icon-crimson')} <span style="color: #fb923c;">${t('verdict_lose')}</span>`;
       if (recBadge) {
         recBadge.className = 'rec-verdict-badge rec-lose';
         recBadge.textContent = t('rec_status_lose');
@@ -691,11 +713,13 @@
         const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
         const slotEl = document.createElement('div');
         slotEl.className = 'trade-slot-card';
+        const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
+        const xIcon = window.getIcon ? window.getIcon('x') : 'x';
         slotEl.innerHTML = `
-          <button class="slot-remove-btn" title="${t('slot_btn_remove')}" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">✕</button>
+          <button class="slot-remove-btn" title="${t('slot_btn_remove')}" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">${xIcon}</button>
           <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy">
           <div class="slot-item-name" title="${name}">${name}</div>
-          <div class="slot-item-val">${formatPts(it.value * entry.qty)} pts <span style="color: var(--gold-glow); font-size: 0.74rem;">(⭐${it.demandScore})</span></div>
+          <div class="slot-item-val">${formatPts(it.value * entry.qty)} pts <span style="color: var(--gold-glow); font-size: 0.74rem;">(${starIcon} ${it.demandScore})</span></div>
           <div class="slot-qty-controls">
             <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', -1)">-</button>
             <span class="qty-num">x${entry.qty}</span>
@@ -709,8 +733,9 @@
       const addBtn = document.createElement('div');
       addBtn.className = 'add-slot-placeholder';
       addBtn.onclick = () => openPickerModal(side);
+      const plusIcon = window.getIcon ? window.getIcon('plus') : '+';
       addBtn.innerHTML = `
-        <span class="add-slot-icon">➕</span>
+        <span class="add-slot-icon">${plusIcon}</span>
         <span class="add-slot-text">${t('click_to_add')}</span>
       `;
       container.appendChild(addBtn);
@@ -877,21 +902,24 @@
     const demandLabel = (translations[currentLang].demand_labels && translations[currentLang].demand_labels[it.demand]) || it.demand;
 
     const catShortNames = {
-      fruits: currentLang === 'ru' ? '🍎 Фрукт' : '🍎 Fruit',
-      weapons: currentLang === 'ru' ? '⚔️ Оружие' : '⚔️ Weapon',
-      chests: currentLang === 'ru' ? '📦 Сундук' : '📦 Chest',
-      accessories: currentLang === 'ru' ? '👑 Аксессуар' : '👑 Accessory',
-      outfits: currentLang === 'ru' ? '🥋 Броня' : '🥋 Armor',
-      boats: currentLang === 'ru' ? '⛵ Лодка' : '⛵ Boat',
-      misc: currentLang === 'ru' ? '📜 Разное' : '📜 Misc'
+      fruits: currentLang === 'ru' ? 'Фрукт' : 'Fruit',
+      weapons: currentLang === 'ru' ? 'Оружие' : 'Weapon',
+      chests: currentLang === 'ru' ? 'Сундук' : 'Chest',
+      accessories: currentLang === 'ru' ? 'Аксессуар' : 'Accessory',
+      outfits: currentLang === 'ru' ? 'Броня' : 'Armor',
+      boats: currentLang === 'ru' ? 'Лодка' : 'Boat',
+      misc: currentLang === 'ru' ? 'Разное' : 'Misc'
     };
     const catLabel = catShortNames[it.category] || it.category;
+    const catIcon = window.getIcon ? window.getIcon(getCategoryIcon(it.category), 'icon-sm') : '';
+    const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
+    const plusIcon = window.getIcon ? window.getIcon('plus') : '+';
 
     const card = document.createElement('div');
     card.className = 'item-comic-card';
     card.innerHTML = `
       <span class="card-tier-tag ${tierClass}">${it.tier}</span>
-      <span class="card-demand-tag ${demandClass}">⭐ ${it.demandScore}/10 • ${demandLabel}</span>
+      <span class="card-demand-tag ${demandClass}">${starIcon} ${it.demandScore}/10 • ${demandLabel}</span>
 
       <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
         <img src="${it.image}" alt="${name}" loading="lazy" onerror="this.src='https://static.wikia.nocookie.net/grand-piece-online/images/b/b3/Legendary_Chest.png/revision/latest'">
@@ -899,8 +927,8 @@
 
       <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">${name}</h4>
       <div class="card-meta-row">
-        ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
-        <span class="card-cat-badge">${catLabel}</span>
+        ${it.abbreviation ? `<span class="card-abbr-badge">${window.getIcon ? window.getIcon('sparkles', 'icon-gold icon-sm') : ''} ${it.abbreviation}</span>` : ''}
+        <span class="card-cat-badge">${catIcon} ${catLabel}</span>
       </div>
 
       <div class="card-values-row">
@@ -910,10 +938,10 @@
 
       <div class="card-actions-row">
         <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')" title="${t('card_title_add_you')}">
-          <span>➕</span> <span>${t('card_btn_you')}</span>
+          ${plusIcon} <span>${t('card_btn_you')}</span>
         </button>
         <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')" title="${t('card_title_add_them')}">
-          <span>➕</span> <span>${t('card_btn_them')}</span>
+          ${plusIcon} <span>${t('card_btn_them')}</span>
         </button>
       </div>
     `;
@@ -1016,18 +1044,20 @@
     }
 
     const catShortNames = {
-      fruits: currentLang === 'ru' ? '🍎 Фрукт' : '🍎 Fruit',
-      weapons: currentLang === 'ru' ? '⚔️ Оружие' : '⚔️ Weapon',
-      chests: currentLang === 'ru' ? '📦 Сундук' : '📦 Chest',
-      accessories: currentLang === 'ru' ? '👑 Аксессуар' : '👑 Accessory',
-      outfits: currentLang === 'ru' ? '🥋 Броня' : '🥋 Armor',
-      boats: currentLang === 'ru' ? '⛵ Лодка' : '⛵ Boat',
-      misc: currentLang === 'ru' ? '📜 Разное' : '📜 Misc'
+      fruits: currentLang === 'ru' ? 'Фрукт' : 'Fruit',
+      weapons: currentLang === 'ru' ? 'Оружие' : 'Weapon',
+      chests: currentLang === 'ru' ? 'Сундук' : 'Chest',
+      accessories: currentLang === 'ru' ? 'Аксессуар' : 'Accessory',
+      outfits: currentLang === 'ru' ? 'Броня' : 'Armor',
+      boats: currentLang === 'ru' ? 'Лодка' : 'Boat',
+      misc: currentLang === 'ru' ? 'Разное' : 'Misc'
     };
 
     items.forEach(it => {
       const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
       const catLabel = catShortNames[it.category] || it.category;
+      const catIcon = window.getIcon ? window.getIcon(getCategoryIcon(it.category), 'icon-sm') : '';
+      const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
       const btn = document.createElement('div');
       btn.className = 'picker-item-btn';
       btn.onclick = () => {
@@ -1037,8 +1067,8 @@
       btn.innerHTML = `
         <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy">
         <div class="picker-item-name" title="${name}">${name}</div>
-        <div class="picker-item-cat">${catLabel}</div>
-        <div class="picker-item-val">${formatPts(it.value)} pts <small style="color: var(--gold-glow); font-size: 0.72rem;">(⭐${it.demandScore})</small></div>
+        <div class="picker-item-cat">${catIcon} ${catLabel}</div>
+        <div class="picker-item-val">${formatPts(it.value)} pts <small style="color: var(--gold-glow); font-size: 0.72rem;">(${starIcon} ${it.demandScore})</small></div>
       `;
       grid.appendChild(btn);
     });
@@ -1061,28 +1091,30 @@
 
     const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
     const trendLabel = translations[currentLang].trend_labels[it.trend] || it.trend;
+    const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
 
-    document.getElementById('detailDemandVal').textContent = `${demandLabel} (⭐ ${it.demandScore}/10)`;
+    document.getElementById('detailDemandVal').innerHTML = `${demandLabel} (${starIcon} ${it.demandScore}/10)`;
     document.getElementById('detailTrendVal').textContent = trendLabel;
     document.getElementById('detailWikiLink').href = it.wikiUrl;
 
     const catShortNames = {
-      fruits: currentLang === 'ru' ? '🍎 Дьявольский Фрукт' : '🍎 Devil Fruit',
-      weapons: currentLang === 'ru' ? '⚔️ Оружие' : '⚔️ Weapon',
-      chests: currentLang === 'ru' ? '📦 Сундук' : '📦 Chest',
-      accessories: currentLang === 'ru' ? '👑 Аксессуар' : '👑 Accessory',
-      outfits: currentLang === 'ru' ? '🥋 Броня & Костюм' : '🥋 Outfit & Armor',
-      boats: currentLang === 'ru' ? '⛵ Лодка & Ховер' : '⛵ Boat & Mount',
-      misc: currentLang === 'ru' ? '📜 Разное & Расходник' : '📜 Misc & Item'
+      fruits: currentLang === 'ru' ? 'Дьявольский Фрукт' : 'Devil Fruit',
+      weapons: currentLang === 'ru' ? 'Оружие' : 'Weapon',
+      chests: currentLang === 'ru' ? 'Сундук' : 'Chest',
+      accessories: currentLang === 'ru' ? 'Аксессуар' : 'Accessory',
+      outfits: currentLang === 'ru' ? 'Броня & Костюм' : 'Outfit & Armor',
+      boats: currentLang === 'ru' ? 'Лодка & Ховер' : 'Boat & Mount',
+      misc: currentLang === 'ru' ? 'Разное & Расходник' : 'Misc & Item'
     };
     const catLabel = catShortNames[it.category] || it.category;
+    const catIcon = window.getIcon ? window.getIcon(getCategoryIcon(it.category), 'icon-sm') : '';
 
     const tagsBox = document.getElementById('detailTags');
     tagsBox.innerHTML = `
       <span class="hero-badge" style="background: #1e293b; color: #fff;">${it.tier}</span>
       <span class="hero-badge" style="background: #090e1b; color: var(--gold-beli);">${it.subTier}</span>
-      <span class="hero-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border-color: #0284c7;">${catLabel}</span>
-      ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
+      <span class="hero-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border-color: #0284c7;">${catIcon} ${catLabel}</span>
+      ${it.abbreviation ? `<span class="card-abbr-badge">${window.getIcon ? window.getIcon('sparkles', 'icon-gold icon-sm') : ''} ${it.abbreviation}</span>` : ''}
     `;
 
     document.getElementById('detailAddYouBtn').onclick = () => {
@@ -1205,10 +1237,11 @@
     if (drawerAudioBtn) {
       drawerAudioBtn.addEventListener('click', () => {
         audioEnabled = !audioEnabled;
-        const icon = audioEnabled ? '🔊' : '🔇';
-        document.getElementById('audioToggleBtn').textContent = icon;
+        const iconSvg = window.getIcon ? window.getIcon(audioEnabled ? 'volume-2' : 'volume-x') : (audioEnabled ? 'ON' : 'OFF');
+        const audioBtn = document.getElementById('audioToggleBtn');
+        if (audioBtn) audioBtn.innerHTML = iconSvg;
         const dIcon = document.getElementById('drawerAudioIcon');
-        if (dIcon) dIcon.textContent = icon;
+        if (dIcon) dIcon.innerHTML = iconSvg;
         if (audioEnabled) playCoinSound();
       });
     }
@@ -1221,10 +1254,11 @@
     // Audio toggle (Desktop Header)
     document.getElementById('audioToggleBtn').addEventListener('click', () => {
       audioEnabled = !audioEnabled;
-      const icon = audioEnabled ? '🔊' : '🔇';
-      document.getElementById('audioToggleBtn').textContent = icon;
+      const iconSvg = window.getIcon ? window.getIcon(audioEnabled ? 'volume-2' : 'volume-x') : (audioEnabled ? 'ON' : 'OFF');
+      const audioBtn = document.getElementById('audioToggleBtn');
+      if (audioBtn) audioBtn.innerHTML = iconSvg;
       const dIcon = document.getElementById('drawerAudioIcon');
-      if (dIcon) dIcon.textContent = icon;
+      if (dIcon) dIcon.innerHTML = iconSvg;
       if (audioEnabled) playCoinSound();
     });
 

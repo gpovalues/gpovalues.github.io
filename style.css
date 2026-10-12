@@ -3043,3 +3043,72 @@ body.drawer-open {
     padding: 1.1rem 1.2rem;
   }
 }
+
+/* =====================================================================
+   VECTOR ICONS (BETTER-ICONS / LUCIDE SVGS)
+   ===================================================================== */
+.gpo-icon {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.18em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.icon-slot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.gpo-icon.icon-lg {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: -0.22em;
+}
+
+.gpo-icon.icon-xl {
+  width: 1.85em;
+  height: 1.85em;
+  vertical-align: -0.25em;
+}
+
+.gpo-icon.icon-sm {
+  width: 0.92em;
+  height: 0.92em;
+  vertical-align: -0.1em;
+}
+
+.gpo-icon.icon-gold {
+  color: var(--gold-beli) !important;
+  filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.4));
+}
+
+.gpo-icon.icon-cyan {
+  color: var(--cyan-glow) !important;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
+}
+
+.gpo-icon.icon-green {
+  color: #4ade80 !important;
+  filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.4));
+}
+
+.gpo-icon.icon-crimson {
+  color: #f87171 !important;
+  filter: drop-shadow(0 0 6px rgba(248, 113, 113, 0.4));
+}
+
+.gpo-icon.icon-purple {
+  color: #c084fc !important;
+  filter: drop-shadow(0 0 6px rgba(192, 132, 252, 0.4));
+}
+
