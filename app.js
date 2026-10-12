@@ -22,15 +22,15 @@
     }
   }
 
-  // --- AUDIO SYSTEM (Authentic Game / RPG / GPO Sound Effects) ---
+  // --- AUDIO SYSTEM (Authentic High-Definition Studio Game Sound Effects) ---
   const SOUND_FILES = {
-    click: 'audio/click.ogg',
-    coin: 'audio/item_add.ogg',
-    remove: 'audio/item_remove.ogg',
-    win: 'audio/win.ogg',
-    lose: 'audio/lose.ogg',
-    modalOpen: 'audio/modal_open.ogg',
-    modalClose: 'audio/modal_close.ogg'
+    click: 'audio/click.wav?v=2',
+    coin: 'audio/item_add.wav?v=2',
+    remove: 'audio/item_remove.wav?v=2',
+    win: 'audio/win.wav?v=2',
+    lose: 'audio/lose.wav?v=2',
+    modalOpen: 'audio/modal_open.wav?v=2',
+    modalClose: 'audio/modal_close.wav?v=2'
   };
 
   const audioBuffers = {};
