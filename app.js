@@ -18,15 +18,24 @@
       }
     }
     if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
+      audioCtx.resume().catch(() => {});
     }
   }
+
+  // Pre-unlock Web Audio on first user interaction to prevent click delay
+  const unlockAudioListener = () => {
+    initAudio();
+    window.removeEventListener('pointerdown', unlockAudioListener);
+    window.removeEventListener('keydown', unlockAudioListener);
+  };
+  window.addEventListener('pointerdown', unlockAudioListener, { passive: true });
+  window.addEventListener('keydown', unlockAudioListener, { passive: true });
 
   function playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.1) {
     if (!audioEnabled) return;
     try {
-      initAudio();
-      if (!audioCtx) return;
+      if (!audioCtx) initAudio();
+      if (!audioCtx || audioCtx.state !== 'running') return;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.type = type;
@@ -706,7 +715,8 @@
     ['you', 'they'].forEach(side => {
       const container = document.getElementById(`${side}SlotsGrid`);
       if (!container) return;
-      container.innerHTML = '';
+
+      const fragment = document.createDocumentFragment();
 
       tradeState[side].forEach(entry => {
         const it = entry.item;
@@ -717,7 +727,7 @@
         const xIcon = window.getIcon ? window.getIcon('x') : 'x';
         slotEl.innerHTML = `
           <button class="slot-remove-btn" title="${t('slot_btn_remove')}" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">${xIcon}</button>
-          <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy">
+          <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy" decoding="async">
           <div class="slot-item-name" title="${name}">${name}</div>
           <div class="slot-item-val">${formatPts(it.value * entry.qty)} pts <span style="color: var(--gold-glow); font-size: 0.74rem;">(${starIcon} ${it.demandScore})</span></div>
           <div class="slot-qty-controls">
@@ -726,7 +736,7 @@
             <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', 1)">+</button>
           </div>
         `;
-        container.appendChild(slotEl);
+        fragment.appendChild(slotEl);
       });
 
       // Add slot placeholder button
@@ -738,7 +748,9 @@
         <span class="add-slot-icon">${plusIcon}</span>
         <span class="add-slot-text">${t('click_to_add')}</span>
       `;
-      container.appendChild(addBtn);
+      fragment.appendChild(addBtn);
+
+      container.replaceChildren(fragment);
     });
   }
 
@@ -769,7 +781,11 @@
       };
       const json = JSON.stringify(data);
       const b64 = btoa(encodeURIComponent(json));
-      window.location.hash = `trade=${b64}`;
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', `#trade=${b64}`);
+      } else {
+        window.location.hash = `trade=${b64}`;
+      }
     } catch (e) {
       // Hash state fallback
     }
@@ -922,7 +938,7 @@
       <span class="card-demand-tag ${demandClass}">${starIcon} ${it.demandScore}/10 • ${demandLabel}</span>
 
       <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
-        <img src="${it.image}" alt="${name}" loading="lazy" onerror="this.src='https://static.wikia.nocookie.net/grand-piece-online/images/b/b3/Legendary_Chest.png/revision/latest'">
+        <img src="${it.image}" alt="${name}" loading="lazy" decoding="async" width="90" height="90" onerror="this.src='https://static.wikia.nocookie.net/grand-piece-online/images/b/b3/Legendary_Chest.png/revision/latest'">
       </div>
 
       <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">${name}</h4>
@@ -951,7 +967,6 @@
   function renderItemsGrid() {
     const grid = document.getElementById('itemsCardsGrid');
     if (!grid) return;
-    grid.innerHTML = '';
 
     const items = filterItemsList(window.GPO_ITEMS || [], searchQuery, currentCategory, currentTier, currentSort);
 
@@ -965,15 +980,16 @@
       return;
     }
 
+    const fragment = document.createDocumentFragment();
     items.forEach(it => {
-      grid.appendChild(createCardElement(it));
+      fragment.appendChild(createCardElement(it));
     });
+    grid.replaceChildren(fragment);
   }
 
   function renderQuickItemsGrid() {
     const grid = document.getElementById('quickItemsCardsGrid');
     if (!grid) return;
-    grid.innerHTML = '';
 
     const items = filterItemsList(window.GPO_ITEMS || [], quickSearch, quickCategory, 'all', quickSort);
 
@@ -986,9 +1002,11 @@
       return;
     }
 
+    const fragment = document.createDocumentFragment();
     items.forEach(it => {
-      grid.appendChild(createCardElement(it));
+      fragment.appendChild(createCardElement(it));
     });
+    grid.replaceChildren(fragment);
   }
 
   // --- ITEM PICKER MODAL LOGIC ---
@@ -1009,7 +1027,7 @@
       title.textContent = side === 'you' ? t('picker_title_you') : t('picker_title_they');
     }
     modal.classList.add('open');
-    filterPickerItems();
+    filterPickerItems(true);
     if (input) input.focus();
   }
 
@@ -1018,7 +1036,18 @@
     document.getElementById('itemPickerModal').classList.remove('open');
   }
 
-  function filterPickerItems() {
+  let pickerDebounceTimer = null;
+  function filterPickerItems(immediate = false) {
+    if (!immediate) {
+      clearTimeout(pickerDebounceTimer);
+      pickerDebounceTimer = setTimeout(() => doFilterPickerItems(), 100);
+    } else {
+      clearTimeout(pickerDebounceTimer);
+      doFilterPickerItems();
+    }
+  }
+
+  function doFilterPickerItems() {
     const q = (document.getElementById('pickerSearchInput').value || '').trim();
     const grid = document.getElementById('pickerItemsGrid');
     if (!grid) return;
@@ -1033,7 +1062,6 @@
       items = items.filter(it => it.category === pickerCategory);
     }
 
-    grid.innerHTML = '';
     if (items.length === 0) {
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-muted);">
@@ -1053,6 +1081,7 @@
       misc: currentLang === 'ru' ? 'Разное' : 'Misc'
     };
 
+    const fragment = document.createDocumentFragment();
     items.forEach(it => {
       const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
       const catLabel = catShortNames[it.category] || it.category;
@@ -1065,13 +1094,14 @@
         closePickerModal();
       };
       btn.innerHTML = `
-        <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy">
+        <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy" decoding="async" width="64" height="64">
         <div class="picker-item-name" title="${name}">${name}</div>
         <div class="picker-item-cat">${catIcon} ${catLabel}</div>
         <div class="picker-item-val">${formatPts(it.value)} pts <small style="color: var(--gold-glow); font-size: 0.72rem;">(${starIcon} ${it.demandScore})</small></div>
       `;
-      grid.appendChild(btn);
+      fragment.appendChild(btn);
     });
+    grid.replaceChildren(fragment);
   }
 
   // --- ITEM DETAIL MODAL ---
@@ -1267,10 +1297,14 @@
     document.getElementById('btnClearTrade').addEventListener('click', clearAllTrade);
     document.getElementById('btnShareTrade').addEventListener('click', copyTradeShareLink);
 
-    // Search & Sort filters
+    // Search & Sort filters (Debounced for silky-smooth typing on weak devices)
+    let searchDebounceTimer = null;
     document.getElementById('searchInput').addEventListener('input', (e) => {
       searchQuery = e.target.value;
-      renderItemsGrid();
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(() => {
+        renderItemsGrid();
+      }, 120);
     });
 
     document.getElementById('sortSelect').addEventListener('change', (e) => {
@@ -1339,9 +1373,13 @@
     renderQuickItemsGrid();
   });
 
+  let quickSearchDebounceTimer = null;
   function handleQuickSearch(e) {
     quickSearch = e.target.value;
-    renderQuickItemsGrid();
+    clearTimeout(quickSearchDebounceTimer);
+    quickSearchDebounceTimer = setTimeout(() => {
+      renderQuickItemsGrid();
+    }, 120);
   }
 
   function handleQuickSort(e) {
