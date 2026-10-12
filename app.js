@@ -22,58 +22,108 @@
     }
   }
 
+  // --- AUDIO SYSTEM (Authentic Game / RPG / GPO Sound Effects) ---
+  const SOUND_FILES = {
+    click: 'audio/click.ogg',
+    coin: 'audio/item_add.ogg',
+    remove: 'audio/item_remove.ogg',
+    win: 'audio/win.ogg',
+    lose: 'audio/lose.ogg',
+    modalOpen: 'audio/modal_open.ogg',
+    modalClose: 'audio/modal_close.ogg'
+  };
+
+  const audioBuffers = {};
+  const htmlAudioPool = {};
+
+  function preloadSounds() {
+    initAudio();
+    Object.keys(SOUND_FILES).forEach(key => {
+      const url = SOUND_FILES[key];
+      // HTML Audio fallback
+      const audio = new Audio(url);
+      audio.preload = 'auto';
+      htmlAudioPool[key] = audio;
+
+      // Web Audio pre-decode for 0ms latency
+      if (window.fetch && audioCtx) {
+        fetch(url)
+          .then(res => res.arrayBuffer())
+          .then(buf => audioCtx.decodeAudioData(buf))
+          .then(decoded => {
+            audioBuffers[key] = decoded;
+          })
+          .catch(() => {});
+      }
+    });
+  }
+
   // Pre-unlock Web Audio on first user interaction to prevent click delay
   const unlockAudioListener = () => {
-    initAudio();
+    preloadSounds();
     window.removeEventListener('pointerdown', unlockAudioListener);
     window.removeEventListener('keydown', unlockAudioListener);
   };
   window.addEventListener('pointerdown', unlockAudioListener, { passive: true });
   window.addEventListener('keydown', unlockAudioListener, { passive: true });
 
-  function playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.1) {
+  function playSound(key, volume = 0.5) {
     if (!audioEnabled) return;
     try {
       if (!audioCtx) initAudio();
-      if (!audioCtx || audioCtx.state !== 'running') return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + duration);
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume().catch(() => {});
+      }
+
+      // 1. Web Audio buffer (instantaneous, crystal clear, zero delay)
+      if (audioCtx && audioCtx.state === 'running' && audioBuffers[key]) {
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffers[key];
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        source.start(0);
+        return;
+      }
+
+      // 2. HTMLAudioElement clone fallback
+      if (htmlAudioPool[key] || SOUND_FILES[key]) {
+        const snd = new Audio(SOUND_FILES[key]);
+        snd.volume = Math.min(1, Math.max(0, volume));
+        snd.play().catch(() => {});
+      }
     } catch (e) {
-      // Audio fallback silent
+      // Fallback silent
     }
   }
 
-  function playCoinSound() {
-    playTone(987.77, 'triangle', 0.08, 0.12);
-    setTimeout(() => playTone(1318.51, 'triangle', 0.15, 0.12), 80);
+  function playClickSound() {
+    playSound('click', 0.4);
   }
 
-  function playClickSound() {
-    playTone(440, 'sine', 0.04, 0.06);
+  function playCoinSound() {
+    playSound('coin', 0.55);
   }
 
   function playRemoveSound() {
-    playTone(260, 'sawtooth', 0.08, 0.08);
+    playSound('remove', 0.45);
   }
 
   function playWinFanfare() {
-    playTone(523.25, 'triangle', 0.1, 0.15);
-    setTimeout(() => playTone(659.25, 'triangle', 0.1, 0.15), 100);
-    setTimeout(() => playTone(783.99, 'triangle', 0.12, 0.15), 200);
-    setTimeout(() => playTone(1046.50, 'triangle', 0.25, 0.2), 300);
+    playSound('win', 0.65);
   }
 
   function playLoseSound() {
-    playTone(392.00, 'sawtooth', 0.12, 0.1);
-    setTimeout(() => playTone(329.63, 'sawtooth', 0.18, 0.12), 120);
+    playSound('lose', 0.5);
+  }
+
+  function playModalOpen() {
+    playSound('modalOpen', 0.4);
+  }
+
+  function playModalClose() {
+    playSound('modalClose', 0.35);
   }
 
   // --- I18N DICTIONARY (Default: English) ---
@@ -1020,7 +1070,7 @@
     });
     const input = document.getElementById('pickerSearchInput');
     if (input) input.value = '';
-    playClickSound();
+    playModalOpen();
     const modal = document.getElementById('itemPickerModal');
     const title = document.getElementById('pickerModalTitle');
     if (title) {
@@ -1032,7 +1082,7 @@
   }
 
   function closePickerModal() {
-    playClickSound();
+    playModalClose();
     document.getElementById('itemPickerModal').classList.remove('open');
   }
 
@@ -1111,7 +1161,7 @@
     const it = (window.GPO_ITEMS || []).find(x => x.id === itemId);
     if (!it) return;
     currentDetailItem = it;
-    playClickSound();
+    playModalOpen();
 
     const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
     document.getElementById('detailImg').src = it.image;
@@ -1163,13 +1213,13 @@
   }
 
   function closeDetailModal() {
-    playClickSound();
+    playModalClose();
     document.getElementById('itemDetailModal').classList.remove('open');
   }
 
   // --- MOBILE DRAWER NAVIGATION ---
   function openMobileDrawer() {
-    playClickSound();
+    playModalOpen();
     const drawer = document.getElementById('mobileNavDrawer');
     const backdrop = document.getElementById('mobileNavBackdrop');
     const menuBtn = document.getElementById('mobileMenuBtn');
@@ -1184,6 +1234,9 @@
 
   function closeMobileDrawer() {
     const drawer = document.getElementById('mobileNavDrawer');
+    if (drawer && drawer.classList.contains('open')) {
+      playModalClose();
+    }
     const backdrop = document.getElementById('mobileNavBackdrop');
     const menuBtn = document.getElementById('mobileMenuBtn');
     if (drawer) {
@@ -1232,6 +1285,8 @@
 
   // --- INITIALIZATION ---
   document.addEventListener('DOMContentLoaded', () => {
+    preloadSounds();
+
     // Nav Tabs click (Desktop)
     document.querySelectorAll('.nav-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1350,6 +1405,7 @@
       overlay.addEventListener('click', (e) => {
         if (e.target === overlay) {
           overlay.classList.remove('open');
+          playModalClose();
         }
       });
     });
