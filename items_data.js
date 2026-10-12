@@ -3600,7 +3600,7 @@ window.GPO_ITEMS = [
     "lcValue": 14.78,
     "demand": "High",
     "trend": "Stable",
-    "category": "weapons",
+    "category": "misc",
     "image": "images/item_47.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruit_Rod",
     "demandScore": 8
