@@ -137,13 +137,13 @@
       label_category: "Category:",
       label_tier: "Tier:",
       cat_all: "All (213)",
-      cat_fruits: "Devil Fruits 🍎",
-      cat_weapons: "Weapons ⚔️",
-      cat_chests: "Chests 📦",
-      cat_accessories: "Accessories 👑",
-      cat_outfits: "Outfits & Armor 🥋",
-      cat_boats: "Boats & Mounts ⛵",
-      cat_misc: "Misc & Items 📜",
+      cat_fruits: "Fruits (25) 🍎",
+      cat_weapons: "Weapons (49) ⚔️",
+      cat_chests: "Chests (6) 📦",
+      cat_accessories: "Accessories (55) 👑",
+      cat_outfits: "Outfits (27) 🥋",
+      cat_boats: "Boats (5) ⛵",
+      cat_misc: "Misc (46) 📜",
       tier_all: "All Tiers",
       catalog_title: "ITEM CATALOG FOR TRADE (213 ITEMS)",
       catalog_hint: "💡 Click [+ You] or [+ Them] on any card for instant adding!",
@@ -295,13 +295,13 @@
       label_category: "Категория:",
       label_tier: "Тир:",
       cat_all: "Все (213)",
-      cat_fruits: "Дьявольские Фрукты 🍎",
-      cat_weapons: "Оружие ⚔️",
-      cat_chests: "Сундуки 📦",
-      cat_accessories: "Аксессуары 👑",
-      cat_outfits: "Костюмы & Броня 🥋",
-      cat_boats: "Лодки & Ховеры ⛵",
-      cat_misc: "Разное & Расходники 📜",
+      cat_fruits: "Фрукты (25) 🍎",
+      cat_weapons: "Оружие (49) ⚔️",
+      cat_chests: "Сундуки (6) 📦",
+      cat_accessories: "Аксессуары (55) 👑",
+      cat_outfits: "Костюмы (27) 🥋",
+      cat_boats: "Лодки (5) ⛵",
+      cat_misc: "Разное (46) 📜",
       tier_all: "Все Тиры",
       catalog_title: "КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)",
       catalog_hint: "💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
@@ -838,18 +838,18 @@
   let quickSort = 'tier_desc';
 
   function filterItemsList(items, q, cat, tier, sort) {
-    let result = items.slice();
+    let result = (items || []).filter(it => it && it.id);
 
     if (q && q.trim()) {
       result = result.filter(it => matchItemQuery(it, q));
     }
 
     if (cat && cat !== 'all') {
-      result = result.filter(it => it.category === cat);
+      result = result.filter(it => it && it.category === cat);
     }
 
     if (tier && tier !== 'all') {
-      result = result.filter(it => it.tier === tier);
+      result = result.filter(it => it && it.tier === tier);
     }
 
     if (sort === 'val_desc') {
@@ -870,10 +870,22 @@
   }
 
   function createCardElement(it) {
+    if (!it || !it.name) return document.createElement('div');
     const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-    const tierClass = `tier-${it.tier.replace(/[\s+]/g, '-')}`;
-    const demandClass = `demand-${it.demand.replace(/[\s+]/g, '-')}`;
-    const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
+    const tierClass = `tier-${(it.tier || '').replace(/[\s+]/g, '-')}`;
+    const demandClass = `demand-${(it.demand || '').replace(/[\s+]/g, '-')}`;
+    const demandLabel = (translations[currentLang].demand_labels && translations[currentLang].demand_labels[it.demand]) || it.demand;
+
+    const catShortNames = {
+      fruits: currentLang === 'ru' ? '🍎 Фрукт' : '🍎 Fruit',
+      weapons: currentLang === 'ru' ? '⚔️ Оружие' : '⚔️ Weapon',
+      chests: currentLang === 'ru' ? '📦 Сундук' : '📦 Chest',
+      accessories: currentLang === 'ru' ? '👑 Аксессуар' : '👑 Accessory',
+      outfits: currentLang === 'ru' ? '🥋 Броня' : '🥋 Armor',
+      boats: currentLang === 'ru' ? '⛵ Лодка' : '⛵ Boat',
+      misc: currentLang === 'ru' ? '📜 Разное' : '📜 Misc'
+    };
+    const catLabel = catShortNames[it.category] || it.category;
 
     const card = document.createElement('div');
     card.className = 'item-comic-card';
@@ -886,7 +898,10 @@
       </div>
 
       <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">${name}</h4>
-      ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
+      <div class="card-meta-row">
+        ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
+        <span class="card-cat-badge">${catLabel}</span>
+      </div>
 
       <div class="card-values-row">
         <span class="val-pts-text">${formatPts(it.value)} pts</span>
@@ -943,8 +958,7 @@
       return;
     }
 
-    const renderLimit = quickSearch.trim() ? items.length : 120;
-    items.slice(0, renderLimit).forEach(it => {
+    items.forEach(it => {
       grid.appendChild(createCardElement(it));
     });
   }
@@ -954,6 +968,12 @@
 
   function openPickerModal(side) {
     activePickerSide = side;
+    pickerCategory = 'all';
+    document.querySelectorAll('#pickerCategoryPills .filter-pill-btn').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-pcat') === 'all');
+    });
+    const input = document.getElementById('pickerSearchInput');
+    if (input) input.value = '';
     playClickSound();
     const modal = document.getElementById('itemPickerModal');
     const title = document.getElementById('pickerModalTitle');
@@ -962,7 +982,7 @@
     }
     modal.classList.add('open');
     filterPickerItems();
-    document.getElementById('pickerSearchInput').focus();
+    if (input) input.focus();
   }
 
   function closePickerModal() {
@@ -975,7 +995,7 @@
     const grid = document.getElementById('pickerItemsGrid');
     if (!grid) return;
 
-    let items = (window.GPO_ITEMS || []).slice();
+    let items = (window.GPO_ITEMS || []).filter(it => it && it.id);
 
     if (q) {
       items = items.filter(it => matchItemQuery(it, q));
@@ -995,8 +1015,19 @@
       return;
     }
 
+    const catShortNames = {
+      fruits: currentLang === 'ru' ? '🍎 Фрукт' : '🍎 Fruit',
+      weapons: currentLang === 'ru' ? '⚔️ Оружие' : '⚔️ Weapon',
+      chests: currentLang === 'ru' ? '📦 Сундук' : '📦 Chest',
+      accessories: currentLang === 'ru' ? '👑 Аксессуар' : '👑 Accessory',
+      outfits: currentLang === 'ru' ? '🥋 Броня' : '🥋 Armor',
+      boats: currentLang === 'ru' ? '⛵ Лодка' : '⛵ Boat',
+      misc: currentLang === 'ru' ? '📜 Разное' : '📜 Misc'
+    };
+
     items.forEach(it => {
       const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
+      const catLabel = catShortNames[it.category] || it.category;
       const btn = document.createElement('div');
       btn.className = 'picker-item-btn';
       btn.onclick = () => {
@@ -1006,6 +1037,7 @@
       btn.innerHTML = `
         <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy">
         <div class="picker-item-name" title="${name}">${name}</div>
+        <div class="picker-item-cat">${catLabel}</div>
         <div class="picker-item-val">${formatPts(it.value)} pts <small style="color: var(--gold-glow); font-size: 0.72rem;">(⭐${it.demandScore})</small></div>
       `;
       grid.appendChild(btn);
@@ -1034,10 +1066,22 @@
     document.getElementById('detailTrendVal').textContent = trendLabel;
     document.getElementById('detailWikiLink').href = it.wikiUrl;
 
+    const catShortNames = {
+      fruits: currentLang === 'ru' ? '🍎 Дьявольский Фрукт' : '🍎 Devil Fruit',
+      weapons: currentLang === 'ru' ? '⚔️ Оружие' : '⚔️ Weapon',
+      chests: currentLang === 'ru' ? '📦 Сундук' : '📦 Chest',
+      accessories: currentLang === 'ru' ? '👑 Аксессуар' : '👑 Accessory',
+      outfits: currentLang === 'ru' ? '🥋 Броня & Костюм' : '🥋 Outfit & Armor',
+      boats: currentLang === 'ru' ? '⛵ Лодка & Ховер' : '⛵ Boat & Mount',
+      misc: currentLang === 'ru' ? '📜 Разное & Расходник' : '📜 Misc & Item'
+    };
+    const catLabel = catShortNames[it.category] || it.category;
+
     const tagsBox = document.getElementById('detailTags');
     tagsBox.innerHTML = `
       <span class="hero-badge" style="background: #1e293b; color: #fff;">${it.tier}</span>
       <span class="hero-badge" style="background: #090e1b; color: var(--gold-beli);">${it.subTier}</span>
+      <span class="hero-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border-color: #0284c7;">${catLabel}</span>
       ${it.abbreviation ? `<span class="card-abbr-badge">✦ ${it.abbreviation}</span>` : ''}
     `;
 
