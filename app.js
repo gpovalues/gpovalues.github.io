@@ -93,7 +93,7 @@
       badge_updated: "Updated: 10/11/2026",
       badge_items_count: "213 Items",
       badge_official_doc: "Official GPO Doc",
-      badge_currency: "SP Reset = 1 pt | 1 LC = 233 pts",
+      badge_currency: "SP Reset = 1 pt | 1 LC = 310 pts",
       label_demand_short: "Demand",
       rec_badge_title: "WORTH TRADING?",
       rec_status_empty: "ADD ITEMS",
@@ -251,7 +251,7 @@
       badge_updated: "Обновление: 10/11/2026",
       badge_items_count: "213 Предметов",
       badge_official_doc: "Официальный GPO Doc",
-      badge_currency: "SP Reset = 1 pt | 1 LC = 233 pts",
+      badge_currency: "SP Reset = 1 pt | 1 LC = 310 pts",
       label_demand_short: "Спрос",
       rec_badge_title: "СТОИТ ЛИ ТРЕЙДИТЬСЯ?",
       rec_status_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
@@ -496,7 +496,7 @@
     });
 
     const avgDemand = pts > 0 ? +(totalWeightedDemand / pts).toFixed(1) : (totalItems > 0 ? 5.0 : 0.0);
-    const lc = (pts / 233.33).toFixed(2);
+    const lc = (pts / 310).toFixed(2);
     return { pts, lc, avgDemand, count: totalItems };
   }
 
