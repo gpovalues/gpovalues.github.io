@@ -9,15 +9,54 @@ Parses raw Discord trading hub messages into structured trades:
 """
 
 import re
+import sys
 import json
 import os
 import logging
 from typing import List, Dict, Any, Tuple, Optional, Set
 
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 logger = logging.getLogger("TradeParser")
 
 EMOJI_REGEX = re.compile(r"<a?:([a-zA-Z0-9_]+):\d+>")
 NLF_REGEX = re.compile(r"\b(nlf|not\s+looking\s+for|no\s+want|dont\s+want|don't\s+want)\b.*$", re.IGNORECASE | re.DOTALL)
+
+KEYCAP_MAP = {
+    "0️⃣": " 0 ", "1️⃣": " 1 ", "2️⃣": " 2 ", "3️⃣": " 3 ", "4️⃣": " 4 ",
+    "5️⃣": " 5 ", "6️⃣": " 6 ", "7️⃣": " 7 ", "8️⃣": " 8 ", "9️⃣": " 9 ",
+    "🔟": " 10 ", "0\u20e3": " 0 ", "1\u20e3": " 1 ", "2\u20e3": " 2 ",
+    "3\u20e3": " 3 ", "4\u20e3": " 4 ", "5\u20e3": " 5 ", "6\u20e3": " 6 ",
+    "7\u20e3": " 7 ", "8\u20e3": " 8 ", "9\u20e3": " 9 "
+}
+
+CIRCLED_DIGITS = {
+    "①": " 1 ", "②": " 2 ", "③": " 3 ", "④": " 4 ", "⑤": " 5 ",
+    "⑥": " 6 ", "⑦": " 7 ", "⑧": " 8 ", "⑨": " 9 ", "⑩": " 10 ",
+    "❶": " 1 ", "❷": " 2 ", "❸": " 3 ", "❹": " 4 ", "❺": " 5 ",
+    "❻": " 6 ", "❼": " 7 ", "❽": " 8 ", "❾": " 9 ", "❿": " 10 ",
+    "➀": " 1 ", "➁": " 2 ", "➂": " 3 ", "➃": " 4 ", "➄": " 5 ",
+    "➅": " 6 ", "➆": " 7 ", "➇": " 8 ", "➈": " 9 ", "➉": " 10 ",
+    "➊": " 1 ", "➋": " 2 ", "➌": " 3 ", "➍": " 4 ", "➎": " 5 ",
+    "➏": " 6 ", "➐": " 7 ", "➑": " 8 ", "➒": " 9 ", "➓": " 10 "
+}
+
+WORD_NUMS = {
+    # English
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+    "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14, "fifteen": 15,
+    "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
+    # Russian
+    "ноль": 0, "один": 1, "одна": 1, "одно": 1, "два": 2, "две": 2, "три": 3,
+    "четыре": 4, "пять": 5, "шесть": 6, "семь": 7, "восемь": 8, "девять": 9, "десять": 10,
+    "одиннадцать": 11, "двенадцать": 12, "тринадцать": 13, "четырнадцать": 14,
+    "пятнадцать": 15, "двадцать": 20
+}
 
 
 class GPOTradeParser:
@@ -239,43 +278,143 @@ class GPOTradeParser:
             "cs": "item_1",
             "cool shades": "item_1",
             "shades": "item_1",
+            "cool shade": "item_1",
+            "крутые очки": "item_1",
+            "кул шейдс": "item_1",
             "sg": "item_4",
             "sakamoto": "item_4",
             "sakamoto glasses": "item_4",
             "cwig": "item_203",
             "clown wig": "item_203",
             "love shades": "item_209",
+            "love shade": "item_209",
+            "loveshades": "item_209",
+            "love_shades": "item_209",
+            "heart shades": "item_209",
+            "heart shade": "item_209",
+            "heartshades": "item_209",
+            "heart_shades": "item_209",
+            "heart cool shades": "item_209",
+            "heart cool shade": "item_209",
+            "love cool shades": "item_209",
+            "lshades": "item_209",
+            "lshade": "item_209",
+            "heart glasses": "item_209",
+            "love glasses": "item_209",
+            "очки сердечки": "item_209",
+            "сердечные очки": "item_209",
+            "очки сердечко": "item_209",
+            "очки с сердечками": "item_209",
+            "лав шейдс": "item_209",
+            "лавшейдс": "item_209",
+            "лав шейдсы": "item_209",
+            "лавшейдсы": "item_209",
             "banana": "item_204",
 
             # Chests
             "lc": "item_102",
+            "lcs": "item_102",
             "leg chest": "item_102",
+            "leg chests": "item_102",
             "legchest": "item_102",
+            "legchests": "item_102",
             "lchest": "item_102",
+            "lchests": "item_102",
             "legendary chest": "item_102",
+            "legendary chests": "item_102",
             "legendary fruit chest": "item_102",
+            "leg fruit chest": "item_102",
+            "лег чест": "item_102",
+            "легчест": "item_102",
+            "лег честа": "item_102",
+            "лег честов": "item_102",
+            "легчестов": "item_102",
+            "легчеста": "item_102",
+            "лк": "item_102",
+            "лчест": "item_102",
+            "лчеста": "item_102",
+            "лчестов": "item_102",
+            "лег сундук": "item_102",
+            "лег сундука": "item_102",
+            "лег сундуки": "item_102",
+            "лег сундуков": "item_102",
+            "легендарный сундук": "item_102",
+            "легендарный чест": "item_102",
+            "легендарные сундуки": "item_102",
+            "легендарных сундуков": "item_102",
+
+            # 10x Legendary Chest
             "10lc": "item_60",
             "10 lc": "item_60",
             "10x lc": "item_60",
             "10x leg chest": "item_60",
+            "10 leg chests": "item_60",
+            "10 leg chest": "item_60",
             "10x legendary fruit chest": "item_60",
+            "10легчест": "item_60",
+            "10 лег чест": "item_60",
+            "10лк": "item_60",
+            "10 лк": "item_60",
+            "10 лег честов": "item_60",
+            "10 легендарных сундуков": "item_60",
+
+            # Mythic Chest
             "mc": "item_58",
+            "mcs": "item_58",
             "mythic chest": "item_58",
+            "mythic chests": "item_58",
             "mythical chest": "item_58",
+            "mythical chests": "item_58",
             "mythic fruit chest": "item_58",
             "mythical fruit chest": "item_58",
+            "mchest": "item_58",
+            "мк": "item_58",
+            "мифик чест": "item_58",
+            "мификчест": "item_58",
+            "мифик честа": "item_58",
+            "мифик честов": "item_58",
+            "мифик сундук": "item_58",
+            "мифик сундука": "item_58",
+            "мифический сундук": "item_58",
+            "мифический чест": "item_58",
+
+            # 10x Mythic Chest
             "10mc": "item_26",
             "10 mc": "item_26",
             "10x mc": "item_26",
             "10x mythic chest": "item_26",
             "10x mythical fruit chest": "item_26",
+            "10мк": "item_26",
+            "10 мк": "item_26",
+            "10 мифик чест": "item_26",
+            "10 мифик честов": "item_26",
+
+            # Rare Chest
             "rare chest": "item_208",
+            "rare chests": "item_208",
             "rare fruit chest": "item_208",
             "rc": "item_208",
+            "rcs": "item_208",
+            "rchest": "item_208",
+            "рк": "item_208",
+            "рар чест": "item_208",
+            "рарчест": "item_208",
+            "рар честа": "item_208",
+            "рар честов": "item_208",
+            "рар сундук": "item_208",
+            "рар сундука": "item_208",
+            "редкий сундук": "item_208",
+            "редкий чест": "item_208",
+
+            # 10x Rare Chest
             "10rc": "item_207",
             "10 rc": "item_207",
             "10x rc": "item_207",
             "10x rare fruit chest": "item_207",
+            "10рк": "item_207",
+            "10 рк": "item_207",
+            "10 рар чест": "item_207",
+            "10 рар честов": "item_207",
 
             # Essences & Bags & Vehicles
             "sp": "item_194",
@@ -343,25 +482,43 @@ class GPOTradeParser:
 
     def clean_text(self, text: str) -> str:
         """
-        Removes Discord custom emoji syntax, standard colon emojis,
-        replaces underscores, and strips NLF parts.
-        Handles adjacent/split emojis like <:kaido:1><:cape:2> or :kaido::cape:.
+        Removes Discord custom emoji syntax, standard colon emojis, normalizes
+        number emojis (keycaps 4️⃣, circled ④, :four:, :4:), heart symbols (❤️, :heart:),
+        replaces punctuation and markdown, and strips NLF parts.
         """
         # 1. Strip NLF
         text = NLF_REGEX.sub("", text)
 
-        # 2. Convert Discord custom emojis <:name:12345> or <a:name:12345> to ' name '
+        # 2. Normalize keycap number emojis (e.g. 4️⃣ -> ' 4 ') and circled numbers (④ -> ' 4 ')
+        for k, v in KEYCAP_MAP.items():
+            text = text.replace(k, v)
+        for k, v in CIRCLED_DIGITS.items():
+            text = text.replace(k, v)
+        text = re.sub(r"(\d)\ufe0f?\u20e3", r" \1 ", text)
+
+        # 3. Normalize all unicode heart variations to ' heart ' (e.g. ❤️, ♥, 💖, 💕, <3)
+        text = re.sub(r"[\u2764\u2665\u2763\u2765-\u2767\U0001F490-\U0001F49F\U0001F90D-\U0001F90F\U0001FA75-\U0001FA77]\ufe0f?|<3", " heart ", text)
+
+        # 4. Normalize heart colon emojis and custom heart/love emojis
+        text = re.sub(r"<a?:(?:[a-zA-Z0-9_]*heart[a-zA-Z0-9_]*|love):\d+>", " heart ", text, flags=re.IGNORECASE)
+        text = re.sub(r":(?:[a-zA-Z0-9_]*heart[a-zA-Z0-9_]*|love):", " heart ", text, flags=re.IGNORECASE)
+
+        # 5. Convert Discord custom emojis <:name:12345> or <a:name:12345> to ' name '
         text = re.sub(r"<a?:([a-zA-Z0-9_]+):\d+>", r" \1 ", text)
 
-        # 3. Convert standard Discord colon emojis (:name:) to ' name '
+        # 6. Convert standard Discord colon emojis (:name:) to ' name '
         # Repeat while pattern matches to handle adjacent or overlapped colons like :kaido::cape:
         prev = None
         while prev != text:
             prev = text
             text = re.sub(r":([a-zA-Z0-9_]+):", r" \1 ", text)
 
-        # 4. Clean up discord markdown (bold, italics, code blocks) and replace underscores with spaces
-        text = re.sub(r"[*_~`|]", " ", text)
+        # 7. Normalize multipliers and split digits from adjacent letters (e.g. '4x mochi' -> '4 mochi', '4lc' -> '4 lc', '4лк' -> '4 лк')
+        text = re.sub(r"(\d+)\s*[xхXХ]\s*", r"\1 ", text)
+        text = re.sub(r"(\d+)([a-zA-Zа-яА-ЯёЁ])", r"\1 \2", text)
+
+        # 8. Clean up discord markdown (bold, italics, code blocks), brackets, and replace underscores with spaces
+        text = re.sub(r"[*_~`|()\[\]{}]", " ", text)
         return text.strip()
 
     def split_offer_want(self, text: str) -> Tuple[str, str]:
@@ -422,11 +579,37 @@ class GPOTradeParser:
                     return self.alias_map[clean_phrase], span
         return None, 0
 
+    def parse_qty_token(self, tok: str) -> Optional[int]:
+        """Parses tokens like '4', '4x', '4х', 'x4', 'four', '4️⃣', 'num_4', 'четыре' into integer quantities."""
+        t = tok.lower().strip()
+        if t in WORD_NUMS:
+            return WORD_NUMS[t]
+        if (t.endswith("x") or t.endswith("х")) and t[:-1] in WORD_NUMS:
+            return WORD_NUMS[t[:-1]]
+        if (t.startswith("x") or t.startswith("х")) and t[1:] in WORD_NUMS:
+            return WORD_NUMS[t[1:]]
+
+        m = re.match(r"^(?:[xхXХ]\s*(\d+)|(\d+)\s*[xхXХ]|\b(\d+)\b)$", t)
+        if m:
+            val = int(m.group(1) or m.group(2) or m.group(3))
+            if 1 <= val <= 100:
+                return val
+
+        m_num = re.match(r"^(?:num|n)?(\d+)_?$", t)
+        if m_num:
+            val = int(m_num.group(1))
+            if 1 <= val <= 100:
+                return val
+
+        return None
+
     def extract_items_with_qty(self, segment: str) -> List[Tuple[str, int]]:
         """
         Extracts matched item IDs and their multipliers.
         Supports:
         - Split stickers (e.g. <:kaido:1><:cape:2>, :kaido::cape:, :kaido: :cape:)
+        - Heart and love variants (e.g. ❤️ :shades:, :heart::shades:, ❤️ :shades:(love shades) -> Love Shades)
+        - Keycap, circled & word numbers (e.g. 4️⃣ leg chest, :four: LC, 4 лег чест -> 4x LC)
         - Undelimited item sequences (e.g. 'kaido cape mochi 2x lc')
         - Prefix and suffix quantities (e.g. '2x item', 'item 2x')
         """
@@ -437,8 +620,12 @@ class GPOTradeParser:
         # Split by major trade delimiters
         clauses = re.split(r"[,+/|&\n]+|\b(?:and|with)\b", segment, flags=re.IGNORECASE)
 
-        qty_regex = re.compile(r"^(?:x(\d+)|(\d+)x|\b(\d+)\b)$", re.IGNORECASE)
-        filler_words = {"adds", "add", "small", "good", "dm", "me", "fast", "trade", "or", "offer", "my", "the", "for", "all", "any", "want", "have", "lf"}
+        filler_words = {
+            "adds", "add", "small", "good", "dm", "me", "fast", "trade", "or",
+            "offer", "my", "the", "for", "all", "any", "want", "have", "lf",
+            "x", "х", "number", "num", "no", "not", "offers", "trading", "wtt", "wts", "wtb", "h", "w",
+            "плюс", "допы", "доп", "фаст", "трейд", "лф", "хочу", "дам", "мои", "мое", "мой", "или", "быстро"
+        }
 
         for clause in clauses:
             clause_clean = re.sub(r"[:;]+", " ", clause)
@@ -453,14 +640,12 @@ class GPOTradeParser:
                     continue
 
                 qty = 1
-                m_pre = qty_regex.match(w)
-                if m_pre:
-                    q_val = int(m_pre.group(1) or m_pre.group(2) or m_pre.group(3))
-                    if 1 <= q_val <= 100:
-                        qty = q_val
-                        idx += 1
-                        if idx >= n:
-                            break
+                q_val = self.parse_qty_token(w)
+                if q_val:
+                    qty = q_val
+                    idx += 1
+                    if idx >= n:
+                        break
 
                 matched_id, span = self.find_item_match(words, idx)
                 if matched_id:
@@ -468,16 +653,20 @@ class GPOTradeParser:
                     # Check for suffix quantity if prefix wasn't set
                     if idx < n and qty == 1:
                         next_w = words[idx].lower()
-                        m_suf = qty_regex.match(next_w)
-                        if m_suf:
+                        next_q = self.parse_qty_token(next_w)
+                        if next_q:
                             # Only treat as suffix if what follows is NOT another item
                             next_item, _ = self.find_item_match(words, idx + 1)
                             if not next_item:
-                                q_val = int(m_suf.group(1) or m_suf.group(2) or m_suf.group(3))
-                                if 1 <= q_val <= 100:
-                                    qty = q_val
-                                    idx += 1
-                    results.append((matched_id, qty))
+                                qty = next_q
+                                idx += 1
+                    
+                    # Avoid duplicate if user writes e.g. "❤️ :shades: (love shades)"
+                    # where the item was already recognized immediately prior with qty=1
+                    if results and results[-1][0] == matched_id and qty == 1 and results[-1][1] == 1:
+                        pass
+                    else:
+                        results.append((matched_id, qty))
                 else:
                     idx += 1
 
@@ -553,7 +742,19 @@ if __name__ == "__main__":
         "trading devil fruit rod for kaido cape and adds",
         "h: :kaido::outfit: w: :big::mom::cape:",
         "LF 2x :kaido::cape: offer :mochi: + 10x lc",
-        "kaido cape 2x leg chest mochi 3x pika"
+        "kaido cape 2x leg chest mochi 3x pika",
+        # Heart Love Shades vs Cool Shades & Emoji 4 Leg Chest tests
+        "❤️ :Shades:",
+        ":heart::shades:",
+        "❤️ :shades:(love shades)",
+        "<:heart:100><:shades:101>",
+        "4️⃣ leg chest",
+        "4️⃣ лег чест",
+        ":four: :leg::chest:",
+        "<:4:999> <:leg:1><:chest:2>",
+        "WTT 4️⃣ <:leg:1><:chest:2> LF ❤️ :shades:",
+        "WTT 4лк LF ❤️:shades:(love shades)",
+        "cool shades for 4x leg chest"
     ]
     for tc in test_cases:
         res = parser.parse_message({"content": tc, "author_id": "test_1", "id": "1", "timestamp": "2026-10-15T12:00:00Z"})
