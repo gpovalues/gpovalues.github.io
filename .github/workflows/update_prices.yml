@@ -1,17 +1,17 @@
-name: GPO 24/7 Continuous Trade Stream & 12-Hour Pricing Pipeline
+name: GPO Hourly Trade Stream & Pricing Pipeline
 
 on:
   schedule:
-    # Runs continuously in GitHub Cloud (every 30 minutes, 24/7) to collect all trade messages without gaps
-    - cron: '*/30 * * * *'
+    # Runs every hour, 24/7, to analyze 1,000 trades from channel #966859339816124438 and update site prices & forecasts
+    - cron: '0 * * * *'
   workflow_dispatch:
     # Allows manual instant triggering with optional forced price update
     inputs:
       force_price_update:
-        description: 'Force recalculate website prices immediately (ignore 12h wait)'
+        description: 'Force recalculate website prices immediately'
         required: false
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: write
@@ -40,10 +40,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run 24/7 Trade Collector & Pricing Pipeline
+      - name: Run Hourly Trade Collector & Pricing Pipeline
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_CHANNEL_IDS: ${{ secrets.DISCORD_CHANNEL_IDS }}
+          DISCORD_CHANNEL_IDS: "966859339816124438"
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_price_update }}" = "true" ]; then
             python scripts/update_values.py --force-prices
@@ -58,12 +58,8 @@ jobs:
           if [[ -n $(git status -s) ]]; then
             echo "Changes detected! Staging and committing..."
             git add data/trades_buffer.json data/values.json data/trade_aliases.json gpo_items.json items_data.js
-            if [[ -f "data/.prices_updated" ]]; then
-              rm -f data/.prices_updated
-              git commit -m "📈 12-Hour Market Revaluation & Website Price Update [$(date -u +'%Y-%m-%d %H:%M UTC')]"
-            else
-              git commit -m "📥 24/7 Trade stream accumulation [$(date -u +'%Y-%m-%d %H:%M UTC')]"
-            fi
+            rm -f data/.prices_updated
+            git commit -m "📈 Hourly Market Revaluation & Forecasts [$(date -u +'%Y-%m-%d %H:%M UTC')]"
             git push origin main
           else
             echo "No changes detected. Database is up to date."

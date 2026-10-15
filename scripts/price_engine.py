@@ -229,10 +229,10 @@ class GPOPriceEngine:
 
             raw_market_estimates.append(raw_market_est)
 
-            # Clamp per 12h cycle to maximum +-10% to prevent market manipulation
-            clamped = max(curr_val * 0.90, min(curr_val * 1.10, raw_market_est))
-            # EMA Smoothing: 88% current weight + 12% market target
-            smoothed = 0.88 * curr_val + 0.12 * clamped
+            # Clamp per 1-hour cycle to maximum +-5% to maintain market stability
+            clamped = max(curr_val * 0.95, min(curr_val * 1.05, raw_market_est))
+            # EMA Smoothing: 92% current weight + 8% hourly market target
+            smoothed = 0.92 * curr_val + 0.08 * clamped
 
             # Preserve baseline for anchor currency (SP Reset ≈ 1)
             if it.get("name") == "SP Reset Essence":
@@ -258,7 +258,6 @@ class GPOPriceEngine:
             if curr_v - next_v < min_gap:
                 spaced_values[i + 1] = max(0.1, curr_v - min_gap)
 
-        # Re-normalize lowest item anchor if needed (SP Reset)
         # Round nicely for display (integers for values >= 100, 1 decimal for < 100)
         final_values: List[float] = []
         for v in spaced_values:
@@ -270,9 +269,44 @@ class GPOPriceEngine:
                 final_values.append(round(v, 2))
 
         # -------------------------------------------------------------
-        # STAGE 4: Forecasting Engine & Tier Pressure Alerts
+        # STAGE 4: Forecasting Engine & Strict 0.0 - 10.0 Demand Scores
         # -------------------------------------------------------------
-        max_demand = max(m["demand_count"] for m in metrics.values()) if metrics else 1
+        # Calculate raw demand intensity for all items
+        raw_demand_intensities: List[float] = []
+        for idx, it in enumerate(self.items):
+            iid = it["id"]
+            m = metrics[iid]
+            d_cnt = float(m["demand_count"])
+            s_cnt = float(m["supply_count"])
+            ratio = (d_cnt + 1.0) / (s_cnt + 1.0)
+            
+            # Organic trading appeal: net demand + volume bonus + pressure ratio
+            net_demand = max(0.0, d_cnt - s_cnt)
+            intensity = d_cnt * 2.0 + net_demand * 1.5 + (ratio - 1.0) * 3.0
+            raw_intensity = max(0.0, intensity)
+            
+            # Smooth logarithmic scale so non-traded items are 0, and top items scale gracefully
+            log_intensity = math.log1p(raw_intensity)
+            raw_demand_intensities.append(log_intensity)
+
+        min_d = min(raw_demand_intensities)
+        max_d = max(raw_demand_intensities)
+
+        # Scale perfectly from 0.0 to 10.0: Highest item = 10.0/10, Lowest item = 0.0/10
+        scaled_scores: List[float] = []
+        if max_d > min_d:
+            for val in raw_demand_intensities:
+                score = 10.0 * (val - min_d) / (max_d - min_d)
+                scaled_scores.append(round(score, 1))
+        else:
+            scaled_scores = [5.0] * n
+
+        # User strict rule: Guarantee highest item is strictly 10.0 and lowest item is strictly 0.0
+        max_idx = max(range(n), key=lambda k: raw_demand_intensities[k])
+        min_idx = min(range(n), key=lambda k: raw_demand_intensities[k])
+        scaled_scores[max_idx] = 10.0
+        scaled_scores[min_idx] = 0.0
+
         processed_items: List[Dict[str, Any]] = []
         tier_pressure_candidates: List[Dict[str, Any]] = []
 
@@ -286,22 +320,31 @@ class GPOPriceEngine:
             demand_cnt = m["demand_count"]
             supply_cnt = m["supply_count"]
             pressure_ratio = round((demand_cnt + 1.0) / (supply_cnt + 1.0), 2)
+            demand_score = scaled_scores[idx]
 
-            # Combined demand score: 70% curated PvP/PvE baseline + 30% dynamic market volume
-            curated_score = float(it.get("demandScore", 8.0))
-            dynamic_score = 1.0 + 9.0 * (math.log1p(demand_cnt) / math.log1p(max(max_demand, 5)))
-            blended_score = round(0.70 * curated_score + 0.30 * dynamic_score, 1)
-            demand_score = max(1.0, min(10.0, blended_score))
+            # Categorical demand label aligned with 0-10 demandScore
+            if demand_score >= 9.0:
+                demand_label = "Extremely High"
+            elif demand_score >= 7.5:
+                demand_label = "Very High"
+            elif demand_score >= 5.5:
+                demand_label = "High"
+            elif demand_score >= 3.5:
+                demand_label = "Medium"
+            elif demand_score >= 1.5:
+                demand_label = "Low"
+            else:
+                demand_label = "Very Low"
 
             # Trend & Expected 24-48h drift
-            pct_drift = round((pressure_ratio - 1.0) * 5.5, 1)
-            pct_drift = max(-10.0, min(12.0, pct_drift))
+            pct_drift = round((pressure_ratio - 1.0) * 4.0, 1)
+            pct_drift = max(-8.0, min(10.0, pct_drift))
 
-            if pressure_ratio >= 1.85 and demand_score >= 8.5:
+            if pressure_ratio >= 1.80 and demand_score >= 8.0:
                 trend = "Overpaid"
-            elif pressure_ratio >= 1.25 or pct_drift >= 3.0:
+            elif pressure_ratio >= 1.25 or pct_drift >= 2.5:
                 trend = "Rising"
-            elif pressure_ratio <= 0.78 or pct_drift <= -3.0:
+            elif pressure_ratio <= 0.78 or pct_drift <= -2.5:
                 trend = "Falling"
             else:
                 trend = "Stable"
@@ -337,7 +380,7 @@ class GPOPriceEngine:
                 **it,
                 "value": int(new_val) if new_val >= 100 else new_val,
                 "lcValue": lc_val,
-                "demand": "Extremely High" if demand_score >= 9.5 else "Very High" if demand_score >= 8.5 else "High" if demand_score >= 7.0 else "Medium" if demand_score >= 5.0 else "Low",
+                "demand": demand_label,
                 "demandScore": demand_score,
                 "trend": trend,
                 "official_rank": idx + 1,
@@ -348,6 +391,11 @@ class GPOPriceEngine:
                 "tier_pressure_alert": tier_pressure_alert
             }
             processed_items.append(item_record)
+
+        # Verify sequence invariant: order of items never changes
+        for i in range(len(processed_items) - 1):
+            assert processed_items[i]["official_rank"] == i + 1, "Rank index mismatch"
+            assert processed_items[i]["value"] >= processed_items[i + 1]["value"], "Value monotonicity violated"
 
         # Highlight summaries
         top_rising = sorted([it for it in processed_items if it["trend"] in ("Rising", "Overpaid")], key=lambda x: -x["pressure_ratio"])[:6]

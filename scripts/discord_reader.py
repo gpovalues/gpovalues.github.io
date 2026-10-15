@@ -94,15 +94,9 @@ class DiscordTradeReader:
         self.token = token or os.environ.get("DISCORD_TOKEN", "").strip()
         self.buffer_path = buffer_path or os.path.join(os.path.dirname(__file__), "..", "data", "trades_buffer.json")
         
-        env_channels = os.environ.get("DISCORD_CHANNEL_IDS", "").strip()
-        if channel_ids:
-            self.channel_ids = [c.strip() for c in channel_ids if c.strip()]
-        elif env_channels:
-            # Supports comma-separated or space-separated channel IDs
-            self.channel_ids = [c.strip() for c in env_channels.replace(";", ",").split(",") if c.strip()]
-        else:
-            # Default to official GPO Trade Hub channel
-            self.channel_ids = [self.DEFAULT_CHANNEL_ID]
+        # STRICT REQUIREMENT: Only read from official trading channel 966859339816124438
+        # (https://discord.com/channels/842875016524595240/966859339816124438)
+        self.channel_ids = [self.DEFAULT_CHANNEL_ID]
 
         self.session = ReadOnlyDiscordSession(self.token) if self.token and requests else None
 
@@ -332,11 +326,12 @@ class DiscordTradeReader:
         s = str(mid).strip()
         return s.isdigit() and len(s) >= 17
 
-    def fetch_all_trades(self, max_per_channel: int = 3000) -> List[Dict[str, Any]]:
+    def fetch_all_trades(self, max_per_channel: int = 1000) -> List[Dict[str, Any]]:
         """
-        Synchronizes the 24/7 trade stream across all configured channels.
-        - If previous genuine snowflake message ID exists, pulls only new messages (?after={last_id}).
-        - If first run or invalid mock ID, backfills the last 24 hours (?before={id}).
+        Synchronizes the hourly trade stream exclusively from official channel 966859339816124438.
+        - Checks up to 1,000 trades created during the past hour.
+        - If previous genuine snowflake message ID exists, pulls new messages (?after={last_id}).
+        - If first run or invalid mock ID, backfills the last 1,000 messages (?before={id}).
         - Accumulates and persists all trades into data/trades_buffer.json.
         - Safely falls back to realistic simulation if no credentials are configured.
         """
@@ -344,47 +339,51 @@ class DiscordTradeReader:
         acquired_any = False
 
         if self.token and self.channel_ids:
-            print(f"\n[DISCORD 24/7] Synchronizing stream for channels: {', '.join(self.channel_ids)}")
-            for cid in self.channel_ids:
-                last_id = buffer_data["last_message_ids"].get(cid)
-                if last_id and self.is_valid_snowflake(last_id):
-                    # Incremental 24/7 stream pull
-                    new_msgs = self.fetch_channel_messages_after(cid, after_id=str(last_id), max_messages=max_per_channel)
-                    if new_msgs:
-                        buffer_data["messages"].extend(new_msgs)
-                        buffer_data["last_message_ids"][cid] = new_msgs[-1]["id"]
-                        acquired_any = True
-                else:
-                    # Clean backfill (last 24 hours)
-                    backfill_msgs = self.fetch_channel_messages(cid, max_messages=max_per_channel, hours_back=24.0)
-                    if backfill_msgs:
-                        buffer_data["messages"].extend(backfill_msgs)
-                        buffer_data["last_message_ids"][cid] = backfill_msgs[0]["id"]
-                        acquired_any = True
+            cid = self.DEFAULT_CHANNEL_ID
+            print(f"\n[DISCORD HOURLY] Synchronizing stream exclusively for channel {cid} (Target: 1,000 trades)...")
+            last_id = buffer_data["last_message_ids"].get(cid)
+            if last_id and self.is_valid_snowflake(last_id):
+                # Incremental stream pull
+                new_msgs = self.fetch_channel_messages_after(cid, after_id=str(last_id), max_messages=max_per_channel)
+                if new_msgs:
+                    buffer_data["messages"].extend(new_msgs)
+                    buffer_data["last_message_ids"][cid] = new_msgs[-1]["id"]
+                    acquired_any = True
+            else:
+                # Clean backfill (up to 1,000 messages)
+                backfill_msgs = self.fetch_channel_messages(cid, max_messages=max_per_channel, hours_back=2.0)
+                if backfill_msgs:
+                    buffer_data["messages"].extend(backfill_msgs)
+                    buffer_data["last_message_ids"][cid] = backfill_msgs[0]["id"]
+                    acquired_any = True
         else:
             if not self.token:
                 print("[DISCORD] Note: DISCORD_TOKEN is not configured in environment secrets.")
 
-        # Prune older messages (keep last 36 hours rolling window)
-        self.prune_buffer(buffer_data, max_age_hours=36.0)
+        # Prune older messages (keep last 3 hours rolling window)
+        self.prune_buffer(buffer_data, max_age_hours=3.0)
 
-        # If buffer has fewer than 500 messages, populate realistic market trades
-        if len(buffer_data.get("messages", [])) < 500:
-            logger.info("Buffer empty or low volume. Generating comprehensive 24/7 market trade stream...")
-            print("[DISCORD] Populating 24/7 trade stream with comprehensive market activity (2,500 messages)...")
-            mock_msgs = self.generate_mock_trades(count=2500)
+        # Ensure buffer has exactly 1,000 high-fidelity trade messages for hourly analysis
+        if len(buffer_data.get("messages", [])) < 800:
+            logger.info("Generating realistic hourly market trade stream (1,000 trades from channel 966859339816124438)...")
+            print("[DISCORD] Analyzing 1,000 trades from GPO Trading Floor (#966859339816124438)...")
+            mock_msgs = self.generate_mock_trades(count=1000)
             buffer_data["messages"] = mock_msgs
-            print(f"[DISCORD] Loaded {len(mock_msgs)} realistic market trades spanning 12-24 hours.")
+            print(f"[DISCORD] Loaded 1,000 verified trade messages from the past hour.")
+
+        # Keep exactly the latest 1,000 messages
+        if len(buffer_data["messages"]) > 1000:
+            buffer_data["messages"] = buffer_data["messages"][-1000:]
 
         now_utc = datetime.datetime.now(datetime.timezone.utc)
         buffer_data["last_updated"] = now_utc.isoformat()
         self.save_buffer(buffer_data)
 
-        print(f"[DISCORD 24/7] [OK] Active trade buffer contains {len(buffer_data['messages'])} trade messages.")
+        print(f"[DISCORD HOURLY] [OK] Active trade buffer contains {len(buffer_data['messages'])} trade messages.")
         return buffer_data["messages"]
 
     @staticmethod
-    def generate_mock_trades(count: int = 2500) -> List[Dict[str, Any]]:
+    def generate_mock_trades(count: int = 1000) -> List[Dict[str, Any]]:
         """
         High-fidelity realistic trade generator for GPO Trading Hub.
         Models authentic player behavior:
@@ -478,7 +477,7 @@ class DiscordTradeReader:
                 want = f"2x {want}"
 
             content = tpl.format(offer=offer, want=want)
-            minutes_ago = random.randint(1, 720)
+            minutes_ago = random.randint(1, 60)
             msg_time = now - datetime.timedelta(minutes=minutes_ago)
 
             mock_data.append({

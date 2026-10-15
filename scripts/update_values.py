@@ -40,20 +40,21 @@ def main():
     values_json_path = os.path.join(data_dir, "values.json")
 
     logger.info("=" * 60)
-    logger.info("STARTING GPO VALUES 12-HOUR AUTOMATED UPDATE PIPELINE")
+    logger.info("STARTING GPO VALUES HOURLY AUTOMATED UPDATE PIPELINE (1,000 TRADES)")
+    logger.info("TARGET CHANNEL: https://discord.com/channels/842875016524595240/966859339816124438")
     logger.info("=" * 60)
 
-    # 1. Read Discord Trade Messages
+    # 1. Read Discord Trade Messages from Channel #966859339816124438
     reader = DiscordTradeReader()
-    raw_messages = reader.fetch_all_trades(max_per_channel=3000)
-    logger.info(f"Step 1 Complete: Acquired {len(raw_messages)} messages.")
+    raw_messages = reader.fetch_all_trades(max_per_channel=1000)
+    logger.info(f"Step 1 Complete: Acquired {len(raw_messages)} messages from channel #966859339816124438.")
 
     # 2. Parse Trade Signals
     parser = GPOTradeParser(items_path=items_json_path)
     trades = parser.parse_all(raw_messages)
     logger.info(f"Step 2 Complete: Extracted {len(trades)} structured trade signals.")
 
-    # Detailed console logging and trade audit for 24/7 stream verification
+    # Detailed console logging and trade audit for hourly stream verification
     demand_counts = {}
     supply_counts = {}
     category_counts = {"fruits": 0, "weapons": 0, "accessories": 0, "chests": 0, "misc": 0}
@@ -75,15 +76,16 @@ def main():
     supplied_strs = [f"{parser.items_dict.get(i, {}).get('name', i)} (x{c})" for i, c in top_supplied]
 
     print("\n" + "=" * 80)
-    print(" 📊 GPO 24/7 CONTINUOUS TRADE STREAM AUDIT & VERIFICATION REPORT")
+    print(" 📊 GPO HOURLY TRADE STREAM AUDIT REPORT (CHANNEL: #966859339816124438)")
     print("=" * 80)
-    print(f" • Total Raw Discord Messages Scanned : {len(raw_messages)}")
-    print(f" • Total Valid Trade Signals Extracted: {len(trades)} distinct player offers")
-    print(f" • Market Activity by Category        : Fruits ({category_counts.get('fruits', 0)}), Weapons ({category_counts.get('weapons', 0)}), Chests ({category_counts.get('chests', 0)}), Accs ({category_counts.get('accessories', 0)})")
-    print(f" • Top 5 Most Demanded Items (WANT)   : {', '.join(demanded_strs) or 'None'}")
-    print(f" • Top 5 Most Supplied Items (OFFER)  : {', '.join(supplied_strs) or 'None'}")
+    print(" • Discord Target Channel         : #966859339816124438 (Guild: 842875016524595240)")
+    print(f" • Total Raw Messages Analyzed    : {len(raw_messages)} (1,000 trades target)")
+    print(f" • Total Valid Trade Offers Extracted: {len(trades)} distinct player trade signals")
+    print(f" • Market Activity by Category    : Fruits ({category_counts.get('fruits', 0)}), Weapons ({category_counts.get('weapons', 0)}), Chests ({category_counts.get('chests', 0)}), Accs ({category_counts.get('accessories', 0)})")
+    print(f" • Top 5 Most Demanded Items (LF) : {', '.join(demanded_strs) or 'None'}")
+    print(f" • Top 5 Most Offered Items (WTT) : {', '.join(supplied_strs) or 'None'}")
     print("=" * 80)
-    print(f" [PARSER VERIFICATION SAMPLES] DISPLAYING 25 EXTRACTED TRADE SIGNALS:")
+    print(" [PARSER VERIFICATION SAMPLES] 25 EXTRACTED HOURLY TRADE SIGNALS:")
     print("-" * 80)
 
     # Show 25 diverse trade samples across the dataset
@@ -96,9 +98,9 @@ def main():
         print(f"[{idx:02d}] [RAW]    : {raw}")
         print(f"     [PARSED] : {parsed_str}")
     print("-" * 80)
-    print(f" >>> Full Dataset Verified: ALL {len(trades)} trade signals successfully loaded into pricing engine. <<<\n")
+    print(f" >>> Full Hourly Dataset Verified: ALL {len(trades)} trade signals loaded into pricing engine. <<<\n")
 
-    # 3. Check 12-hour cycle for updating website prices
+    # 3. Check 1-hour cycle for updating website prices & forecast tab
     force_update = ("--force-prices" in sys.argv) or ("--force" in sys.argv)
     collect_only = ("--collect-only" in sys.argv)
 
@@ -120,35 +122,33 @@ def main():
     else:
         elapsed_hours = 999.0
 
-    # The user rule: Collect 24/7, but recalculate & update website prices every 12 hours
-    should_update_prices = force_update or (not collect_only and elapsed_hours >= 12.0)
+    # User rule: Updates every 1 hour (>= 0.85h accommodates standard GitHub Actions cron jitter)
+    should_update_prices = force_update or (not collect_only and elapsed_hours >= 0.85)
 
     if not should_update_prices:
-        hours_remaining = max(0.0, 12.0 - elapsed_hours)
-        minutes_remaining = int(hours_remaining * 60)
+        minutes_remaining = max(1, int((1.0 - elapsed_hours) * 60))
         print("=" * 78)
-        print(" [24/7 STREAM STATUS] CONTINUOUS DATA ACCUMULATION IN PROGRESS")
+        print(" [HOURLY STREAM STATUS] 1-HOUR CYCLE IN PROGRESS")
         print("=" * 78)
-        print(f" • Time elapsed since last price update: {elapsed_hours:.1f} hours ({int(elapsed_hours * 60)} minutes)")
-        print(f" • Time remaining until 12h price update: {hours_remaining:.1f} hours ({minutes_remaining} minutes)")
-        print(f" • Trades accumulated in 24/7 buffer   : {len(trades)} trade signals")
-        print(f" • Stream collection status             : 100% OPERATIONAL (running 24/7)")
-        print(" • Website pricing status              : LOCKED & STABLE (updates only every 12h)")
+        print(f" • Time elapsed since last update: {int(elapsed_hours * 60)} minutes")
+        print(f" • Time remaining until next update: {minutes_remaining} minutes")
+        print(f" • Buffer messages accumulated   : {len(trades)} trades")
+        print(" • Website pricing status         : LOCKED until 1-hour cycle completes")
         print("=" * 78 + "\n")
         return
 
     print("=" * 78)
     if force_update:
-        print(f" [PRICE ENGINE] MANUAL FORCE OVERRIDE DETECTED (--force-prices)")
+        print(" [HOURLY ENGINE] MANUAL FORCE OVERRIDE DETECTED (--force-prices)")
         print("=" * 78)
-        print(f" • Elapsed since last update: {elapsed_hours:.1f} hours ({int(elapsed_hours * 60)} minutes)")
-        print(" • Notice: 12-hour cycle is not finished, but admin requested immediate price recalculation.")
-        print(f" • Calculating ideal market values from all {len(trades)} accumulated trades...")
+        print(f" • Elapsed since last update: {int(elapsed_hours * 60)} minutes")
+        print(f" • Calculating ideal market values, monotonic order, and 0-10 demand scores from {len(trades)} trades...")
     else:
-        print(f" [PRICE ENGINE] FULL 12-HOUR CYCLE COMPLETED (Elapsed: {elapsed_hours:.1f}h >= 12.0h)")
+        print(f" [HOURLY ENGINE] 1-HOUR CYCLE COMPLETED (Elapsed: {elapsed_hours:.1f}h >= 1.0h)")
         print("=" * 78)
-        print(" • Full 12-hour continuous trade stream cycle finished!")
-        print(f" • Calculating ideal market values and updating website prices from all {len(trades)} trades...")
+        print(f" • Full 1-hour trading cycle completed on channel #966859339816124438!")
+        print(f" • Recalculating website prices, monotonic order, 0-10 demand scores, and forecast tab from {len(trades)} trades...")
+    print("=" * 78 + "\n")
     print("=" * 78 + "\n")
 
     # 4. Mathematical Optimization & Forecasting Engine
