@@ -66,21 +66,61 @@ def main():
         print(f"     [PARSED] : {parsed_str}")
     print("=" * 75 + "\n")
 
-    # 3. Mathematical Optimization & Forecasting Engine
+    # 3. Check 12-hour cycle for updating website prices
+    force_update = ("--force-prices" in sys.argv) or ("--force" in sys.argv)
+    collect_only = ("--collect-only" in sys.argv)
+
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    last_price_update_dt = None
+
+    if os.path.exists(values_json_path):
+        try:
+            with open(values_json_path, "r", encoding="utf-8") as f:
+                prev_val = json.load(f)
+                iso_str = prev_val.get("meta", {}).get("updated_at_iso")
+                if iso_str:
+                    last_price_update_dt = datetime.datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
+        except Exception:
+            pass
+
+    if last_price_update_dt:
+        elapsed_hours = (now_utc - last_price_update_dt).total_seconds() / 3600.0
+    else:
+        elapsed_hours = 999.0
+
+    # The user rule: Collect 24/7, but recalculate & update website prices every 12 hours
+    should_update_prices = force_update or (not collect_only and elapsed_hours >= 11.5)
+
+    if not should_update_prices:
+        hours_remaining = max(0.0, 12.0 - elapsed_hours)
+        print("=" * 70)
+        print("[24/7 STREAM STATUS - DATABASE ACCUMULATION ACTIVE]")
+        print(f" - Continuous collection: ACTIVE ({len(trades)} trades in 24/7 buffer)")
+        print(f" - Elapsed since last site price update: {elapsed_hours:.1f} hours")
+        print(f" - Next website price recalculation in : {hours_remaining:.1f} hours")
+        print(" - (Website prices kept stable until the 12-hour mark)")
+        print("=" * 70)
+        return
+
+    print("=" * 70)
+    print(f"[PRICE ENGINE] 12-HOUR CYCLE REACHED (Elapsed: {elapsed_hours:.1f}h).")
+    print("CALCULATING IDEAL MARKET VALUES & UPDATING WEBSITE PRICES...")
+    print("=" * 70)
+
+    # 4. Mathematical Optimization & Forecasting Engine
     engine = GPOPriceEngine(items_path=items_json_path)
     result = engine.run_pipeline(trades)
 
-    now_utc = datetime.datetime.now(datetime.timezone.utc)
     result["meta"]["updated_at"] = now_utc.strftime("%Y-%m-%d %H:%M:%S UTC")
     result["meta"]["updated_at_iso"] = now_utc.isoformat()
     result["meta"]["official_base_updated"] = "10/11/2026"
 
-    # 4. Save data/values.json
+    # 5. Save data/values.json
     with open(values_json_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
     logger.info(f"Saved live analytics to {values_json_path} ({len(result['items'])} items).")
 
-    # 5. Synchronize gpo_items.json and items_data.js
+    # 6. Synchronize gpo_items.json and items_data.js
     updated_items = result["items"]
     with open(items_json_path, "w", encoding="utf-8") as f:
         json.dump(updated_items, f, indent=2, ensure_ascii=False)
@@ -102,7 +142,7 @@ def main():
     logger.info(f"Top Falling Items ({len(falling)}): {', '.join(it['name'] for it in falling[:4])}")
     logger.info(f"Tier Pressure Alerts ({len(alerts)}): {', '.join(it['name'] for it in alerts[:3]) if alerts else 'None'}")
     logger.info("-" * 60)
-    logger.info("PIPELINE COMPLETED SUCCESSFULLY.")
+    logger.info("WEBSITE PRICES UPDATED SUCCESSFULLY (12-HOUR CYCLE).")
 
 
 if __name__ == "__main__":

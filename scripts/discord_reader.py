@@ -7,6 +7,7 @@ are completely disabled at the class/architecture level.
 
 import os
 import sys
+import json
 import time
 import random
 import datetime
@@ -89,8 +90,9 @@ class DiscordTradeReader:
 
     DEFAULT_CHANNEL_ID = "966859339816124438"
 
-    def __init__(self, token: Optional[str] = None, channel_ids: Optional[List[str]] = None):
+    def __init__(self, token: Optional[str] = None, channel_ids: Optional[List[str]] = None, buffer_path: Optional[str] = None):
         self.token = token or os.environ.get("DISCORD_TOKEN", "").strip()
+        self.buffer_path = buffer_path or os.path.join(os.path.dirname(__file__), "..", "data", "trades_buffer.json")
         
         env_channels = os.environ.get("DISCORD_CHANNEL_IDS", "").strip()
         if channel_ids:
@@ -104,9 +106,130 @@ class DiscordTradeReader:
 
         self.session = ReadOnlyDiscordSession(self.token) if self.token and requests else None
 
-    def fetch_channel_messages(self, channel_id: str, max_messages: int = 1500, hours_back: float = 12.0) -> List[Dict[str, Any]]:
+    def load_buffer(self) -> Dict[str, Any]:
+        """Loads the persistent 24/7 trade buffer from disk."""
+        if os.path.exists(self.buffer_path):
+            try:
+                with open(self.buffer_path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if isinstance(data, dict) and "messages" in data and "last_message_ids" in data:
+                        return data
+            except Exception as e:
+                logger.warning(f"Could not load trade buffer from {self.buffer_path}: {e}")
+        return {
+            "last_updated": None,
+            "last_price_update": None,
+            "last_message_ids": {},
+            "messages": []
+        }
+
+    def save_buffer(self, buffer_data: Dict[str, Any]):
+        """Persists the 24/7 trade buffer to disk."""
+        try:
+            os.makedirs(os.path.dirname(self.buffer_path), exist_ok=True)
+            with open(self.buffer_path, "w", encoding="utf-8") as f:
+                json.dump(buffer_data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"Error saving trade buffer to {self.buffer_path}: {e}")
+
+    def prune_buffer(self, buffer_data: Dict[str, Any], max_age_hours: float = 36.0):
+        """Deduplicates messages and removes those older than max_age_hours to maintain a lean rolling window."""
+        cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=max_age_hours)
+        valid_msgs = []
+        seen_ids = set()
+
+        for m in buffer_data.get("messages", []):
+            mid = m.get("id")
+            if not mid or mid in seen_ids:
+                continue
+            ts_str = m.get("timestamp", "")
+            try:
+                m_dt = datetime.datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+            except Exception:
+                m_dt = datetime.datetime.now(datetime.timezone.utc)
+            if m_dt >= cutoff:
+                seen_ids.add(mid)
+                valid_msgs.append(m)
+
+        buffer_data["messages"] = valid_msgs
+
+    def fetch_channel_messages_after(self, channel_id: str, after_id: str, max_messages: int = 2000) -> List[Dict[str, Any]]:
         """
-        Fetches up to `max_messages` from `channel_id` created within the last `hours_back` hours.
+        Fetches any new messages created since `after_id` using forward pagination (?after={id}&limit=100).
+        This provides seamless 24/7 continuous stream reading with zero duplicate gaps.
+        """
+        if not self.session:
+            return []
+
+        new_messages: List[Dict[str, Any]] = []
+        current_after = after_id
+        url = f"{self.DISCORD_API_BASE}/channels/{channel_id}/messages"
+
+        print(f"\n[DISCORD 24/7] Checking for new messages in channel {channel_id} after message ID {after_id}...")
+
+        while len(new_messages) < max_messages:
+            params = {"limit": 100, "after": current_after}
+            try:
+                resp = self.session.get(url, params=params, timeout=12)
+                print(f"[DISCORD API] GET /channels/{channel_id}/messages?after={current_after} -> HTTP {resp.status_code} ({resp.reason})")
+            except Exception as e:
+                print(f"[DISCORD API] [ERROR] Network error querying channel {channel_id}: {e}")
+                logger.error(f"Network error querying channel {channel_id}: {e}")
+                break
+
+            if resp.status_code == 429:
+                try:
+                    retry_after = resp.json().get("retry_after", 3.0)
+                except Exception:
+                    retry_after = 3.0
+                print(f"[DISCORD API] [RETRY] Rate limited (HTTP 429). Sleeping for {retry_after:.2f}s...")
+                time.sleep(retry_after + 0.5)
+                continue
+
+            if resp.status_code in (401, 403):
+                print(f"[DISCORD API] [ERROR] Auth error ({resp.status_code}) on channel {channel_id}. Check DISCORD_TOKEN.")
+                break
+
+            if resp.status_code != 200:
+                print(f"[DISCORD API] [WARN] Unexpected HTTP {resp.status_code}: {resp.text[:200]}")
+                break
+
+            batch = resp.json()
+            if not isinstance(batch, list) or len(batch) == 0:
+                print(f"[DISCORD 24/7] Up to date: No newer messages in channel {channel_id}.")
+                break
+
+            # Discord returns messages in ascending order for 'after'
+            for msg in batch:
+                content = msg.get("content", "")
+                created_str = msg.get("timestamp", "")
+                author = msg.get("author", {})
+                author_id = author.get("id", "anonymous")
+
+                if content and not author.get("bot", False):
+                    new_messages.append({
+                        "id": msg.get("id"),
+                        "author_id": author_id,
+                        "content": content,
+                        "timestamp": created_str
+                    })
+
+            print(f"[DISCORD 24/7] Stream batch fetched: {len(batch)} new messages (Running new total: {len(new_messages)})")
+            current_after = batch[-1].get("id")
+
+            if len(batch) < 100:
+                # Reached the very latest message
+                break
+
+            pause = random.uniform(1.2, 2.2)
+            time.sleep(pause)
+
+        print(f"[DISCORD 24/7] [OK] Acquired {len(new_messages)} new messages from channel {channel_id}.")
+        return new_messages
+
+    def fetch_channel_messages(self, channel_id: str, max_messages: int = 1500, hours_back: float = 24.0) -> List[Dict[str, Any]]:
+        """
+        Fetches up to `max_messages` from `channel_id` created within the last `hours_back` hours (backfill).
         """
         if not self.session:
             print(f"[DISCORD API] [WARN] No active session (token missing). Skipping channel {channel_id}.")
@@ -174,8 +297,8 @@ class DiscordTradeReader:
                     msg_dt = datetime.datetime.now(datetime.timezone.utc)
 
                 if msg_dt < cutoff_dt:
-                    print(f"[DISCORD API] Reached 12h cutoff timestamp ({msg_dt.strftime('%H:%M:%S UTC')}). Stopping pagination.")
-                    logger.info(f"Reached 12h cutoff timestamp ({msg_dt.isoformat()}). Stopping pagination.")
+                    print(f"[DISCORD API] Reached cutoff timestamp ({msg_dt.strftime('%H:%M:%S UTC')}). Stopping pagination.")
+                    logger.info(f"Reached cutoff timestamp ({msg_dt.isoformat()}). Stopping pagination.")
                     print(f"[DISCORD API] [OK] Total messages downloaded from channel {channel_id}: {len(messages)}")
                     return messages
 
@@ -201,30 +324,59 @@ class DiscordTradeReader:
         logger.info(f"Collected {len(messages)} messages from channel {channel_id}.")
         return messages
 
-    def fetch_all_trades(self, max_per_channel: int = 1200) -> List[Dict[str, Any]]:
+    def fetch_all_trades(self, max_per_channel: int = 1500) -> List[Dict[str, Any]]:
         """
-        Gathers trade messages across all configured channels.
-        If no credentials or channels are provided, safely returns realistic mock data
-        so the mathematical engine and pipeline function without failure.
+        Synchronizes the 24/7 trade stream across all configured channels.
+        - If previous message ID exists, pulls only new messages (?after={last_id}).
+        - If first run, backfills the last 24 hours (?before={id}).
+        - Accumulates and persists all trades into data/trades_buffer.json.
+        - Safely falls back to realistic simulation if no credentials are configured.
         """
-        all_messages: List[Dict[str, Any]] = []
+        buffer_data = self.load_buffer()
+        acquired_any = False
 
         if self.token and self.channel_ids:
-            print(f"\n[DISCORD] Starting live message download for channels: {', '.join(self.channel_ids)}")
+            print(f"\n[DISCORD 24/7] Synchronizing stream for channels: {', '.join(self.channel_ids)}")
             for cid in self.channel_ids:
-                msgs = self.fetch_channel_messages(cid, max_messages=max_per_channel)
-                all_messages.extend(msgs)
+                last_id = buffer_data["last_message_ids"].get(cid)
+                if last_id:
+                    # Incremental 24/7 stream pull
+                    new_msgs = self.fetch_channel_messages_after(cid, after_id=last_id, max_messages=max_per_channel)
+                    if new_msgs:
+                        buffer_data["messages"].extend(new_msgs)
+                        buffer_data["last_message_ids"][cid] = new_msgs[-1]["id"]
+                        acquired_any = True
+                else:
+                    # Initial backfill (last 24 hours)
+                    backfill_msgs = self.fetch_channel_messages(cid, max_messages=max_per_channel, hours_back=24.0)
+                    if backfill_msgs:
+                        buffer_data["messages"].extend(backfill_msgs)
+                        # In 'before' pagination, backfill_msgs[0] is the newest message
+                        buffer_data["last_message_ids"][cid] = backfill_msgs[0]["id"]
+                        acquired_any = True
         else:
             if not self.token:
                 print("[DISCORD] Note: DISCORD_TOKEN is not configured in environment secrets.")
 
-        if not all_messages:
-            logger.info("No live Discord messages retrieved (or token not configured). Running fallback market simulation...")
-            print("[DISCORD] Running realistic GPO Trade Hub market simulation...")
-            all_messages = self.generate_mock_trades()
-            print(f"[DISCORD] Simulation generated {len(all_messages)} messages.")
+        # Prune older messages (keep last 36 hours rolling window)
+        self.prune_buffer(buffer_data, max_age_hours=36.0)
 
-        return all_messages
+        # If buffer is still empty (e.g. no token configured and no existing buffer):
+        if not buffer_data["messages"]:
+            logger.info("Buffer empty. Running fallback market simulation...")
+            print("[DISCORD] Running realistic GPO Trade Hub market simulation (24/7 stream)...")
+            mock_msgs = self.generate_mock_trades()
+            buffer_data["messages"] = mock_msgs
+            if self.channel_ids:
+                buffer_data["last_message_ids"][self.channel_ids[0]] = mock_msgs[-1]["id"]
+            print(f"[DISCORD] Simulation populated {len(mock_msgs)} messages.")
+
+        now_utc = datetime.datetime.now(datetime.timezone.utc)
+        buffer_data["last_updated"] = now_utc.isoformat()
+        self.save_buffer(buffer_data)
+
+        print(f"[DISCORD 24/7] [OK] Active trade buffer contains {len(buffer_data['messages'])} trade messages.")
+        return buffer_data["messages"]
 
     @staticmethod
     def generate_mock_trades(count: int = 650) -> List[Dict[str, Any]]:

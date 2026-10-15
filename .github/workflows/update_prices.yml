@@ -1,11 +1,17 @@
-name: GPO Automated 12-Hour Market Pricing & Forecasts
+name: GPO 24/7 Continuous Trade Stream & 12-Hour Pricing Pipeline
 
 on:
   schedule:
-    # Runs autonomously in GitHub Cloud every 12 hours
-    - cron: '0 */12 * * *'
+    # Runs continuously in GitHub Cloud (every 30 minutes, 24/7) to collect all trade messages without gaps
+    - cron: '*/30 * * * *'
   workflow_dispatch:
-    # Allows manual instant triggering from the Actions tab
+    # Allows manual instant triggering with optional forced price update
+    inputs:
+      force_price_update:
+        description: 'Force recalculate website prices immediately (ignore 12h wait)'
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -34,12 +40,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Market Analysis & Pricing Engine
+      - name: Run 24/7 Trade Collector & Pricing Pipeline
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           DISCORD_CHANNEL_IDS: ${{ secrets.DISCORD_CHANNEL_IDS }}
         run: |
-          python scripts/update_values.py
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_price_update }}" = "true" ]; then
+            python scripts/update_values.py --force-prices
+          else
+            python scripts/update_values.py
+          fi
 
       - name: Commit and Push Changes
         run: |
@@ -47,9 +57,9 @@ jobs:
           git config --local user.name "GPO Autonomous Value Bot"
           if [[ -n $(git status -s) ]]; then
             echo "Changes detected! Staging and committing..."
-            git add data/values.json data/trade_aliases.json gpo_items.json items_data.js
-            git commit -m "📈 Auto-update market values & forecasts [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            git add data/trades_buffer.json data/values.json data/trade_aliases.json gpo_items.json items_data.js
+            git commit -m "📈 24/7 Trade stream sync & market update [$(date -u +'%Y-%m-%d %H:%M UTC')]"
             git push origin main
           else
-            echo "No market price changes detected. Database is up to date."
+            echo "No changes detected. Database is up to date."
           fi
