@@ -1,658 +1,10 @@
 {
-  "last_updated": "2026-10-15T14:48:25.731757+00:00",
+  "last_updated": "2026-10-15T14:52:25.111885+00:00",
   "last_price_update": null,
   "last_message_ids": {
-    "966859339816124438": "1560298302845620317"
+    "966859339816124438": "1560298351990149171"
   },
   "messages": [
-    {
-      "id": "sim_1000000000",
-      "author_id": "user_1000",
-      "content": "Обменяю Pika ищу 1x Legendary Fruit Chest + Dark Root",
-      "timestamp": "2026-10-15T14:10:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000001",
-      "author_id": "user_1001",
-      "content": "WTT Cool Shades LF Marine Cape + 2x Legendary Fruit Chest fast accept",
-      "timestamp": "2026-10-15T14:03:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000002",
-      "author_id": "user_1002",
-      "content": "WTT Kikoku LF 1x Legendary Fruit Chest + 3x SP Reset Essence fast accept",
-      "timestamp": "2026-10-15T14:21:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000003",
-      "author_id": "user_1003",
-      "content": ":kaido::outfit: ➡ :big::mom::cape:",
-      "timestamp": "2026-10-15T13:57:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000004",
-      "author_id": "user_1004",
-      "content": "Trading All Seeing Eye for 11x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T13:55:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000005",
-      "author_id": "user_1005",
-      "content": "Трейд All Seeing Eye на 2x 11x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T13:55:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000006",
-      "author_id": "user_1006",
-      "content": "H Mochi W Venom + Pika | NLF commons / rares",
-      "timestamp": "2026-10-15T13:53:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000007",
-      "author_id": "user_1007",
-      "content": "Обменяю <:marine:201><:cape:202> ищу :kaido::gourd:",
-      "timestamp": "2026-10-15T14:32:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000008",
-      "author_id": "user_1008",
-      "content": "WTT Hoverboard LF 2x 2x SP Reset Essence",
-      "timestamp": "2026-10-15T14:26:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000009",
-      "author_id": "user_1009",
-      "content": "Обменяю Горо ищу 3 сп",
-      "timestamp": "2026-10-15T13:48:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000010",
-      "author_id": "user_1010",
-      "content": "<:marine:201><:cape:202> ➡ :kaido::gourd:",
-      "timestamp": "2026-10-15T14:02:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000011",
-      "author_id": "user_1011",
-      "content": "ВТТ Goro лф 3x SP Reset Essence",
-      "timestamp": "2026-10-15T14:12:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000012",
-      "author_id": "user_1012",
-      "content": "WTT All Seeing Eye LF Prestige Fruitbag + 2x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:44:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000013",
-      "author_id": "user_1013",
-      "content": "2x Pika ➡ 1x Legendary Fruit Chest + Dark Root",
-      "timestamp": "2026-10-15T14:15:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000014",
-      "author_id": "user_1014",
-      "content": "Suna for 2x 2x SP Reset Essence fast trade",
-      "timestamp": "2026-10-15T14:22:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000015",
-      "author_id": "user_1015",
-      "content": "WTT Суна LF 2 сп ресет",
-      "timestamp": "2026-10-15T13:55:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000016",
-      "author_id": "user_1016",
-      "content": "Trading 10x Legendary Fruit Chest + small adds | LF 2x Mythical Fruit Chest nlf bad fruits",
-      "timestamp": "2026-10-15T14:47:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000017",
-      "author_id": "user_1017",
-      "content": "WTT Веном LF 2 лк + сп fast accept",
-      "timestamp": "2026-10-15T14:23:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000018",
-      "author_id": "user_1018",
-      "content": "WTT 2x Devil Fruit Rod LF 2x Legendary Fruit Chest fast accept",
-      "timestamp": "2026-10-15T13:53:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000019",
-      "author_id": "user_1019",
-      "content": "❤️ :shades: -> 4️⃣ leg chest",
-      "timestamp": "2026-10-15T13:56:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000020",
-      "author_id": "user_1020",
-      "content": "WTT Kikoku LF Mochi + adds fast accept",
-      "timestamp": "2026-10-15T14:40:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000021",
-      "author_id": "user_1021",
-      "content": "WTT Кикоку want лк + 3 сп or good overpay",
-      "timestamp": "2026-10-15T14:21:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000022",
-      "author_id": "user_1022",
-      "content": "WTT ❤️ :shades:(love shades) LF 4x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:30:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000023",
-      "author_id": "user_1023",
-      "content": "Trading Ba'al Head + small adds | LF 1x Legendary Fruit Chest nlf bad fruits",
-      "timestamp": "2026-10-15T14:27:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000024",
-      "author_id": "user_1024",
-      "content": "Trading Magu for 1x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:01:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000025",
-      "author_id": "user_1025",
-      "content": "Trading All Seeing Egg for Cupid's All Seeing Eye + adds",
-      "timestamp": "2026-10-15T13:59:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000026",
-      "author_id": "user_1026",
-      "content": "Ищу лк + 3 сп за Кикоку фаст",
-      "timestamp": "2026-10-15T14:46:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000027",
-      "author_id": "user_1027",
-      "content": "H: Pika W: 2x Magu + adds",
-      "timestamp": "2026-10-15T13:52:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000028",
-      "author_id": "user_1028",
-      "content": "Трейд Candy Cane на Prestige World Ender + 5x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:44:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000029",
-      "author_id": "user_1029",
-      "content": "ВТТ Пика лф лк + темный корень",
-      "timestamp": "2026-10-15T14:03:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000030",
-      "author_id": "user_1030",
-      "content": "Trading Mochi + small adds | LF 3x Legendary Fruit Chest nlf bad fruits",
-      "timestamp": "2026-10-15T14:12:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000031",
-      "author_id": "user_1031",
-      "content": "WTT All Seeing Eye LF Prestige Fruitbag + 2x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T13:48:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000032",
-      "author_id": "user_1032",
-      "content": "Веном for 2 лк + сп fast trade",
-      "timestamp": "2026-10-15T14:13:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000033",
-      "author_id": "user_1033",
-      "content": "H: 2x Горо W: 3 сп",
-      "timestamp": "2026-10-15T14:41:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000034",
-      "author_id": "user_1034",
-      "content": "WTT 2x Кикоку LF лк + 3 сп fast accept",
-      "timestamp": "2026-10-15T14:08:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000035",
-      "author_id": "user_1035",
-      "content": "Ищу 2x :kaido::gourd: за <:marine:201><:cape:202> фаст",
-      "timestamp": "2026-10-15T14:45:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000036",
-      "author_id": "user_1036",
-      "content": "Обменяю Pika ищу Magu + adds",
-      "timestamp": "2026-10-15T13:52:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000037",
-      "author_id": "user_1037",
-      "content": "Кикоку -> 2x лк + 3 сп",
-      "timestamp": "2026-10-15T13:48:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000038",
-      "author_id": "user_1038",
-      "content": "Dragon Emperor's Cape ➡ 2x 1x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:32:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000039",
-      "author_id": "user_1039",
-      "content": "WTT 2x Suna want 2x SP Reset Essence or good overpay",
-      "timestamp": "2026-10-15T14:17:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000040",
-      "author_id": "user_1040",
-      "content": "Trading World Ender for Prestige Firework Lancer + adds",
-      "timestamp": "2026-10-15T14:07:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000041",
-      "author_id": "user_1041",
-      "content": "<:4:999> <:leg:1><:chest:2> ➡ ❤️ :shades:",
-      "timestamp": "2026-10-15T14:18:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000042",
-      "author_id": "user_1042",
-      "content": "H: Pika W: Magu + adds",
-      "timestamp": "2026-10-15T14:42:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000043",
-      "author_id": "user_1043",
-      "content": "Отдам :kaido: :cape: за 2x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:30:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000044",
-      "author_id": "user_1044",
-      "content": "H 2x Kikoku W Mochi + adds | NLF commons / rares",
-      "timestamp": "2026-10-15T14:08:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000045",
-      "author_id": "user_1045",
-      "content": "H 2x All Seeing Eye W 11x Legendary Fruit Chest | NLF commons / rares",
-      "timestamp": "2026-10-15T13:53:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000046",
-      "author_id": "user_1046",
-      "content": "Trading Ba'al Head + small adds | LF 1x Legendary Fruit Chest nlf bad fruits",
-      "timestamp": "2026-10-15T14:23:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000047",
-      "author_id": "user_1047",
-      "content": "Трейд Mochi на Venom + Pika",
-      "timestamp": "2026-10-15T14:36:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000048",
-      "author_id": "user_1048",
-      "content": "H World Ender W Prestige Firework Lancer + adds | NLF commons / rares",
-      "timestamp": "2026-10-15T14:06:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000049",
-      "author_id": "user_1049",
-      "content": "Trading :df::rod: for 2x 2x LC",
-      "timestamp": "2026-10-15T14:03:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000050",
-      "author_id": "user_1050",
-      "content": "Трейд Пика на лк + темный корень",
-      "timestamp": "2026-10-15T14:10:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000051",
-      "author_id": "user_1051",
-      "content": "Prestige Candy Cane ➡ Prestige World Ender + All Seeing Eye",
-      "timestamp": "2026-10-15T14:08:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000052",
-      "author_id": "user_1052",
-      "content": "WTT 2x Goro LF 3x SP Reset Essence fast accept",
-      "timestamp": "2026-10-15T14:09:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000053",
-      "author_id": "user_1053",
-      "content": "Трейд Love Shades на 4x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:01:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000054",
-      "author_id": "user_1054",
-      "content": "LF 2x 1x Legendary Fruit Chest + 2x SP Reset Essence for my Tori",
-      "timestamp": "2026-10-15T14:18:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000055",
-      "author_id": "user_1055",
-      "content": "Ищу 2 сп ресет за Суна фаст",
-      "timestamp": "2026-10-15T14:18:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000056",
-      "author_id": "user_1056",
-      "content": "H Candy Cane W Prestige World Ender + 5x Legendary Fruit Chest | NLF commons / rares",
-      "timestamp": "2026-10-15T14:38:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000057",
-      "author_id": "user_1057",
-      "content": "Трейд Kikoku на 1x Legendary Fruit Chest + 3x SP Reset Essence",
-      "timestamp": "2026-10-15T14:02:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000058",
-      "author_id": "user_1058",
-      "content": "H: 2x Striker W: 1x Rare Fruit Chest + SP Reset Essence",
-      "timestamp": "2026-10-15T14:02:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000059",
-      "author_id": "user_1059",
-      "content": "2x :kaido: :cape: ➡ 2x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:04:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000060",
-      "author_id": "user_1060",
-      "content": "WTT 2x <:marine:201><:cape:202> LF :kaido::gourd: fast accept",
-      "timestamp": "2026-10-15T13:54:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000061",
-      "author_id": "user_1061",
-      "content": "LF Ope + Tori for my Venom",
-      "timestamp": "2026-10-15T13:56:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000062",
-      "author_id": "user_1062",
-      "content": "LF 2x SP Reset Essence for my Hoverboard",
-      "timestamp": "2026-10-15T14:05:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000063",
-      "author_id": "user_1063",
-      "content": "Kaido Cape ➡ 2x Mochi + adds",
-      "timestamp": "2026-10-15T13:54:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000064",
-      "author_id": "user_1064",
-      "content": "Trading All Seeing Eye for Prestige Fruitbag + 2x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:42:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000065",
-      "author_id": "user_1065",
-      "content": "ВТТ Kikoku лф 1x Legendary Fruit Chest + 3x SP Reset Essence",
-      "timestamp": "2026-10-15T14:42:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000066",
-      "author_id": "user_1066",
-      "content": "All Seeing Eye for 11x Legendary Fruit Chest fast trade",
-      "timestamp": "2026-10-15T14:26:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000067",
-      "author_id": "user_1067",
-      "content": "Trading Алл Сиинг Ай + small adds | LF 11 лк nlf bad fruits",
-      "timestamp": "2026-10-15T14:08:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000068",
-      "author_id": "user_1068",
-      "content": "Trading Goro for 3x SP Reset Essence",
-      "timestamp": "2026-10-15T13:49:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000069",
-      "author_id": "user_1069",
-      "content": "Трейд Мочи на 2x 3 лк",
-      "timestamp": "2026-10-15T14:01:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000070",
-      "author_id": "user_1070",
-      "content": "2x Magu -> 1x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:05:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000071",
-      "author_id": "user_1071",
-      "content": "Обменяю Venom ищу 2x Legendary Fruit Chest + SP Reset Essence",
-      "timestamp": "2026-10-15T14:44:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000072",
-      "author_id": "user_1072",
-      "content": "Кикоку for лк + 3 сп fast trade",
-      "timestamp": "2026-10-15T13:53:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000073",
-      "author_id": "user_1073",
-      "content": "LF 1x Legendary Fruit Chest for my Magu",
-      "timestamp": "2026-10-15T14:31:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000074",
-      "author_id": "user_1074",
-      "content": "Обменяю Веном ищу 2 лк + сп",
-      "timestamp": "2026-10-15T13:48:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000075",
-      "author_id": "user_1075",
-      "content": "Cool Shades ➡ Marine Cape + 2x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:38:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000076",
-      "author_id": "user_1076",
-      "content": "Kikoku for Mochi + adds fast trade",
-      "timestamp": "2026-10-15T14:25:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000077",
-      "author_id": "user_1077",
-      "content": "WTT 2x Pika LF Magu + adds fast accept",
-      "timestamp": "2026-10-15T14:43:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000078",
-      "author_id": "user_1078",
-      "content": "Обменяю Mochi ищу 3x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:07:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000079",
-      "author_id": "user_1079",
-      "content": "Kaido Cape ➡ Mochi + adds",
-      "timestamp": "2026-10-15T14:07:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000080",
-      "author_id": "user_1080",
-      "content": "ВТТ 2x Пика лф лк + темный корень",
-      "timestamp": "2026-10-15T14:26:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000081",
-      "author_id": "user_1081",
-      "content": "Trading :kaido: :cape: + small adds | LF 2x Legendary Fruit Chest nlf bad fruits",
-      "timestamp": "2026-10-15T14:16:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000082",
-      "author_id": "user_1082",
-      "content": "Трейд Pika на 1x Legendary Fruit Chest + Dark Root",
-      "timestamp": "2026-10-15T14:02:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000083",
-      "author_id": "user_1083",
-      "content": "Ope for 2x 1x Legendary Fruit Chest fast trade",
-      "timestamp": "2026-10-15T14:27:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000084",
-      "author_id": "user_1084",
-      "content": "H Кикоку W лк + 3 сп | NLF commons / rares",
-      "timestamp": "2026-10-15T14:19:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000085",
-      "author_id": "user_1085",
-      "content": "Trading Суна for 2 сп ресет",
-      "timestamp": "2026-10-15T14:05:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000086",
-      "author_id": "user_1086",
-      "content": "LF 2x 2x SP Reset Essence for my 2x Suna",
-      "timestamp": "2026-10-15T13:58:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000087",
-      "author_id": "user_1087",
-      "content": "Trading 2x Кикоку for лк + 3 сп",
-      "timestamp": "2026-10-15T14:29:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000088",
-      "author_id": "user_1088",
-      "content": "Обменяю All Seeing Eye ищу 2x 11x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:19:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000089",
-      "author_id": "user_1089",
-      "content": "WTT <:kaido:101><:cape:102> LF 1x Legendary Fruit Chest fast accept",
-      "timestamp": "2026-10-15T14:08:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000090",
-      "author_id": "user_1090",
-      "content": "2x Kikoku -> 1x Legendary Fruit Chest + 3x SP Reset Essence",
-      "timestamp": "2026-10-15T14:13:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000091",
-      "author_id": "user_1091",
-      "content": "WTT :kaido::cape: LF Mochi",
-      "timestamp": "2026-10-15T13:50:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000092",
-      "author_id": "user_1092",
-      "content": "H: 2x Pika W: 1x Legendary Fruit Chest + Dark Root",
-      "timestamp": "2026-10-15T14:11:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000093",
-      "author_id": "user_1093",
-      "content": "Трейд :kaido::cape: на Mochi",
-      "timestamp": "2026-10-15T14:11:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000094",
-      "author_id": "user_1094",
-      "content": "Отдам World Ender за Prestige Firework Lancer + adds",
-      "timestamp": "2026-10-15T13:49:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000095",
-      "author_id": "user_1095",
-      "content": "Trading Kaido Cape + small adds | LF 2x Mochi + adds nlf bad fruits",
-      "timestamp": "2026-10-15T14:36:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000096",
-      "author_id": "user_1096",
-      "content": "Ищу 2x SP Reset Essence за Hoverboard фаст",
-      "timestamp": "2026-10-15T14:41:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000097",
-      "author_id": "user_1097",
-      "content": "Трейд 2x Mochi на 3x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:38:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000098",
-      "author_id": "user_1098",
-      "content": "Обменяю 2x Pika ищу Magu + adds",
-      "timestamp": "2026-10-15T14:00:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000099",
-      "author_id": "user_1099",
-      "content": "LF 1x Legendary Fruit Chest + Dark Root for my Pika",
-      "timestamp": "2026-10-15T14:25:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000100",
-      "author_id": "user_1100",
-      "content": "2x Алл Сиинг Ай for 11 лк fast trade",
-      "timestamp": "2026-10-15T14:15:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000101",
-      "author_id": "user_1101",
-      "content": "Ищу Prestige World Ender + All Seeing Eye за Prestige Candy Cane фаст",
-      "timestamp": "2026-10-15T14:14:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000102",
-      "author_id": "user_1102",
-      "content": "WTT <:kaido:101><:cape:102> LF 1x Legendary Fruit Chest fast accept",
-      "timestamp": "2026-10-15T14:41:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000103",
-      "author_id": "user_1103",
-      "content": "ВТТ Mochi лф 3x Legendary Fruit Chest",
-      "timestamp": "2026-10-15T14:07:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000104",
-      "author_id": "user_1104",
-      "content": "Ищу Prestige World Ender + All Seeing Eye за Prestige Candy Cane фаст",
-      "timestamp": "2026-10-15T14:45:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000105",
-      "author_id": "user_1105",
-      "content": "Trading Goro for 3x SP Reset Essence",
-      "timestamp": "2026-10-15T14:29:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000106",
-      "author_id": "user_1106",
-      "content": "Ищу 3 сп за Горо фаст",
-      "timestamp": "2026-10-15T14:24:25.725505+00:00"
-    },
-    {
-      "id": "sim_1000000107",
-      "author_id": "user_1107",
-      "content": "Отдам 2x :kaido::outfit: за :big::mom::cape:",
-      "timestamp": "2026-10-15T14:13:25.725505+00:00"
-    },
     {
       "id": "sim_1000000108",
       "author_id": "user_1108",
@@ -6004,6 +5356,654 @@
       "author_id": "user_1039",
       "content": "WTT 2x Hoverboard LF 2x 2x SP Reset Essence",
       "timestamp": "2026-10-15T14:39:25.725505+00:00"
+    },
+    {
+      "id": "1560298700746792961",
+      "author_id": "866212237998817302",
+      "content": "<:hollyase:1519457376564936804> <:Flowers:1523902340271308913> <:ResHead:1523920882857148588> <:mpow:1523898619789443113> <:Stark:1433956131503603754> <:Gun:1433910955997397154><:Inferno_Blade:1523897944263229582>  <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:59.206000+00:00"
+    },
+    {
+      "id": "1560298696560607345",
+      "author_id": "993544892078903338",
+      "content": "<:Leopard:1543808730485755905> <:FOR:1433910700975067146> <:Kikoku:1120440014883537047>",
+      "timestamp": "2026-10-15T14:29:58.208000+00:00"
+    },
+    {
+      "id": "1560298695277416583",
+      "author_id": "704350570181558343",
+      "content": "<:icc:1519457404268449993> <:FOR:1433910700975067146> <:CC:1523897313964068963> <:case:1519457201692082237> <:Small_Adds:1433929646512144454>",
+      "timestamp": "2026-10-15T14:29:57.902000+00:00"
+    },
+    {
+      "id": "1560298692869755055",
+      "author_id": "591389337430786091",
+      "content": "2️⃣ <:baal_ase:1519457131697541141> <:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:hagoromo:1519457338124402808> <:Small_Adds:1433929646512144454>",
+      "timestamp": "2026-10-15T14:29:57.328000+00:00"
+    },
+    {
+      "id": "1560298680291033123",
+      "author_id": "617962744930369536",
+      "content": "<:CC:1523897313964068963> <:FOR:1433910700975067146> <:Blossom_ASE:1543808857892192257><:hagoromo:1519457338124402808> <:Adds:1433909995426152519> <:OR:1433929275144142879> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:54.329000+00:00"
+    },
+    {
+      "id": "1560298668488261652",
+      "author_id": "1335014535777751053",
+      "content": "<:sase:1519457756740976852>3️⃣<:baal_ase:1519457131697541141>👉<:pbag:1523911398936150136>\n<:Yukio:1523916052994457630><:mpow:1523898619789443113>👉<:Blossom_ASE:1543808857892192257>\n<:icc:1519457404268449993>👉❓",
+      "timestamp": "2026-10-15T14:29:51.515000+00:00"
+    },
+    {
+      "id": "1560298665015509005",
+      "author_id": "751163396317249537",
+      "content": "<:baal_ase:1519457131697541141> <:FOR:1433910700975067146> <:Random:1434728946825433088> <:ase:1519457110465839155> <:Adds:1433909995426152519> \n<:baal_ase:1519457131697541141> <:FOR:1433910700975067146>  <:hollyase:1519457376564936804> <:yoru:1519457861342593318>",
+      "timestamp": "2026-10-15T14:29:50.687000+00:00"
+    },
+    {
+      "id": "1560298661156618261",
+      "author_id": "876243523987464232",
+      "content": "<:Blue:1434110153623470080> <:Valk:1433929789558882486> <:Adds:1433909995426152519> <:FOR:1433910700975067146> <:sks:1519457776424845494>",
+      "timestamp": "2026-10-15T14:29:49.767000+00:00"
+    },
+    {
+      "id": "1560298657482281012",
+      "author_id": "1490850162774380635",
+      "content": "<:hagoromo:1519457338124402808> <:FOR:1433910700975067146> <:sase:1519457756740976852> <:sks:1519457776424845494>",
+      "timestamp": "2026-10-15T14:29:48.891000+00:00"
+    },
+    {
+      "id": "1560298655280533596",
+      "author_id": "665262618780631040",
+      "content": "<:blo_ase:1519457155537961133> <:FOR:1433910700975067146> <:hollyase:1519457376564936804> <:Adds:1433909995426152519> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:29:48.366000+00:00"
+    },
+    {
+      "id": "1560298647575601185",
+      "author_id": "1056914510402826280",
+      "content": "<:CC:1523897313964068963><:FOR:1433910700975067146><:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:46.529000+00:00"
+    },
+    {
+      "id": "1560298643586818059",
+      "author_id": "1241828086303948833",
+      "content": "<:hollyase:1519457376564936804> <:RaceReroll:1523925540392927293> <:Max:1433929025021153311> <:FOR:1433910700975067146> <:Offer:1433929248669958276>    <:LF:1433928971099177063> <:Random:1434728946825433088> <:ase:1519457110465839155> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:29:45.578000+00:00"
+    },
+    {
+      "id": "1560298640923168869",
+      "author_id": "624184880460333077",
+      "content": "2️⃣ 4️⃣ 0️⃣ <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:venom:1519457841138761909> <:Small_Adds:1433929646512144454>",
+      "timestamp": "2026-10-15T14:29:44.943000+00:00"
+    },
+    {
+      "id": "1560298639123947582",
+      "author_id": "699987849315090512",
+      "content": "<:Blossom_ASE:1543808857892192257>  <:yoru:1519457861342593318> <:OR:1433929275144142879> <:mc:1519457464091803668> <:FOR:1433910700975067146> <:Aura:1442679962850300066>",
+      "timestamp": "2026-10-15T14:29:44.514000+00:00"
+    },
+    {
+      "id": "1560298638276694098",
+      "author_id": "679216072519319562",
+      "content": "<:world_ender:1523901541357064204> <:napoleon:1519457506340896870> <:df_rod:1519457245958508696> <:FOR:1433910700975067146> <:Blossom_ASE:1543808857892192257>",
+      "timestamp": "2026-10-15T14:29:44.312000+00:00"
+    },
+    {
+      "id": "1560298637379244113",
+      "author_id": "1483603778996408402",
+      "content": "<:blo_ase:1519457155537961133> <:blo_ase:1519457155537961133> <:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:hagoromo:1519457338124402808> <:ase:1519457110465839155>",
+      "timestamp": "2026-10-15T14:29:44.098000+00:00"
+    },
+    {
+      "id": "1560298635026239611",
+      "author_id": "851482100174946354",
+      "content": "<:ptera:1519457706178515016> <:FOR:1433910700975067146> <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:29:43.537000+00:00"
+    },
+    {
+      "id": "1560298634178863115",
+      "author_id": "1245501264847179907",
+      "content": "<:sase:1519457756740976852> <:hollyase:1519457376564936804>  <:FOR:1433910700975067146>  <:Offer:1433929248669958276> \n<:sase:1519457756740976852>  <:FOR:1433910700975067146> 2️⃣ <:Blossom_ASE:1543808857892192257> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:29:43.335000+00:00"
+    },
+    {
+      "id": "1560298633218490491",
+      "author_id": "839654773925085186",
+      "content": "1️⃣ 5️⃣ <:TailorToken:1523925590548283413> <:Adds:1433909995426152519> <:FOR:1433910700975067146> <:Pika:1523917220944547850>",
+      "timestamp": "2026-10-15T14:29:43.106000+00:00"
+    },
+    {
+      "id": "1560298624934744095",
+      "author_id": "1555818764640063498",
+      "content": "<:baal_ase:1519457131697541141> 🇻 <:Wings:1433929830466064394> <:nfs:1519457528340156586> <:yoru:1519457861342593318> <:HWE:1523899219830902844> <:FOR:1433910700975067146> <:ase:1519457110465839155> <:ase:1519457110465839155>",
+      "timestamp": "2026-10-15T14:29:41.131000+00:00"
+    },
+    {
+      "id": "1560298623571464336",
+      "author_id": "724926365085859840",
+      "content": "<:pfrl:1519461832937574430> <:jfit:1519457440909889768> <:FOR:1433910700975067146> 3️⃣ <:Blossom_ASE:1543808857892192257> <:Bunyo:1523916102147768330>",
+      "timestamp": "2026-10-15T14:29:40.806000+00:00"
+    },
+    {
+      "id": "1560298618408276090",
+      "author_id": "1068441788223852595",
+      "content": "<:yoru:1519457861342593318> <:Capsule:1524552860736688239> <:FOR:1433910700975067146> <:napoleon:1519457506340896870> \n<:ope:1519470446280446053> <:FOR:1433910700975067146> <:Kaido:1543801666535555133> <:Cape:1433910249475149885>",
+      "timestamp": "2026-10-15T14:29:39.575000+00:00"
+    },
+    {
+      "id": "1560298616919167107",
+      "author_id": "1245983433318989844",
+      "content": "<:BOS:1555378662608470107> <:hollyase:1519457376564936804> <:NFA:1555378885401649192>  <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:39.220000+00:00"
+    },
+    {
+      "id": "1560298614121566232",
+      "author_id": "1010905737419038820",
+      "content": "<:mc:1519457464091803668> <:hopiyo:1523896400025223168> <:DarkSkeletalMask:1523918005849817120> <:FOR:1433910700975067146> <:mpow:1523898619789443113>",
+      "timestamp": "2026-10-15T14:29:38.553000+00:00"
+    },
+    {
+      "id": "1560298611101667429",
+      "author_id": "952208731976904735",
+      "content": "<:hagoromo:1519457338124402808> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:37.833000+00:00"
+    },
+    {
+      "id": "1560298605330440287",
+      "author_id": "751147880277868636",
+      "content": "<:case:1519457201692082237> <:Bunyo:1523916102147768330> <:FOR:1433910700975067146> <:pbag:1523911398936150136>",
+      "timestamp": "2026-10-15T14:29:36.457000+00:00"
+    },
+    {
+      "id": "1560298604650831944",
+      "author_id": "761474120252522496",
+      "content": "<:CC:1523897313964068963> <:pbag:1523911398936150136> <:sase:1519457756740976852> <:hagoromo:1519457338124402808> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:36.295000+00:00"
+    },
+    {
+      "id": "1560298604298641531",
+      "author_id": "453183791125757952",
+      "content": "<:ace:1519457087384588489> <:EloHammer:1523902266514473010> <:FOR:1433910700975067146> <:OG:1433943709568991305> <:Cupid:1433910376847904830> <:Outfit:1433929299475566592>",
+      "timestamp": "2026-10-15T14:29:36.211000+00:00"
+    },
+    {
+      "id": "1560298602641883229",
+      "author_id": "997991596060577812",
+      "content": "<:SOS:1523896968592490506><:FOR:1433910700975067146><:Offer:1433929248669958276>\n<:mochi:1519457484874448966><:Pika:1523917220944547850><:FOR:1433910700975067146><:Offer:1433929248669958276>\n<:ace:1519457087384588489><:FOR:1433910700975067146><:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:35.816000+00:00"
+    },
+    {
+      "id": "1560298600943194205",
+      "author_id": "723579855907586158",
+      "content": "<:Kaido:1543801666535555133> <:Cape:1433910249475149885> <:Magu:1523917100379541657> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:35.411000+00:00"
+    },
+    {
+      "id": "1560298592256786454",
+      "author_id": "969561092110049340",
+      "content": "<:firework_lancer:1523898512985821245> <:FOR:1433910700975067146> <:Exalted:1433910616028090578> <:Wings:1433929830466064394> <:OR:1433929275144142879> <:mochi:1519457484874448966>",
+      "timestamp": "2026-10-15T14:29:33.340000+00:00"
+    },
+    {
+      "id": "1560298592101732413",
+      "author_id": "1127671577820024903",
+      "content": "<:mpow:1523898619789443113> <:Thunder_Club:1543808596595441664> <:Endbringer:1434379147987386521> <:Wings:1433929830466064394> <:FOR:1433910700975067146> <:Yukio:1523916052994457630>",
+      "timestamp": "2026-10-15T14:29:33.303000+00:00"
+    },
+    {
+      "id": "1560298589153009786",
+      "author_id": "878576487626850324",
+      "content": "<:HWE:1523899219830902844> <:FOR:1433910700975067146> <:BOS:1555378662608470107>",
+      "timestamp": "2026-10-15T14:29:32.600000+00:00"
+    },
+    {
+      "id": "1560298580906872955",
+      "author_id": "1479912075206856845",
+      "content": "<:TrueBaalsGuard:1523900180175257742><:TrueBaalsSnakeHead:1523900300887457882><:goru:1523899958959407104><:Gura:1523931393057488996><:Kage:1523917374531829801><:paw:1523901843934154752><:FOR:1433910700975067146><:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:30.634000+00:00"
+    },
+    {
+      "id": "1560298576842854431",
+      "author_id": "1502677231804088452",
+      "content": "<:pwe:1519457731583672441> <:FOR:1433910700975067146> <:icc:1519457404268449993> <:Adds:1433909995426152519> <:OR:1433929275144142879> <:CC:1523897313964068963> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:29:29.665000+00:00"
+    },
+    {
+      "id": "1560298570391879681",
+      "author_id": "797277065871228949",
+      "content": "<:sase:1519457756740976852>3️⃣<:baal_ase:1519457131697541141>👉<:pbag:1523911398936150136>\n<:Yukio:1523916052994457630><:mpow:1523898619789443113>👉<:Blossom_ASE:1543808857892192257>\n<:icc:1519457404268449993>👉❓",
+      "timestamp": "2026-10-15T14:29:28.127000+00:00"
+    },
+    {
+      "id": "1560298568294600767",
+      "author_id": "931034308397891595",
+      "content": "<:nfs:1519457528340156586> <:FOR:1433910700975067146> 2️⃣ <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:29:27.627000+00:00"
+    },
+    {
+      "id": "1560298567699267625",
+      "author_id": "1006581866968649799",
+      "content": "<:Thunder_Club:1543808596595441664> 🇻 <:Wings:1433929830466064394> <:FOR:1433910700975067146><:mpow:1523898619789443113>",
+      "timestamp": "2026-10-15T14:29:27.485000+00:00"
+    },
+    {
+      "id": "1560298565354520668",
+      "author_id": "654623813266440203",
+      "content": "<:NFA:1555378885401649192> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:26.926000+00:00"
+    },
+    {
+      "id": "1560298556105957478",
+      "author_id": "534685507708256266",
+      "content": "6️⃣0️⃣0️⃣🇰<:Bounty:1433910205124579439><:FOR:1433910700975067146> \n<:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:24.721000+00:00"
+    },
+    {
+      "id": "1560298552805171341",
+      "author_id": "909695692941971497",
+      "content": "<:DarkSkeletalMask:1523918005849817120> <:BatSwarm:1523915861142798496> <:ResHead:1523920882857148588> <:Kaido:1543801666535555133> <:Set:1433929580514639925> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:23.934000+00:00"
+    },
+    {
+      "id": "1560298547860213923",
+      "author_id": "539513380780638208",
+      "content": "<:Stark:1433956131503603754><:Outfit:1433929299475566592><:FOR:1433910700975067146><:Offer:1433929248669958276>\n<:Stark:1433956131503603754><:Outfit:1433929299475566592><:FOR:1433910700975067146><:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:22.755000+00:00"
+    },
+    {
+      "id": "1560298543154204794",
+      "author_id": "853436009232859156",
+      "content": "<:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:21.633000+00:00"
+    },
+    {
+      "id": "1560298539626659872",
+      "author_id": "925938558806671370",
+      "content": "<:NFA:1555378885401649192><:FOR:1433910700975067146>  <:hopiyo:1523896400025223168>🇻  <:Cupid:1433910376847904830> <:Wings:1433929830466064394> <:yoru:1519457861342593318>",
+      "timestamp": "2026-10-15T14:29:20.792000+00:00"
+    },
+    {
+      "id": "1560298538267574333",
+      "author_id": "1486009112939728948",
+      "content": "<:pbag:1523911398936150136> <:Blossom_ASE:1543808857892192257> <:Blossom_ASE:1543808857892192257> <:BOS:1555378662608470107> <:yoru:1519457861342593318> <:Pika:1523917220944547850> <:FOR:1433910700975067146> <:icc:1519457404268449993> <:OR:1433929275144142879> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:20.468000+00:00"
+    },
+    {
+      "id": "1560298530185289828",
+      "author_id": "467173608242806807",
+      "content": "<:Max:1433929025021153311><:Peli:1432141315575124070> <:FOR:1433910700975067146>  <:hie:1523900473877201099> <:Zushi:1523916792295325746>",
+      "timestamp": "2026-10-15T14:29:18.541000+00:00"
+    },
+    {
+      "id": "1560298530105466932",
+      "author_id": "471716299618123806",
+      "content": "1️⃣ 0️⃣ 0️⃣ <:TailorToken:1523925590548283413> <:FOR:1433910700975067146> <:mc:1519457464091803668> 🇴 🇷 <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:18.522000+00:00"
+    },
+    {
+      "id": "1560298526712528950",
+      "author_id": "1442597691900170271",
+      "content": "<:df_rod:1519457245958508696> <:NFA:1555378885401649192> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:17.713000+00:00"
+    },
+    {
+      "id": "1560298526272135199",
+      "author_id": "1286695472295055373",
+      "content": "<:dragon:1519457318461247618> <:FOR:1433910700975067146> 3️⃣ <:mc:1519457464091803668> \n<:dragon:1519457318461247618> <:FOR:1433910700975067146> 3️⃣ <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:29:17.608000+00:00"
+    },
+    {
+      "id": "1560298518642556951",
+      "author_id": "683338686741348401",
+      "content": "<:hollyase:1519457376564936804> <:FOR:1433910700975067146> <:ase:1519457110465839155> <:Adds:1433909995426152519> <:OR:1433929275144142879> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:15.789000+00:00"
+    },
+    {
+      "id": "1560298515027071029",
+      "author_id": "1099414462366232646",
+      "content": "<:df_rod:1519457245958508696> <:goru:1523899958959407104> <:Magu:1523917100379541657> <:FOR:1433910700975067146> 2️⃣ <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:29:14.927000+00:00"
+    },
+    {
+      "id": "1560298512883912705",
+      "author_id": "1514631693795987634",
+      "content": "<:mc:1519457464091803668> <:FOR:1433910700975067146> <:Offer:1433929248669958276> \n\n<:mpow:1523898619789443113> <:FOR:1433910700975067146> <:Offer:1433929248669958276> \n\n<:mc:1519457464091803668> <:FOR:1433910700975067146> <:yoru:1519457861342593318> <:Pika:1523917220944547850>",
+      "timestamp": "2026-10-15T14:29:14.416000+00:00"
+    },
+    {
+      "id": "1560298509863751742",
+      "author_id": "1041054591363596338",
+      "content": "<:napoleon:1519457506340896870> <:FOR:1433910700975067146>3️⃣ <:mc:1519457464091803668> \n<:napoleon:1519457506340896870> <:FOR:1433910700975067146>3️⃣ <:mc:1519457464091803668> \n<:napoleon:1519457506340896870> <:FOR:1433910700975067146>3️⃣ <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:29:13.696000+00:00"
+    },
+    {
+      "id": "1560298509113098272",
+      "author_id": "714066326523740190",
+      "content": "<:mpow:1523898619789443113> <:df_rod:1519457245958508696> <:Kikoku:1120440014883537047> <:FOR:1433910700975067146> <:hollyase:1519457376564936804>",
+      "timestamp": "2026-10-15T14:29:13.517000+00:00"
+    },
+    {
+      "id": "1560298508362186763",
+      "author_id": "1546246134975172663",
+      "content": "<:Leopard:1543808730485755905> <:FOR:1433910700975067146> <:venom:1519457841138761909> <:ptera:1519457706178515016>",
+      "timestamp": "2026-10-15T14:29:13.338000+00:00"
+    },
+    {
+      "id": "1560298486405144650",
+      "author_id": "833277874273517579",
+      "content": "<:mc:1519457464091803668> <:Adds:1433909995426152519> <:FOR:1433910700975067146> <:nfs:1519457528340156586> \n\n<:mc:1519457464091803668> <:Adds:1433909995426152519> <:FOR:1433910700975067146> <:nfs:1519457528340156586>",
+      "timestamp": "2026-10-15T14:29:08.103000+00:00"
+    },
+    {
+      "id": "1560298474304442419",
+      "author_id": "331899363553181708",
+      "content": "<:hagoromo:1519457338124402808> <:pbag:1523911398936150136> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:05.218000+00:00"
+    },
+    {
+      "id": "1560298465794461758",
+      "author_id": "916307338942631956",
+      "content": "<:TrueBaalsGuard:1523900180175257742> <:ope:1519470446280446053> <:buddha:1519457180921757746> <:yoru:1519457861342593318> <:ace:1519457087384588489> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:03.189000+00:00"
+    },
+    {
+      "id": "1560298459347812373",
+      "author_id": "1023507193519149137",
+      "content": "<:tori:1519457818837778652> <:Magu:1523917100379541657> <:Biscuit:1543809076767490190> <:DarkSkeletalMask:1523918005849817120> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:01.652000+00:00"
+    },
+    {
+      "id": "1560298458412224513",
+      "author_id": "725595071684018227",
+      "content": "<:case:1519457201692082237> <:hollyase:1519457376564936804> <:hollyase:1519457376564936804> <:ase:1519457110465839155> <:cqase:1519457222890094812> <:FOR:1433910700975067146> <:icc:1519457404268449993>",
+      "timestamp": "2026-10-15T14:29:01.429000+00:00"
+    },
+    {
+      "id": "1560298457556590704",
+      "author_id": "1306424937044512768",
+      "content": "<:mpow:1523898619789443113><:FOR:1433910700975067146><:dragon:1519457318461247618><:Strong_Adds:1433929688207855769><:OR:1433929275144142879><:world_ender:1523901541357064204> <:OR:1433929275144142879><:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:29:01.225000+00:00"
+    },
+    {
+      "id": "1560298452716363837",
+      "author_id": "449916517895897098",
+      "content": "<:Blessed:1433910143770431681> 🏹 <:FOR:1433910700975067146> 🇨 🇴 🇾 🇴 🇹 🇪 <:Wings:1433929830466064394> 🇻",
+      "timestamp": "2026-10-15T14:29:00.071000+00:00"
+    },
+    {
+      "id": "1560298448857735329",
+      "author_id": "1256706832336945183",
+      "content": "<:Blessed:1433910143770431681> <:Wings:1433929830466064394> <:FOR:1433910700975067146> <:Blossom_ASE:1543808857892192257><:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:28:59.151000+00:00"
+    },
+    {
+      "id": "1560298439181336607",
+      "author_id": "281130578600787968",
+      "content": "<:DarkSkeletalMask:1523918005849817120><:FOR:1433910700975067146><:Offer:1433929248669958276>\n<:LF:1433928971099177063><:mochi:1519457484874448966><:OR:1433929275144142879><:ptera:1519457706178515016>",
+      "timestamp": "2026-10-15T14:28:56.844000+00:00"
+    },
+    {
+      "id": "1560298429303889964",
+      "author_id": "366257887120457729",
+      "content": "<:yoru:1519457861342593318> <:buddha:1519457180921757746> <:ptera:1519457706178515016> <:Outfit:1433929299475566592> <:Cupid:1433910376847904830> <:TrueBaalsGuard:1523900180175257742> <:FOR:1433910700975067146> <:mc:1519457464091803668> 2️⃣ <:OR:1433929275144142879> <:df_rod:1519457245958508696>",
+      "timestamp": "2026-10-15T14:28:54.489000+00:00"
+    },
+    {
+      "id": "1560298424480309259",
+      "author_id": "1352875882116808748",
+      "content": "2️⃣ 0️⃣ <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:smoke:1523902047068356639>",
+      "timestamp": "2026-10-15T14:28:53.339000+00:00"
+    },
+    {
+      "id": "1560298422844657747",
+      "author_id": "728598382167457792",
+      "content": "<:sase:1519457756740976852><:Bunyo:1523916102147768330><:FOR:1433910700975067146><:hagoromo:1519457338124402808><:OR:1433929275144142879><:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:52.949000+00:00"
+    },
+    {
+      "id": "1560298421594886277",
+      "author_id": "717104229046681660",
+      "content": "<:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:ase:1519457110465839155> <:Strong_Adds:1433929688207855769>",
+      "timestamp": "2026-10-15T14:28:52.651000+00:00"
+    },
+    {
+      "id": "1560298417153114163",
+      "author_id": "917596643593973852",
+      "content": "<:mpow:1523898619789443113> <:BOS:1555378662608470107> <:Cupid:1433910376847904830> <:Scarf:1433929454748565546> 🛡️ <:FOR:1433910700975067146> <:ase:1519457110465839155>",
+      "timestamp": "2026-10-15T14:28:51.592000+00:00"
+    },
+    {
+      "id": "1560298414346997921",
+      "author_id": "1412904165038096527",
+      "content": "<:Max:1433929025021153311> <:RaceReroll:1523925540392927293> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:50.923000+00:00"
+    },
+    {
+      "id": "1560298412241453149",
+      "author_id": "878381506043731999",
+      "content": "<:Thunder_Club:1543808596595441664> <:mc:1519457464091803668> <:FOR:1433910700975067146> <:dragon:1519457318461247618>",
+      "timestamp": "2026-10-15T14:28:50.421000+00:00"
+    },
+    {
+      "id": "1560298405714985001",
+      "author_id": "784488818492964875",
+      "content": "<:BOS:1555378662608470107> <:FOR:1433910700975067146> <:hopiyo:1523896400025223168>",
+      "timestamp": "2026-10-15T14:28:48.865000+00:00"
+    },
+    {
+      "id": "1560298405149016105",
+      "author_id": "1406430688709836960",
+      "content": "<:Kikoku:1120440014883537047> <:lc:1038468258975719444> <:lc:1038468258975719444> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:48.730000+00:00"
+    },
+    {
+      "id": "1560298398580744255",
+      "author_id": "1184831208744558595",
+      "content": "4️⃣  <:mc:1519457464091803668> 🇻 <:Wings:1433929830466064394> <:yoru:1519457861342593318><:SOS:1523896968592490506>  <:FOR:1433910700975067146> <:ase:1519457110465839155>",
+      "timestamp": "2026-10-15T14:28:47.164000+00:00"
+    },
+    {
+      "id": "1560298396705759284",
+      "author_id": "1246702627996172298",
+      "content": "<:NFA:1555378885401649192> <:FOR:1433910700975067146> 🇻 <:Wings:1433929830466064394> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:28:46.717000+00:00"
+    },
+    {
+      "id": "1560298392524034140",
+      "author_id": "1323036982997155886",
+      "content": "Perm Invite To Crew \"AFT\"   #7\nPRICE 2-3 MC /  Offers\nﺤ═══════ι▬▬⊱🔫 ⊰▬▬ι═══════ﺤ\n✦ ADVANTAGES:\n⚔️  Prestige Yoru!\n👑  Exclusive title (Collector)\n🍀  No more Infamy farming!\n🤝 We invite first!\n👑 Top #7 crew\nﺤ═══════ι▬▬⊱𓆩🔥 𓆪⊰▬▬ι═══════ﺤ",
+      "timestamp": "2026-10-15T14:28:45.720000+00:00"
+    },
+    {
+      "id": "1560298389332172885",
+      "author_id": "1364977495442587710",
+      "content": "<:hollyase:1519457376564936804> <:sase:1519457756740976852> <:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:CC:1523897313964068963> <:mpow:1523898619789443113> <:Small_Adds:1433929646512144454>",
+      "timestamp": "2026-10-15T14:28:44.959000+00:00"
+    },
+    {
+      "id": "1560298386119200791",
+      "author_id": "671041397826125844",
+      "content": "<:mochi:1519457484874448966> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:44.193000+00:00"
+    },
+    {
+      "id": "1560298385565552833",
+      "author_id": "1551981099830353980",
+      "content": "<:Pika:1523917220944547850> <:FOR:1433910700975067146> <:festival_lancer:1559587987220598985> <:OR:1433929275144142879> <:festival_lancer:1559587987220598985> 🛡️",
+      "timestamp": "2026-10-15T14:28:44.061000+00:00"
+    },
+    {
+      "id": "1560298382524948483",
+      "author_id": "1558101022499536908",
+      "content": "<:HWE:1523899219830902844> <:SOS:1523896968592490506> <:Flower:1468057888248561694> <:Sword:1433929727474663494> 🇻 <:Wings:1433929830466064394> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:43.336000+00:00"
+    },
+    {
+      "id": "1560298377864937543",
+      "author_id": "906985017476010005",
+      "content": "<:Kaido:1543801666535555133> 🍶 <:FOR:1433910700975067146> <:lc:1038468258975719444> \n<:SKG:1523898730019815494> <:FOR:1433910700975067146> <:Max:1433929025021153311> <:Fish_Bait:1434690900193448059>",
+      "timestamp": "2026-10-15T14:28:42.225000+00:00"
+    },
+    {
+      "id": "1560298376782680156",
+      "author_id": "718224046348697762",
+      "content": "<:df_rod:1519457245958508696> <:dragon:1519457318461247618> <:FOR:1433910700975067146> ❓",
+      "timestamp": "2026-10-15T14:28:41.967000+00:00"
+    },
+    {
+      "id": "1560298372185727037",
+      "author_id": "1073670557125595237",
+      "content": "<:sase:1519457756740976852> <:blo_ase:1519457155537961133> <:ase:1519457110465839155> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:40.871000+00:00"
+    },
+    {
+      "id": "1560298371665629325",
+      "author_id": "882459335232462959",
+      "content": "8️⃣ <:mc:1519457464091803668> <:FOR:1433910700975067146> <:baal_ase:1519457131697541141> \n7️⃣ <:FOR:1433910700975067146> <:ase:1519457110465839155> <:OR:1433929275144142879> <:sks:1519457776424845494>",
+      "timestamp": "2026-10-15T14:28:40.747000+00:00"
+    },
+    {
+      "id": "1560298366573879447",
+      "author_id": "395759705789562881",
+      "content": "<:df_rod:1519457245958508696> <:FOR:1433910700975067146> 2️⃣ <:mc:1519457464091803668> <:Small_Adds:1433929646512144454>",
+      "timestamp": "2026-10-15T14:28:39.533000+00:00"
+    },
+    {
+      "id": "1560298361670865048",
+      "author_id": "481771465990078484",
+      "content": "<:Max:1433929025021153311> <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:venom:1519457841138761909>\n <:Max:1433929025021153311> <:RaceReroll:1523925540392927293> <:FOR:1433910700975067146> <:Pika:1523917220944547850>",
+      "timestamp": "2026-10-15T14:28:38.364000+00:00"
+    },
+    {
+      "id": "1560298354569777313",
+      "author_id": "1000727386490425374",
+      "content": "<:Leopard:1543808730485755905> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:36.671000+00:00"
+    },
+    {
+      "id": "1560298352510242938",
+      "author_id": "915227113316057088",
+      "content": "<:CC:1523897313964068963> <:mc:1519457464091803668> <:FOR:1433910700975067146> <:hagoromo:1519457338124402808> <:Blossom_ASE:1543808857892192257> \n<:LF:1433928971099177063> <:hagoromo:1519457338124402808>",
+      "timestamp": "2026-10-15T14:28:36.180000+00:00"
+    },
+    {
+      "id": "1560298351990149171",
+      "author_id": "1460451284254593117",
+      "content": "<:napoleon:1519457506340896870> 5️⃣ <:mc:1519457464091803668> <:FOR:1433910700975067146> <:hollyase:1519457376564936804> <:OR:1433929275144142879> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:36.056000+00:00"
+    },
+    {
+      "id": "1560298351927496815",
+      "author_id": "397465730121203723",
+      "content": "<:nfs:1519457528340156586> <:FOR:1433910700975067146> <:Stark:1433956131503603754> <:Outfit:1433929299475566592>",
+      "timestamp": "2026-10-15T14:28:36.041000+00:00"
+    },
+    {
+      "id": "1560298345010958467",
+      "author_id": "1068272223946805278",
+      "content": "2️⃣ <:lc:1038468258975719444> <:ope:1519470446280446053> <:goru:1523899958959407104> <:Suna:1523931344260960406> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:34.392000+00:00"
+    },
+    {
+      "id": "1560298341122703361",
+      "author_id": "702567929715359834",
+      "content": "<:sase:1519457756740976852> <:Blossom_ASE:1543808857892192257> <:Adds:1433909995426152519> <:FOR:1433910700975067146> <:CC:1523897313964068963>",
+      "timestamp": "2026-10-15T14:28:33.465000+00:00"
+    },
+    {
+      "id": "1560298333682008116",
+      "author_id": "346230741216264192",
+      "content": "2️⃣ <:mc:1519457464091803668> <:BOS:1555378662608470107> <:FOR:1433910700975067146> <:ase:1519457110465839155>",
+      "timestamp": "2026-10-15T14:28:31.691000+00:00"
+    },
+    {
+      "id": "1560298322898583596",
+      "author_id": "1200782218902110208",
+      "content": "<:ase:1519457110465839155> <:mpow:1523898619789443113> <:FOR:1433910700975067146> <:Blossom_ASE:1543808857892192257> <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:28:29.120000+00:00"
+    },
+    {
+      "id": "1560298320684126332",
+      "author_id": "1494835019728814242",
+      "content": "<:df_rod:1519457245958508696> ➕ <:Max:1433929025021153311> <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:28:28.592000+00:00"
+    },
+    {
+      "id": "1560298313507406035",
+      "author_id": "1139230333250830366",
+      "content": "<:ResHead:1523920882857148588> <:FOR:1433910700975067146> <:Kikoku:1120440014883537047> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:28:26.881000+00:00"
+    },
+    {
+      "id": "1560298313037910017",
+      "author_id": "348806238072602629",
+      "content": "9️⃣ <:mc:1519457464091803668> <:NFA:1555378885401649192> <:FOR:1433910700975067146> <:Blossom_ASE:1543808857892192257>",
+      "timestamp": "2026-10-15T14:28:26.769000+00:00"
+    },
+    {
+      "id": "1560298312643514369",
+      "author_id": "1240532721265021008",
+      "content": "<:df_rod:1519457245958508696> <:BOS:1555378662608470107> 5️⃣ <:mc:1519457464091803668> <:FOR:1433910700975067146> <:Random:1434728946825433088> <:ase:1519457110465839155>",
+      "timestamp": "2026-10-15T14:28:26.675000+00:00"
+    },
+    {
+      "id": "1560298701132529695",
+      "author_id": "488834322841862165",
+      "content": "1️⃣ 0️⃣ 0️⃣ <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:lc:1038468258975719444>",
+      "timestamp": "2026-10-15T14:29:59.298000+00:00"
+    },
+    {
+      "id": "1560298711983198321",
+      "author_id": "852851414521872415",
+      "content": "<:yoru:1519457861342593318> <:venom:1519457841138761909> <:soul:1519457796943511766> <:ace:1519457087384588489> <:FOR:1433910700975067146> <:Offer:1433929248669958276>",
+      "timestamp": "2026-10-15T14:30:01.885000+00:00"
+    },
+    {
+      "id": "1560298715225268318",
+      "author_id": "1558508079333515436",
+      "content": "<:df_rod:1519457245958508696> <:NFA:1555378885401649192> <:FOR:1433910700975067146> <:mc:1519457464091803668> <:mc:1519457464091803668> <:mc:1519457464091803668>",
+      "timestamp": "2026-10-15T14:30:02.658000+00:00"
+    },
+    {
+      "id": "1560298720967528469",
+      "author_id": "702024197551030333",
+      "content": "<:Magu:1523917100379541657> <:ope:1519470446280446053> <:Pika:1523917220944547850> <:FOR:1433910700975067146> <:Fish_Bait:1434690900193448059> \n<:Pika:1523917220944547850> <:soul:1519457796943511766> <:FOR:1433910700975067146> <:Kikoku:1120440014883537047>",
+      "timestamp": "2026-10-15T14:30:04.027000+00:00"
+    },
+    {
+      "id": "1560298723261546668",
+      "author_id": "816983054303756288",
+      "content": "<:hollyase:1519457376564936804> <:RaceReroll:1523925540392927293> <:Max:1433929025021153311> <:FOR:1433910700975067146> <:Offer:1433929248669958276>    <:LF:1433928971099177063> <:Random:1434728946825433088> <:ase:1519457110465839155> <:Adds:1433909995426152519>",
+      "timestamp": "2026-10-15T14:30:04.574000+00:00"
+    },
+    {
+      "id": "1560298726302548111",
+      "author_id": "1016994958831534090",
+      "content": "<:How_Many:1433928830250258442> <:RaceReroll:1523925540392927293> <:FOR:1433910700975067146> 1️⃣ <:lc:1038468258975719444> \n1️⃣ 5️⃣ <:TailorToken:1523925590548283413> <:FOR:1433910700975067146> 1️⃣ <:lc:1038468258975719444>",
+      "timestamp": "2026-10-15T14:30:05.299000+00:00"
+    },
+    {
+      "id": "1560298732828885045",
+      "author_id": "756333586885509190",
+      "content": "🔟 <:mc:1519457464091803668> <:ace:1519457087384588489> <:soul:1519457796943511766> <:FOR:1433910700975067146> <:Blossom_ASE:1543808857892192257>",
+      "timestamp": "2026-10-15T14:30:06.855000+00:00"
+    },
+    {
+      "id": "1560298734389301249",
+      "author_id": "734594752833650718",
+      "content": "<:Leopard:1543808730485755905> <:BatSwarm:1523915861142798496> <:FOR:1433910700975067146> <:Kikoku:1120440014883537047> <:ope:1519470446280446053>",
+      "timestamp": "2026-10-15T14:30:07.227000+00:00"
+    },
+    {
+      "id": "1560298739824992348",
+      "author_id": "837105070826848306",
+      "content": "<:sase:1519457756740976852> 6️⃣ <:mc:1519457464091803668> <:FOR:1433910700975067146> <:hagoromo:1519457338124402808>",
+      "timestamp": "2026-10-15T14:30:08.523000+00:00"
+    },
+    {
+      "id": "1560298744128344157",
+      "author_id": "994329198997012740",
+      "content": "<:Kikoku:1120440014883537047> <:Inferno_Blade:1523897944263229582> <:FOR:1433910700975067146> <:SOS:1523896968592490506>",
+      "timestamp": "2026-10-15T14:30:09.549000+00:00"
     }
   ]
 }
