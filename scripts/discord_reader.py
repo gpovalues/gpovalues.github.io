@@ -379,13 +379,13 @@ class DiscordTradeReader:
         return buffer_data["messages"]
 
     @staticmethod
-    def generate_mock_trades(count: int = 650) -> List[Dict[str, Any]]:
+    def generate_mock_trades(count: int = 1500) -> List[Dict[str, Any]]:
         """
         High-fidelity realistic trade generator for GPO Trading Hub.
         Models authentic player behavior:
         - Common trade patterns: 'WTT [A] LF [B]', '[A] -> [B]', '[A] for [B] + adds'
         - Meta trading liquid pairs: All Seeing Eye, Candy Cane, Mochi, Venom, Pika, LC, SP Reset, Kikoku
-        - Variations in quantities: 2x LC, 3x SP, 10x LC
+        - Variations in quantities: 2x LC, 3x SP, 10x LC, 4️⃣ leg chest
         """
         templates = [
             "WTT {offer} LF {want}",
@@ -436,7 +436,13 @@ class DiscordTradeReader:
             ("Dragon Emperor's Cape", "1x Legendary Fruit Chest"),
             ("<:marine:201><:cape:202>", ":kaido::gourd:"),
             (":kaido::outfit:", ":big::mom::cape:"),
-            (":df::rod:", "2x LC")
+            (":df::rod:", "2x LC"),
+            # Love Shades & Multiplier Emojis
+            ("❤️ :shades:", "4️⃣ leg chest"),
+            (":heart::shades:", "4лк"),
+            ("❤️ :shades:(love shades)", "4x Legendary Fruit Chest"),
+            ("<:4:999> <:leg:1><:chest:2>", "❤️ :shades:"),
+            ("Love Shades", "4x Legendary Fruit Chest")
         ]
 
         now = datetime.datetime.now(datetime.timezone.utc)

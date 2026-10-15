@@ -11,7 +11,7 @@ on:
         description: 'Force recalculate website prices immediately (ignore 12h wait)'
         required: false
         type: boolean
-        default: true
+        default: false
 
 permissions:
   contents: write

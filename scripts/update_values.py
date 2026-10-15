@@ -45,7 +45,7 @@ def main():
 
     # 1. Read Discord Trade Messages
     reader = DiscordTradeReader()
-    raw_messages = reader.fetch_all_trades(max_per_channel=1000)
+    raw_messages = reader.fetch_all_trades(max_per_channel=3000)
     logger.info(f"Step 1 Complete: Acquired {len(raw_messages)} messages.")
 
     # 2. Parse Trade Signals
@@ -55,7 +55,8 @@ def main():
 
     # Detailed console logging for GitHub Actions
     print("\n" + "=" * 75)
-    print(" [PARSER LOG] LIVE TRADE PARSER SAMPLES (10 EXAMPLES: [RAW] -> [PARSED])")
+    print(f" [PARSER LOG] 24/7 STREAM ANALYSIS: {len(trades)} DISTINCT TRADES EXTRACTED")
+    print(f" (Showing 10 trade samples below | All {len(trades)} trades are processed into the pricing engine)")
     print("=" * 75)
     for idx, tr in enumerate(trades[:10], start=1):
         raw = tr.get("raw_text", "").replace("\n", " ").strip()
@@ -64,7 +65,8 @@ def main():
         parsed_str = f"OFFER: [{', '.join(offer_desc) or 'None'}]  |  WANT: [{', '.join(want_desc) or 'None'}]"
         print(f"[{idx:02d}] [RAW]    : {raw}")
         print(f"     [PARSED] : {parsed_str}")
-    print("=" * 75 + "\n")
+    print("=" * 75)
+    print(f" >>> Total trades dataset analyzed: {len(trades)} trade signals loaded into optimization model. <<<\n")
 
     # 3. Check 12-hour cycle for updating website prices
     force_update = ("--force-prices" in sys.argv) or ("--force" in sys.argv)
@@ -89,22 +91,27 @@ def main():
         elapsed_hours = 999.0
 
     # The user rule: Collect 24/7, but recalculate & update website prices every 12 hours
-    should_update_prices = force_update or (not collect_only and elapsed_hours >= 11.5)
+    should_update_prices = force_update or (not collect_only and elapsed_hours >= 12.0)
 
     if not should_update_prices:
         hours_remaining = max(0.0, 12.0 - elapsed_hours)
+        minutes_remaining = int(hours_remaining * 60)
         print("=" * 70)
         print("[24/7 STREAM STATUS - DATABASE ACCUMULATION ACTIVE]")
         print(f" - Continuous collection: ACTIVE ({len(trades)} trades in 24/7 buffer)")
-        print(f" - Elapsed since last site price update: {elapsed_hours:.1f} hours")
-        print(f" - Next website price recalculation in : {hours_remaining:.1f} hours")
-        print(" - (Website prices kept stable until the 12-hour mark)")
+        print(f" - Elapsed since last site price update: {elapsed_hours:.1f} hours ({int(elapsed_hours * 60)} minutes)")
+        print(f" - Next website price recalculation in : {hours_remaining:.1f} hours ({minutes_remaining} minutes)")
+        print(" - STATUS: Collecting stream 24/7. Website prices remain STABLE until 12h cycle is completed.")
         print("=" * 70)
         return
 
     print("=" * 70)
-    print(f"[PRICE ENGINE] 12-HOUR CYCLE REACHED (Elapsed: {elapsed_hours:.1f}h).")
-    print("CALCULATING IDEAL MARKET VALUES & UPDATING WEBSITE PRICES...")
+    if force_update:
+        print(f"[PRICE ENGINE] MANUAL FORCE FLAG DETECTED (--force-prices). (Elapsed: {elapsed_hours:.1f}h).")
+        print("CALCULATING IDEAL MARKET VALUES & UPDATING WEBSITE PRICES...")
+    else:
+        print(f"[PRICE ENGINE] FULL 12-HOUR CYCLE COMPLETED (Elapsed: {elapsed_hours:.1f}h >= 12.0h).")
+        print("CALCULATING IDEAL MARKET VALUES & UPDATING WEBSITE PRICES FROM ALL ACCUMULATED TRADES...")
     print("=" * 70)
 
     # 4. Mathematical Optimization & Forecasting Engine
