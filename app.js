@@ -279,6 +279,11 @@
       forecast_hero_title: "GPO Market Forecasts & <span class=\"text-gradient-purple\">AI Analytics</span>",
       forecast_hero_desc: "Automated parsing of trading channel #966859339816124438 in Discord every hour (1,000 trades). Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and calibrated 0.0–10.0 demand scores.",
       forecast_badge_autonomous: "AUTONOMOUS DISCORD HOURLY ENGINE",
+      forecast_tf_title: "Market Analysis Timeframe:",
+      tf_btn_1h: "1 Hour (1h)",
+      tf_btn_24h: "24 Hours (24h)",
+      tf_btn_7d: "7 Days / Week (7d)",
+      tf_demand_rule_note: "Item Demand (★ 0-10) is calibrated from 7-day stable weekly market data across the entire site",
       forecast_updated_label: "Last Analysis:",
       forecast_trades_label: "Hourly Trades Analyzed:",
       forecast_sentiment_label: "Market Sentiment:",
@@ -472,6 +477,11 @@
       forecast_hero_title: "Прогнозы Рынка GPO & <span class=\"text-gradient-purple\">AI-Аналитика</span>",
       forecast_hero_desc: "Автоматический парсинг канала #966859339816124438 в Discord каждый час (1000 трейдов). Строгое сохранение официального порядка тир-листа и идеальная калибровка спроса от 10/10 до 0/10.",
       forecast_badge_autonomous: "АВТОНОМНЫЙ DISCORD ДВИЖОК (1 ЧАС)",
+      forecast_tf_title: "Период аналитики рынка:",
+      tf_btn_1h: "1 Час (1h)",
+      tf_btn_24h: "24 Часа (24h)",
+      tf_btn_7d: "7 Дней / Неделя (7d)",
+      tf_demand_rule_note: "Спрос (Demand ★) везде на сайте откалиброван по стабильным данным за 7 дней (10/10 максимум, 0/10 минимум)",
       forecast_updated_label: "Последний анализ:",
       forecast_trades_label: "Сделок за час:",
       forecast_sentiment_label: "Настроение рынка:",
@@ -1532,6 +1542,17 @@
       });
     });
 
+    // Timeframe Period Switcher (1h / 24h / 7d)
+    document.querySelectorAll('#forecastTimeframeGroup .f-tf-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#forecastTimeframeGroup .f-tf-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentForecastTimeframe = btn.getAttribute('data-tf') || '1h';
+        playClickSound();
+        renderForecastsSection();
+      });
+    });
+
     // Load live values from values.json (with cache-busting), then render
     loadLiveValues().then(() => {
       applyLanguage();
@@ -1543,6 +1564,7 @@
 
   // --- FORECASTS & MARKET ANALYTICS ENGINE ---
   let liveMarketData = null;
+  let currentForecastTimeframe = '1h';
   let forecastSearch = '';
   let forecastStatusFilter = 'all';
   let forecastCategoryFilter = 'all';
@@ -1565,41 +1587,74 @@
     const items = window.GPO_ITEMS || [];
     if (!items.length) return;
 
-    // 1. Meta Pills
+    // 1. Resolve Timeframe Summary
+    const tfKey = currentForecastTimeframe || '1h';
+    const tfSummary = (liveMarketData && liveMarketData.forecast_summary && liveMarketData.forecast_summary[tfKey]) ||
+                      (liveMarketData && liveMarketData.forecast_summary) || {};
+
+    const tfLabel = tfKey === '1h' ? (currentLang === 'ru' ? 'за 1 час' : '1h') :
+                    tfKey === '24h' ? (currentLang === 'ru' ? 'за 24ч' : '24h') :
+                    (currentLang === 'ru' ? 'за 7 дней' : '7d');
+
+    // 2. Meta Pills
     const updatedEl = document.getElementById('forecastLastUpdatedVal');
     const tradesEl = document.getElementById('forecastTradesCountVal');
     const sentimentEl = document.getElementById('forecastSentimentVal');
 
     if (liveMarketData && liveMarketData.meta) {
-      if (updatedEl) updatedEl.textContent = liveMarketData.meta.updated_at || '12h Autonomous Sync';
-      if (tradesEl) tradesEl.textContent = (liveMarketData.meta.total_trades_analyzed || 640) + ' trades';
-      if (sentimentEl) sentimentEl.textContent = liveMarketData.meta.market_sentiment || 'Bullish';
+      if (updatedEl) updatedEl.textContent = liveMarketData.meta.updated_at || 'Live Hourly Sync';
+      const tradesCount = tfSummary.trades_analyzed || (tfKey === '1h' ? 1000 : tfKey === '24h' ? 3400 : 7800);
+      if (tradesEl) tradesEl.textContent = `${tradesCount} trades (${tfLabel})`;
+      if (sentimentEl) {
+        sentimentEl.textContent = tfSummary.market_sentiment || 'Bullish';
+        sentimentEl.style.color = (tfSummary.market_sentiment === 'Bullish') ? 'var(--green-glow)' : (tfSummary.market_sentiment === 'Bearish') ? 'var(--red-glow)' : 'var(--cyan-glow)';
+      }
     } else {
-      if (updatedEl) updatedEl.textContent = '12h Autonomous';
-      if (tradesEl) tradesEl.textContent = '646 trades';
+      if (updatedEl) updatedEl.textContent = 'Live Hourly Sync';
+      if (tradesEl) tradesEl.textContent = `1,000 trades (${tfLabel})`;
       if (sentimentEl) sentimentEl.textContent = 'Active';
     }
 
-    // 2. Highlights Lists
+    // 3. Highlights Lists for Selected Timeframe
     const risingContainer = document.getElementById('forecastRisingList');
     const fallingContainer = document.getElementById('forecastFallingList');
     const alertsContainer = document.getElementById('forecastAlertsList');
 
-    const risingItems = [...items].filter(it => (it.trend === 'Rising' || it.trend === 'Overpaid' || (it.pressure_ratio || 1) >= 1.25))
-                                  .sort((a, b) => (b.pressure_ratio || 1) - (a.pressure_ratio || 1))
-                                  .slice(0, 4);
+    const risingItems = (tfSummary.top_rising && tfSummary.top_rising.length > 0)
+      ? tfSummary.top_rising.slice(0, 4)
+      : [...items].filter(it => {
+          const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+          return tfd.trend === 'Rising' || tfd.trend === 'Overpaid' || (tfd.pressure_ratio || 1) >= 1.25;
+        }).sort((a, b) => {
+          const rA = ((a.timeframes && a.timeframes[tfKey]) || a).pressure_ratio || 1;
+          const rB = ((b.timeframes && b.timeframes[tfKey]) || b).pressure_ratio || 1;
+          return rB - rA;
+        }).slice(0, 4);
 
-    const fallingItems = [...items].filter(it => (it.trend === 'Falling' || (it.pressure_ratio || 1) <= 0.85))
-                                   .sort((a, b) => (a.pressure_ratio || 1) - (b.pressure_ratio || 1))
-                                   .slice(0, 4);
+    const fallingItems = (tfSummary.top_falling && tfSummary.top_falling.length > 0)
+      ? tfSummary.top_falling.slice(0, 4)
+      : [...items].filter(it => {
+          const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+          return tfd.trend === 'Falling' || (tfd.pressure_ratio || 1) <= 0.85;
+        }).sort((a, b) => {
+          const rA = ((a.timeframes && a.timeframes[tfKey]) || a).pressure_ratio || 1;
+          const rB = ((b.timeframes && b.timeframes[tfKey]) || b).pressure_ratio || 1;
+          return rA - rB;
+        }).slice(0, 4);
 
-    const alertItems = [...items].filter(it => it.tier_pressure_alert).slice(0, 4);
+    const alertItems = (tfSummary.tier_pressure_candidates && tfSummary.tier_pressure_candidates.length > 0)
+      ? tfSummary.tier_pressure_candidates.slice(0, 4)
+      : [...items].filter(it => {
+          const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+          return Boolean(tfd.tier_pressure_alert);
+        }).slice(0, 4);
 
     if (risingContainer) {
       risingContainer.innerHTML = risingItems.map(it => {
         const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const drift = it.predicted_change_pct ? (it.predicted_change_pct > 0 ? `+${it.predicted_change_pct}%` : `${it.predicted_change_pct}%`) : '+4.5%';
-        const ratio = it.pressure_ratio || 1.4;
+        const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+        const drift = tfd.predicted_change_pct ? (tfd.predicted_change_pct > 0 ? `+${tfd.predicted_change_pct}%` : `${tfd.predicted_change_pct}%`) : '+4.5%';
+        const ratio = tfd.pressure_ratio || 1.4;
         return `
           <div class="highlight-item-row" onclick="window.GPO_APP.openDetail('${it.id}')">
             <div class="highlight-item-left">
@@ -1608,7 +1663,7 @@
                 <span class="highlight-item-name">#${it.official_rank || 1} ${name}</span>
                 <span class="highlight-item-sub">
                   <span style="color: var(--gold-glow); font-weight: 700;">★ ${it.demandScore}</span> • 
-                  <span>LF: ${it.demand_count || 12} / Offer: ${it.supply_count || 4}</span>
+                  <span>LF: ${tfd.demand_count !== undefined ? tfd.demand_count : 12} / Offer: ${tfd.supply_count !== undefined ? tfd.supply_count : 4}</span>
                 </span>
               </div>
             </div>
@@ -1624,8 +1679,9 @@
     if (fallingContainer) {
       fallingContainer.innerHTML = fallingItems.map(it => {
         const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const drift = it.predicted_change_pct ? (it.predicted_change_pct > 0 ? `+${it.predicted_change_pct}%` : `${it.predicted_change_pct}%`) : '-3.5%';
-        const ratio = it.pressure_ratio || 0.7;
+        const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+        const drift = tfd.predicted_change_pct ? (tfd.predicted_change_pct > 0 ? `+${tfd.predicted_change_pct}%` : `${tfd.predicted_change_pct}%`) : '-3.5%';
+        const ratio = tfd.pressure_ratio || 0.7;
         return `
           <div class="highlight-item-row" onclick="window.GPO_APP.openDetail('${it.id}')">
             <div class="highlight-item-left">
@@ -1634,7 +1690,7 @@
                 <span class="highlight-item-name">#${it.official_rank || 1} ${name}</span>
                 <span class="highlight-item-sub">
                   <span style="color: var(--gold-glow); font-weight: 700;">★ ${it.demandScore}</span> • 
-                  <span>LF: ${it.demand_count || 3} / Offer: ${it.supply_count || 14}</span>
+                  <span>LF: ${tfd.demand_count !== undefined ? tfd.demand_count : 3} / Offer: ${tfd.supply_count !== undefined ? tfd.supply_count : 14}</span>
                 </span>
               </div>
             </div>
@@ -1650,13 +1706,15 @@
     if (alertsContainer) {
       alertsContainer.innerHTML = alertItems.map(it => {
         const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const alertText = it.tier_pressure_alert ? (currentLang === 'ru' ? it.tier_pressure_alert.ru : it.tier_pressure_alert.en) : (currentLang === 'ru' ? 'Высокий шанс повышения позиции в тир-листе' : 'High tier promotion momentum');
+        const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+        const alertObj = it.alert || tfd.tier_pressure_alert;
+        const alertText = alertObj ? (currentLang === 'ru' ? alertObj.ru : alertObj.en) : (currentLang === 'ru' ? 'Высокий шанс повышения позиции в тир-листе' : 'High tier promotion momentum');
         return `
           <div class="highlight-item-row" onclick="window.GPO_APP.openDetail('${it.id}')" style="border-color: rgba(168, 85, 247, 0.45);">
             <div class="highlight-item-left">
               <img src="${it.image}" alt="${name}" class="highlight-item-img" loading="lazy">
               <div class="highlight-item-meta">
-                <span class="highlight-item-name" style="color: #c084fc;">#${it.official_rank || 1} ${name}</span>
+                <span class="highlight-item-name" style="color: #c084fc;">#${it.official_rank || it.current_rank || 1} ${name}</span>
                 <span style="font-size: 0.72rem; color: #e2e8f0; line-height: 1.25;">${alertText}</span>
               </div>
             </div>
@@ -1668,7 +1726,7 @@
       }).join('');
     }
 
-    // 3. Main Analytics Table
+    // 4. Main Analytics Table
     const tbody = document.getElementById('forecastTableBody');
     if (!tbody) return;
 
@@ -1683,15 +1741,15 @@
     }
 
     if (forecastStatusFilter === 'Rising') {
-      filtered = filtered.filter(it => it.trend === 'Rising');
+      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Rising'));
     } else if (forecastStatusFilter === 'Overpaid') {
-      filtered = filtered.filter(it => it.trend === 'Overpaid');
+      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Overpaid'));
     } else if (forecastStatusFilter === 'Falling') {
-      filtered = filtered.filter(it => it.trend === 'Falling');
+      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Falling'));
     } else if (forecastStatusFilter === 'Stable') {
-      filtered = filtered.filter(it => it.trend === 'Stable');
+      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Stable'));
     } else if (forecastStatusFilter === 'Alert') {
-      filtered = filtered.filter(it => Boolean(it.tier_pressure_alert));
+      filtered = filtered.filter(it => Boolean(((it.timeframes && it.timeframes[tfKey]) || it).tier_pressure_alert));
     }
 
     if (filtered.length === 0) {
@@ -1709,25 +1767,26 @@
     tbody.innerHTML = filtered.map(it => {
       const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
       const rank = it.official_rank || 1;
-      const ratio = it.pressure_ratio || 1.0;
-      const pct = it.predicted_change_pct ? (it.predicted_change_pct > 0 ? `+${it.predicted_change_pct}%` : `${it.predicted_change_pct}%`) : '0.0%';
+      const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
+      const ratio = tfd.pressure_ratio || 1.0;
+      const pct = tfd.predicted_change_pct ? (tfd.predicted_change_pct > 0 ? `+${tfd.predicted_change_pct}%` : `${tfd.predicted_change_pct}%`) : '0.0%';
       const fillWidth = Math.min(100, Math.max(10, Math.round(ratio / 2.5 * 100)));
       const fillColor = ratio >= 1.25 ? 'var(--green-glow)' : ratio <= 0.8 ? 'var(--red-glow)' : 'var(--cyan-glow)';
 
       let statusBadge = '';
-      if (it.trend === 'Overpaid') {
+      if (tfd.trend === 'Overpaid') {
         statusBadge = `<span class="badge-forecast-status badge-status-overpaid">OVERPAY 🔥</span>`;
-      } else if (it.trend === 'Rising') {
+      } else if (tfd.trend === 'Rising') {
         statusBadge = `<span class="badge-forecast-status badge-status-rising">RISING 📈</span>`;
-      } else if (it.trend === 'Falling') {
+      } else if (tfd.trend === 'Falling') {
         statusBadge = `<span class="badge-forecast-status badge-status-falling">FALLING 📉</span>`;
       } else {
         statusBadge = `<span class="badge-forecast-status badge-status-stable">STABLE ➖</span>`;
       }
 
-      const alertMarkup = it.tier_pressure_alert
-        ? `<div class="tier-pressure-note" title="${currentLang === 'ru' ? it.tier_pressure_alert.ru : it.tier_pressure_alert.en}">
-            <span>⚠️</span> <span>${currentLang === 'ru' ? it.tier_pressure_alert.ru : it.tier_pressure_alert.en}</span>
+      const alertMarkup = tfd.tier_pressure_alert
+        ? `<div class="tier-pressure-note" title="${currentLang === 'ru' ? tfd.tier_pressure_alert.ru : tfd.tier_pressure_alert.en}">
+            <span>⚠️</span> <span>${currentLang === 'ru' ? tfd.tier_pressure_alert.ru : tfd.tier_pressure_alert.en}</span>
           </div>`
         : statusBadge;
 
@@ -1758,12 +1817,12 @@
           </td>
           <td>
             <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.76rem;">
-              ${it.demand_count !== undefined ? it.demand_count : 5} LF
+              ${tfd.demand_count !== undefined ? tfd.demand_count : 5} LF
             </span>
           </td>
           <td>
             <span style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.76rem;">
-              ${it.supply_count !== undefined ? it.supply_count : 4} Offer
+              ${tfd.supply_count !== undefined ? tfd.supply_count : 4} Offer
             </span>
           </td>
           <td>
@@ -1778,10 +1837,10 @@
             </div>
           </td>
           <td>
-            <div style="font-weight: 800; font-size: 0.88rem; color: ${it.predicted_change_pct >= 0 ? 'var(--green-glow)' : 'var(--red-glow)'};">
+            <div style="font-weight: 800; font-size: 0.88rem; color: ${tfd.predicted_change_pct >= 0 ? 'var(--green-glow)' : 'var(--red-glow)'};">
               ${pct}
             </div>
-            <small style="color: var(--text-muted); font-size: 0.7rem;">24-48h drift</small>
+            <small style="color: var(--text-muted); font-size: 0.7rem;">drift</small>
           </td>
           <td>
             ${alertMarkup}

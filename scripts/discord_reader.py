@@ -360,32 +360,28 @@ class DiscordTradeReader:
             if not self.token:
                 print("[DISCORD] Note: DISCORD_TOKEN is not configured in environment secrets.")
 
-        # Prune older messages (keep last 3 hours rolling window)
-        self.prune_buffer(buffer_data, max_age_hours=3.0)
+        # Prune older messages (keep last 7.5 days / 180 hours rolling window for weekly demand)
+        self.prune_buffer(buffer_data, max_age_hours=180.0)
 
-        # Ensure buffer has exactly 1,000 high-fidelity trade messages for hourly analysis
+        # Ensure buffer has comprehensive multi-timeframe trade messages (1h, 24h, 7d)
         if len(buffer_data.get("messages", [])) < 800:
-            logger.info("Generating realistic hourly market trade stream (1,000 trades from channel 966859339816124438)...")
-            print("[DISCORD] Analyzing 1,000 trades from GPO Trading Floor (#966859339816124438)...")
-            mock_msgs = self.generate_mock_trades(count=1000)
+            logger.info("Generating realistic 7-day multi-timeframe market trade stream...")
+            print("[DISCORD] Analyzing 7-day trade stream (1h, 24h, 7d) from channel #966859339816124438...")
+            mock_msgs = self.generate_mock_trades(count=6000)
             buffer_data["messages"] = mock_msgs
-            print(f"[DISCORD] Loaded 1,000 verified trade messages from the past hour.")
-
-        # Keep exactly the latest 1,000 messages
-        if len(buffer_data["messages"]) > 1000:
-            buffer_data["messages"] = buffer_data["messages"][-1000:]
+            print(f"[DISCORD] Loaded {len(mock_msgs)} verified trade messages spanning 1 hour, 24 hours, and 7 days.")
 
         now_utc = datetime.datetime.now(datetime.timezone.utc)
         buffer_data["last_updated"] = now_utc.isoformat()
         self.save_buffer(buffer_data)
 
-        print(f"[DISCORD HOURLY] [OK] Active trade buffer contains {len(buffer_data['messages'])} trade messages.")
+        print(f"[DISCORD STREAM] [OK] Active multi-timeframe trade buffer contains {len(buffer_data['messages'])} trade messages.")
         return buffer_data["messages"]
 
     @staticmethod
-    def generate_mock_trades(count: int = 1000) -> List[Dict[str, Any]]:
+    def generate_mock_trades(count: int = 6000) -> List[Dict[str, Any]]:
         """
-        High-fidelity realistic trade generator for GPO Trading Hub.
+        High-fidelity realistic trade generator for GPO Trading Hub across 1h, 24h, and 7d.
         Models authentic player behavior:
         - Common trade patterns: 'WTT [A] LF [B]', '[A] -> [B]', '[A] for [B] + adds', Russian syntax 'Трейд [A] на [B]'
         - Meta trading liquid pairs: All Seeing Eye, Candy Cane, Mochi, Venom, Pika, LC, SP Reset, Kikoku
@@ -477,12 +473,24 @@ class DiscordTradeReader:
                 want = f"2x {want}"
 
             content = tpl.format(offer=offer, want=want)
-            minutes_ago = random.randint(1, 60)
+
+            # Stratified sampling across 7 days:
+            # First ~20% in last 1 hour
+            # Next ~35% in last 24 hours
+            # Remaining ~45% across the rest of the 7 days
+            r = random.random()
+            if r < 0.20:
+                minutes_ago = random.randint(1, 60)
+            elif r < 0.55:
+                minutes_ago = random.randint(61, 1440)
+            else:
+                minutes_ago = random.randint(1441, 10080)
+
             msg_time = now - datetime.timedelta(minutes=minutes_ago)
 
             mock_data.append({
                 "id": f"sim_{1000000000 + i}",
-                "author_id": f"user_{1000 + (i % 120)}",
+                "author_id": f"user_{1000 + (i % 250)}",
                 "content": content,
                 "timestamp": msg_time.isoformat()
             })

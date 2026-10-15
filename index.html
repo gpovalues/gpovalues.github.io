@@ -755,6 +755,32 @@
             </div>
           </div>
         </div>
+      <!-- Interactive Timeframe Period Switcher: 1 Hour / 24 Hours / 7 Days -->
+      <div class="forecast-timeframe-panel">
+        <div class="f-tf-header-row">
+          <div class="f-tf-title-box">
+            <span class="icon-slot" data-icon="clock" style="color: var(--gold-beli);"></span>
+            <span class="f-tf-title" data-i18n="forecast_tf_title">Период аналитики рынка:</span>
+          </div>
+          <div class="f-tf-buttons-group" id="forecastTimeframeGroup">
+            <button class="f-tf-btn active" data-tf="1h">
+              <span class="icon-slot" data-icon="zap"></span>
+              <span class="f-tf-btn-text" data-i18n="tf_btn_1h">1 Час (1h)</span>
+            </button>
+            <button class="f-tf-btn" data-tf="24h">
+              <span class="icon-slot" data-icon="calendar"></span>
+              <span class="f-tf-btn-text" data-i18n="tf_btn_24h">24 Часа (24h)</span>
+            </button>
+            <button class="f-tf-btn" data-tf="7d">
+              <span class="icon-slot" data-icon="bar-chart-2"></span>
+              <span class="f-tf-btn-text" data-i18n="tf_btn_7d">7 Дней / Неделя (7d)</span>
+            </button>
+          </div>
+        </div>
+        <div class="f-tf-footer-note">
+          <span class="icon-slot" data-icon="shield-check" style="color: var(--gold-glow);"></span>
+          <span data-i18n="tf_demand_rule_note">Спрос (Demand ★) везде на сайте откалиброван по стабильным данным за 7 дней (10/10 максимум, 0/10 минимум)</span>
+        </div>
       </div>
 
       <!-- Highlights 3-Card Grid: Rising, Falling, Tier Pressure -->

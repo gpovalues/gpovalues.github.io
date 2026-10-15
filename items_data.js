@@ -18,10 +18,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 1,
     "demand_count": 0,
-    "supply_count": 22,
-    "pressure_ratio": 0.04,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "supply_count": 12,
+    "pressure_ratio": 0.08,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 12,
+        "pressure_ratio": 0.08,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 24,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 24,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_2",
@@ -40,11 +66,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Marine_Cape",
     "demandScore": 4.3,
     "official_rank": 2,
-    "demand_count": 14,
-    "supply_count": 21,
-    "pressure_ratio": 0.68,
-    "predicted_change_pct": -1.3,
-    "tier_pressure_alert": null
+    "demand_count": 9,
+    "supply_count": 15,
+    "pressure_ratio": 0.62,
+    "predicted_change_pct": -1.5,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 9,
+        "supply_count": 15,
+        "pressure_ratio": 0.62,
+        "predicted_change_pct": -1.5,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 16,
+        "supply_count": 26,
+        "pressure_ratio": 0.63,
+        "predicted_change_pct": -2.0,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 16,
+        "supply_count": 26,
+        "pressure_ratio": 0.63,
+        "predicted_change_pct": -2.6,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_3",
@@ -67,7 +119,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_4",
@@ -90,7 +168,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_5",
@@ -113,7 +217,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_6",
@@ -133,10 +263,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 6,
     "demand_count": 0,
-    "supply_count": 23,
-    "pressure_ratio": 0.04,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "supply_count": 12,
+    "pressure_ratio": 0.08,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 12,
+        "pressure_ratio": 0.08,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 26,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 26,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_7",
@@ -156,10 +312,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 7,
     "demand_count": 0,
-    "supply_count": 26,
-    "pressure_ratio": 0.04,
+    "supply_count": 16,
+    "pressure_ratio": 0.06,
     "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 16,
+        "pressure_ratio": 0.06,
+        "predicted_change_pct": -3.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 26,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 26,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_8",
@@ -178,13 +360,42 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_World_Ender",
     "demandScore": 6.5,
     "official_rank": 8,
-    "demand_count": 51,
-    "supply_count": 23,
-    "pressure_ratio": 2.17,
-    "predicted_change_pct": 4.7,
-    "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Cupid Queen's Maid Outfit)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Костюм Горничной Королевы Купидонов)"
+    "demand_count": 26,
+    "supply_count": 20,
+    "pressure_ratio": 1.29,
+    "predicted_change_pct": 1.2,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 26,
+        "supply_count": 20,
+        "pressure_ratio": 1.29,
+        "predicted_change_pct": 1.2,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 53,
+        "supply_count": 25,
+        "pressure_ratio": 2.08,
+        "predicted_change_pct": 5.9,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Cupid Queen's Maid Outfit)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Костюм Горничной Королевы Купидонов)"
+        }
+      },
+      "7d": {
+        "demand_count": 53,
+        "supply_count": 25,
+        "pressure_ratio": 2.08,
+        "predicted_change_pct": 7.6,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Cupid Queen's Maid Outfit)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Костюм Горничной Королевы Купидонов)"
+        }
+      }
     }
   },
   {
@@ -204,11 +415,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Firework_Lancer",
     "demandScore": 4.7,
     "official_rank": 9,
-    "demand_count": 13,
-    "supply_count": 7,
-    "pressure_ratio": 1.75,
-    "predicted_change_pct": 3.0,
-    "tier_pressure_alert": null
+    "demand_count": 6,
+    "supply_count": 6,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 6,
+        "supply_count": 6,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 15,
+        "supply_count": 8,
+        "pressure_ratio": 1.78,
+        "predicted_change_pct": 4.3,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 15,
+        "supply_count": 8,
+        "pressure_ratio": 1.78,
+        "predicted_change_pct": 5.5,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_10",
@@ -231,7 +468,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_11",
@@ -250,11 +513,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Iceborn_Candy_Cane",
     "demandScore": 2.5,
     "official_rank": 11,
-    "demand_count": 3,
-    "supply_count": 3,
+    "demand_count": 0,
+    "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_12",
@@ -277,7 +566,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_195",
@@ -300,7 +615,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_13",
@@ -319,13 +660,48 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Prestige_Fruit_Bag",
     "demandScore": 5.5,
     "official_rank": 14,
-    "demand_count": 26,
-    "supply_count": 16,
-    "pressure_ratio": 1.59,
-    "predicted_change_pct": 2.4,
+    "demand_count": 20,
+    "supply_count": 7,
+    "pressure_ratio": 2.62,
+    "predicted_change_pct": 6.5,
     "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Dominus Empyreus)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Доминус Эмпириус)"
+      "en": "High chance of tier promotion (trading on par with Dominus Empyreus)",
+      "ru": "Высокий шанс повышения (торгуется на уровне Доминус Эмпириус)"
+    },
+    "timeframes": {
+      "1h": {
+        "demand_count": 20,
+        "supply_count": 7,
+        "pressure_ratio": 2.62,
+        "predicted_change_pct": 6.5,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Dominus Empyreus)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Доминус Эмпириус)"
+        }
+      },
+      "24h": {
+        "demand_count": 28,
+        "supply_count": 11,
+        "pressure_ratio": 2.42,
+        "predicted_change_pct": 7.8,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Dominus Empyreus)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Доминус Эмпириус)"
+        }
+      },
+      "7d": {
+        "demand_count": 28,
+        "supply_count": 11,
+        "pressure_ratio": 2.42,
+        "predicted_change_pct": 9.9,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Dominus Empyreus)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Доминус Эмпириус)"
+        }
+      }
     }
   },
   {
@@ -349,7 +725,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_14",
@@ -368,11 +770,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Chromatic_All_Seeing_Eye",
     "demandScore": 0.9,
     "official_rank": 16,
-    "demand_count": 1,
-    "supply_count": 2,
-    "pressure_ratio": 0.67,
-    "predicted_change_pct": -1.3,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_197",
@@ -395,7 +823,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_15",
@@ -418,7 +872,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_198",
@@ -441,7 +921,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_16",
@@ -453,18 +959,44 @@ window.GPO_ITEMS = [
     "rankInTier": 6,
     "value": 92815,
     "lcValue": 397.78,
-    "demand": "Low",
+    "demand": "Very Low",
     "trend": "Falling",
     "category": "weapons",
     "image": "images/item_16.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Santa%27s_Candy_Cane",
     "demandScore": 2.4,
     "official_rank": 20,
-    "demand_count": 4,
-    "supply_count": 33,
-    "pressure_ratio": 0.15,
-    "predicted_change_pct": -3.4,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 21,
+    "pressure_ratio": 0.05,
+    "predicted_change_pct": -3.8,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 21,
+        "pressure_ratio": 0.05,
+        "predicted_change_pct": -3.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 31,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 31,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -6.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_199",
@@ -487,7 +1019,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_200",
@@ -510,7 +1068,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_17",
@@ -533,7 +1117,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_18",
@@ -556,7 +1166,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_201",
@@ -579,7 +1215,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_19",
@@ -602,7 +1264,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_20",
@@ -622,10 +1310,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 27,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_21",
@@ -645,10 +1359,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 28,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_202",
@@ -671,7 +1411,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_22",
@@ -694,7 +1460,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_23",
@@ -717,7 +1509,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_24",
@@ -737,10 +1555,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 32,
     "demand_count": 0,
-    "supply_count": 24,
-    "pressure_ratio": 0.04,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "supply_count": 14,
+    "pressure_ratio": 0.07,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 14,
+        "pressure_ratio": 0.07,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 22,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 22,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_203",
@@ -763,7 +1607,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_25",
@@ -786,7 +1656,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_26",
@@ -809,7 +1705,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_27",
@@ -832,7 +1754,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_28",
@@ -855,7 +1803,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_29",
@@ -874,13 +1848,48 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid%27s_All_Seeing_Eye",
     "demandScore": 4.7,
     "official_rank": 38,
-    "demand_count": 13,
-    "supply_count": 8,
-    "pressure_ratio": 1.56,
-    "predicted_change_pct": 2.2,
+    "demand_count": 8,
+    "supply_count": 5,
+    "pressure_ratio": 1.5,
+    "predicted_change_pct": 2.0,
     "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with All Seeing Holly)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Всевидящий Остролист)"
+      "en": "High chance of tier promotion (trading on par with All Seeing Holly)",
+      "ru": "Высокий шанс повышения (торгуется на уровне Всевидящий Остролист)"
+    },
+    "timeframes": {
+      "1h": {
+        "demand_count": 8,
+        "supply_count": 5,
+        "pressure_ratio": 1.5,
+        "predicted_change_pct": 2.0,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with All Seeing Holly)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Всевидящий Остролист)"
+        }
+      },
+      "24h": {
+        "demand_count": 14,
+        "supply_count": 7,
+        "pressure_ratio": 1.88,
+        "predicted_change_pct": 4.8,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with All Seeing Holly)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Всевидящий Остролист)"
+        }
+      },
+      "7d": {
+        "demand_count": 14,
+        "supply_count": 7,
+        "pressure_ratio": 1.88,
+        "predicted_change_pct": 6.2,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with All Seeing Holly)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Всевидящий Остролист)"
+        }
+      }
     }
   },
   {
@@ -900,11 +1909,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Soul_King%27s_Scarf",
     "demandScore": 2.7,
     "official_rank": 39,
-    "demand_count": 2,
-    "supply_count": 1,
-    "pressure_ratio": 1.5,
-    "predicted_change_pct": 2.0,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_92",
@@ -927,7 +1962,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_31",
@@ -946,11 +2007,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/All_Seeing_Eye",
     "demandScore": 5.4,
     "official_rank": 41,
-    "demand_count": 32,
-    "supply_count": 88,
-    "pressure_ratio": 0.37,
-    "predicted_change_pct": -2.5,
-    "tier_pressure_alert": null
+    "demand_count": 6,
+    "supply_count": 49,
+    "pressure_ratio": 0.14,
+    "predicted_change_pct": -3.4,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 6,
+        "supply_count": 49,
+        "pressure_ratio": 0.14,
+        "predicted_change_pct": -3.4,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 15,
+        "supply_count": 78,
+        "pressure_ratio": 0.2,
+        "predicted_change_pct": -4.4,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 15,
+        "supply_count": 78,
+        "pressure_ratio": 0.2,
+        "predicted_change_pct": -5.6,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_32",
@@ -969,11 +2056,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Troll_Face",
     "demandScore": 0.9,
     "official_rank": 42,
-    "demand_count": 1,
-    "supply_count": 2,
-    "pressure_ratio": 0.67,
-    "predicted_change_pct": -1.3,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_33",
@@ -996,7 +2109,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_34",
@@ -1015,11 +2154,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System",
     "demandScore": 0.9,
     "official_rank": 44,
-    "demand_count": 1,
-    "supply_count": 2,
-    "pressure_ratio": 0.67,
-    "predicted_change_pct": -1.3,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_35",
@@ -1038,11 +2203,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Bounty_System",
     "demandScore": 0.0,
     "official_rank": 45,
-    "demand_count": 1,
-    "supply_count": 24,
-    "pressure_ratio": 0.08,
+    "demand_count": 0,
+    "supply_count": 13,
+    "pressure_ratio": 0.07,
     "predicted_change_pct": -3.7,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 13,
+        "pressure_ratio": 0.07,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 25,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 25,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_36",
@@ -1065,7 +2256,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_37",
@@ -1088,7 +2305,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_38",
@@ -1107,11 +2350,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 1.9,
     "official_rank": 48,
-    "demand_count": 2,
-    "supply_count": 3,
-    "pressure_ratio": 0.75,
-    "predicted_change_pct": -1.0,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_41",
@@ -1131,10 +2400,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 49,
     "demand_count": 0,
-    "supply_count": 6,
-    "pressure_ratio": 0.14,
-    "predicted_change_pct": -3.4,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_42",
@@ -1157,7 +2452,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_43",
@@ -1180,7 +2501,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_93",
@@ -1203,7 +2550,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_39",
@@ -1222,11 +2595,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 0.0,
     "official_rank": 53,
-    "demand_count": 1,
-    "supply_count": 6,
-    "pressure_ratio": 0.29,
-    "predicted_change_pct": -2.8,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_40",
@@ -1246,10 +2645,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 54,
     "demand_count": 0,
-    "supply_count": 7,
-    "pressure_ratio": 0.12,
-    "predicted_change_pct": -3.5,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_44",
@@ -1272,7 +2697,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_45",
@@ -1292,10 +2743,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 56,
     "demand_count": 0,
-    "supply_count": 3,
-    "pressure_ratio": 0.25,
-    "predicted_change_pct": -3.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_46",
@@ -1318,7 +2795,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_48",
@@ -1341,7 +2844,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_47",
@@ -1360,11 +2889,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruit_Rod",
     "demandScore": 0.0,
     "official_rank": 59,
-    "demand_count": 1,
-    "supply_count": 44,
+    "demand_count": 0,
+    "supply_count": 26,
     "pressure_ratio": 0.04,
     "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 26,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -3.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 38,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 38,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -6.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_49",
@@ -1387,7 +2942,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_50",
@@ -1410,7 +2991,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_51",
@@ -1430,10 +3037,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 62,
     "demand_count": 0,
-    "supply_count": 5,
-    "pressure_ratio": 0.17,
-    "predicted_change_pct": -3.3,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_53",
@@ -1452,13 +3085,36 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade",
     "demandScore": 2.7,
     "official_rank": 63,
-    "demand_count": 2,
-    "supply_count": 1,
-    "pressure_ratio": 1.5,
-    "predicted_change_pct": 2.0,
-    "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Nightfall Shroud)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Покров Найтфолл)"
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
     }
   },
   {
@@ -1479,10 +3135,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 64,
     "demand_count": 0,
-    "supply_count": 3,
-    "pressure_ratio": 0.25,
-    "predicted_change_pct": -3.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_57",
@@ -1505,7 +3187,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_54",
@@ -1524,11 +3232,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Blade",
     "demandScore": 0.0,
     "official_rank": 66,
-    "demand_count": 1,
-    "supply_count": 11,
-    "pressure_ratio": 0.17,
-    "predicted_change_pct": -3.3,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_55",
@@ -1551,7 +3285,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_60",
@@ -1574,7 +3334,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_56",
@@ -1593,11 +3379,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Sickle_of_Sorrow",
     "demandScore": 0.5,
     "official_rank": 69,
-    "demand_count": 1,
-    "supply_count": 3,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_58",
@@ -1607,20 +3419,58 @@ window.GPO_ITEMS = [
     "tier": "Tier A",
     "subTier": "High",
     "rankInTier": 11,
-    "value": 2889,
-    "lcValue": 12.38,
+    "value": 2901,
+    "lcValue": 12.43,
     "demand": "Medium",
-    "trend": "Falling",
+    "trend": "Rising",
     "category": "chests",
     "image": "images/item_58.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mythical_Fruit_Chest",
     "demandScore": 5.2,
     "official_rank": 70,
-    "demand_count": 28,
-    "supply_count": 76,
-    "pressure_ratio": 0.38,
-    "predicted_change_pct": -2.5,
-    "tier_pressure_alert": null
+    "demand_count": 14,
+    "supply_count": 0,
+    "pressure_ratio": 15.0,
+    "predicted_change_pct": 12.0,
+    "tier_pressure_alert": {
+      "en": "High chance of tier promotion (trading on par with Sickle of Sorrow)",
+      "ru": "Высокий шанс повышения (торгуется на уровне Коса Скорби)"
+    },
+    "timeframes": {
+      "1h": {
+        "demand_count": 14,
+        "supply_count": 0,
+        "pressure_ratio": 15.0,
+        "predicted_change_pct": 12.0,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Sickle of Sorrow)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Коса Скорби)"
+        }
+      },
+      "24h": {
+        "demand_count": 18,
+        "supply_count": 4,
+        "pressure_ratio": 3.8,
+        "predicted_change_pct": 12.0,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Sickle of Sorrow)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Коса Скорби)"
+        }
+      },
+      "7d": {
+        "demand_count": 18,
+        "supply_count": 4,
+        "pressure_ratio": 3.8,
+        "predicted_change_pct": 12.0,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Sickle of Sorrow)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Коса Скорби)"
+        }
+      }
+    }
   },
   {
     "id": "item_59",
@@ -1640,10 +3490,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 71,
     "demand_count": 0,
-    "supply_count": 34,
-    "pressure_ratio": 0.03,
-    "predicted_change_pct": -3.9,
-    "tier_pressure_alert": null
+    "supply_count": 11,
+    "pressure_ratio": 0.08,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 11,
+        "pressure_ratio": 0.08,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 24,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 24,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_205",
@@ -1662,11 +3538,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Festival_Lancer",
     "demandScore": 2.6,
     "official_rank": 72,
-    "demand_count": 1,
+    "demand_count": 0,
     "supply_count": 0,
-    "pressure_ratio": 2.0,
-    "predicted_change_pct": 4.0,
-    "tier_pressure_alert": null
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_61",
@@ -1689,7 +3591,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_206",
@@ -1712,7 +3640,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_62",
@@ -1724,18 +3678,44 @@ window.GPO_ITEMS = [
     "rankInTier": 15,
     "value": 1686,
     "lcValue": 7.23,
-    "demand": "Low",
+    "demand": "Very Low",
     "trend": "Falling",
     "category": "weapons",
     "image": "images/item_62.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Kikoku",
     "demandScore": 1.9,
     "official_rank": 75,
-    "demand_count": 3,
-    "supply_count": 73,
-    "pressure_ratio": 0.05,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "demand_count": 0,
+    "supply_count": 47,
+    "pressure_ratio": 0.02,
+    "predicted_change_pct": -3.9,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 47,
+        "pressure_ratio": 0.02,
+        "predicted_change_pct": -3.9,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 87,
+        "pressure_ratio": 0.01,
+        "predicted_change_pct": -5.4,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 87,
+        "pressure_ratio": 0.01,
+        "predicted_change_pct": -6.9,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_63",
@@ -1755,10 +3735,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 76,
     "demand_count": 0,
-    "supply_count": 4,
-    "pressure_ratio": 0.2,
-    "predicted_change_pct": -3.2,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_64",
@@ -1778,10 +3784,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 77,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_65",
@@ -1804,7 +3836,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_209",
@@ -1823,11 +3881,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Love_Shades",
     "demandScore": 4.6,
     "official_rank": 79,
-    "demand_count": 18,
-    "supply_count": 91,
-    "pressure_ratio": 0.21,
+    "demand_count": 12,
+    "supply_count": 64,
+    "pressure_ratio": 0.2,
     "predicted_change_pct": -3.2,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 12,
+        "supply_count": 64,
+        "pressure_ratio": 0.2,
+        "predicted_change_pct": -3.2,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 19,
+        "supply_count": 94,
+        "pressure_ratio": 0.21,
+        "predicted_change_pct": -4.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 19,
+        "supply_count": 94,
+        "pressure_ratio": 0.21,
+        "predicted_change_pct": -5.5,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_66",
@@ -1850,7 +3934,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_68",
@@ -1873,7 +3983,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_67",
@@ -1896,7 +4032,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_69",
@@ -1919,7 +4081,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_70",
@@ -1939,10 +4127,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 84,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_210",
@@ -1965,7 +4179,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_71",
@@ -1988,7 +4228,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_72",
@@ -2007,11 +4273,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Mochi_Mochi_no_Mi",
     "demandScore": 5.9,
     "official_rank": 87,
-    "demand_count": 47,
-    "supply_count": 72,
-    "pressure_ratio": 0.66,
-    "predicted_change_pct": -1.4,
-    "tier_pressure_alert": null
+    "demand_count": 30,
+    "supply_count": 42,
+    "pressure_ratio": 0.72,
+    "predicted_change_pct": -1.1,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 30,
+        "supply_count": 42,
+        "pressure_ratio": 0.72,
+        "predicted_change_pct": -1.1,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 54,
+        "supply_count": 78,
+        "pressure_ratio": 0.7,
+        "predicted_change_pct": -1.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 54,
+        "supply_count": 78,
+        "pressure_ratio": 0.7,
+        "predicted_change_pct": -2.1,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_73",
@@ -2034,7 +4326,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_211",
@@ -2057,7 +4375,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_74",
@@ -2077,10 +4421,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 90,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_76",
@@ -2099,11 +4469,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 4.7,
     "official_rank": 91,
-    "demand_count": 19,
-    "supply_count": 63,
-    "pressure_ratio": 0.31,
-    "predicted_change_pct": -2.8,
-    "tier_pressure_alert": null
+    "demand_count": 12,
+    "supply_count": 40,
+    "pressure_ratio": 0.32,
+    "predicted_change_pct": -2.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 12,
+        "supply_count": 40,
+        "pressure_ratio": 0.32,
+        "predicted_change_pct": -2.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 18,
+        "supply_count": 64,
+        "pressure_ratio": 0.29,
+        "predicted_change_pct": -3.9,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 18,
+        "supply_count": 64,
+        "pressure_ratio": 0.29,
+        "predicted_change_pct": -5.0,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_75",
@@ -2123,10 +4519,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 92,
     "demand_count": 0,
-    "supply_count": 3,
-    "pressure_ratio": 0.25,
-    "predicted_change_pct": -3.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_77",
@@ -2149,7 +4571,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_78",
@@ -2172,7 +4620,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_79",
@@ -2191,11 +4665,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Cupid_Queen%27s_Outfit",
     "demandScore": 2.6,
     "official_rank": 95,
-    "demand_count": 1,
+    "demand_count": 0,
     "supply_count": 0,
-    "pressure_ratio": 2.0,
-    "predicted_change_pct": 4.0,
-    "tier_pressure_alert": null
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_212",
@@ -2215,10 +4715,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 96,
     "demand_count": 0,
-    "supply_count": 19,
-    "pressure_ratio": 0.05,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "supply_count": 11,
+    "pressure_ratio": 0.08,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 11,
+        "pressure_ratio": 0.08,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 21,
+        "pressure_ratio": 0.05,
+        "predicted_change_pct": -5.2,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 21,
+        "pressure_ratio": 0.05,
+        "predicted_change_pct": -6.6,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_81",
@@ -2241,7 +4767,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_82",
@@ -2264,7 +4816,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_84",
@@ -2283,11 +4861,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Devil_Fruits",
     "demandScore": 4.2,
     "official_rank": 99,
-    "demand_count": 13,
-    "supply_count": 30,
-    "pressure_ratio": 0.45,
+    "demand_count": 7,
+    "supply_count": 17,
+    "pressure_ratio": 0.44,
     "predicted_change_pct": -2.2,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 7,
+        "supply_count": 17,
+        "pressure_ratio": 0.44,
+        "predicted_change_pct": -2.2,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 14,
+        "supply_count": 30,
+        "pressure_ratio": 0.48,
+        "predicted_change_pct": -2.9,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 14,
+        "supply_count": 30,
+        "pressure_ratio": 0.48,
+        "predicted_change_pct": -3.6,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_83",
@@ -2307,10 +4911,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 100,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_85",
@@ -2333,7 +4963,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_86",
@@ -2352,11 +5008,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Pika_Pika_no_Mi",
     "demandScore": 4.4,
     "official_rank": 102,
-    "demand_count": 15,
-    "supply_count": 64,
-    "pressure_ratio": 0.25,
-    "predicted_change_pct": -3.0,
-    "tier_pressure_alert": null
+    "demand_count": 9,
+    "supply_count": 47,
+    "pressure_ratio": 0.21,
+    "predicted_change_pct": -3.2,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 9,
+        "supply_count": 47,
+        "pressure_ratio": 0.21,
+        "predicted_change_pct": -3.2,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 15,
+        "supply_count": 73,
+        "pressure_ratio": 0.22,
+        "predicted_change_pct": -4.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 15,
+        "supply_count": 73,
+        "pressure_ratio": 0.22,
+        "predicted_change_pct": -5.5,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_87",
@@ -2368,18 +5050,44 @@ window.GPO_ITEMS = [
     "rankInTier": 19,
     "value": 493,
     "lcValue": 2.11,
-    "demand": "Low",
+    "demand": "Very Low",
     "trend": "Stable",
     "category": "fruits",
     "image": "images/item_87.png",
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Pika_Pika_no_Mi",
     "demandScore": 2.1,
     "official_rank": 103,
-    "demand_count": 2,
-    "supply_count": 2,
+    "demand_count": 0,
+    "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_80",
@@ -2402,7 +5110,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_88",
@@ -2425,7 +5159,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_89",
@@ -2448,7 +5208,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_90",
@@ -2471,7 +5257,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_213",
@@ -2491,10 +5303,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 108,
     "demand_count": 0,
-    "supply_count": 31,
-    "pressure_ratio": 0.03,
-    "predicted_change_pct": -3.9,
-    "tier_pressure_alert": null
+    "supply_count": 14,
+    "pressure_ratio": 0.07,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 14,
+        "pressure_ratio": 0.07,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 34,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 34,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -6.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_94",
@@ -2517,7 +5355,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_95",
@@ -2540,7 +5404,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_96",
@@ -2563,7 +5453,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_97",
@@ -2586,7 +5502,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_98",
@@ -2609,7 +5551,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_99",
@@ -2632,7 +5600,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_91",
@@ -2655,7 +5649,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_101",
@@ -2678,7 +5698,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_102",
@@ -2697,11 +5743,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Legendary_Fruit_Chest",
     "demandScore": 10.0,
     "official_rank": 117,
-    "demand_count": 878,
-    "supply_count": 595,
-    "pressure_ratio": 1.47,
-    "predicted_change_pct": 1.9,
-    "tier_pressure_alert": null
+    "demand_count": 620,
+    "supply_count": 400,
+    "pressure_ratio": 1.55,
+    "predicted_change_pct": 2.2,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 620,
+        "supply_count": 400,
+        "pressure_ratio": 1.55,
+        "predicted_change_pct": 2.2,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 991,
+        "supply_count": 639,
+        "pressure_ratio": 1.55,
+        "predicted_change_pct": 3.0,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 991,
+        "supply_count": 639,
+        "pressure_ratio": 1.55,
+        "predicted_change_pct": 3.9,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_103",
@@ -2724,7 +5796,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_207",
@@ -2747,7 +5845,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_104",
@@ -2767,10 +5891,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 120,
     "demand_count": 0,
-    "supply_count": 108,
-    "pressure_ratio": 0.01,
-    "predicted_change_pct": -4.0,
-    "tier_pressure_alert": null
+    "supply_count": 64,
+    "pressure_ratio": 0.02,
+    "predicted_change_pct": -3.9,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 64,
+        "pressure_ratio": 0.02,
+        "predicted_change_pct": -3.9,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 116,
+        "pressure_ratio": 0.01,
+        "predicted_change_pct": -5.4,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 116,
+        "pressure_ratio": 0.01,
+        "predicted_change_pct": -6.9,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_105",
@@ -2789,13 +5939,36 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ace",
     "demandScore": 4.3,
     "official_rank": 121,
-    "demand_count": 10,
+    "demand_count": 7,
     "supply_count": 7,
-    "pressure_ratio": 1.38,
-    "predicted_change_pct": 1.5,
-    "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Dragon Emperor’s Cape)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Плащ Императора Драконов)"
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 7,
+        "supply_count": 7,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 12,
+        "supply_count": 10,
+        "pressure_ratio": 1.18,
+        "predicted_change_pct": 1.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 12,
+        "supply_count": 10,
+        "pressure_ratio": 1.18,
+        "predicted_change_pct": 1.3,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
     }
   },
   {
@@ -2816,10 +5989,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 122,
     "demand_count": 0,
-    "supply_count": 5,
-    "pressure_ratio": 0.17,
-    "predicted_change_pct": -3.3,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_107",
@@ -2839,10 +6038,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 123,
     "demand_count": 0,
-    "supply_count": 2,
-    "pressure_ratio": 0.33,
-    "predicted_change_pct": -2.7,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_100",
@@ -2861,11 +6086,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Ope_Ope_no_Mi",
     "demandScore": 4.4,
     "official_rank": 124,
-    "demand_count": 15,
-    "supply_count": 27,
-    "pressure_ratio": 0.57,
-    "predicted_change_pct": -1.7,
-    "tier_pressure_alert": null
+    "demand_count": 7,
+    "supply_count": 11,
+    "pressure_ratio": 0.67,
+    "predicted_change_pct": -1.3,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 7,
+        "supply_count": 11,
+        "pressure_ratio": 0.67,
+        "predicted_change_pct": -1.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 15,
+        "supply_count": 24,
+        "pressure_ratio": 0.64,
+        "predicted_change_pct": -2.0,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 15,
+        "supply_count": 24,
+        "pressure_ratio": 0.64,
+        "predicted_change_pct": -2.5,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_108",
@@ -2885,10 +6136,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 125,
     "demand_count": 0,
-    "supply_count": 24,
-    "pressure_ratio": 0.04,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "supply_count": 12,
+    "pressure_ratio": 0.08,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 12,
+        "pressure_ratio": 0.08,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 27,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 27,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -6.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_109",
@@ -2911,7 +6188,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_110",
@@ -2934,7 +6237,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_111",
@@ -2957,7 +6286,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_112",
@@ -2980,7 +6335,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_113",
@@ -3003,7 +6384,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_114",
@@ -3026,7 +6433,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_115",
@@ -3049,7 +6482,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_116",
@@ -3072,7 +6531,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_117",
@@ -3092,10 +6577,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 134,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_118",
@@ -3118,7 +6629,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_119",
@@ -3137,13 +6674,48 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Big_Mama%27s_Cape",
     "demandScore": 5.1,
     "official_rank": 136,
-    "demand_count": 16,
-    "supply_count": 6,
-    "pressure_ratio": 2.43,
-    "predicted_change_pct": 5.7,
+    "demand_count": 8,
+    "supply_count": 4,
+    "pressure_ratio": 1.8,
+    "predicted_change_pct": 3.2,
     "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Radiant Shades)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Сияющие Очки)"
+      "en": "High chance of tier promotion (trading on par with Radiant Shades)",
+      "ru": "Высокий шанс повышения (торгуется на уровне Сияющие Очки)"
+    },
+    "timeframes": {
+      "1h": {
+        "demand_count": 8,
+        "supply_count": 4,
+        "pressure_ratio": 1.8,
+        "predicted_change_pct": 3.2,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Radiant Shades)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Сияющие Очки)"
+        }
+      },
+      "24h": {
+        "demand_count": 17,
+        "supply_count": 7,
+        "pressure_ratio": 2.25,
+        "predicted_change_pct": 6.9,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Radiant Shades)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Сияющие Очки)"
+        }
+      },
+      "7d": {
+        "demand_count": 17,
+        "supply_count": 7,
+        "pressure_ratio": 2.25,
+        "predicted_change_pct": 8.8,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Radiant Shades)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Сияющие Очки)"
+        }
+      }
     }
   },
   {
@@ -3167,7 +6739,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_121",
@@ -3190,7 +6788,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_122",
@@ -3209,11 +6833,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Magu_Magu_no_Mi",
     "demandScore": 4.5,
     "official_rank": 139,
-    "demand_count": 16,
-    "supply_count": 30,
-    "pressure_ratio": 0.55,
-    "predicted_change_pct": -1.8,
-    "tier_pressure_alert": null
+    "demand_count": 12,
+    "supply_count": 17,
+    "pressure_ratio": 0.72,
+    "predicted_change_pct": -1.1,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 12,
+        "supply_count": 17,
+        "pressure_ratio": 0.72,
+        "predicted_change_pct": -1.1,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 20,
+        "supply_count": 32,
+        "pressure_ratio": 0.64,
+        "predicted_change_pct": -2.0,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 20,
+        "supply_count": 32,
+        "pressure_ratio": 0.64,
+        "predicted_change_pct": -2.5,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_136",
@@ -3236,7 +6886,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_123",
@@ -3256,10 +6932,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 141,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_124",
@@ -3282,7 +6984,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_125",
@@ -3305,7 +7033,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_127",
@@ -3328,7 +7082,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_126",
@@ -3351,7 +7131,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_128",
@@ -3374,7 +7180,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_129",
@@ -3397,7 +7229,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_130",
@@ -3420,7 +7278,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_131",
@@ -3443,7 +7327,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_132",
@@ -3466,7 +7376,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_133",
@@ -3489,7 +7425,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_134",
@@ -3509,10 +7471,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 152,
     "demand_count": 0,
-    "supply_count": 30,
-    "pressure_ratio": 0.03,
-    "predicted_change_pct": -3.9,
-    "tier_pressure_alert": null
+    "supply_count": 25,
+    "pressure_ratio": 0.04,
+    "predicted_change_pct": -3.8,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 25,
+        "pressure_ratio": 0.04,
+        "predicted_change_pct": -3.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 35,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 35,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -6.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_135",
@@ -3532,10 +7520,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 153,
     "demand_count": 0,
-    "supply_count": 24,
-    "pressure_ratio": 0.04,
-    "predicted_change_pct": -3.8,
-    "tier_pressure_alert": null
+    "supply_count": 14,
+    "pressure_ratio": 0.07,
+    "predicted_change_pct": -3.7,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 14,
+        "pressure_ratio": 0.07,
+        "predicted_change_pct": -3.7,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 28,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -5.3,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 28,
+        "pressure_ratio": 0.03,
+        "predicted_change_pct": -6.8,
+        "trend": "Falling",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_137",
@@ -3558,7 +7572,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_138",
@@ -3581,7 +7621,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_139",
@@ -3604,7 +7670,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_140",
@@ -3627,7 +7719,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_141",
@@ -3650,7 +7768,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_142",
@@ -3673,7 +7817,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_143",
@@ -3696,7 +7866,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_144",
@@ -3715,11 +7911,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Hie_Hie_no_Mi",
     "demandScore": 1.4,
     "official_rank": 161,
-    "demand_count": 1,
-    "supply_count": 1,
+    "demand_count": 0,
+    "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_145",
@@ -3742,7 +7964,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_146",
@@ -3762,10 +8010,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 163,
     "demand_count": 0,
-    "supply_count": 3,
-    "pressure_ratio": 0.25,
-    "predicted_change_pct": -3.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_147",
@@ -3788,7 +8062,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_148",
@@ -3811,7 +8111,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_149",
@@ -3834,7 +8160,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_208",
@@ -3853,13 +8205,48 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Rare_Fruit_Chest",
     "demandScore": 4.3,
     "official_rank": 167,
-    "demand_count": 10,
-    "supply_count": 7,
-    "pressure_ratio": 1.38,
-    "predicted_change_pct": 1.5,
+    "demand_count": 7,
+    "supply_count": 3,
+    "pressure_ratio": 2.0,
+    "predicted_change_pct": 4.0,
     "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Iceborn Katana)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Ледяная Катана (IBK))"
+      "en": "High chance of tier promotion (trading on par with Iceborn Katana)",
+      "ru": "Высокий шанс повышения (торгуется на уровне Ледяная Катана (IBK))"
+    },
+    "timeframes": {
+      "1h": {
+        "demand_count": 7,
+        "supply_count": 3,
+        "pressure_ratio": 2.0,
+        "predicted_change_pct": 4.0,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Iceborn Katana)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Ледяная Катана (IBK))"
+        }
+      },
+      "24h": {
+        "demand_count": 11,
+        "supply_count": 7,
+        "pressure_ratio": 1.5,
+        "predicted_change_pct": 2.8,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Iceborn Katana)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Ледяная Катана (IBK))"
+        }
+      },
+      "7d": {
+        "demand_count": 11,
+        "supply_count": 7,
+        "pressure_ratio": 1.5,
+        "predicted_change_pct": 3.5,
+        "trend": "Rising",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Iceborn Katana)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Ледяная Катана (IBK))"
+        }
+      }
     }
   },
   {
@@ -3883,7 +8270,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_151",
@@ -3906,7 +8319,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_152",
@@ -3925,13 +8364,36 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Boneshiver",
     "demandScore": 2.6,
     "official_rank": 170,
-    "demand_count": 1,
+    "demand_count": 0,
     "supply_count": 0,
-    "pressure_ratio": 2.0,
-    "predicted_change_pct": 4.0,
-    "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Roger’s Hat)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Шляпа Роджера)"
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
     }
   },
   {
@@ -3955,7 +8417,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_154",
@@ -3978,7 +8466,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_155",
@@ -3997,13 +8511,36 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Moku_Moku_no_Mi",
     "demandScore": 2.6,
     "official_rank": 173,
-    "demand_count": 1,
+    "demand_count": 0,
     "supply_count": 0,
-    "pressure_ratio": 2.0,
-    "predicted_change_pct": 4.0,
-    "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Moria’s Necklace)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Ожерелье Мории)"
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
     }
   },
   {
@@ -4027,7 +8564,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_157",
@@ -4050,7 +8613,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_158",
@@ -4073,7 +8662,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_159",
@@ -4096,7 +8711,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_160",
@@ -4119,7 +8760,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_161",
@@ -4142,7 +8809,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_162",
@@ -4165,7 +8858,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_163",
@@ -4188,7 +8907,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_164",
@@ -4211,7 +8956,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_165",
@@ -4234,7 +9005,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_166",
@@ -4254,10 +9051,36 @@ window.GPO_ITEMS = [
     "demandScore": 0.0,
     "official_rank": 184,
     "demand_count": 0,
-    "supply_count": 1,
-    "pressure_ratio": 0.5,
-    "predicted_change_pct": -2.0,
-    "tier_pressure_alert": null
+    "supply_count": 0,
+    "pressure_ratio": 1.0,
+    "predicted_change_pct": 0.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_167",
@@ -4280,7 +9103,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_168",
@@ -4303,7 +9152,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_169",
@@ -4326,7 +9201,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_170",
@@ -4349,7 +9250,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_171",
@@ -4372,7 +9299,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_172",
@@ -4395,7 +9348,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_173",
@@ -4418,7 +9397,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_174",
@@ -4441,7 +9446,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_175",
@@ -4464,7 +9495,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_176",
@@ -4487,7 +9544,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_177",
@@ -4510,7 +9593,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_179",
@@ -4533,7 +9642,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_178",
@@ -4556,7 +9691,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_180",
@@ -4579,7 +9740,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_181",
@@ -4602,7 +9789,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_182",
@@ -4625,7 +9838,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_183",
@@ -4648,7 +9887,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_184",
@@ -4671,7 +9936,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_185",
@@ -4694,7 +9985,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_186",
@@ -4717,7 +10034,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_187",
@@ -4740,7 +10083,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_188",
@@ -4763,7 +10132,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_189",
@@ -4786,7 +10181,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_190",
@@ -4809,7 +10230,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_191",
@@ -4832,7 +10279,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_192",
@@ -4855,7 +10328,33 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_193",
@@ -4874,11 +10373,37 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/Dark_Root",
     "demandScore": 5.3,
     "official_rank": 211,
-    "demand_count": 18,
-    "supply_count": 6,
-    "pressure_ratio": 2.71,
-    "predicted_change_pct": 6.8,
-    "tier_pressure_alert": null
+    "demand_count": 14,
+    "supply_count": 3,
+    "pressure_ratio": 3.75,
+    "predicted_change_pct": 11.0,
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 14,
+        "supply_count": 3,
+        "pressure_ratio": 3.75,
+        "predicted_change_pct": 11.0,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 21,
+        "supply_count": 8,
+        "pressure_ratio": 2.44,
+        "predicted_change_pct": 7.9,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 21,
+        "supply_count": 8,
+        "pressure_ratio": 2.44,
+        "predicted_change_pct": 10.1,
+        "trend": "Rising",
+        "tier_pressure_alert": null
+      }
+    }
   },
   {
     "id": "item_194",
@@ -4897,13 +10422,48 @@ window.GPO_ITEMS = [
     "wikiUrl": "https://grand-piece-online.fandom.com/wiki/SP_Reset_Essence",
     "demandScore": 8.3,
     "official_rank": 212,
-    "demand_count": 204,
-    "supply_count": 98,
-    "pressure_ratio": 2.07,
-    "predicted_change_pct": 4.3,
+    "demand_count": 140,
+    "supply_count": 60,
+    "pressure_ratio": 2.31,
+    "predicted_change_pct": 5.2,
     "tier_pressure_alert": {
-      "en": "High chance of tier promotion in next official tier list (trading on par with Dark Root)",
-      "ru": "Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне Темный Корень (Сброс Фрукта))"
+      "en": "High chance of tier promotion (trading on par with Dark Root)",
+      "ru": "Высокий шанс повышения (торгуется на уровне Темный Корень (Сброс Фрукта))"
+    },
+    "timeframes": {
+      "1h": {
+        "demand_count": 140,
+        "supply_count": 60,
+        "pressure_ratio": 2.31,
+        "predicted_change_pct": 5.2,
+        "trend": "Overpaid",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Dark Root)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Темный Корень (Сброс Фрукта))"
+        }
+      },
+      "24h": {
+        "demand_count": 229,
+        "supply_count": 110,
+        "pressure_ratio": 2.07,
+        "predicted_change_pct": 5.9,
+        "trend": "Overpaid",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Dark Root)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Темный Корень (Сброс Фрукта))"
+        }
+      },
+      "7d": {
+        "demand_count": 229,
+        "supply_count": 110,
+        "pressure_ratio": 2.07,
+        "predicted_change_pct": 7.5,
+        "trend": "Overpaid",
+        "tier_pressure_alert": {
+          "en": "High chance of tier promotion (trading on par with Dark Root)",
+          "ru": "Высокий шанс повышения (торгуется на уровне Темный Корень (Сброс Фрукта))"
+        }
+      }
     }
   },
   {
@@ -4927,6 +10487,32 @@ window.GPO_ITEMS = [
     "supply_count": 0,
     "pressure_ratio": 1.0,
     "predicted_change_pct": 0.0,
-    "tier_pressure_alert": null
+    "tier_pressure_alert": null,
+    "timeframes": {
+      "1h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "24h": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      },
+      "7d": {
+        "demand_count": 0,
+        "supply_count": 0,
+        "pressure_ratio": 1.0,
+        "predicted_change_pct": 0.0,
+        "trend": "Stable",
+        "tier_pressure_alert": null
+      }
+    }
   }
 ];

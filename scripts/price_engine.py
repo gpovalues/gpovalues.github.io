@@ -195,17 +195,56 @@ class GPOPriceEngine:
 
     def run_pipeline(self, trades: List[Dict[str, Any]]) -> Dict[str, Any]:
         """
-        Executes the full 4-stage mathematical pipeline:
-        Stage 1: Raw implied valuation + EMA clamp.
-        Stage 2: Strict Isotonic Regression (PAVA).
-        Stage 3: Smooth spacing regularization (no identical values).
-        Stage 4: Forecasting & Tier Pressure alerts.
+        Executes the multi-timeframe mathematical pipeline:
+        1. Segregates trade stream into 1-hour, 24-hour, and 7-day rolling windows.
+        2. Calculates universal demand scores (0.0 to 10.0) from the stable 7-day dataset.
+        3. Enforces strict monotonic ranking constraint (PAVA + spacing gap): sequence never changes.
+        4. Produces multi-timeframe forecast summaries and item metrics for 1h, 24h, and 7d.
         """
-        metrics = self.calculate_market_metrics(trades)
+        import datetime
+        now_utc = datetime.datetime.now(datetime.timezone.utc)
         n = len(self.items)
 
         # -------------------------------------------------------------
-        # STAGE 1: Raw Implied Value & EMA Clamping (+-10% limit)
+        # STEP 1: Segregate Trades by Timeframe (1h, 24h, 7d)
+        # -------------------------------------------------------------
+        trades_1h: List[Dict[str, Any]] = []
+        trades_24h: List[Dict[str, Any]] = []
+        trades_7d: List[Dict[str, Any]] = []
+
+        for tr in trades:
+            ts_str = tr.get("timestamp")
+            m_dt = None
+            if ts_str:
+                try:
+                    m_dt = datetime.datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
+                except Exception:
+                    pass
+            if not m_dt:
+                m_dt = now_utc
+
+            diff_sec = max(0.0, (now_utc - m_dt).total_seconds())
+            if diff_sec <= 3600.0:     # Last 1 Hour
+                trades_1h.append(tr)
+            if diff_sec <= 86400.0:    # Last 24 Hours
+                trades_24h.append(tr)
+            if diff_sec <= 604800.0:   # Last 7 Days (168h)
+                trades_7d.append(tr)
+
+        # Fallbacks if buffer was freshly populated
+        if not trades_1h:
+            trades_1h = trades[-min(1000, len(trades)):]
+        if not trades_24h:
+            trades_24h = trades[-min(3000, len(trades)):]
+        if not trades_7d:
+            trades_7d = trades
+
+        metrics_1h = self.calculate_market_metrics(trades_1h)
+        metrics_24h = self.calculate_market_metrics(trades_24h)
+        metrics_7d = self.calculate_market_metrics(trades_7d)
+
+        # -------------------------------------------------------------
+        # STEP 2: Raw Valuation & Hourly EMA Clamping (+-5% limit)
         # -------------------------------------------------------------
         raw_values: List[float] = []
         raw_market_estimates: List[float] = []
@@ -213,18 +252,16 @@ class GPOPriceEngine:
         for it in self.items:
             iid = it["id"]
             curr_val = float(it.get("value", 10.0))
-            m = metrics[iid]
+            m = metrics_1h[iid]
 
             filtered_obs = self.filter_outliers_iqr(m["implied_values"])
             if filtered_obs:
-                # Median of filtered observations
                 sorted_obs = sorted(filtered_obs)
                 obs_median = sorted_obs[len(sorted_obs) // 2]
                 raw_market_est = obs_median
             else:
-                # Drift from bid/ask pressure
                 ratio = (m["demand_count"] + 1.0) / (m["supply_count"] + 1.0)
-                drift_factor = math.tanh((ratio - 1.0) * 0.4) * 0.08  # smooth -8% to +8%
+                drift_factor = math.tanh((ratio - 1.0) * 0.4) * 0.05  # smooth -5% to +5%
                 raw_market_est = curr_val * (1.0 + drift_factor)
 
             raw_market_estimates.append(raw_market_est)
@@ -241,14 +278,11 @@ class GPOPriceEngine:
             raw_values.append(smoothed)
 
         # -------------------------------------------------------------
-        # STAGE 2: Strict Monotonic Constraint (PAVA)
+        # STEP 3: Strict Monotonic Constraint (PAVA) & Regularization
         # -------------------------------------------------------------
-        # All items are ordered by official_rank (index 0 = Rank 1 = most expensive)
+        # All items are ordered strictly by official_rank (Rank 1 to 213)
         pava_fitted = pava_decreasing(raw_values)
 
-        # -------------------------------------------------------------
-        # STAGE 3: Smooth Spacing Regularization (No Zero Gaps)
-        # -------------------------------------------------------------
         spaced_values = list(pava_fitted)
         for i in range(n - 1):
             curr_v = spaced_values[i]
@@ -258,7 +292,6 @@ class GPOPriceEngine:
             if curr_v - next_v < min_gap:
                 spaced_values[i + 1] = max(0.1, curr_v - min_gap)
 
-        # Round nicely for display (integers for values >= 100, 1 decimal for < 100)
         final_values: List[float] = []
         for v in spaced_values:
             if v >= 100:
@@ -269,149 +302,207 @@ class GPOPriceEngine:
                 final_values.append(round(v, 2))
 
         # -------------------------------------------------------------
-        # STAGE 4: Forecasting Engine & Strict 0.0 - 10.0 Demand Scores
+        # STEP 4: Universal 7-Day Weekly Demand Calibration (0.0 to 10.0)
+        # "но чтобы спрос показывался недельным везде(demand)"
         # -------------------------------------------------------------
-        # Calculate raw demand intensity for all items
-        raw_demand_intensities: List[float] = []
+        raw_demand_intensities_7d: List[float] = []
         for idx, it in enumerate(self.items):
             iid = it["id"]
-            m = metrics[iid]
+            m = metrics_7d[iid]
             d_cnt = float(m["demand_count"])
             s_cnt = float(m["supply_count"])
             ratio = (d_cnt + 1.0) / (s_cnt + 1.0)
-            
-            # Organic trading appeal: net demand + volume bonus + pressure ratio
+
+            # Net demand + market pressure
             net_demand = max(0.0, d_cnt - s_cnt)
             intensity = d_cnt * 2.0 + net_demand * 1.5 + (ratio - 1.0) * 3.0
             raw_intensity = max(0.0, intensity)
-            
-            # Smooth logarithmic scale so non-traded items are 0, and top items scale gracefully
             log_intensity = math.log1p(raw_intensity)
-            raw_demand_intensities.append(log_intensity)
+            raw_demand_intensities_7d.append(log_intensity)
 
-        min_d = min(raw_demand_intensities)
-        max_d = max(raw_demand_intensities)
+        min_d7 = min(raw_demand_intensities_7d)
+        max_d7 = max(raw_demand_intensities_7d)
 
-        # Scale perfectly from 0.0 to 10.0: Highest item = 10.0/10, Lowest item = 0.0/10
-        scaled_scores: List[float] = []
-        if max_d > min_d:
-            for val in raw_demand_intensities:
-                score = 10.0 * (val - min_d) / (max_d - min_d)
-                scaled_scores.append(round(score, 1))
+        weekly_scaled_scores: List[float] = []
+        if max_d7 > min_d7:
+            for val in raw_demand_intensities_7d:
+                score = 10.0 * (val - min_d7) / (max_d7 - min_d7)
+                weekly_scaled_scores.append(round(score, 1))
         else:
-            scaled_scores = [5.0] * n
+            weekly_scaled_scores = [5.0] * n
 
-        # User strict rule: Guarantee highest item is strictly 10.0 and lowest item is strictly 0.0
-        max_idx = max(range(n), key=lambda k: raw_demand_intensities[k])
-        min_idx = min(range(n), key=lambda k: raw_demand_intensities[k])
-        scaled_scores[max_idx] = 10.0
-        scaled_scores[min_idx] = 0.0
+        # Strict rule: Highest weekly demand = 10.0/10, Lowest weekly demand = 0.0/10
+        max_idx = max(range(n), key=lambda k: raw_demand_intensities_7d[k])
+        min_idx = min(range(n), key=lambda k: raw_demand_intensities_7d[k])
+        weekly_scaled_scores[max_idx] = 10.0
+        weekly_scaled_scores[min_idx] = 0.0
 
+        def get_demand_label(score: float) -> str:
+            if score >= 9.0:
+                return "Extremely High"
+            elif score >= 7.5:
+                return "Very High"
+            elif score >= 5.5:
+                return "High"
+            elif score >= 3.5:
+                return "Medium"
+            elif score >= 1.5:
+                return "Low"
+            else:
+                return "Very Low"
+
+        # -------------------------------------------------------------
+        # STEP 5: Build Multi-Timeframe Forecasts (1h, 24h, 7d)
+        # -------------------------------------------------------------
+        timeframe_metrics_map = {
+            "1h": (metrics_1h, 4.0),
+            "24h": (metrics_24h, 5.5),
+            "7d": (metrics_7d, 7.0)
+        }
+
+        # Item records container
         processed_items: List[Dict[str, Any]] = []
-        tier_pressure_candidates: List[Dict[str, Any]] = []
+
+        # Containers for summaries per timeframe
+        tf_summaries: Dict[str, Dict[str, Any]] = {}
+        for tf_key in ("1h", "24h", "7d"):
+            tf_summaries[tf_key] = {
+                "top_rising": [],
+                "top_falling": [],
+                "tier_pressure_candidates": []
+            }
 
         for idx, it in enumerate(self.items):
             iid = it["id"]
-            m = metrics[iid]
             new_val = final_values[idx]
-            old_val = float(it.get("value", new_val))
-            raw_market_est = raw_market_estimates[idx]
+            lc_val = round(new_val / self.LC_POINT_BASE, 2) if new_val > 1.0 else 0.0
+            weekly_score = weekly_scaled_scores[idx]
+            weekly_demand_label = get_demand_label(weekly_score)
 
-            demand_cnt = m["demand_count"]
-            supply_cnt = m["supply_count"]
-            pressure_ratio = round((demand_cnt + 1.0) / (supply_cnt + 1.0), 2)
-            demand_score = scaled_scores[idx]
+            item_tf_data: Dict[str, Any] = {}
 
-            # Categorical demand label aligned with 0-10 demandScore
-            if demand_score >= 9.0:
-                demand_label = "Extremely High"
-            elif demand_score >= 7.5:
-                demand_label = "Very High"
-            elif demand_score >= 5.5:
-                demand_label = "High"
-            elif demand_score >= 3.5:
-                demand_label = "Medium"
-            elif demand_score >= 1.5:
-                demand_label = "Low"
-            else:
-                demand_label = "Very Low"
+            for tf_key, (tf_metrics, drift_mult) in timeframe_metrics_map.items():
+                m = tf_metrics[iid]
+                demand_cnt = m["demand_count"]
+                supply_cnt = m["supply_count"]
+                pressure_ratio = round((demand_cnt + 1.0) / (supply_cnt + 1.0), 2)
 
-            # Trend & Expected 24-48h drift
-            pct_drift = round((pressure_ratio - 1.0) * 4.0, 1)
-            pct_drift = max(-8.0, min(10.0, pct_drift))
+                pct_drift = round((pressure_ratio - 1.0) * drift_mult, 1)
+                pct_drift = max(-10.0, min(12.0, pct_drift))
 
-            if pressure_ratio >= 1.80 and demand_score >= 8.0:
-                trend = "Overpaid"
-            elif pressure_ratio >= 1.25 or pct_drift >= 2.5:
-                trend = "Rising"
-            elif pressure_ratio <= 0.78 or pct_drift <= -2.5:
-                trend = "Falling"
-            else:
-                trend = "Stable"
+                if pressure_ratio >= 1.80 and weekly_score >= 7.5:
+                    trend = "Overpaid"
+                elif pressure_ratio >= 1.25 or pct_drift >= 2.5:
+                    trend = "Rising"
+                elif pressure_ratio <= 0.78 or pct_drift <= -2.5:
+                    trend = "Falling"
+                else:
+                    trend = "Stable"
 
-            # TIER PRESSURE ALERT:
-            # Check if actual market trades value this item higher than its neighbor above
-            tier_pressure_alert: Optional[Dict[str, str]] = None
-            if idx > 0:
-                neighbor_above = self.items[idx - 1]
-                above_val = final_values[idx - 1]
-                if raw_market_est >= above_val * 0.98 and pressure_ratio >= 1.3:
-                    alert_en = f"High chance of tier promotion in next official tier list (trading on par with {neighbor_above['name']})"
-                    alert_ru = f"Высокий шанс повышения в следующем официальном тир-листе (торгуется на уровне {neighbor_above.get('nameRu', neighbor_above['name'])})"
-                    tier_pressure_alert = {"en": alert_en, "ru": alert_ru}
-                    tier_pressure_candidates.append({
-                        "id": iid,
-                        "name": it["name"],
-                        "nameRu": it.get("nameRu", it["name"]),
-                        "image": it.get("image", ""),
-                        "current_rank": idx + 1,
-                        "pressure_type": "UP",
-                        "target_neighbor": neighbor_above["name"],
-                        "target_neighbor_ru": neighbor_above.get("nameRu", neighbor_above["name"]),
-                        "pressure_ratio": pressure_ratio,
-                        "alert": tier_pressure_alert
-                    })
+                # Tier pressure check for this timeframe
+                tier_pressure_alert: Optional[Dict[str, str]] = None
+                if idx > 0:
+                    neighbor_above = self.items[idx - 1]
+                    above_val = final_values[idx - 1]
+                    raw_est = raw_market_estimates[idx]
+                    if raw_est >= above_val * 0.98 and pressure_ratio >= 1.3:
+                        alert_en = f"High chance of tier promotion (trading on par with {neighbor_above['name']})"
+                        alert_ru = f"Высокий шанс повышения (торгуется на уровне {neighbor_above.get('nameRu', neighbor_above['name'])})"
+                        tier_pressure_alert = {"en": alert_en, "ru": alert_ru}
 
-            lc_val = round(new_val / self.LC_POINT_BASE, 2)
-            if new_val <= 1.0:
-                lc_val = 0.0
+                tf_record = {
+                    "demand_count": demand_cnt,
+                    "supply_count": supply_cnt,
+                    "pressure_ratio": pressure_ratio,
+                    "predicted_change_pct": pct_drift,
+                    "trend": trend,
+                    "tier_pressure_alert": tier_pressure_alert
+                }
+                item_tf_data[tf_key] = tf_record
 
+            # Root fields default to active 1h stream for momentum, while DEMAND is strictly 7d weekly everywhere
+            active_1h = item_tf_data["1h"]
             item_record = {
                 **it,
                 "value": int(new_val) if new_val >= 100 else new_val,
                 "lcValue": lc_val,
-                "demand": demand_label,
-                "demandScore": demand_score,
-                "trend": trend,
+                "demand": weekly_demand_label,          # 100% Weekly Demand Everywhere
+                "demandScore": weekly_score,            # 100% Weekly Demand Score (0.0 - 10.0) Everywhere
+                "trend": active_1h["trend"],
                 "official_rank": idx + 1,
-                "demand_count": demand_cnt,
-                "supply_count": supply_cnt,
-                "pressure_ratio": pressure_ratio,
-                "predicted_change_pct": pct_drift,
-                "tier_pressure_alert": tier_pressure_alert
+                "demand_count": active_1h["demand_count"],
+                "supply_count": active_1h["supply_count"],
+                "pressure_ratio": active_1h["pressure_ratio"],
+                "predicted_change_pct": active_1h["predicted_change_pct"],
+                "tier_pressure_alert": active_1h["tier_pressure_alert"],
+                "timeframes": item_tf_data
             }
             processed_items.append(item_record)
 
-        # Verify sequence invariant: order of items never changes
+        # Sequence invariance check: items order NEVER changes
         for i in range(len(processed_items) - 1):
-            assert processed_items[i]["official_rank"] == i + 1, "Rank index mismatch"
-            assert processed_items[i]["value"] >= processed_items[i + 1]["value"], "Value monotonicity violated"
+            assert processed_items[i]["official_rank"] == i + 1, "Rank sequence invariant violated"
+            assert processed_items[i]["value"] >= processed_items[i + 1]["value"], "Price monotonicity violated"
 
-        # Highlight summaries
-        top_rising = sorted([it for it in processed_items if it["trend"] in ("Rising", "Overpaid")], key=lambda x: -x["pressure_ratio"])[:6]
-        top_falling = sorted([it for it in processed_items if it["trend"] == "Falling"], key=lambda x: x["pressure_ratio"])[:6]
+        # Populate highlight summaries for each timeframe
+        for tf_key in ("1h", "24h", "7d"):
+            top_rising = sorted(
+                [it for it in processed_items if it["timeframes"][tf_key]["trend"] in ("Rising", "Overpaid")],
+                key=lambda x: -x["timeframes"][tf_key]["pressure_ratio"]
+            )[:6]
+
+            top_falling = sorted(
+                [it for it in processed_items if it["timeframes"][tf_key]["trend"] == "Falling"],
+                key=lambda x: x["timeframes"][tf_key]["pressure_ratio"]
+            )[:6]
+
+            alerts: List[Dict[str, Any]] = []
+            for it in processed_items:
+                alert = it["timeframes"][tf_key]["tier_pressure_alert"]
+                if alert:
+                    above_item = self.items[it["official_rank"] - 2]
+                    alerts.append({
+                        "id": it["id"],
+                        "name": it["name"],
+                        "nameRu": it.get("nameRu", it["name"]),
+                        "image": it.get("image", ""),
+                        "current_rank": it["official_rank"],
+                        "pressure_type": "UP",
+                        "target_neighbor": above_item["name"],
+                        "target_neighbor_ru": above_item.get("nameRu", above_item["name"]),
+                        "pressure_ratio": it["timeframes"][tf_key]["pressure_ratio"],
+                        "alert": alert
+                    })
+
+            tf_count = len(trades_1h) if tf_key == "1h" else len(trades_24h) if tf_key == "24h" else len(trades_7d)
+            tf_summaries[tf_key] = {
+                "timeframe_label": "1 Hour" if tf_key == "1h" else "24 Hours" if tf_key == "24h" else "7 Days (Weekly)",
+                "trades_analyzed": tf_count,
+                "market_sentiment": "Bullish" if len(top_rising) > len(top_falling) else "Neutral",
+                "top_rising": top_rising,
+                "top_falling": top_falling,
+                "tier_pressure_candidates": alerts
+            }
 
         output = {
             "meta": {
                 "updated_at": "auto",
-                "total_trades_analyzed": len(trades),
+                "total_trades_analyzed": len(trades_7d),
+                "total_trades_1h": len(trades_1h),
+                "total_trades_24h": len(trades_24h),
+                "total_trades_7d": len(trades_7d),
                 "total_items": len(processed_items),
-                "market_sentiment": "Bullish" if len(top_rising) > len(top_falling) else "Neutral"
+                "market_sentiment": tf_summaries["1h"]["market_sentiment"]
             },
             "forecast_summary": {
-                "top_rising": top_rising,
-                "top_falling": top_falling,
-                "tier_pressure_candidates": tier_pressure_candidates
+                "active_timeframe": "1h",
+                "1h": tf_summaries["1h"],
+                "24h": tf_summaries["24h"],
+                "7d": tf_summaries["7d"],
+                # Root level backward compatibility
+                "top_rising": tf_summaries["1h"]["top_rising"],
+                "top_falling": tf_summaries["1h"]["top_falling"],
+                "tier_pressure_candidates": tf_summaries["1h"]["tier_pressure_candidates"]
             },
             "items": processed_items
         }
