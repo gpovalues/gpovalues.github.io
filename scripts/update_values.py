@@ -13,6 +13,12 @@ import json
 import datetime
 import logging
 
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # Ensure local scripts folder is in import path
 sys.path.insert(0, os.path.dirname(__file__))
 
@@ -46,6 +52,19 @@ def main():
     parser = GPOTradeParser(items_path=items_json_path)
     trades = parser.parse_all(raw_messages)
     logger.info(f"Step 2 Complete: Extracted {len(trades)} structured trade signals.")
+
+    # Detailed console logging for GitHub Actions
+    print("\n" + "=" * 75)
+    print(" [PARSER LOG] LIVE TRADE PARSER SAMPLES (10 EXAMPLES: [RAW] -> [PARSED])")
+    print("=" * 75)
+    for idx, tr in enumerate(trades[:10], start=1):
+        raw = tr.get("raw_text", "").replace("\n", " ").strip()
+        offer_desc = [f"{parser.items_dict.get(iid, {}).get('name', iid)} (x{cnt})" for iid, cnt in tr.get("offer_items", [])]
+        want_desc = [f"{parser.items_dict.get(iid, {}).get('name', iid)} (x{cnt})" for iid, cnt in tr.get("want_items", [])]
+        parsed_str = f"OFFER: [{', '.join(offer_desc) or 'None'}]  |  WANT: [{', '.join(want_desc) or 'None'}]"
+        print(f"[{idx:02d}] [RAW]    : {raw}")
+        print(f"     [PARSED] : {parsed_str}")
+    print("=" * 75 + "\n")
 
     # 3. Mathematical Optimization & Forecasting Engine
     engine = GPOPriceEngine(items_path=items_json_path)

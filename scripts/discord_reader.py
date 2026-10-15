@@ -6,11 +6,18 @@ are completely disabled at the class/architecture level.
 """
 
 import os
+import sys
 import time
 import random
 import datetime
 import logging
 from typing import List, Dict, Any, Optional
+
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
 
 try:
     import requests
@@ -80,6 +87,8 @@ class DiscordTradeReader:
     """
     DISCORD_API_BASE = "https://discord.com/api/v9"
 
+    DEFAULT_CHANNEL_ID = "966859339816124438"
+
     def __init__(self, token: Optional[str] = None, channel_ids: Optional[List[str]] = None):
         self.token = token or os.environ.get("DISCORD_TOKEN", "").strip()
         
@@ -90,7 +99,8 @@ class DiscordTradeReader:
             # Supports comma-separated or space-separated channel IDs
             self.channel_ids = [c.strip() for c in env_channels.replace(";", ",").split(",") if c.strip()]
         else:
-            self.channel_ids = []
+            # Default to official GPO Trade Hub channel
+            self.channel_ids = [self.DEFAULT_CHANNEL_ID]
 
         self.session = ReadOnlyDiscordSession(self.token) if self.token and requests else None
 
@@ -99,6 +109,7 @@ class DiscordTradeReader:
         Fetches up to `max_messages` from `channel_id` created within the last `hours_back` hours.
         """
         if not self.session:
+            print(f"[DISCORD API] [WARN] No active session (token missing). Skipping channel {channel_id}.")
             logger.warning("No Discord session active. Skipping live fetch.")
             return []
 
@@ -107,6 +118,7 @@ class DiscordTradeReader:
         cutoff_dt = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=hours_back)
         url = f"{self.DISCORD_API_BASE}/channels/{channel_id}/messages"
 
+        print(f"\n[DISCORD API] [INFO] Connecting to Discord API channel {channel_id} (cutoff: {cutoff_dt.strftime('%Y-%m-%d %H:%M:%S UTC')})...")
         logger.info(f"Fetching messages for channel {channel_id} (cutoff: {cutoff_dt.isoformat()})...")
 
         while len(messages) < max_messages:
@@ -116,7 +128,9 @@ class DiscordTradeReader:
 
             try:
                 resp = self.session.get(url, params=params, timeout=12)
+                print(f"[DISCORD API] GET /channels/{channel_id}/messages -> HTTP {resp.status_code} ({resp.reason})")
             except Exception as e:
+                print(f"[DISCORD API] [ERROR] Network error querying channel {channel_id}: {e}")
                 logger.error(f"Network error querying channel {channel_id}: {e}")
                 break
 
@@ -126,20 +140,24 @@ class DiscordTradeReader:
                     retry_after = resp.json().get("retry_after", 3.0)
                 except Exception:
                     retry_after = 3.0
+                print(f"[DISCORD API] [RETRY] Rate limited (HTTP 429). Sleeping for {retry_after:.2f}s...")
                 logger.warning(f"Rate limited (429). Sleeping for {retry_after:.2f}s...")
                 time.sleep(retry_after + 0.5)
                 continue
 
             if resp.status_code in (401, 403):
+                print(f"[DISCORD API] [ERROR] Authorization/Permission error (HTTP {resp.status_code}) on channel {channel_id}. Check DISCORD_TOKEN.")
                 logger.error(f"Authorization error ({resp.status_code}) on channel {channel_id}. Check DISCORD_TOKEN.")
                 break
 
             if resp.status_code != 200:
+                print(f"[DISCORD API] [WARN] Discord API returned HTTP {resp.status_code}: {resp.text[:200]}")
                 logger.warning(f"Discord API returned status {resp.status_code}: {resp.text[:200]}")
                 break
 
             batch = resp.json()
             if not isinstance(batch, list) or len(batch) == 0:
+                print(f"[DISCORD API] Reached end of message history or empty batch on channel {channel_id}.")
                 logger.info("Reached end of messages or empty batch.")
                 break
 
@@ -156,7 +174,9 @@ class DiscordTradeReader:
                     msg_dt = datetime.datetime.now(datetime.timezone.utc)
 
                 if msg_dt < cutoff_dt:
+                    print(f"[DISCORD API] Reached 12h cutoff timestamp ({msg_dt.strftime('%H:%M:%S UTC')}). Stopping pagination.")
                     logger.info(f"Reached 12h cutoff timestamp ({msg_dt.isoformat()}). Stopping pagination.")
+                    print(f"[DISCORD API] [OK] Total messages downloaded from channel {channel_id}: {len(messages)}")
                     return messages
 
                 if content and not author.get("bot", False):
@@ -171,10 +191,13 @@ class DiscordTradeReader:
                 if len(messages) >= max_messages:
                     break
 
+            print(f"[DISCORD API] Batch fetched: {len(batch)} items (Channel {channel_id} total so far: {len(messages)})")
+
             # Human-like delay between pagination requests
             pause = random.uniform(1.6, 2.8)
             time.sleep(pause)
 
+        print(f"[DISCORD API] [OK] Total messages downloaded from channel {channel_id}: {len(messages)}")
         logger.info(f"Collected {len(messages)} messages from channel {channel_id}.")
         return messages
 
@@ -187,13 +210,19 @@ class DiscordTradeReader:
         all_messages: List[Dict[str, Any]] = []
 
         if self.token and self.channel_ids:
+            print(f"\n[DISCORD] Starting live message download for channels: {', '.join(self.channel_ids)}")
             for cid in self.channel_ids:
                 msgs = self.fetch_channel_messages(cid, max_messages=max_per_channel)
                 all_messages.extend(msgs)
+        else:
+            if not self.token:
+                print("[DISCORD] Note: DISCORD_TOKEN is not configured in environment secrets.")
 
         if not all_messages:
             logger.info("No live Discord messages retrieved (or token not configured). Running fallback market simulation...")
+            print("[DISCORD] Running realistic GPO Trade Hub market simulation...")
             all_messages = self.generate_mock_trades()
+            print(f"[DISCORD] Simulation generated {len(all_messages)} messages.")
 
         return all_messages
 

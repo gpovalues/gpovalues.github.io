@@ -23,6 +23,7 @@ __pycache__/
 # =====================================================================
 *.txt
 !robots.txt
+!requirements.txt
 server.js
 package.json
 package-lock.json
