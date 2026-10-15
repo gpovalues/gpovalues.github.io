@@ -17,6 +17,7 @@ browser/
 *.log
 __pycache__/
 *.pyc
+data/.prices_updated
 
 # =====================================================================
 # Temporary & Scratch Development Scripts

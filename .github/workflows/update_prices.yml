@@ -58,7 +58,12 @@ jobs:
           if [[ -n $(git status -s) ]]; then
             echo "Changes detected! Staging and committing..."
             git add data/trades_buffer.json data/values.json data/trade_aliases.json gpo_items.json items_data.js
-            git commit -m "📈 24/7 Trade stream sync & market update [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            if [[ -f "data/.prices_updated" ]]; then
+              rm -f data/.prices_updated
+              git commit -m "📈 12-Hour Market Revaluation & Website Price Update [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            else
+              git commit -m "📥 24/7 Trade stream accumulation [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            fi
             git push origin main
           else
             echo "No changes detected. Database is up to date."
