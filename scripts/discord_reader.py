@@ -246,7 +246,16 @@ class DiscordTradeReader:
             ("Kikoku", "Mochi + adds"),
             ("Ba'al Head", "1x Legendary Fruit Chest"),
             ("Devil Fruit Rod", "2x Legendary Fruit Chest"),
-            ("All Seeing Egg", "Cupid's All Seeing Eye + adds")
+            ("All Seeing Egg", "Cupid's All Seeing Eye + adds"),
+            # Split stickers & Kaido items
+            ("<:kaido:101><:cape:102>", "1x Legendary Fruit Chest"),
+            (":kaido::cape:", "Mochi"),
+            (":kaido: :cape:", "2x Legendary Fruit Chest"),
+            ("Kaido Cape", "Mochi + adds"),
+            ("Dragon Emperor's Cape", "1x Legendary Fruit Chest"),
+            ("<:marine:201><:cape:202>", ":kaido::gourd:"),
+            (":kaido::outfit:", ":big::mom::cape:"),
+            (":df::rod:", "2x LC")
         ]
 
         now = datetime.datetime.now(datetime.timezone.utc)
