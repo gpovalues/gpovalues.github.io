@@ -133,7 +133,12 @@ class GPOTradeParser:
             "dragon emperors cape": "item_104",
             "dragon emperor's cape": "item_104",
             "dragon cape": "item_104",
+            "de cape": "item_104",
+            "de_cape": "item_104",
             "decape": "item_104",
+            "dec": "item_104",
+            "cape": "item_104",             # In GPO trading, generic 'cape' refers to the standard 1 LC Dragon Emperor's Cape
+            "плащ": "item_104",            # Стандартный плащ в трейде GPO (Плащ Кайдо / Dragon Emperor's Cape)
             "плащ кайдо": "item_104",
             "кайдо плащ": "item_104",
             "кайдо": "item_104",
@@ -153,7 +158,7 @@ class GPOTradeParser:
             "костюм кайдо": "item_108",
             "сет кайдо": "item_108",
 
-            # Big Mom / Big Mama
+            # Big Mom / Big Mama Cape
             "big mom cape": "item_119",
             "big moms cape": "item_119",
             "big mom's cape": "item_119",
@@ -163,13 +168,57 @@ class GPOTradeParser:
             "bigmom cape": "item_119",
             "bm cape": "item_119",
             "bmcape": "item_119",
+            "bmc": "item_119",
             "плащ биг мам": "item_119",
+            "плащ биг мамы": "item_119",
             "плащ большой мамочки": "item_119",
+            "биг мам плащ": "item_119",
 
-            # Marine Gear
+            # Other Specific Capes
+            "titan cape": "item_162",
+            "titan's cape": "item_162",
+            "titan of justice cape": "item_162",
+            "titan of justice's cape": "item_162",
+            "toj cape": "item_162",
+            "tojc": "item_162",
+            "плащ титана": "item_162",
+            "плащ титана правосудия": "item_162",
+            "титан плащ": "item_162",
+
+            "ashen cape": "item_165",
+            "ashen's cape": "item_165",
+            "ashens cape": "item_165",
+            "плащ пепельного": "item_165",
+            "пепельный плащ": "item_165",
+
+            "radiant cape": "item_166",
+            "radiant admiral cape": "item_166",
+            "radiant admiral's cape": "item_166",
+            "admiral cape": "item_166",
+            "admiral's cape": "item_166",
+            "rac": "item_166",
+            "ra cape": "item_166",
+            "плащ адмирала": "item_166",
+            "плащ сияющего адмирала": "item_166",
+            "адмирал плащ": "item_166",
+
+            "zhen cape": "item_184",
+            "zhen's cape": "item_184",
+            "captain zhen cape": "item_184",
+            "captain zhen's cape": "item_184",
+            "cz cape": "item_184",
+            "czc": "item_184",
+            "плащ чжэня": "item_184",
+            "плащ капитана чжэня": "item_184",
+            "чжэнь плащ": "item_184",
+
+            # Marine Gear (Exclusive high tier - requires explicit marine/дозор)
             "marine cape": "item_2",
+            "marine's cape": "item_2",
+            "marines cape": "item_2",
             "mcape": "item_2",
             "плащ дозора": "item_2",
+            "морской плащ": "item_2",
             "marine cap": "item_3",
             "mcap": "item_3",
             "кепка дозора": "item_3",

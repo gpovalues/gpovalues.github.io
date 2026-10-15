@@ -233,9 +233,9 @@ class GPOPriceEngine:
 
         # Fallbacks if buffer was freshly populated
         if not trades_1h:
-            trades_1h = trades[-min(1000, len(trades)):]
+            trades_1h = trades[-min(10000, len(trades)):]
         if not trades_24h:
-            trades_24h = trades[-min(3000, len(trades)):]
+            trades_24h = trades[-min(25000, len(trades)):]
         if not trades_7d:
             trades_7d = trades
 

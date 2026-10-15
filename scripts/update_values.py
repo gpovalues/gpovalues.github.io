@@ -40,13 +40,13 @@ def main():
     values_json_path = os.path.join(data_dir, "values.json")
 
     logger.info("=" * 60)
-    logger.info("STARTING GPO VALUES HOURLY AUTOMATED UPDATE PIPELINE (1,000 TRADES)")
+    logger.info("STARTING GPO VALUES HOURLY AUTOMATED UPDATE PIPELINE (10,000 TRADES)")
     logger.info("TARGET CHANNEL: https://discord.com/channels/842875016524595240/966859339816124438")
     logger.info("=" * 60)
 
     # 1. Read Discord Trade Messages from Channel #966859339816124438
     reader = DiscordTradeReader()
-    raw_messages = reader.fetch_all_trades(max_per_channel=1000)
+    raw_messages = reader.fetch_all_trades(max_per_channel=10000)
     logger.info(f"Step 1 Complete: Acquired {len(raw_messages)} messages from channel #966859339816124438.")
 
     # 2. Parse Trade Signals
@@ -93,7 +93,7 @@ def main():
     print(" 📊 GPO MULTI-TIMEFRAME CONTINUOUS STREAM AUDIT (#966859339816124438)")
     print("=" * 80)
     print(" • Discord Target Channel         : #966859339816124438 (Guild: 842875016524595240)")
-    print(f" • 1-Hour Rolling Window (1h)     : {t1h_cnt or min(1000, len(trades))} trades (hourly momentum)")
+    print(f" • 1-Hour Rolling Window (1h)     : {t1h_cnt or min(10000, len(trades))} trades (hourly momentum)")
     print(f" • 24-Hour Rolling Window (24h)   : {t24h_cnt or len(trades)} trades (daily market trends)")
     print(f" • 7-Day Rolling Window (7d)      : {len(trades)} trades (weekly macro stability)")
     print(f" • Market Activity by Category    : Fruits ({category_counts.get('fruits', 0)}), Weapons ({category_counts.get('weapons', 0)}), Chests ({category_counts.get('chests', 0)}), Accs ({category_counts.get('accessories', 0)})")

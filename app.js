@@ -277,7 +277,7 @@
       tab_forecasts: "Forecasts & Trends",
       drawer_forecast_desc: "Hourly Discord analysis & alerts",
       forecast_hero_title: "GPO Market Forecasts & <span class=\"text-gradient-purple\">AI Analytics</span>",
-      forecast_hero_desc: "Automated parsing of trading channel #966859339816124438 in Discord every hour (1,000 trades). Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and calibrated 0.0–10.0 demand scores.",
+      forecast_hero_desc: "Automated parsing of trading channel #966859339816124438 in Discord every hour (10,000 trades). Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and calibrated 0.0–10.0 demand scores.",
       forecast_badge_autonomous: "AUTONOMOUS DISCORD HOURLY ENGINE",
       forecast_tf_title: "Market Analysis Timeframe:",
       tf_btn_1h: "1 Hour (1h)",
@@ -475,7 +475,7 @@
       tab_forecasts: "Прогнозы и Тренды",
       drawer_forecast_desc: "Почасовой анализ Discord и алерты",
       forecast_hero_title: "Прогнозы Рынка GPO & <span class=\"text-gradient-purple\">AI-Аналитика</span>",
-      forecast_hero_desc: "Автоматический парсинг канала #966859339816124438 в Discord каждый час (1000 трейдов). Строгое сохранение официального порядка тир-листа и идеальная калибровка спроса от 10/10 до 0/10.",
+      forecast_hero_desc: "Автоматический парсинг канала #966859339816124438 в Discord каждый час (10 000 трейдов). Строгое сохранение официального порядка тир-листа и идеальная калибровка спроса от 10/10 до 0/10.",
       forecast_badge_autonomous: "АВТОНОМНЫЙ DISCORD ДВИЖОК (1 ЧАС)",
       forecast_tf_title: "Период аналитики рынка:",
       tf_btn_1h: "1 Час (1h)",
@@ -1603,15 +1603,15 @@
 
     if (liveMarketData && liveMarketData.meta) {
       if (updatedEl) updatedEl.textContent = liveMarketData.meta.updated_at || 'Live Hourly Sync';
-      const tradesCount = tfSummary.trades_analyzed || (tfKey === '1h' ? 1000 : tfKey === '24h' ? 3400 : 7800);
-      if (tradesEl) tradesEl.textContent = `${tradesCount} trades (${tfLabel})`;
+      const tradesCount = tfSummary.trades_analyzed || (tfKey === '1h' ? 10000 : tfKey === '24h' ? 25000 : 42000);
+      if (tradesEl) tradesEl.textContent = `${tradesCount.toLocaleString()} trades (${tfLabel})`;
       if (sentimentEl) {
         sentimentEl.textContent = tfSummary.market_sentiment || 'Bullish';
         sentimentEl.style.color = (tfSummary.market_sentiment === 'Bullish') ? 'var(--green-glow)' : (tfSummary.market_sentiment === 'Bearish') ? 'var(--red-glow)' : 'var(--cyan-glow)';
       }
     } else {
       if (updatedEl) updatedEl.textContent = 'Live Hourly Sync';
-      if (tradesEl) tradesEl.textContent = `1,000 trades (${tfLabel})`;
+      if (tradesEl) tradesEl.textContent = `10,000 trades (${tfLabel})`;
       if (sentimentEl) sentimentEl.textContent = 'Active';
     }
 

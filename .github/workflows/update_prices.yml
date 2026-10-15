@@ -2,7 +2,7 @@ name: GPO Hourly Trade Stream & Pricing Pipeline
 
 on:
   schedule:
-    # Runs every hour, 24/7, to analyze 1,000 trades from channel #966859339816124438 and update site prices & forecasts
+    # Runs every hour, 24/7, to analyze 10,000 trades from channel #966859339816124438 and update site prices & forecasts
     - cron: '0 * * * *'
   workflow_dispatch:
     # Allows manual instant triggering with optional forced price update
