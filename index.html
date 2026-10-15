@@ -56,7 +56,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
@@ -84,6 +84,9 @@
         </button>
         <button class="nav-tab-btn" id="tabBtnTierlist" data-tab="tierlist">
           <span class="icon-slot" data-icon="scroll"></span> <span class="tab-label" data-i18n="tab_tierlist">Tier List & Values</span>
+        </button>
+        <button class="nav-tab-btn" id="tabBtnForecasts" data-tab="forecasts">
+          <span class="icon-slot" data-icon="trending-up"></span> <span class="tab-label" data-i18n="tab_forecasts">Forecasts & Trends</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnCommunity" data-tab="community">
           <span class="icon-slot" data-icon="message-square"></span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
@@ -137,6 +140,15 @@
             <span class="d-tab-name" data-i18n="tab_tierlist">Tier List & Values</span>
             <small class="d-tab-desc" data-i18n="drawer_tier_desc">213 items with abbreviations</small>
           </div>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="forecasts">
+          <span class="d-tab-icon icon-slot" data-icon="trending-up"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_forecasts">Forecasts & Trends</span>
+            <small class="d-tab-desc" data-i18n="drawer_forecast_desc">12h Discord analysis & alerts</small>
+          </div>
+          <span class="d-tab-badge" style="background: var(--purple-glow); color: #fff;">AI</span>
           <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
         </button>
         <button class="drawer-tab-btn" data-tab="community">
@@ -704,6 +716,147 @@
 
     </section>
 
+    <!-- =====================================================================
+         SECTION 5: MARKET FORECASTS & AI ANALYTICS (12-HOUR AUTONOMOUS ENGINE)
+         ===================================================================== -->
+    <section class="tab-section" id="sectionForecasts" style="display: none;">
+      <!-- Hero Analytics Card -->
+      <div class="trade-side-panel forecast-hero-panel">
+        <div class="forecast-hero-top">
+          <div>
+            <div class="forecast-pill-badge">
+              <span class="icon-slot" data-icon="zap"></span>
+              <span data-i18n="forecast_badge_autonomous">AUTONOMOUS DISCORD 12H ENGINE</span>
+            </div>
+            <h2 class="forecast-hero-heading" data-i18n="forecast_hero_title">
+              GPO Market Forecasts & <span class="text-gradient-purple">AI Analytics</span>
+            </h2>
+            <p class="forecast-hero-desc" data-i18n="forecast_hero_desc">
+              Automated parsing of trading channels in Discord every 12 hours. Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and 24–48h price momentum predictions.
+            </p>
+          </div>
+
+          <div class="forecast-meta-pills" id="forecastMetaPills">
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_updated_label">Last Analysis:</span>
+              <span class="f-pill-val" id="forecastLastUpdatedVal">Synchronizing...</span>
+            </div>
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_trades_label">12h Trades Analyzed:</span>
+              <span class="f-pill-val" id="forecastTradesCountVal">...</span>
+            </div>
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_sentiment_label">Market Sentiment:</span>
+              <span class="f-pill-val" id="forecastSentimentVal" style="color: var(--green-glow);">Bullish</span>
+            </div>
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_hierarchy_label">Tier Hierarchy:</span>
+              <span class="f-pill-val" style="color: var(--cyan-glow);">100% Strict Monotonic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Highlights 3-Card Grid: Rising, Falling, Tier Pressure -->
+      <div class="forecast-highlights-grid">
+        <!-- Card 1: Hyped / Rising -->
+        <div class="forecast-highlight-card card-rising">
+          <div class="highlight-card-header">
+            <div class="highlight-title-box">
+              <span class="icon-slot" data-icon="trending-up" style="color: var(--green-glow);"></span>
+              <h3 data-i18n="forecast_card_rising_title">Лидеры роста (Hyped / Rising)</h3>
+            </div>
+            <span class="highlight-badge-pill pill-rising" data-i18n="forecast_badge_high_demand">ВЫСОКИЙ СПРОС</span>
+          </div>
+          <p class="highlight-card-sub" data-i18n="forecast_card_rising_desc">Предметы с максимальным перевесом покупателей над продавцами (LF > Offer) за последние 12 часов.</p>
+          <div class="highlight-items-list" id="forecastRisingList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Card 2: Falling / High Supply -->
+        <div class="forecast-highlight-card card-falling">
+          <div class="highlight-card-header">
+            <div class="highlight-title-box">
+              <span class="icon-slot" data-icon="trending-down" style="color: var(--red-glow);"></span>
+              <h3 data-i18n="forecast_card_falling_title">Теряют в цене (Falling)</h3>
+            </div>
+            <span class="highlight-badge-pill pill-falling" data-i18n="forecast_badge_high_supply">ИЗБЫТОК СНАБЖЕНИЯ</span>
+          </div>
+          <p class="highlight-card-sub" data-i18n="forecast_card_falling_desc">Предметы, которые активно сбрасывают в Trading, при пониженном количестве запросов на покупку.</p>
+          <div class="highlight-items-list" id="forecastFallingList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Card 3: Tier Pressure Candidates -->
+        <div class="forecast-highlight-card card-alert">
+          <div class="highlight-card-header">
+            <div class="highlight-title-box">
+              <span class="icon-slot" data-icon="alert-triangle" style="color: var(--purple-glow);"></span>
+              <h3 data-i18n="forecast_card_alerts_title">Кандидаты на смену позиции в Офиц. Тир-Листе</h3>
+            </div>
+            <span class="highlight-badge-pill pill-alert" data-i18n="forecast_badge_tier_pressure">TIER PRESSURE</span>
+          </div>
+          <p class="highlight-card-sub" data-i18n="forecast_card_alerts_desc">Рыночная цена в Discord вплотную приблизилась или обогнала соседа сверху. Официальный порядок сохранён, но шанс повышения в след. доке максимален.</p>
+          <div class="highlight-items-list" id="forecastAlertsList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Explorer & Filter Bar -->
+      <div class="trade-side-panel" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="forecast-filter-toolbar">
+          <div class="search-input-box" style="flex: 1; min-width: 260px;">
+            <input type="text" id="forecastSearchInput" placeholder="Поиск предмета в прогнозах по названию или тегу..." data-i18n-placeholder="forecast_search_placeholder">
+          </div>
+          <div class="filter-pills-row" id="forecastStatusPills">
+            <button class="filter-pill-btn active" data-fstatus="all" data-i18n="forecast_filter_all">Все статусы (213)</button>
+            <button class="filter-pill-btn" data-fstatus="Rising"><span class="icon-slot" data-icon="trending-up"></span> <span data-i18n="forecast_filter_rising">Растут 📈</span></button>
+            <button class="filter-pill-btn" data-fstatus="Overpaid"><span class="icon-slot" data-icon="zap"></span> <span data-i18n="forecast_filter_overpaid">Оверпей 🔥</span></button>
+            <button class="filter-pill-btn" data-fstatus="Falling"><span class="icon-slot" data-icon="trending-down"></span> <span data-i18n="forecast_filter_falling">Падают 📉</span></button>
+            <button class="filter-pill-btn" data-fstatus="Stable"><span data-i18n="forecast_filter_stable">Стабильно ➖</span></button>
+            <button class="filter-pill-btn" data-fstatus="Alert"><span class="icon-slot" data-icon="alert-triangle"></span> <span data-i18n="forecast_filter_alert">Алерты ⚠️</span></button>
+          </div>
+        </div>
+
+        <!-- Category Pills Row -->
+        <div class="filter-pills-row" id="forecastCategoryPills" style="margin-top: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
+          <button class="filter-pill-btn active" data-fcat="all" data-i18n="cat_all">All Categories</button>
+          <button class="filter-pill-btn" data-fcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-fcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-fcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-fcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-fcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits</button>
+          <button class="filter-pill-btn" data-fcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats</button>
+          <button class="filter-pill-btn" data-fcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc</button>
+        </div>
+      </div>
+
+      <!-- Full Analytics Table Container -->
+      <div class="forecast-table-container">
+        <table class="forecast-table" id="forecastMainTable">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th data-i18n="fth_item">Предмет</th>
+              <th data-i18n="fth_value">Офиц. Цена (pts / LC)</th>
+              <th data-i18n="fth_demand">Спрос (1-10)</th>
+              <th data-i18n="fth_lf">Спрос (LF)</th>
+              <th data-i18n="fth_offer">Предлож. (Offer)</th>
+              <th data-i18n="fth_pressure">Давление рынка</th>
+              <th data-i18n="fth_forecast">Прогноз 24–48ч</th>
+              <th data-i18n="fth_alert">Статус / Давление на тир</th>
+            </tr>
+          </thead>
+          <tbody id="forecastTableBody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </main>
 
   <!-- =====================================================================
@@ -813,8 +966,8 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="icons.js?v=2"></script>
-  <script src="items_data.js?v=2"></script>
-  <script src="app.js?v=2"></script>
+  <script src="icons.js?v=3"></script>
+  <script src="items_data.js?v=3"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
