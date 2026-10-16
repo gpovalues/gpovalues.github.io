@@ -62,7 +62,12 @@ class ReadOnlyDiscordSession:
 
     def get(self, url: str, **kwargs) -> requests.Response:
         """Permitted HTTP method: GET only."""
-        return self._session.get(url, **kwargs)
+        resp = self._session.get(url, **kwargs)
+        if resp.status_code == 401 and self._token and not self._token.startswith("Bot "):
+            self._headers["Authorization"] = f"Bot {self._token.strip()}"
+            self._session.headers.update(self._headers)
+            resp = self._session.get(url, **kwargs)
+        return resp
 
     def post(self, *args, **kwargs):
         raise RuntimeError("ARCHITECTURE VIOLATION: POST method is strictly disabled in ReadOnlyDiscordSession.")
@@ -374,13 +379,12 @@ class DiscordTradeReader:
         # Prune older messages (keep last 7.5 days / 180 hours rolling window for weekly demand)
         self.prune_buffer(buffer_data, max_age_hours=180.0)
 
-        # Ensure buffer has comprehensive multi-timeframe trade messages (10,000+ per hour, 24h, 7d)
-        if len(buffer_data.get("messages", [])) < 8000:
-            logger.info("Generating realistic 7-day multi-timeframe market trade stream (10,000/hr target)...")
-            print("[DISCORD] Analyzing high-volume 7-day trade stream (10,000+ trades/hr) from channel #966859339816124438...")
-            mock_msgs = self.generate_mock_trades(count=42000)
-            buffer_data["messages"] = mock_msgs
-            print(f"[DISCORD] Loaded {len(mock_msgs)} verified trade messages (10,000+ trades in the past hour).")
+        # STRICT REAL-DATA ENFORCEMENT: Never generate fake trades.
+        # Only authentic player messages from channel 966859339816124438 are kept.
+        buffer_data["messages"] = [
+            m for m in buffer_data.get("messages", [])
+            if not str(m.get("id", "")).startswith("sim_")
+        ]
 
         now_utc = datetime.datetime.now(datetime.timezone.utc)
         buffer_data["last_updated"] = now_utc.isoformat()
