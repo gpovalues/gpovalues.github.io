@@ -517,11 +517,59 @@ class GPOTradeParser:
             "string": "item_143",
             "kage": "item_144",
             "shadow": "item_144",
-            "hiei": "item_142",
-            "ice": "item_142",
             "yami": "item_165",
             "dark": "item_165",
-            "paw": "item_166"
+            "paw": "item_166",
+
+            # Popular Trade Slang & Discord Emoji Tokens
+            "mpow": "item_37",
+            "mega pow": "item_37",
+            "mega-pow": "item_37",
+            "megapow": "item_37",
+            "sase": "item_31",
+            "hollyase": "item_31",
+            "blo_ase": "item_31",
+            "blossom_ase": "item_31",
+            "blossom ase": "item_31",
+            "baal_ase": "item_31",
+            "baal ase": "item_31",
+            "case": "item_14",
+            "cqase": "item_29",
+            "hagoromo": "item_17",
+            "pbag": "item_13",
+            "prestige bag": "item_13",
+            "sos": "item_56",
+            "sickle of sorrow": "item_56",
+            "inferno blade": "item_69",
+            "inferno_blade": "item_69",
+            "batswarm": "item_101",
+            "bat swarm": "item_101",
+            "sks": "item_30",
+            "skg": "item_74",
+            "df_rod": "item_47",
+            "df rod": "item_47",
+            "nfa": "item_40",
+            "nightfall aura": "item_40",
+            "icc": "item_11",
+            "iceborn cc": "item_11",
+            "pcc": "item_6",
+            "prestige cc": "item_6",
+            "pwe": "item_8",
+            "hwe": "item_8",
+            "yukio": "item_32",
+            "bunyo": "item_34",
+            "napoleon": "item_41",
+            "yoru": "item_54",
+            "ace": "item_106",
+            "rogers ace": "item_106",
+            "fish_bait": "item_73",
+            "fish bait": "item_73",
+            "legendary fish bait": "item_73",
+            "tailortoken": "item_168",
+            "tailor token": "item_168",
+            "blue valk": "item_196",
+            "valk": "item_201",
+            "valkyrie": "item_201"
         }
         self.alias_map.update(slang)
 
@@ -536,36 +584,43 @@ class GPOTradeParser:
 
         # 2. Normalize keycap number emojis (e.g. 4️⃣ -> ' 4 ') and circled numbers (④ -> ' 4 ')
         for k, v in KEYCAP_MAP.items():
-            text = text.replace(k, v)
+            text = text.replace(k, f" {v} ")
         for k, v in CIRCLED_DIGITS.items():
-            text = text.replace(k, v)
+            text = text.replace(k, f" {v} ")
         text = re.sub(r"(\d)\ufe0f?\u20e3", r" \1 ", text)
 
-        # 3. Normalize all unicode heart variations to ' heart ' (e.g. ❤️, ♥, 💖, 💕, <3)
+        # 3. Collapse adjacent single digits (e.g. '1 0 0' -> '100', '1 5' -> '15', '2 4 0' -> '240')
+        text = re.sub(r"\b(\d)\s+(\d)\s+(\d)\b", r"\1\2\3", text)
+        text = re.sub(r"\b(\d)\s+(\d)\b", r"\1\2", text)
+
+        # 4. Normalize arrows: 👉, ➡, ➡️, ▶️, —, => to ' -> '
+        text = re.sub(r"(?:👉|➡|➡️|▶️|—>|-->|=>)", " -> ", text)
+
+        # 5. Normalize all unicode heart variations to ' heart ' (e.g. ❤️, ♥, 💖, 💕, <3)
         text = re.sub(r"[\u2764\u2665\u2763\u2765-\u2767\U0001F490-\U0001F49F\U0001F90D-\U0001F90F\U0001FA75-\U0001FA77]\ufe0f?|<3", " heart ", text)
 
-        # 4. Normalize heart colon emojis and custom heart/love emojis
+        # 6. Normalize heart colon emojis and custom heart/love emojis
         text = re.sub(r"<a?:(?:[a-zA-Z0-9_]*heart[a-zA-Z0-9_]*|love):\d+>", " heart ", text, flags=re.IGNORECASE)
         text = re.sub(r":(?:[a-zA-Z0-9_]*heart[a-zA-Z0-9_]*|love):", " heart ", text, flags=re.IGNORECASE)
 
-        # 5. Handle adjacent custom tags <:a:1><:b:2> -> <:a:1> <:b:2>
+        # 7. Handle adjacent custom tags <:a:1><:b:2> -> <:a:1> <:b:2>
         text = text.replace("><", "> <")
 
-        # 6. Expand adjacent colons :: -> : : so :kaido::cape: becomes :kaido: :cape:
+        # 8. Expand adjacent colons :: -> : : so :kaido::cape: becomes :kaido: :cape:
         while "::" in text:
             text = text.replace("::", ": :")
 
-        # 7. Convert Discord custom emojis <:name:12345> or <a:name:12345> to ' name '
+        # 9. Convert Discord custom emojis <:name:12345> or <a:name:12345> to ' name '
         text = re.sub(r"<a?:([a-zA-Z0-9_]+):\d+>", r" \1 ", text)
 
-        # 8. Convert standard Discord colon emojis (:name:) to ' name '
+        # 10. Convert standard Discord colon emojis (:name:) to ' name '
         text = re.sub(r":([a-zA-Z0-9_]+):", r" \1 ", text)
 
-        # 9. Normalize multipliers and split digits from adjacent letters (e.g. '4x mochi' -> '4 mochi', '4lc' -> '4 lc', '4лк' -> '4 лк')
+        # 11. Normalize multipliers and split digits from adjacent letters (e.g. '4x mochi' -> '4 mochi', '4lc' -> '4 lc', '4лк' -> '4 лк')
         text = re.sub(r"(\d+)\s*[xхXХ]\s*", r"\1 ", text)
         text = re.sub(r"(\d+)([a-zA-Zа-яА-ЯёЁ])", r"\1 \2", text)
 
-        # 10. Clean up discord markdown (bold, italics, code blocks), brackets, and replace underscores with spaces
+        # 12. Clean up discord markdown (bold, italics, code blocks), brackets, and replace underscores with spaces
         text = re.sub(r"[*_~`|()\[\]{}]", " ", text)
         return text.strip()
 
@@ -580,6 +635,16 @@ class GPOTradeParser:
         - '[offer] for [want]'
         """
         t = text
+
+        # Check for: [offer] (FOR offer / FOR ?) with LF [want]
+        m_offer_lf = re.search(r"^(.*?)\s+\b(?:for\s+offer|for_offer)\b.*?\b(?:lf|want|w|ищу)\b\s+(.*)$", t, re.IGNORECASE)
+        if m_offer_lf:
+            return m_offer_lf.group(1).strip(), m_offer_lf.group(2).strip()
+
+        # Check for: [offer] (FOR offer / FOR ? / FOR ❓) with no specific want
+        m_for_offer = re.search(r"^(.*?)\s+\b(?:for\s+offer|for_offer|for\s*\?|for\s*❓)\b\s*$", t, re.IGNORECASE)
+        if m_for_offer:
+            return m_for_offer.group(1).strip(), ""
 
         # Format: LF <want> for <offer>
         m_lf_for = re.search(r"^\s*\b(?:lf|looking\s+for|want|w|ищу)\b\s+(.*?)\s+\b(?:for|offer|giving|за|на)\b\s+(.*)$", t, re.IGNORECASE)
@@ -640,13 +705,13 @@ class GPOTradeParser:
         m = re.match(r"^(?:[xхXХ]\s*(\d+)|(\d+)\s*[xхXХ]|\b(\d+)\b)$", t)
         if m:
             val = int(m.group(1) or m.group(2) or m.group(3))
-            if 1 <= val <= 100:
+            if 1 <= val <= 1000:
                 return val
 
         m_num = re.match(r"^(?:num|n)?(\d+)_?$", t)
         if m_num:
             val = int(m_num.group(1))
-            if 1 <= val <= 100:
+            if 1 <= val <= 1000:
                 return val
 
         return None
@@ -660,13 +725,14 @@ class GPOTradeParser:
         - Keycap, circled & word numbers (e.g. 4️⃣ leg chest, :four: LC, 4 лег чест -> 4x LC)
         - Undelimited item sequences (e.g. 'kaido cape mochi 2x lc')
         - Prefix and suffix quantities (e.g. '2x item', 'item 2x')
+        - Consecutive identical items accumulate quantity (e.g. <:mc:...> <:mc:...> -> 2x mc)
         """
         if not segment:
             return []
 
         results: List[Tuple[str, int]] = []
         # Split by major trade delimiters
-        clauses = re.split(r"[,+/|&\n]+|\b(?:and|with)\b", segment, flags=re.IGNORECASE)
+        clauses = re.split(r"[,+/|&]+|\b(?:and|with)\b", segment, flags=re.IGNORECASE)
 
         filler_words = {
             "adds", "add", "small", "good", "dm", "me", "fast", "trade", "or",
@@ -708,17 +774,34 @@ class GPOTradeParser:
                             if not next_item:
                                 qty = next_q
                                 idx += 1
-                    
-                    # Avoid duplicate if user writes e.g. "❤️ :shades: (love shades)"
-                    # where the item was already recognized immediately prior with qty=1
-                    if results and results[-1][0] == matched_id and qty == 1 and results[-1][1] == 1:
-                        pass
+
+                    # If the exact same item was matched consecutively, increment quantity
+                    if results and results[-1][0] == matched_id:
+                        results[-1] = (matched_id, results[-1][1] + qty)
                     else:
                         results.append((matched_id, qty))
                 else:
                     idx += 1
 
         return results
+
+    def _split_clauses(self, raw_text: str) -> List[str]:
+        """
+        Splits a raw message into distinct trade lines or clauses.
+        Supports:
+        - Multi-line messages (\n)
+        - Multiple arrow clauses (e.g. A -> B C -> D E -> F)
+        """
+        lines = [line.strip() for line in raw_text.splitlines() if line.strip()]
+        expanded: List[str] = []
+        for line in lines:
+            # Check for multiple arrows on a single line: "A -> B C -> D"
+            arrow_parts = re.split(r"(?<=\S)\s+(?=[^->\n]+(?:->|👉|➡|➡️))", line)
+            if len(arrow_parts) > 1:
+                expanded.extend([p.strip() for p in arrow_parts if p.strip()])
+            else:
+                expanded.append(line)
+        return expanded
 
     def parse_message(self, message: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """
@@ -728,13 +811,31 @@ class GPOTradeParser:
         if not raw_text or len(raw_text) < 4:
             return None
 
-        cleaned = self.clean_text(raw_text)
-        offer_str, want_str = self.split_offer_want(cleaned)
+        clauses = self._split_clauses(raw_text)
+        if not clauses:
+            return None
 
-        offer_items = self.extract_items_with_qty(offer_str)
-        want_items = self.extract_items_with_qty(want_str)
+        total_offer: List[Tuple[str, int]] = []
+        total_want: List[Tuple[str, int]] = []
 
-        # Must have at least one recognized item in offer or want
+        for cl in clauses:
+            cleaned = self.clean_text(cl)
+            offer_str, want_str = self.split_offer_want(cleaned)
+            total_offer.extend(self.extract_items_with_qty(offer_str))
+            total_want.extend(self.extract_items_with_qty(want_str))
+
+        # Consolidate duplicate item counts
+        offer_dict: Dict[str, int] = {}
+        for iid, q in total_offer:
+            offer_dict[iid] = offer_dict.get(iid, 0) + q
+
+        want_dict: Dict[str, int] = {}
+        for iid, q in total_want:
+            want_dict[iid] = want_dict.get(iid, 0) + q
+
+        offer_items = list(offer_dict.items())
+        want_items = list(want_dict.items())
+
         if not offer_items and not want_items:
             return None
 
