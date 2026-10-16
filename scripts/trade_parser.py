@@ -526,15 +526,31 @@ class GPOTradeParser:
             "mega pow": "item_37",
             "mega-pow": "item_37",
             "megapow": "item_37",
-            "sase": "item_31",
-            "hollyase": "item_31",
-            "blo_ase": "item_31",
-            "blossom_ase": "item_31",
-            "blossom ase": "item_31",
-            "baal_ase": "item_31",
-            "baal ase": "item_31",
+            # Distinct All Seeing Eye Skins & Variants
+            "ase": "item_31",
+            "all seeing eye": "item_31",
             "case": "item_14",
+            "chromatic ase": "item_14",
+            "chromatic all seeing eye": "item_14",
+            "sase": "item_18",
+            "shamrock ase": "item_18",
+            "all seeing shamrock": "item_18",
+            "all seeing egg": "item_24",
+            "blo_ase": "item_25",
+            "blossom_ase": "item_25",
+            "blossom ase": "item_25",
+            "all seeing blossom": "item_25",
+            "baal_ase": "item_27",
+            "baal ase": "item_27",
+            "all seeing baal": "item_27",
+            "hollyase": "item_28",
+            "holly ase": "item_28",
+            "all seeing holly": "item_28",
             "cqase": "item_29",
+            "cupid ase": "item_29",
+            "cupids all seeing eye": "item_29",
+
+            # Gear, Accessories & Items
             "hagoromo": "item_17",
             "pbag": "item_13",
             "prestige bag": "item_13",
@@ -558,6 +574,7 @@ class GPOTradeParser:
             "hwe": "item_8",
             "yukio": "item_32",
             "bunyo": "item_34",
+            "hopiyo": "item_53",
             "napoleon": "item_41",
             "yoru": "item_54",
             "ace": "item_106",
@@ -569,7 +586,22 @@ class GPOTradeParser:
             "tailor token": "item_168",
             "blue valk": "item_196",
             "valk": "item_201",
-            "valkyrie": "item_201"
+            "valkyrie": "item_201",
+            "bos": "item_39",
+            "brand of sacrifice": "item_39",
+            "thunder club": "item_45",
+            "thunder_club": "item_45",
+            "smoke": "item_155",
+            "festival lancer": "item_205",
+            "festival_lancer": "item_205",
+            "flower sword": "item_64",
+            "truebaalsguard": "item_82",
+            "darkskeletalmask": "item_91",
+            "dark skeletal shark mask": "item_91",
+            "skeletal mask": "item_91",
+            "gourd": "item_105",
+            "kaido gourd": "item_105",
+            "kaido sake": "item_105"
         }
         self.alias_map.update(slang)
 
@@ -581,6 +613,7 @@ class GPOTradeParser:
         """
         # 1. Strip NLF
         text = NLF_REGEX.sub("", text)
+        text = text.replace("🍶", " gourd ")
 
         # 2. Normalize keycap number emojis (e.g. 4️⃣ -> ' 4 ') and circled numbers (④ -> ' 4 ')
         for k, v in KEYCAP_MAP.items():
@@ -646,6 +679,13 @@ class GPOTradeParser:
         if m_for_offer:
             return m_for_offer.group(1).strip(), ""
 
+        # Format: <offer> FOR <want1> LF <want2> (FOR comes before LF)
+        m_for_lf = re.search(r"^(.*?)\s+\b(?:for|на|за)\b\s+(.*?)\s+\b(?:lf|looking\s+for|want|w|ищу)\b\s+(.*)$", t, re.IGNORECASE)
+        if m_for_lf:
+            offer_part = m_for_lf.group(1).strip()
+            want_part = f"{m_for_lf.group(2).strip()} {m_for_lf.group(3).strip()}"
+            return offer_part, want_part
+
         # Format: LF <want> for <offer>
         m_lf_for = re.search(r"^\s*\b(?:lf|looking\s+for|want|w|ищу)\b\s+(.*?)\s+\b(?:for|offer|giving|за|на)\b\s+(.*)$", t, re.IGNORECASE)
         if m_lf_for:
@@ -666,8 +706,8 @@ class GPOTradeParser:
         if m_wtt_lf:
             return m_wtt_lf.group(1).strip(), m_wtt_lf.group(2).strip()
 
-        # Format: <offer> LF <want>
-        m_lf = re.search(r"^(.*?)\s+\b(?:lf|looking\s+for|want|ищу)\b\s+(.*)$", t, re.IGNORECASE)
+        # Format: <offer> LF <want> or standalone LF <want>
+        m_lf = re.search(r"^(.*?)\s*\b(?:lf|looking\s+for|want|w|ищу)\b\s+(.*)$", t, re.IGNORECASE)
         if m_lf:
             return m_lf.group(1).strip(), m_lf.group(2).strip()
 
