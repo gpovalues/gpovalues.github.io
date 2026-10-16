@@ -1,0 +1,45 @@
+name: Sync Discord Emojis from Server
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/discord_emoji_extractor.py'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-emojis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Fetch Real Discord Emojis from Server
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN || vars.DISCORD_TOKEN || secrets.DISCORD || vars.DISCORD || secrets.TOKEN || vars.TOKEN || secrets.BOT_TOKEN || vars.BOT_TOKEN || secrets.DISCORD_USER_TOKEN || vars.DISCORD_USER_TOKEN }}
+        run: |
+          python scripts/discord_emoji_extractor.py --sync
+
+      - name: Commit and Push Real Discord Emojis
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Emoji Syncer"
+          git add data/discord_emojis.json data/discord_api_status.json
+          if [[ -n $(git status -s) ]]; then
+            git commit -m "✨ Sync authentic Discord emojis from GPO server via GitHub Secret"
+            git push origin main
+          else
+            echo "No emoji changes detected."
+          fi

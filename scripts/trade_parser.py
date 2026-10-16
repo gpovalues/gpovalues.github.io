@@ -123,12 +123,11 @@ class GPOTradeParser:
 
         # Popular Trading Slang, Split Stickers, and Community Nicknames
         slang = {
-            # Kaido / Dragon Emperor Items (frequently split as :kaido: :cape: stickers)
+            # Kaido / Dragon Emperor Items (only compound forms like :kaido::cape: or 'kaido cape' count!)
             "kaido cape": "item_104",
             "kaidos cape": "item_104",
             "kaido's cape": "item_104",
             "kaidocape": "item_104",
-            "kaido": "item_104",
             "dragon emperor cape": "item_104",
             "dragon emperors cape": "item_104",
             "dragon emperor's cape": "item_104",
@@ -137,11 +136,8 @@ class GPOTradeParser:
             "de_cape": "item_104",
             "decape": "item_104",
             "dec": "item_104",
-            "cape": "item_104",             # In GPO trading, generic 'cape' refers to the standard 1 LC Dragon Emperor's Cape
-            "плащ": "item_104",            # Стандартный плащ в трейде GPO (Плащ Кайдо / Dragon Emperor's Cape)
             "плащ кайдо": "item_104",
             "кайдо плащ": "item_104",
-            "кайдо": "item_104",
             "kaido gourd": "item_105",
             "kaidos gourd": "item_105",
             "kaido's gourd": "item_105",
@@ -552,21 +548,24 @@ class GPOTradeParser:
         text = re.sub(r"<a?:(?:[a-zA-Z0-9_]*heart[a-zA-Z0-9_]*|love):\d+>", " heart ", text, flags=re.IGNORECASE)
         text = re.sub(r":(?:[a-zA-Z0-9_]*heart[a-zA-Z0-9_]*|love):", " heart ", text, flags=re.IGNORECASE)
 
-        # 5. Convert Discord custom emojis <:name:12345> or <a:name:12345> to ' name '
+        # 5. Handle adjacent custom tags <:a:1><:b:2> -> <:a:1> <:b:2>
+        text = text.replace("><", "> <")
+
+        # 6. Expand adjacent colons :: -> : : so :kaido::cape: becomes :kaido: :cape:
+        while "::" in text:
+            text = text.replace("::", ": :")
+
+        # 7. Convert Discord custom emojis <:name:12345> or <a:name:12345> to ' name '
         text = re.sub(r"<a?:([a-zA-Z0-9_]+):\d+>", r" \1 ", text)
 
-        # 6. Convert standard Discord colon emojis (:name:) to ' name '
-        # Repeat while pattern matches to handle adjacent or overlapped colons like :kaido::cape:
-        prev = None
-        while prev != text:
-            prev = text
-            text = re.sub(r":([a-zA-Z0-9_]+):", r" \1 ", text)
+        # 8. Convert standard Discord colon emojis (:name:) to ' name '
+        text = re.sub(r":([a-zA-Z0-9_]+):", r" \1 ", text)
 
-        # 7. Normalize multipliers and split digits from adjacent letters (e.g. '4x mochi' -> '4 mochi', '4lc' -> '4 lc', '4лк' -> '4 лк')
+        # 9. Normalize multipliers and split digits from adjacent letters (e.g. '4x mochi' -> '4 mochi', '4lc' -> '4 lc', '4лк' -> '4 лк')
         text = re.sub(r"(\d+)\s*[xхXХ]\s*", r"\1 ", text)
         text = re.sub(r"(\d+)([a-zA-Zа-яА-ЯёЁ])", r"\1 \2", text)
 
-        # 8. Clean up discord markdown (bold, italics, code blocks), brackets, and replace underscores with spaces
+        # 10. Clean up discord markdown (bold, italics, code blocks), brackets, and replace underscores with spaces
         text = re.sub(r"[*_~`|()\[\]{}]", " ", text)
         return text.strip()
 
@@ -583,12 +582,12 @@ class GPOTradeParser:
         t = text
 
         # Format: LF <want> for <offer>
-        m_lf_for = re.search(r"^\s*(?:lf|looking\s+for|want|w)\s+(.*?)\s+(?:for|offer|giving)\s+(.*)$", t, re.IGNORECASE)
+        m_lf_for = re.search(r"^\s*\b(?:lf|looking\s+for|want|w|ищу)\b\s+(.*?)\s+\b(?:for|offer|giving|за|на)\b\s+(.*)$", t, re.IGNORECASE)
         if m_lf_for:
             return m_lf_for.group(2).strip(), m_lf_for.group(1).strip()
 
-        # Format: H: <offer> W: <want>
-        m_hw = re.search(r"(?:h|have|giving|trading)\s*:\s*(.*?)\s*(?:w|want|lf|looking\s+for)\s*:\s*(.*)", t, re.IGNORECASE)
+        # Format: H: <offer> W: <want> (colon directly attached to keyword)
+        m_hw = re.search(r"\b(?:h|have|giving|trading|wtt|отдам|трейд):\s*(.*?)\s*\b(?:w|want|lf|looking\s+for|ищу):\s*(.*)", t, re.IGNORECASE)
         if m_hw:
             return m_hw.group(1).strip(), m_hw.group(2).strip()
 
@@ -598,17 +597,17 @@ class GPOTradeParser:
             return m_arrow.group(1).strip(), m_arrow.group(2).strip()
 
         # Format: WTT <offer> LF <want>
-        m_wtt_lf = re.search(r"(?:wtt|trading|giving|have|h)\s+(.*?)\s+(?:lf|looking\s+for|want|w)\s+(.*)", t, re.IGNORECASE)
+        m_wtt_lf = re.search(r"\b(?:wtt|trading|giving|have|h)\b\s+(.*?)\s+\b(?:lf|looking\s+for|want|w|ищу)\b\s+(.*)", t, re.IGNORECASE)
         if m_wtt_lf:
             return m_wtt_lf.group(1).strip(), m_wtt_lf.group(2).strip()
 
         # Format: <offer> LF <want>
-        m_lf = re.search(r"^(.*?)\s+(?:lf|looking\s+for|want)\s+(.*)$", t, re.IGNORECASE)
+        m_lf = re.search(r"^(.*?)\s+\b(?:lf|looking\s+for|want|ищу)\b\s+(.*)$", t, re.IGNORECASE)
         if m_lf:
             return m_lf.group(1).strip(), m_lf.group(2).strip()
 
         # Format: <offer> for <want>
-        m_for = re.search(r"^(.*?)\s+(?:for)\s+(.*)$", t, re.IGNORECASE)
+        m_for = re.search(r"^(.*?)\s+\b(?:for|на|за)\b\s+(.*)$", t, re.IGNORECASE)
         if m_for:
             return m_for.group(1).strip(), m_for.group(2).strip()
 

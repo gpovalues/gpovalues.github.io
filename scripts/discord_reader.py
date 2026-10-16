@@ -92,6 +92,17 @@ class DiscordTradeReader:
 
     def __init__(self, token: Optional[str] = None, channel_ids: Optional[List[str]] = None, buffer_path: Optional[str] = None):
         self.token = token or os.environ.get("DISCORD_TOKEN", "").strip()
+        if not self.token:
+            env_file = os.path.join(os.path.dirname(__file__), "..", ".env")
+            if os.path.exists(env_file):
+                try:
+                    with open(env_file, "r", encoding="utf-8") as f:
+                        for line in f:
+                            if line.strip().startswith("DISCORD_TOKEN="):
+                                self.token = line.strip().split("=", 1)[1].strip().strip('"').strip("'")
+                                break
+                except Exception:
+                    pass
         self.buffer_path = buffer_path or os.path.join(os.path.dirname(__file__), "..", "data", "trades_buffer.json")
         
         # STRICT REQUIREMENT: Only read from official trading channel 966859339816124438
