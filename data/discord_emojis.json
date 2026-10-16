@@ -1,0 +1,2912 @@
+{
+  "guild_id": "842875016524595240",
+  "channel_id": "966859339816124438",
+  "total_emojis": 258,
+  "emojis": {
+    "allfruits": {
+      "id": "980501126715699211",
+      "name": "AllFruits",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/980501126715699211.png?size=128",
+      "discord_tag": "<:AllFruits:980501126715699211>",
+      "colon_syntax": ":AllFruits:",
+      "source": "guild_api"
+    },
+    "unobs": {
+      "id": "989236728470597702",
+      "name": "unobs",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/989236728470597702.png?size=128",
+      "discord_tag": "<:unobs:989236728470597702>",
+      "colon_syntax": ":unobs:",
+      "source": "guild_api"
+    },
+    "lc": {
+      "id": "1038468258975719444",
+      "name": "lc",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1038468258975719444.png?size=128",
+      "discord_tag": "<:lc:1038468258975719444>",
+      "colon_syntax": ":lc:",
+      "source": "guild_api"
+    },
+    "all_legendary": {
+      "id": "1049119801613746176",
+      "name": "all_legendary",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1049119801613746176.png?size=128",
+      "discord_tag": "<:all_legendary:1049119801613746176>",
+      "colon_syntax": ":all_legendary:",
+      "source": "guild_api"
+    },
+    "premium": {
+      "id": "1061691832452534292",
+      "name": "premium",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1061691832452534292.png?size=128",
+      "discord_tag": "<:premium:1061691832452534292>",
+      "colon_syntax": ":premium:",
+      "source": "guild_api"
+    },
+    "kikoku": {
+      "id": "1120440014883537047",
+      "name": "Kikoku",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1120440014883537047.png?size=128",
+      "discord_tag": "<:Kikoku:1120440014883537047>",
+      "colon_syntax": ":Kikoku:",
+      "source": "guild_api"
+    },
+    "planetary_devastation": {
+      "id": "1120998119249805402",
+      "name": "planetary_devastation",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1120998119249805402.png?size=128",
+      "discord_tag": "<:planetary_devastation:1120998119249805402>",
+      "colon_syntax": ":planetary_devastation:",
+      "source": "guild_api"
+    },
+    "susanoo": {
+      "id": "1120998186752938098",
+      "name": "Susanoo",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1120998186752938098.png?size=128",
+      "discord_tag": "<:Susanoo:1120998186752938098>",
+      "colon_syntax": ":Susanoo:",
+      "source": "guild_api"
+    },
+    "kurohitsugi": {
+      "id": "1120998228951826463",
+      "name": "Kurohitsugi",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1120998228951826463.png?size=128",
+      "discord_tag": "<:Kurohitsugi:1120998228951826463>",
+      "colon_syntax": ":Kurohitsugi:",
+      "source": "guild_api"
+    },
+    "2mi": {
+      "id": "1253545065431699467",
+      "name": "2mi",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1253545065431699467.png?size=128",
+      "discord_tag": "<:2mi:1253545065431699467>",
+      "colon_syntax": ":2mi:",
+      "source": "guild_api"
+    },
+    "allmythicalfruits": {
+      "id": "1333805534662492234",
+      "name": "AllMythicalFruits",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1333805534662492234.png?size=128",
+      "discord_tag": "<:AllMythicalFruits:1333805534662492234>",
+      "colon_syntax": ":AllMythicalFruits:",
+      "source": "guild_api"
+    },
+    "random_leg_fruit": {
+      "id": "1337827937642090546",
+      "name": "random_leg_fruit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1337827937642090546.png?size=128",
+      "discord_tag": "<:random_leg_fruit:1337827937642090546>",
+      "colon_syntax": ":random_leg_fruit:",
+      "source": "guild_api"
+    },
+    "chroma_allseeingeye": {
+      "id": "1346222339662282833",
+      "name": "Chroma_AllSeeingEye",
+      "animated": true,
+      "url": "https://cdn.discordapp.com/emojis/1346222339662282833.gif?size=128",
+      "discord_tag": "<a:Chroma_AllSeeingEye:1346222339662282833>",
+      "colon_syntax": ":Chroma_AllSeeingEye:",
+      "source": "guild_api"
+    },
+    "leg_fish": {
+      "id": "1431025917366501519",
+      "name": "leg_fish",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1431025917366501519.png?size=128",
+      "discord_tag": "<:leg_fish:1431025917366501519>",
+      "colon_syntax": ":leg_fish:",
+      "source": "guild_api"
+    },
+    "peli": {
+      "id": "1432141315575124070",
+      "name": "Peli",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1432141315575124070.png?size=128",
+      "discord_tag": "<:Peli:1432141315575124070>",
+      "colon_syntax": ":Peli:",
+      "source": "guild_api"
+    },
+    "amaterasu": {
+      "id": "1433023741201223741",
+      "name": "Amaterasu",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433023741201223741.png?size=128",
+      "discord_tag": "<:Amaterasu:1433023741201223741>",
+      "colon_syntax": ":Amaterasu:",
+      "source": "guild_api"
+    },
+    "swordfish_rapier": {
+      "id": "1433024513238630410",
+      "name": "Swordfish_Rapier",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433024513238630410.png?size=128",
+      "discord_tag": "<:Swordfish_Rapier:1433024513238630410>",
+      "colon_syntax": ":Swordfish_Rapier:",
+      "source": "guild_api"
+    },
+    "accessory": {
+      "id": "1433909979290665041",
+      "name": "Accessory",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433909979290665041.png?size=128",
+      "discord_tag": "<:Accessory:1433909979290665041>",
+      "colon_syntax": ":Accessory:",
+      "source": "guild_api"
+    },
+    "adds": {
+      "id": "1433909995426152519",
+      "name": "Adds",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433909995426152519.png?size=128",
+      "discord_tag": "<:Adds:1433909995426152519>",
+      "colon_syntax": ":Adds:",
+      "source": "guild_api"
+    },
+    "anniversary": {
+      "id": "1433910007866331276",
+      "name": "Anniversary",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910007866331276.png?size=128",
+      "discord_tag": "<:Anniversary:1433910007866331276>",
+      "colon_syntax": ":Anniversary:",
+      "source": "guild_api"
+    },
+    "armor": {
+      "id": "1433910047217549413",
+      "name": "Armor",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910047217549413.png?size=128",
+      "discord_tag": "<:Armor:1433910047217549413>",
+      "colon_syntax": ":Armor:",
+      "source": "guild_api"
+    },
+    "baal": {
+      "id": "1433910077206564994",
+      "name": "Baal",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910077206564994.png?size=128",
+      "discord_tag": "<:Baal:1433910077206564994>",
+      "colon_syntax": ":Baal:",
+      "source": "guild_api"
+    },
+    "battle_pass": {
+      "id": "1433910092775952525",
+      "name": "Battle_Pass",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910092775952525.png?size=128",
+      "discord_tag": "<:Battle_Pass:1433910092775952525>",
+      "colon_syntax": ":Battle_Pass:",
+      "source": "guild_api"
+    },
+    "blessed": {
+      "id": "1433910143770431681",
+      "name": "Blessed",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910143770431681.png?size=128",
+      "discord_tag": "<:Blessed:1433910143770431681>",
+      "colon_syntax": ":Blessed:",
+      "source": "guild_api"
+    },
+    "blueprint": {
+      "id": "1433910159197081652",
+      "name": "Blueprint",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910159197081652.png?size=128",
+      "discord_tag": "<:Blueprint:1433910159197081652>",
+      "colon_syntax": ":Blueprint:",
+      "source": "guild_api"
+    },
+    "boat": {
+      "id": "1433910174849957909",
+      "name": "Boat",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910174849957909.png?size=128",
+      "discord_tag": "<:Boat:1433910174849957909>",
+      "colon_syntax": ":Boat:",
+      "source": "guild_api"
+    },
+    "bounty": {
+      "id": "1433910205124579439",
+      "name": "Bounty",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910205124579439.png?size=128",
+      "discord_tag": "<:Bounty:1433910205124579439>",
+      "colon_syntax": ":Bounty:",
+      "source": "guild_api"
+    },
+    "bunny": {
+      "id": "1433910235839598703",
+      "name": "Bunny",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910235839598703.png?size=128",
+      "discord_tag": "<:Bunny:1433910235839598703>",
+      "colon_syntax": ":Bunny:",
+      "source": "guild_api"
+    },
+    "cape": {
+      "id": "1433910249475149885",
+      "name": "Cape",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910249475149885.png?size=128",
+      "discord_tag": "<:Cape:1433910249475149885>",
+      "colon_syntax": ":Cape:",
+      "source": "guild_api"
+    },
+    "christmas": {
+      "id": "1433910284820414615",
+      "name": "Christmas",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910284820414615.png?size=128",
+      "discord_tag": "<:Christmas:1433910284820414615>",
+      "colon_syntax": ":Christmas:",
+      "source": "guild_api"
+    },
+    "costume": {
+      "id": "1433910299546619956",
+      "name": "Costume",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910299546619956.png?size=128",
+      "discord_tag": "<:Costume:1433910299546619956>",
+      "colon_syntax": ":Costume:",
+      "source": "guild_api"
+    },
+    "crew": {
+      "id": "1433910333197652138",
+      "name": "Crew",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910333197652138.png?size=128",
+      "discord_tag": "<:Crew:1433910333197652138>",
+      "colon_syntax": ":Crew:",
+      "source": "guild_api"
+    },
+    "crown": {
+      "id": "1433910357952561293",
+      "name": "Crown",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910357952561293.png?size=128",
+      "discord_tag": "<:Crown:1433910357952561293>",
+      "colon_syntax": ":Crown:",
+      "source": "guild_api"
+    },
+    "cupid": {
+      "id": "1433910376847904830",
+      "name": "Cupid",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910376847904830.png?size=128",
+      "discord_tag": "<:Cupid:1433910376847904830>",
+      "colon_syntax": ":Cupid:",
+      "source": "guild_api"
+    },
+    "donmingo": {
+      "id": "1433910483869765722",
+      "name": "Donmingo",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910483869765722.png?size=128",
+      "discord_tag": "<:Donmingo:1433910483869765722>",
+      "colon_syntax": ":Donmingo:",
+      "source": "guild_api"
+    },
+    "downgrade": {
+      "id": "1433910506275733564",
+      "name": "Downgrade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910506275733564.png?size=128",
+      "discord_tag": "<:Downgrade:1433910506275733564>",
+      "colon_syntax": ":Downgrade:",
+      "source": "guild_api"
+    },
+    "drops": {
+      "id": "1433910527519887360",
+      "name": "Drops",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910527519887360.png?size=128",
+      "discord_tag": "<:Drops:1433910527519887360>",
+      "colon_syntax": ":Drops:",
+      "source": "guild_api"
+    },
+    "easter": {
+      "id": "1433910547740364973",
+      "name": "Easter",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910547740364973.png?size=128",
+      "discord_tag": "<:Easter:1433910547740364973>",
+      "colon_syntax": ":Easter:",
+      "source": "guild_api"
+    },
+    "egg": {
+      "id": "1433910568627994684",
+      "name": "Egg",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910568627994684.png?size=128",
+      "discord_tag": "<:Egg:1433910568627994684>",
+      "colon_syntax": ":Egg:",
+      "source": "guild_api"
+    },
+    "event": {
+      "id": "1433910586722222291",
+      "name": "Event",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910586722222291.png?size=128",
+      "discord_tag": "<:Event:1433910586722222291>",
+      "colon_syntax": ":Event:",
+      "source": "guild_api"
+    },
+    "exalted": {
+      "id": "1433910616028090578",
+      "name": "Exalted",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910616028090578.png?size=128",
+      "discord_tag": "<:Exalted:1433910616028090578>",
+      "colon_syntax": ":Exalted:",
+      "source": "guild_api"
+    },
+    "fish": {
+      "id": "1433910655509073960",
+      "name": "Fish",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910655509073960.png?size=128",
+      "discord_tag": "<:Fish:1433910655509073960>",
+      "colon_syntax": ":Fish:",
+      "source": "guild_api"
+    },
+    "fishing_rod": {
+      "id": "1433910680368713971",
+      "name": "Fishing_Rod",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910680368713971.png?size=128",
+      "discord_tag": "<:Fishing_Rod:1433910680368713971>",
+      "colon_syntax": ":Fishing_Rod:",
+      "source": "guild_api"
+    },
+    "for": {
+      "id": "1433910700975067146",
+      "name": "FOR",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910700975067146.png?size=128",
+      "discord_tag": "<:FOR:1433910700975067146>",
+      "colon_syntax": ":FOR:",
+      "source": "guild_api"
+    },
+    "fruit": {
+      "id": "1433910724358574110",
+      "name": "Fruit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910724358574110.png?size=128",
+      "discord_tag": "<:Fruit:1433910724358574110>",
+      "colon_syntax": ":Fruit:",
+      "source": "guild_api"
+    },
+    "full": {
+      "id": "1433910748471365673",
+      "name": "Full",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910748471365673.png?size=128",
+      "discord_tag": "<:Full:1433910748471365673>",
+      "colon_syntax": ":Full:",
+      "source": "guild_api"
+    },
+    "gamepass": {
+      "id": "1433910773096255490",
+      "name": "Gamepass",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910773096255490.png?size=128",
+      "discord_tag": "<:Gamepass:1433910773096255490>",
+      "colon_syntax": ":Gamepass:",
+      "source": "guild_api"
+    },
+    "gift": {
+      "id": "1433910817744617594",
+      "name": "Gift",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910817744617594.png?size=128",
+      "discord_tag": "<:Gift:1433910817744617594>",
+      "colon_syntax": ":Gift:",
+      "source": "guild_api"
+    },
+    "golden": {
+      "id": "1433910837906637161",
+      "name": "Golden",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910837906637161.png?size=128",
+      "discord_tag": "<:Golden:1433910837906637161>",
+      "colon_syntax": ":Golden:",
+      "source": "guild_api"
+    },
+    "gpo_products": {
+      "id": "1433910868982104215",
+      "name": "GPO_Products",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910868982104215.png?size=128",
+      "discord_tag": "<:GPO_Products:1433910868982104215>",
+      "colon_syntax": ":GPO_Products:",
+      "source": "guild_api"
+    },
+    "grip": {
+      "id": "1433910933478047785",
+      "name": "Grip",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910933478047785.png?size=128",
+      "discord_tag": "<:Grip:1433910933478047785>",
+      "colon_syntax": ":Grip:",
+      "source": "guild_api"
+    },
+    "gun": {
+      "id": "1433910955997397154",
+      "name": "Gun",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910955997397154.png?size=128",
+      "discord_tag": "<:Gun:1433910955997397154>",
+      "colon_syntax": ":Gun:",
+      "source": "guild_api"
+    },
+    "halloween": {
+      "id": "1433910978885451776",
+      "name": "Halloween",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433910978885451776.png?size=128",
+      "discord_tag": "<:Halloween:1433910978885451776>",
+      "colon_syntax": ":Halloween:",
+      "source": "guild_api"
+    },
+    "hammer": {
+      "id": "1433911003392774206",
+      "name": "Hammer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433911003392774206.png?size=128",
+      "discord_tag": "<:Hammer:1433911003392774206>",
+      "colon_syntax": ":Hammer:",
+      "source": "guild_api"
+    },
+    "hat": {
+      "id": "1433911036116996209",
+      "name": "Hat",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433911036116996209.png?size=128",
+      "discord_tag": "<:Hat:1433911036116996209>",
+      "colon_syntax": ":Hat:",
+      "source": "guild_api"
+    },
+    "hawk_eye": {
+      "id": "1433911056555577354",
+      "name": "Hawk_Eye",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433911056555577354.png?size=128",
+      "discord_tag": "<:Hawk_Eye:1433911056555577354>",
+      "colon_syntax": ":Hawk_Eye:",
+      "source": "guild_api"
+    },
+    "headband": {
+      "id": "1433911098448281641",
+      "name": "Headband",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433911098448281641.png?size=128",
+      "discord_tag": "<:Headband:1433911098448281641>",
+      "colon_syntax": ":Headband:",
+      "source": "guild_api"
+    },
+    "helmet": {
+      "id": "1433925080999657566",
+      "name": "Helmet",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433925080999657566.png?size=128",
+      "discord_tag": "<:Helmet:1433925080999657566>",
+      "colon_syntax": ":Helmet:",
+      "source": "guild_api"
+    },
+    "how_many": {
+      "id": "1433928830250258442",
+      "name": "How_Many",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928830250258442.png?size=128",
+      "discord_tag": "<:How_Many:1433928830250258442>",
+      "colon_syntax": ":How_Many:",
+      "source": "guild_api"
+    },
+    "items": {
+      "id": "1433928855613341806",
+      "name": "Items",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928855613341806.png?size=128",
+      "discord_tag": "<:Items:1433928855613341806>",
+      "colon_syntax": ":Items:",
+      "source": "guild_api"
+    },
+    "kizaru": {
+      "id": "1433928877931102441",
+      "name": "Kizaru",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928877931102441.png?size=128",
+      "discord_tag": "<:Kizaru:1433928877931102441>",
+      "colon_syntax": ":Kizaru:",
+      "source": "guild_api"
+    },
+    "kraken": {
+      "id": "1433928901251567748",
+      "name": "Kraken",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928901251567748.png?size=128",
+      "discord_tag": "<:Kraken:1433928901251567748>",
+      "colon_syntax": ":Kraken:",
+      "source": "guild_api"
+    },
+    "law": {
+      "id": "1433928924362047742",
+      "name": "Law",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928924362047742.png?size=128",
+      "discord_tag": "<:Law:1433928924362047742>",
+      "colon_syntax": ":Law:",
+      "source": "guild_api"
+    },
+    "lf": {
+      "id": "1433928971099177063",
+      "name": "LF",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928971099177063.png?size=128",
+      "discord_tag": "<:LF:1433928971099177063>",
+      "colon_syntax": ":LF:",
+      "source": "guild_api"
+    },
+    "mask": {
+      "id": "1433928998718541824",
+      "name": "Mask",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433928998718541824.png?size=128",
+      "discord_tag": "<:Mask:1433928998718541824>",
+      "colon_syntax": ":Mask:",
+      "source": "guild_api"
+    },
+    "max": {
+      "id": "1433929025021153311",
+      "name": "Max",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929025021153311.png?size=128",
+      "discord_tag": "<:Max:1433929025021153311>",
+      "colon_syntax": ":Max:",
+      "source": "guild_api"
+    },
+    "merchant": {
+      "id": "1433929048656183417",
+      "name": "Merchant",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929048656183417.png?size=128",
+      "discord_tag": "<:Merchant:1433929048656183417>",
+      "colon_syntax": ":Merchant:",
+      "source": "guild_api"
+    },
+    "monster": {
+      "id": "1433929074971115722",
+      "name": "Monster",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929074971115722.png?size=128",
+      "discord_tag": "<:Monster:1433929074971115722>",
+      "colon_syntax": ":Monster:",
+      "source": "guild_api"
+    },
+    "mythical": {
+      "id": "1433929122404634716",
+      "name": "Mythical",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929122404634716.png?size=128",
+      "discord_tag": "<:Mythical:1433929122404634716>",
+      "colon_syntax": ":Mythical:",
+      "source": "guild_api"
+    },
+    "necklace": {
+      "id": "1433929162581606531",
+      "name": "Necklace",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929162581606531.png?size=128",
+      "discord_tag": "<:Necklace:1433929162581606531>",
+      "colon_syntax": ":Necklace:",
+      "source": "guild_api"
+    },
+    "new": {
+      "id": "1433929196324782240",
+      "name": "New",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929196324782240.png?size=128",
+      "discord_tag": "<:New:1433929196324782240>",
+      "colon_syntax": ":New:",
+      "source": "guild_api"
+    },
+    "nlf": {
+      "id": "1433929225458683914",
+      "name": "NLF",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929225458683914.png?size=128",
+      "discord_tag": "<:NLF:1433929225458683914>",
+      "colon_syntax": ":NLF:",
+      "source": "guild_api"
+    },
+    "offer": {
+      "id": "1433929248669958276",
+      "name": "Offer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929248669958276.png?size=128",
+      "discord_tag": "<:Offer:1433929248669958276>",
+      "colon_syntax": ":Offer:",
+      "source": "guild_api"
+    },
+    "or": {
+      "id": "1433929275144142879",
+      "name": "OR",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929275144142879.png?size=128",
+      "discord_tag": "<:OR:1433929275144142879>",
+      "colon_syntax": ":OR:",
+      "source": "guild_api"
+    },
+    "outfit": {
+      "id": "1433929299475566592",
+      "name": "Outfit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929299475566592.png?size=128",
+      "discord_tag": "<:Outfit:1433929299475566592>",
+      "colon_syntax": ":Outfit:",
+      "source": "guild_api"
+    },
+    "prestige": {
+      "id": "1433929328470786228",
+      "name": "Prestige",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929328470786228.png?size=128",
+      "discord_tag": "<:Prestige:1433929328470786228>",
+      "colon_syntax": ":Prestige:",
+      "source": "guild_api"
+    },
+    "roger": {
+      "id": "1433929433089310943",
+      "name": "Roger",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929433089310943.png?size=128",
+      "discord_tag": "<:Roger:1433929433089310943>",
+      "colon_syntax": ":Roger:",
+      "source": "guild_api"
+    },
+    "scarf": {
+      "id": "1433929454748565546",
+      "name": "Scarf",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929454748565546.png?size=128",
+      "discord_tag": "<:Scarf:1433929454748565546>",
+      "colon_syntax": ":Scarf:",
+      "source": "guild_api"
+    },
+    "sea": {
+      "id": "1433929481235464337",
+      "name": "Sea",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929481235464337.png?size=128",
+      "discord_tag": "<:Sea:1433929481235464337>",
+      "colon_syntax": ":Sea:",
+      "source": "guild_api"
+    },
+    "set": {
+      "id": "1433929580514639925",
+      "name": "Set",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929580514639925.png?size=128",
+      "discord_tag": "<:Set:1433929580514639925>",
+      "colon_syntax": ":Set:",
+      "source": "guild_api"
+    },
+    "shades": {
+      "id": "1433929602169966642",
+      "name": "Shades",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929602169966642.png?size=128",
+      "discord_tag": "<:Shades:1433929602169966642>",
+      "colon_syntax": ":Shades:",
+      "source": "guild_api"
+    },
+    "shop": {
+      "id": "1433929624630333642",
+      "name": "Shop",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929624630333642.png?size=128",
+      "discord_tag": "<:Shop:1433929624630333642>",
+      "colon_syntax": ":Shop:",
+      "source": "guild_api"
+    },
+    "small_adds": {
+      "id": "1433929646512144454",
+      "name": "Small_Adds",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929646512144454.png?size=128",
+      "discord_tag": "<:Small_Adds:1433929646512144454>",
+      "colon_syntax": ":Small_Adds:",
+      "source": "guild_api"
+    },
+    "soul_king": {
+      "id": "1433929666153939044",
+      "name": "Soul_King",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929666153939044.png?size=128",
+      "discord_tag": "<:Soul_King:1433929666153939044>",
+      "colon_syntax": ":Soul_King:",
+      "source": "guild_api"
+    },
+    "strong_adds": {
+      "id": "1433929688207855769",
+      "name": "Strong_Adds",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929688207855769.png?size=128",
+      "discord_tag": "<:Strong_Adds:1433929688207855769>",
+      "colon_syntax": ":Strong_Adds:",
+      "source": "guild_api"
+    },
+    "sword": {
+      "id": "1433929727474663494",
+      "name": "Sword",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929727474663494.png?size=128",
+      "discord_tag": "<:Sword:1433929727474663494>",
+      "colon_syntax": ":Sword:",
+      "source": "guild_api"
+    },
+    "update": {
+      "id": "1433929750274900018",
+      "name": "Update",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929750274900018.png?size=128",
+      "discord_tag": "<:Update:1433929750274900018>",
+      "colon_syntax": ":Update:",
+      "source": "guild_api"
+    },
+    "upgrade": {
+      "id": "1433929771498213497",
+      "name": "Upgrade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929771498213497.png?size=128",
+      "discord_tag": "<:Upgrade:1433929771498213497>",
+      "colon_syntax": ":Upgrade:",
+      "source": "guild_api"
+    },
+    "valk": {
+      "id": "1433929789558882486",
+      "name": "Valk",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929789558882486.png?size=128",
+      "discord_tag": "<:Valk:1433929789558882486>",
+      "colon_syntax": ":Valk:",
+      "source": "guild_api"
+    },
+    "weapon": {
+      "id": "1433929808651485377",
+      "name": "Weapon",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929808651485377.png?size=128",
+      "discord_tag": "<:Weapon:1433929808651485377>",
+      "colon_syntax": ":Weapon:",
+      "source": "guild_api"
+    },
+    "wings": {
+      "id": "1433929830466064394",
+      "name": "Wings",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929830466064394.png?size=128",
+      "discord_tag": "<:Wings:1433929830466064394>",
+      "colon_syntax": ":Wings:",
+      "source": "guild_api"
+    },
+    "zhen": {
+      "id": "1433929852821573642",
+      "name": "Zhen",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433929852821573642.png?size=128",
+      "discord_tag": "<:Zhen:1433929852821573642>",
+      "colon_syntax": ":Zhen:",
+      "source": "guild_api"
+    },
+    "og": {
+      "id": "1433943709568991305",
+      "name": "OG",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433943709568991305.png?size=128",
+      "discord_tag": "<:OG:1433943709568991305>",
+      "colon_syntax": ":OG:",
+      "source": "guild_api"
+    },
+    "stark": {
+      "id": "1433956131503603754",
+      "name": "Stark",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433956131503603754.png?size=128",
+      "discord_tag": "<:Stark:1433956131503603754>",
+      "colon_syntax": ":Stark:",
+      "source": "guild_api"
+    },
+    "toji": {
+      "id": "1433957483176792244",
+      "name": "Toji",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433957483176792244.png?size=128",
+      "discord_tag": "<:Toji:1433957483176792244>",
+      "colon_syntax": ":Toji:",
+      "source": "guild_api"
+    },
+    "steampunk": {
+      "id": "1433970915905110119",
+      "name": "Steampunk",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433970915905110119.png?size=128",
+      "discord_tag": "<:Steampunk:1433970915905110119>",
+      "colon_syntax": ":Steampunk:",
+      "source": "guild_api"
+    },
+    "battle_royale": {
+      "id": "1433971746343751800",
+      "name": "Battle_Royale",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1433971746343751800.png?size=128",
+      "discord_tag": "<:Battle_Royale:1433971746343751800>",
+      "colon_syntax": ":Battle_Royale:",
+      "source": "guild_api"
+    },
+    "azure": {
+      "id": "1434110137190191144",
+      "name": "Azure",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434110137190191144.png?size=128",
+      "discord_tag": "<:Azure:1434110137190191144>",
+      "colon_syntax": ":Azure:",
+      "source": "guild_api"
+    },
+    "blue": {
+      "id": "1434110153623470080",
+      "name": "Blue",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434110153623470080.png?size=128",
+      "discord_tag": "<:Blue:1434110153623470080>",
+      "colon_syntax": ":Blue:",
+      "source": "guild_api"
+    },
+    "green": {
+      "id": "1434110171168243763",
+      "name": "Green",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434110171168243763.png?size=128",
+      "discord_tag": "<:Green:1434110171168243763>",
+      "colon_syntax": ":Green:",
+      "source": "guild_api"
+    },
+    "purple": {
+      "id": "1434110184602730526",
+      "name": "Purple",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434110184602730526.png?size=128",
+      "discord_tag": "<:Purple:1434110184602730526>",
+      "colon_syntax": ":Purple:",
+      "source": "guild_api"
+    },
+    "red": {
+      "id": "1434110208199753749",
+      "name": "Red",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434110208199753749.png?size=128",
+      "discord_tag": "<:Red:1434110208199753749>",
+      "colon_syntax": ":Red:",
+      "source": "guild_api"
+    },
+    "rockstar_soul_king": {
+      "id": "1434110222426968084",
+      "name": "Rockstar_Soul_King",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434110222426968084.png?size=128",
+      "discord_tag": "<:Rockstar_Soul_King:1434110222426968084>",
+      "colon_syntax": ":Rockstar_Soul_King:",
+      "source": "guild_api"
+    },
+    "megalodon": {
+      "id": "1434128296164982885",
+      "name": "Megalodon",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434128296164982885.png?size=128",
+      "discord_tag": "<:Megalodon:1434128296164982885>",
+      "colon_syntax": ":Megalodon:",
+      "source": "guild_api"
+    },
+    "endbringer": {
+      "id": "1434379147987386521",
+      "name": "Endbringer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434379147987386521.png?size=128",
+      "discord_tag": "<:Endbringer:1434379147987386521>",
+      "colon_syntax": ":Endbringer:",
+      "source": "guild_api"
+    },
+    "fish_bait": {
+      "id": "1434690900193448059",
+      "name": "Fish_Bait",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434690900193448059.png?size=128",
+      "discord_tag": "<:Fish_Bait:1434690900193448059>",
+      "colon_syntax": ":Fish_Bait:",
+      "source": "guild_api"
+    },
+    "blade": {
+      "id": "1434728822154068191",
+      "name": "Blade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728822154068191.png?size=128",
+      "discord_tag": "<:Blade:1434728822154068191>",
+      "colon_syntax": ":Blade:",
+      "source": "guild_api"
+    },
+    "bow": {
+      "id": "1434728832820183090",
+      "name": "Bow",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728832820183090.png?size=128",
+      "discord_tag": "<:Bow:1434728832820183090>",
+      "colon_syntax": ":Bow:",
+      "source": "guild_api"
+    },
+    "chest": {
+      "id": "1434728844698456104",
+      "name": "Chest",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728844698456104.png?size=128",
+      "discord_tag": "<:Chest:1434728844698456104>",
+      "colon_syntax": ":Chest:",
+      "source": "guild_api"
+    },
+    "gauntlet": {
+      "id": "1434728860016054433",
+      "name": "Gauntlet",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728860016054433.png?size=128",
+      "discord_tag": "<:Gauntlet:1434728860016054433>",
+      "colon_syntax": ":Gauntlet:",
+      "source": "guild_api"
+    },
+    "great": {
+      "id": "1434728877141397686",
+      "name": "Great",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728877141397686.png?size=128",
+      "discord_tag": "<:Great:1434728877141397686>",
+      "colon_syntax": ":Great:",
+      "source": "guild_api"
+    },
+    "legendary": {
+      "id": "1434728891926450276",
+      "name": "Legendary",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728891926450276.png?size=128",
+      "discord_tag": "<:Legendary:1434728891926450276>",
+      "colon_syntax": ":Legendary:",
+      "source": "guild_api"
+    },
+    "rainbow": {
+      "id": "1434728908690821196",
+      "name": "Rainbow",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728908690821196.png?size=128",
+      "discord_tag": "<:Rainbow:1434728908690821196>",
+      "colon_syntax": ":Rainbow:",
+      "source": "guild_api"
+    },
+    "random": {
+      "id": "1434728946825433088",
+      "name": "Random",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728946825433088.png?size=128",
+      "discord_tag": "<:Random:1434728946825433088>",
+      "colon_syntax": ":Random:",
+      "source": "guild_api"
+    },
+    "rapier": {
+      "id": "1434728961572864072",
+      "name": "Rapier",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728961572864072.png?size=128",
+      "discord_tag": "<:Rapier:1434728961572864072>",
+      "colon_syntax": ":Rapier:",
+      "source": "guild_api"
+    },
+    "rare": {
+      "id": "1434728974302449666",
+      "name": "Rare",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728974302449666.png?size=128",
+      "discord_tag": "<:Rare:1434728974302449666>",
+      "colon_syntax": ":Rare:",
+      "source": "guild_api"
+    },
+    "sunken": {
+      "id": "1434728986704871456",
+      "name": "Sunken",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434728986704871456.png?size=128",
+      "discord_tag": "<:Sunken:1434728986704871456>",
+      "colon_syntax": ":Sunken:",
+      "source": "guild_api"
+    },
+    "iceborn": {
+      "id": "1434985477752094790",
+      "name": "Iceborn",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434985477752094790.png?size=128",
+      "discord_tag": "<:Iceborn:1434985477752094790>",
+      "colon_syntax": ":Iceborn:",
+      "source": "guild_api"
+    },
+    "katana": {
+      "id": "1434985506449657897",
+      "name": "Katana",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1434985506449657897.png?size=128",
+      "discord_tag": "<:Katana:1434985506449657897>",
+      "colon_syntax": ":Katana:",
+      "source": "guild_api"
+    },
+    "rumbling": {
+      "id": "1436821878135193805",
+      "name": "Rumbling",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1436821878135193805.png?size=128",
+      "discord_tag": "<:Rumbling:1436821878135193805>",
+      "colon_syntax": ":Rumbling:",
+      "source": "guild_api"
+    },
+    "collectable": {
+      "id": "1437187402442735737",
+      "name": "Collectable",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1437187402442735737.png?size=128",
+      "discord_tag": "<:Collectable:1437187402442735737>",
+      "colon_syntax": ":Collectable:",
+      "source": "guild_api"
+    },
+    "santa": {
+      "id": "1437190206598938757",
+      "name": "Santa",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1437190206598938757.png?size=128",
+      "discord_tag": "<:Santa:1437190206598938757>",
+      "colon_syntax": ":Santa:",
+      "source": "guild_api"
+    },
+    "aura": {
+      "id": "1442679962850300066",
+      "name": "Aura",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1442679962850300066.png?size=128",
+      "discord_tag": "<:Aura:1442679962850300066>",
+      "colon_syntax": ":Aura:",
+      "source": "guild_api"
+    },
+    "bigmom": {
+      "id": "1453811346893438996",
+      "name": "BigMom",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1453811346893438996.png?size=128",
+      "discord_tag": "<:BigMom:1453811346893438996>",
+      "colon_syntax": ":BigMom:",
+      "source": "guild_api"
+    },
+    "empress": {
+      "id": "1453811384616747120",
+      "name": "Empress",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1453811384616747120.png?size=128",
+      "discord_tag": "<:Empress:1453811384616747120>",
+      "colon_syntax": ":Empress:",
+      "source": "guild_api"
+    },
+    "katakuri": {
+      "id": "1453811404397089022",
+      "name": "Katakuri",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1453811404397089022.png?size=128",
+      "discord_tag": "<:Katakuri:1453811404397089022>",
+      "colon_syntax": ":Katakuri:",
+      "source": "guild_api"
+    },
+    "trident": {
+      "id": "1453940822268579901",
+      "name": "Trident",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1453940822268579901.png?size=128",
+      "discord_tag": "<:Trident:1453940822268579901>",
+      "colon_syntax": ":Trident:",
+      "source": "guild_api"
+    },
+    "scythe": {
+      "id": "1462269954731540481",
+      "name": "Scythe",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1462269954731540481.png?size=128",
+      "discord_tag": "<:Scythe:1462269954731540481>",
+      "colon_syntax": ":Scythe:",
+      "source": "guild_api"
+    },
+    "champion": {
+      "id": "1465484798297510026",
+      "name": "Champion",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1465484798297510026.png?size=128",
+      "discord_tag": "<:Champion:1465484798297510026>",
+      "colon_syntax": ":Champion:",
+      "source": "guild_api"
+    },
+    "l_trade": {
+      "id": "1465494620153712908",
+      "name": "L_Trade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1465494620153712908.png?size=128",
+      "discord_tag": "<:L_Trade:1465494620153712908>",
+      "colon_syntax": ":L_Trade:",
+      "source": "guild_api"
+    },
+    "w_trade": {
+      "id": "1465494758775324804",
+      "name": "W_Trade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1465494758775324804.png?size=128",
+      "discord_tag": "<:W_Trade:1465494758775324804>",
+      "colon_syntax": ":W_Trade:",
+      "source": "guild_api"
+    },
+    "fair_trade": {
+      "id": "1465754129690263815",
+      "name": "Fair_Trade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1465754129690263815.png?size=128",
+      "discord_tag": "<:Fair_Trade:1465754129690263815>",
+      "colon_syntax": ":Fair_Trade:",
+      "source": "guild_api"
+    },
+    "flower": {
+      "id": "1468057888248561694",
+      "name": "Flower",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1468057888248561694.png?size=128",
+      "discord_tag": "<:Flower:1468057888248561694>",
+      "colon_syntax": ":Flower:",
+      "source": "guild_api"
+    },
+    "firework": {
+      "id": "1468057917767946463",
+      "name": "Firework",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1468057917767946463.png?size=128",
+      "discord_tag": "<:Firework:1468057917767946463>",
+      "colon_syntax": ":Firework:",
+      "source": "guild_api"
+    },
+    "core": {
+      "id": "1470079058732650588",
+      "name": "Core",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1470079058732650588.png?size=128",
+      "discord_tag": "<:Core:1470079058732650588>",
+      "colon_syntax": ":Core:",
+      "source": "guild_api"
+    },
+    "leprechaun": {
+      "id": "1483846508569956443",
+      "name": "Leprechaun",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1483846508569956443.png?size=128",
+      "discord_tag": "<:Leprechaun:1483846508569956443>",
+      "colon_syntax": ":Leprechaun:",
+      "source": "guild_api"
+    },
+    "sakamoto_glasses": {
+      "id": "1518427470389579916",
+      "name": "sakamoto_glasses",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1518427470389579916.png?size=128",
+      "discord_tag": "<:sakamoto_glasses:1518427470389579916>",
+      "colon_syntax": ":sakamoto_glasses:",
+      "source": "guild_api"
+    },
+    "ace": {
+      "id": "1519457087384588489",
+      "name": "ace",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457087384588489.png?size=128",
+      "discord_tag": "<:ace:1519457087384588489>",
+      "colon_syntax": ":ace:",
+      "source": "guild_api"
+    },
+    "ase": {
+      "id": "1519457110465839155",
+      "name": "ase",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457110465839155.png?size=128",
+      "discord_tag": "<:ase:1519457110465839155>",
+      "colon_syntax": ":ase:",
+      "source": "guild_api"
+    },
+    "baal_ase": {
+      "id": "1519457131697541141",
+      "name": "baal_ase",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457131697541141.png?size=128",
+      "discord_tag": "<:baal_ase:1519457131697541141>",
+      "colon_syntax": ":baal_ase:",
+      "source": "guild_api"
+    },
+    "blo_ase": {
+      "id": "1519457155537961133",
+      "name": "blo_ase",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457155537961133.png?size=128",
+      "discord_tag": "<:blo_ase:1519457155537961133>",
+      "colon_syntax": ":blo_ase:",
+      "source": "guild_api"
+    },
+    "buddha": {
+      "id": "1519457180921757746",
+      "name": "buddha",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457180921757746.png?size=128",
+      "discord_tag": "<:buddha:1519457180921757746>",
+      "colon_syntax": ":buddha:",
+      "source": "guild_api"
+    },
+    "case": {
+      "id": "1519457201692082237",
+      "name": "case",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457201692082237.png?size=128",
+      "discord_tag": "<:case:1519457201692082237>",
+      "colon_syntax": ":case:",
+      "source": "guild_api"
+    },
+    "cqase": {
+      "id": "1519457222890094812",
+      "name": "cqase",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457222890094812.png?size=128",
+      "discord_tag": "<:cqase:1519457222890094812>",
+      "colon_syntax": ":cqase:",
+      "source": "guild_api"
+    },
+    "df_rod": {
+      "id": "1519457245958508696",
+      "name": "df_rod",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457245958508696.png?size=128",
+      "discord_tag": "<:df_rod:1519457245958508696>",
+      "colon_syntax": ":df_rod:",
+      "source": "guild_api"
+    },
+    "dominus_empyreus": {
+      "id": "1519457265860608120",
+      "name": "dominus_empyreus",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457265860608120.png?size=128",
+      "discord_tag": "<:dominus_empyreus:1519457265860608120>",
+      "colon_syntax": ":dominus_empyreus:",
+      "source": "guild_api"
+    },
+    "dominus_ultimus": {
+      "id": "1519457292049842277",
+      "name": "dominus_ultimus",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457292049842277.png?size=128",
+      "discord_tag": "<:dominus_ultimus:1519457292049842277>",
+      "colon_syntax": ":dominus_ultimus:",
+      "source": "guild_api"
+    },
+    "dragon": {
+      "id": "1519457318461247618",
+      "name": "dragon",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457318461247618.png?size=128",
+      "discord_tag": "<:dragon:1519457318461247618>",
+      "colon_syntax": ":dragon:",
+      "source": "guild_api"
+    },
+    "hagoromo": {
+      "id": "1519457338124402808",
+      "name": "hagoromo",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457338124402808.png?size=128",
+      "discord_tag": "<:hagoromo:1519457338124402808>",
+      "colon_syntax": ":hagoromo:",
+      "source": "guild_api"
+    },
+    "half_nfs": {
+      "id": "1519457357875249283",
+      "name": "half_nfs",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457357875249283.png?size=128",
+      "discord_tag": "<:half_nfs:1519457357875249283>",
+      "colon_syntax": ":half_nfs:",
+      "source": "guild_api"
+    },
+    "hollyase": {
+      "id": "1519457376564936804",
+      "name": "hollyase",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457376564936804.png?size=128",
+      "discord_tag": "<:hollyase:1519457376564936804>",
+      "colon_syntax": ":hollyase:",
+      "source": "guild_api"
+    },
+    "icc": {
+      "id": "1519457404268449993",
+      "name": "icc",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457404268449993.png?size=128",
+      "discord_tag": "<:icc:1519457404268449993>",
+      "colon_syntax": ":icc:",
+      "source": "guild_api"
+    },
+    "jfit": {
+      "id": "1519457440909889768",
+      "name": "jfit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457440909889768.png?size=128",
+      "discord_tag": "<:jfit:1519457440909889768>",
+      "colon_syntax": ":jfit:",
+      "source": "guild_api"
+    },
+    "mc": {
+      "id": "1519457464091803668",
+      "name": "mc",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457464091803668.png?size=128",
+      "discord_tag": "<:mc:1519457464091803668>",
+      "colon_syntax": ":mc:",
+      "source": "guild_api"
+    },
+    "mochi": {
+      "id": "1519457484874448966",
+      "name": "mochi",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457484874448966.png?size=128",
+      "discord_tag": "<:mochi:1519457484874448966>",
+      "colon_syntax": ":mochi:",
+      "source": "guild_api"
+    },
+    "napoleon": {
+      "id": "1519457506340896870",
+      "name": "napoleon",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457506340896870.png?size=128",
+      "discord_tag": "<:napoleon:1519457506340896870>",
+      "colon_syntax": ":napoleon:",
+      "source": "guild_api"
+    },
+    "nfs": {
+      "id": "1519457528340156586",
+      "name": "nfs",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457528340156586.png?size=128",
+      "discord_tag": "<:nfs:1519457528340156586>",
+      "colon_syntax": ":nfs:",
+      "source": "guild_api"
+    },
+    "pcc": {
+      "id": "1519457554084794539",
+      "name": "PCC",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457554084794539.png?size=128",
+      "discord_tag": "<:PCC:1519457554084794539>",
+      "colon_syntax": ":PCC:",
+      "source": "guild_api"
+    },
+    "pchakram": {
+      "id": "1519457611907465358",
+      "name": "pchakram",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457611907465358.png?size=128",
+      "discord_tag": "<:pchakram:1519457611907465358>",
+      "colon_syntax": ":pchakram:",
+      "source": "guild_api"
+    },
+    "pfd": {
+      "id": "1519457631557910682",
+      "name": "pfd",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457631557910682.png?size=128",
+      "discord_tag": "<:pfd:1519457631557910682>",
+      "colon_syntax": ":pfd:",
+      "source": "guild_api"
+    },
+    "pfl": {
+      "id": "1519457655163457547",
+      "name": "pfl",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457655163457547.png?size=128",
+      "discord_tag": "<:pfl:1519457655163457547>",
+      "colon_syntax": ":pfl:",
+      "source": "guild_api"
+    },
+    "pirb": {
+      "id": "1519457681063022803",
+      "name": "pirb",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457681063022803.png?size=128",
+      "discord_tag": "<:pirb:1519457681063022803>",
+      "colon_syntax": ":pirb:",
+      "source": "guild_api"
+    },
+    "ptera": {
+      "id": "1519457706178515016",
+      "name": "ptera",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457706178515016.png?size=128",
+      "discord_tag": "<:ptera:1519457706178515016>",
+      "colon_syntax": ":ptera:",
+      "source": "guild_api"
+    },
+    "pwe": {
+      "id": "1519457731583672441",
+      "name": "pwe",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457731583672441.png?size=128",
+      "discord_tag": "<:pwe:1519457731583672441>",
+      "colon_syntax": ":pwe:",
+      "source": "guild_api"
+    },
+    "sase": {
+      "id": "1519457756740976852",
+      "name": "sase",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457756740976852.png?size=128",
+      "discord_tag": "<:sase:1519457756740976852>",
+      "colon_syntax": ":sase:",
+      "source": "guild_api"
+    },
+    "sks": {
+      "id": "1519457776424845494",
+      "name": "sks",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457776424845494.png?size=128",
+      "discord_tag": "<:sks:1519457776424845494>",
+      "colon_syntax": ":sks:",
+      "source": "guild_api"
+    },
+    "soul": {
+      "id": "1519457796943511766",
+      "name": "soul",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457796943511766.png?size=128",
+      "discord_tag": "<:soul:1519457796943511766>",
+      "colon_syntax": ":soul:",
+      "source": "guild_api"
+    },
+    "tori": {
+      "id": "1519457818837778652",
+      "name": "tori",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457818837778652.png?size=128",
+      "discord_tag": "<:tori:1519457818837778652>",
+      "colon_syntax": ":tori:",
+      "source": "guild_api"
+    },
+    "venom": {
+      "id": "1519457841138761909",
+      "name": "venom",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457841138761909.png?size=128",
+      "discord_tag": "<:venom:1519457841138761909>",
+      "colon_syntax": ":venom:",
+      "source": "guild_api"
+    },
+    "yoru": {
+      "id": "1519457861342593318",
+      "name": "yoru",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519457861342593318.png?size=128",
+      "discord_tag": "<:yoru:1519457861342593318>",
+      "colon_syntax": ":yoru:",
+      "source": "guild_api"
+    },
+    "pmaidfit": {
+      "id": "1519458810882818247",
+      "name": "PMaidFit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519458810882818247.png?size=128",
+      "discord_tag": "<:PMaidFit:1519458810882818247>",
+      "colon_syntax": ":PMaidFit:",
+      "source": "guild_api"
+    },
+    "pfrl": {
+      "id": "1519461832937574430",
+      "name": "pfrl",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519461832937574430.png?size=128",
+      "discord_tag": "<:pfrl:1519461832937574430>",
+      "colon_syntax": ":pfrl:",
+      "source": "guild_api"
+    },
+    "marine_cap": {
+      "id": "1519461939926007989",
+      "name": "marine_cap",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519461939926007989.png?size=128",
+      "discord_tag": "<:marine_cap:1519461939926007989>",
+      "colon_syntax": ":marine_cap:",
+      "source": "guild_api"
+    },
+    "ope": {
+      "id": "1519470446280446053",
+      "name": "ope",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1519470446280446053.png?size=128",
+      "discord_tag": "<:ope:1519470446280446053>",
+      "colon_syntax": ":ope:",
+      "source": "guild_api"
+    },
+    "amp": {
+      "id": "1521470298828836915",
+      "name": "amp",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1521470298828836915.png?size=128",
+      "discord_tag": "<:amp:1521470298828836915>",
+      "colon_syntax": ":amp:",
+      "source": "guild_api"
+    },
+    "snowcap": {
+      "id": "1523896288796737649",
+      "name": "snowcap",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523896288796737649.png?size=128",
+      "discord_tag": "<:snowcap:1523896288796737649>",
+      "colon_syntax": ":snowcap:",
+      "source": "guild_api"
+    },
+    "hopiyo": {
+      "id": "1523896400025223168",
+      "name": "hopiyo",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523896400025223168.png?size=128",
+      "discord_tag": "<:hopiyo:1523896400025223168>",
+      "colon_syntax": ":hopiyo:",
+      "source": "guild_api"
+    },
+    "sos": {
+      "id": "1523896968592490506",
+      "name": "SOS",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523896968592490506.png?size=128",
+      "discord_tag": "<:SOS:1523896968592490506>",
+      "colon_syntax": ":SOS:",
+      "source": "guild_api"
+    },
+    "clownwig": {
+      "id": "1523897104920084632",
+      "name": "ClownWig",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523897104920084632.png?size=128",
+      "discord_tag": "<:ClownWig:1523897104920084632>",
+      "colon_syntax": ":ClownWig:",
+      "source": "guild_api"
+    },
+    "cc": {
+      "id": "1523897313964068963",
+      "name": "CC",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523897313964068963.png?size=128",
+      "discord_tag": "<:CC:1523897313964068963>",
+      "colon_syntax": ":CC:",
+      "source": "guild_api"
+    },
+    "trollface": {
+      "id": "1523897512497254521",
+      "name": "TrollFace",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523897512497254521.png?size=128",
+      "discord_tag": "<:TrollFace:1523897512497254521>",
+      "colon_syntax": ":TrollFace:",
+      "source": "guild_api"
+    },
+    "cupidschakram": {
+      "id": "1523897722690732052",
+      "name": "CupidsChakram",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523897722690732052.png?size=128",
+      "discord_tag": "<:CupidsChakram:1523897722690732052>",
+      "colon_syntax": ":CupidsChakram:",
+      "source": "guild_api"
+    },
+    "grapplehook": {
+      "id": "1523897817893179434",
+      "name": "grapplehook",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523897817893179434.png?size=128",
+      "discord_tag": "<:grapplehook:1523897817893179434>",
+      "colon_syntax": ":grapplehook:",
+      "source": "guild_api"
+    },
+    "inferno_blade": {
+      "id": "1523897944263229582",
+      "name": "Inferno_Blade",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523897944263229582.png?size=128",
+      "discord_tag": "<:Inferno_Blade:1523897944263229582>",
+      "colon_syntax": ":Inferno_Blade:",
+      "source": "guild_api"
+    },
+    "hollowfang": {
+      "id": "1523898062710505503",
+      "name": "HollowFang",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523898062710505503.png?size=128",
+      "discord_tag": "<:HollowFang:1523898062710505503>",
+      "colon_syntax": ":HollowFang:",
+      "source": "guild_api"
+    },
+    "rocky": {
+      "id": "1523898383721435246",
+      "name": "rocky",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523898383721435246.png?size=128",
+      "discord_tag": "<:rocky:1523898383721435246>",
+      "colon_syntax": ":rocky:",
+      "source": "guild_api"
+    },
+    "firework_lancer": {
+      "id": "1523898512985821245",
+      "name": "firework_lancer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523898512985821245.png?size=128",
+      "discord_tag": "<:firework_lancer:1523898512985821245>",
+      "colon_syntax": ":firework_lancer:",
+      "source": "guild_api"
+    },
+    "mpow": {
+      "id": "1523898619789443113",
+      "name": "mpow",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523898619789443113.png?size=128",
+      "discord_tag": "<:mpow:1523898619789443113>",
+      "colon_syntax": ":mpow:",
+      "source": "guild_api"
+    },
+    "skg": {
+      "id": "1523898730019815494",
+      "name": "SKG",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523898730019815494.png?size=128",
+      "discord_tag": "<:SKG:1523898730019815494>",
+      "colon_syntax": ":SKG:",
+      "source": "guild_api"
+    },
+    "baalhead": {
+      "id": "1523898827097112669",
+      "name": "BaalHead",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523898827097112669.png?size=128",
+      "discord_tag": "<:BaalHead:1523898827097112669>",
+      "colon_syntax": ":BaalHead:",
+      "source": "guild_api"
+    },
+    "hwe": {
+      "id": "1523899219830902844",
+      "name": "HWE",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523899219830902844.png?size=128",
+      "discord_tag": "<:HWE:1523899219830902844>",
+      "colon_syntax": ":HWE:",
+      "source": "guild_api"
+    },
+    "truebaalshorn": {
+      "id": "1523899355843526676",
+      "name": "TrueBaalsHorn",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523899355843526676.png?size=128",
+      "discord_tag": "<:TrueBaalsHorn:1523899355843526676>",
+      "colon_syntax": ":TrueBaalsHorn:",
+      "source": "guild_api"
+    },
+    "rc": {
+      "id": "1523899473720381641",
+      "name": "rc",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523899473720381641.png?size=128",
+      "discord_tag": "<:rc:1523899473720381641>",
+      "colon_syntax": ":rc:",
+      "source": "guild_api"
+    },
+    "blo_crimsonhammer": {
+      "id": "1523899590129090640",
+      "name": "blo_crimsonhammer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523899590129090640.png?size=128",
+      "discord_tag": "<:blo_crimsonhammer:1523899590129090640>",
+      "colon_syntax": ":blo_crimsonhammer:",
+      "source": "guild_api"
+    },
+    "blo_hammer": {
+      "id": "1523899820622741524",
+      "name": "blo_hammer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523899820622741524.png?size=128",
+      "discord_tag": "<:blo_hammer:1523899820622741524>",
+      "colon_syntax": ":blo_hammer:",
+      "source": "guild_api"
+    },
+    "goru": {
+      "id": "1523899958959407104",
+      "name": "goru",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523899958959407104.png?size=128",
+      "discord_tag": "<:goru:1523899958959407104>",
+      "colon_syntax": ":goru:",
+      "source": "guild_api"
+    },
+    "truebaalsguard": {
+      "id": "1523900180175257742",
+      "name": "TrueBaalsGuard",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523900180175257742.png?size=128",
+      "discord_tag": "<:TrueBaalsGuard:1523900180175257742>",
+      "colon_syntax": ":TrueBaalsGuard:",
+      "source": "guild_api"
+    },
+    "truebaalssnakehead": {
+      "id": "1523900300887457882",
+      "name": "TrueBaalsSnakeHead",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523900300887457882.png?size=128",
+      "discord_tag": "<:TrueBaalsSnakeHead:1523900300887457882>",
+      "colon_syntax": ":TrueBaalsSnakeHead:",
+      "source": "guild_api"
+    },
+    "hie": {
+      "id": "1523900473877201099",
+      "name": "hie",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523900473877201099.png?size=128",
+      "discord_tag": "<:hie:1523900473877201099>",
+      "colon_syntax": ":hie:",
+      "source": "guild_api"
+    },
+    "coffinboat": {
+      "id": "1523900819307630622",
+      "name": "coffinboat",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523900819307630622.png?size=128",
+      "discord_tag": "<:coffinboat:1523900819307630622>",
+      "colon_syntax": ":coffinboat:",
+      "source": "guild_api"
+    },
+    "striker": {
+      "id": "1523901042365042828",
+      "name": "Striker",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523901042365042828.png?size=128",
+      "discord_tag": "<:Striker:1523901042365042828>",
+      "colon_syntax": ":Striker:",
+      "source": "guild_api"
+    },
+    "world_ender": {
+      "id": "1523901541357064204",
+      "name": "world_ender",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523901541357064204.png?size=128",
+      "discord_tag": "<:world_ender:1523901541357064204>",
+      "colon_syntax": ":world_ender:",
+      "source": "guild_api"
+    },
+    "goro": {
+      "id": "1523901753878380594",
+      "name": "goro",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523901753878380594.png?size=128",
+      "discord_tag": "<:goro:1523901753878380594>",
+      "colon_syntax": ":goro:",
+      "source": "guild_api"
+    },
+    "paw": {
+      "id": "1523901843934154752",
+      "name": "paw",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523901843934154752.png?size=128",
+      "discord_tag": "<:paw:1523901843934154752>",
+      "colon_syntax": ":paw:",
+      "source": "guild_api"
+    },
+    "smoke": {
+      "id": "1523902047068356639",
+      "name": "smoke",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523902047068356639.png?size=128",
+      "discord_tag": "<:smoke:1523902047068356639>",
+      "colon_syntax": ":smoke:",
+      "source": "guild_api"
+    },
+    "elohammer": {
+      "id": "1523902266514473010",
+      "name": "EloHammer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523902266514473010.png?size=128",
+      "discord_tag": "<:EloHammer:1523902266514473010>",
+      "colon_syntax": ":EloHammer:",
+      "source": "guild_api"
+    },
+    "flowers": {
+      "id": "1523902340271308913",
+      "name": "Flowers",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523902340271308913.png?size=128",
+      "discord_tag": "<:Flowers:1523902340271308913>",
+      "colon_syntax": ":Flowers:",
+      "source": "guild_api"
+    },
+    "ruinmask": {
+      "id": "1523902415320121374",
+      "name": "RuinMask",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523902415320121374.png?size=128",
+      "discord_tag": "<:RuinMask:1523902415320121374>",
+      "colon_syntax": ":RuinMask:",
+      "source": "guild_api"
+    },
+    "pbag": {
+      "id": "1523911398936150136",
+      "name": "pbag",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523911398936150136.png?size=128",
+      "discord_tag": "<:pbag:1523911398936150136>",
+      "colon_syntax": ":pbag:",
+      "source": "guild_api"
+    },
+    "batswarm": {
+      "id": "1523915861142798496",
+      "name": "BatSwarm",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523915861142798496.png?size=128",
+      "discord_tag": "<:BatSwarm:1523915861142798496>",
+      "colon_syntax": ":BatSwarm:",
+      "source": "guild_api"
+    },
+    "yukio": {
+      "id": "1523916052994457630",
+      "name": "Yukio",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523916052994457630.png?size=128",
+      "discord_tag": "<:Yukio:1523916052994457630>",
+      "colon_syntax": ":Yukio:",
+      "source": "guild_api"
+    },
+    "bunyo": {
+      "id": "1523916102147768330",
+      "name": "Bunyo",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523916102147768330.png?size=128",
+      "discord_tag": "<:Bunyo:1523916102147768330>",
+      "colon_syntax": ":Bunyo:",
+      "source": "guild_api"
+    },
+    "darkroot": {
+      "id": "1523916249455788052",
+      "name": "DarkRoot",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523916249455788052.png?size=128",
+      "discord_tag": "<:DarkRoot:1523916249455788052>",
+      "colon_syntax": ":DarkRoot:",
+      "source": "guild_api"
+    },
+    "ito": {
+      "id": "1523916703354851378",
+      "name": "Ito",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523916703354851378.png?size=128",
+      "discord_tag": "<:Ito:1523916703354851378>",
+      "colon_syntax": ":Ito:",
+      "source": "guild_api"
+    },
+    "zushi": {
+      "id": "1523916792295325746",
+      "name": "Zushi",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523916792295325746.png?size=128",
+      "discord_tag": "<:Zushi:1523916792295325746>",
+      "colon_syntax": ":Zushi:",
+      "source": "guild_api"
+    },
+    "yuki": {
+      "id": "1523916857328009378",
+      "name": "Yuki",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523916857328009378.png?size=128",
+      "discord_tag": "<:Yuki:1523916857328009378>",
+      "colon_syntax": ":Yuki:",
+      "source": "guild_api"
+    },
+    "magu": {
+      "id": "1523917100379541657",
+      "name": "Magu",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523917100379541657.png?size=128",
+      "discord_tag": "<:Magu:1523917100379541657>",
+      "colon_syntax": ":Magu:",
+      "source": "guild_api"
+    },
+    "mera": {
+      "id": "1523917154657898576",
+      "name": "Mera",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523917154657898576.png?size=128",
+      "discord_tag": "<:Mera:1523917154657898576>",
+      "colon_syntax": ":Mera:",
+      "source": "guild_api"
+    },
+    "pika": {
+      "id": "1523917220944547850",
+      "name": "Pika",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523917220944547850.png?size=128",
+      "discord_tag": "<:Pika:1523917220944547850>",
+      "colon_syntax": ":Pika:",
+      "source": "guild_api"
+    },
+    "kage": {
+      "id": "1523917374531829801",
+      "name": "Kage",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523917374531829801.png?size=128",
+      "discord_tag": "<:Kage:1523917374531829801>",
+      "colon_syntax": ":Kage:",
+      "source": "guild_api"
+    },
+    "epicbanana": {
+      "id": "1523917751536844820",
+      "name": "EpicBanana",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523917751536844820.png?size=128",
+      "discord_tag": "<:EpicBanana:1523917751536844820>",
+      "colon_syntax": ":EpicBanana:",
+      "source": "guild_api"
+    },
+    "skeletalmask": {
+      "id": "1523917957334565064",
+      "name": "SkeletalMask",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523917957334565064.png?size=128",
+      "discord_tag": "<:SkeletalMask:1523917957334565064>",
+      "colon_syntax": ":SkeletalMask:",
+      "source": "guild_api"
+    },
+    "darkskeletalmask": {
+      "id": "1523918005849817120",
+      "name": "DarkSkeletalMask",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523918005849817120.png?size=128",
+      "discord_tag": "<:DarkSkeletalMask:1523918005849817120>",
+      "colon_syntax": ":DarkSkeletalMask:",
+      "source": "guild_api"
+    },
+    "reshead": {
+      "id": "1523920882857148588",
+      "name": "ResHead",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523920882857148588.png?size=128",
+      "discord_tag": "<:ResHead:1523920882857148588>",
+      "colon_syntax": ":ResHead:",
+      "source": "guild_api"
+    },
+    "giftoffruit": {
+      "id": "1523921001266675883",
+      "name": "GiftOfFruit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523921001266675883.png?size=128",
+      "discord_tag": "<:GiftOfFruit:1523921001266675883>",
+      "colon_syntax": ":GiftOfFruit:",
+      "source": "guild_api"
+    },
+    "racereroll": {
+      "id": "1523925540392927293",
+      "name": "RaceReroll",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523925540392927293.png?size=128",
+      "discord_tag": "<:RaceReroll:1523925540392927293>",
+      "colon_syntax": ":RaceReroll:",
+      "source": "guild_api"
+    },
+    "tailortoken": {
+      "id": "1523925590548283413",
+      "name": "TailorToken",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523925590548283413.png?size=128",
+      "discord_tag": "<:TailorToken:1523925590548283413>",
+      "colon_syntax": ":TailorToken:",
+      "source": "guild_api"
+    },
+    "sparebag": {
+      "id": "1523925672924282911",
+      "name": "SpareBag",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523925672924282911.png?size=128",
+      "discord_tag": "<:SpareBag:1523925672924282911>",
+      "colon_syntax": ":SpareBag:",
+      "source": "guild_api"
+    },
+    "swordfish": {
+      "id": "1523930994212601864",
+      "name": "SwordFish",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523930994212601864.png?size=128",
+      "discord_tag": "<:SwordFish:1523930994212601864>",
+      "colon_syntax": ":SwordFish:",
+      "source": "guild_api"
+    },
+    "spreset": {
+      "id": "1523931030044807238",
+      "name": "SPReset",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523931030044807238.png?size=128",
+      "discord_tag": "<:SPReset:1523931030044807238>",
+      "colon_syntax": ":SPReset:",
+      "source": "guild_api"
+    },
+    "megalodonteeth": {
+      "id": "1523931134478782504",
+      "name": "MegalodonTeeth",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523931134478782504.png?size=128",
+      "discord_tag": "<:MegalodonTeeth:1523931134478782504>",
+      "colon_syntax": ":MegalodonTeeth:",
+      "source": "guild_api"
+    },
+    "suna": {
+      "id": "1523931344260960406",
+      "name": "Suna",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523931344260960406.png?size=128",
+      "discord_tag": "<:Suna:1523931344260960406>",
+      "colon_syntax": ":Suna:",
+      "source": "guild_api"
+    },
+    "gura": {
+      "id": "1523931393057488996",
+      "name": "Gura",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1523931393057488996.png?size=128",
+      "discord_tag": "<:Gura:1523931393057488996>",
+      "colon_syntax": ":Gura:",
+      "source": "guild_api"
+    },
+    "yami": {
+      "id": "1524049604017127434",
+      "name": "Yami",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1524049604017127434.png?size=128",
+      "discord_tag": "<:Yami:1524049604017127434>",
+      "colon_syntax": ":Yami:",
+      "source": "guild_api"
+    },
+    "hoverboard": {
+      "id": "1524050192515596338",
+      "name": "HoverBoard",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1524050192515596338.png?size=128",
+      "discord_tag": "<:HoverBoard:1524050192515596338>",
+      "colon_syntax": ":HoverBoard:",
+      "source": "guild_api"
+    },
+    "capsule": {
+      "id": "1524552860736688239",
+      "name": "Capsule",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1524552860736688239.png?size=128",
+      "discord_tag": "<:Capsule:1524552860736688239>",
+      "colon_syntax": ":Capsule:",
+      "source": "guild_api"
+    },
+    "snoozyneko": {
+      "id": "1524554483454054608",
+      "name": "SnoozyNeko",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1524554483454054608.png?size=128",
+      "discord_tag": "<:SnoozyNeko:1524554483454054608>",
+      "colon_syntax": ":SnoozyNeko:",
+      "source": "guild_api"
+    },
+    "hover_pod": {
+      "id": "1524554531365585076",
+      "name": "Hover_Pod",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1524554531365585076.png?size=128",
+      "discord_tag": "<:Hover_Pod:1524554531365585076>",
+      "colon_syntax": ":Hover_Pod:",
+      "source": "guild_api"
+    },
+    "kaido": {
+      "id": "1543801666535555133",
+      "name": "Kaido",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1543801666535555133.png?size=128",
+      "discord_tag": "<:Kaido:1543801666535555133>",
+      "colon_syntax": ":Kaido:",
+      "source": "guild_api"
+    },
+    "thunder_club": {
+      "id": "1543808596595441664",
+      "name": "Thunder_Club",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1543808596595441664.png?size=128",
+      "discord_tag": "<:Thunder_Club:1543808596595441664>",
+      "colon_syntax": ":Thunder_Club:",
+      "source": "guild_api"
+    },
+    "leopard": {
+      "id": "1543808730485755905",
+      "name": "Leopard",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1543808730485755905.png?size=128",
+      "discord_tag": "<:Leopard:1543808730485755905>",
+      "colon_syntax": ":Leopard:",
+      "source": "guild_api"
+    },
+    "blossom_ase": {
+      "id": "1543808857892192257",
+      "name": "Blossom_ASE",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1543808857892192257.png?size=128",
+      "discord_tag": "<:Blossom_ASE:1543808857892192257>",
+      "colon_syntax": ":Blossom_ASE:",
+      "source": "guild_api"
+    },
+    "biscuit": {
+      "id": "1543809076767490190",
+      "name": "Biscuit",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1543809076767490190.png?size=128",
+      "discord_tag": "<:Biscuit:1543809076767490190>",
+      "colon_syntax": ":Biscuit:",
+      "source": "guild_api"
+    },
+    "lantern": {
+      "id": "1549912582088040529",
+      "name": "Lantern",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1549912582088040529.png?size=128",
+      "discord_tag": "<:Lantern:1549912582088040529>",
+      "colon_syntax": ":Lantern:",
+      "source": "guild_api"
+    },
+    "tungcostume": {
+      "id": "1555378579045482536",
+      "name": "TungCostume",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1555378579045482536.png?size=128",
+      "discord_tag": "<:TungCostume:1555378579045482536>",
+      "colon_syntax": ":TungCostume:",
+      "source": "guild_api"
+    },
+    "bos": {
+      "id": "1555378662608470107",
+      "name": "BOS",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1555378662608470107.png?size=128",
+      "discord_tag": "<:BOS:1555378662608470107>",
+      "colon_syntax": ":BOS:",
+      "source": "guild_api"
+    },
+    "tung_club": {
+      "id": "1555378833979347045",
+      "name": "Tung_Club",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1555378833979347045.png?size=128",
+      "discord_tag": "<:Tung_Club:1555378833979347045>",
+      "colon_syntax": ":Tung_Club:",
+      "source": "guild_api"
+    },
+    "nfa": {
+      "id": "1555378885401649192",
+      "name": "NFA",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1555378885401649192.png?size=128",
+      "discord_tag": "<:NFA:1555378885401649192>",
+      "colon_syntax": ":NFA:",
+      "source": "guild_api"
+    },
+    "festival_lancer": {
+      "id": "1559587987220598985",
+      "name": "festival_lancer",
+      "animated": false,
+      "url": "https://cdn.discordapp.com/emojis/1559587987220598985.png?size=128",
+      "discord_tag": "<:festival_lancer:1559587987220598985>",
+      "colon_syntax": ":festival_lancer:",
+      "source": "guild_api"
+    },
+    "df": {
+      "id": null,
+      "name": "df",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":df:",
+      "colon_syntax": ":df:",
+      "source": "colon_syntax",
+      "occurrences": 799
+    },
+    "rod": {
+      "id": null,
+      "name": "rod",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":rod:",
+      "colon_syntax": ":rod:",
+      "source": "colon_syntax",
+      "occurrences": 799
+    },
+    "4": {
+      "id": null,
+      "name": "4",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":4:",
+      "colon_syntax": ":4:",
+      "source": "colon_syntax",
+      "occurrences": 810
+    },
+    "leg": {
+      "id": null,
+      "name": "leg",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":leg:",
+      "colon_syntax": ":leg:",
+      "source": "colon_syntax",
+      "occurrences": 810
+    },
+    "big": {
+      "id": null,
+      "name": "big",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":big:",
+      "colon_syntax": ":big:",
+      "source": "colon_syntax",
+      "occurrences": 776
+    },
+    "mom": {
+      "id": null,
+      "name": "mom",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":mom:",
+      "colon_syntax": ":mom:",
+      "source": "colon_syntax",
+      "occurrences": 776
+    },
+    "heart": {
+      "id": null,
+      "name": "heart",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":heart:",
+      "colon_syntax": ":heart:",
+      "source": "colon_syntax",
+      "occurrences": 730
+    },
+    "gourd": {
+      "id": null,
+      "name": "gourd",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":gourd:",
+      "colon_syntax": ":gourd:",
+      "source": "colon_syntax",
+      "occurrences": 745
+    },
+    "festival_shield": {
+      "id": null,
+      "name": "festival_shield",
+      "animated": false,
+      "url": null,
+      "discord_tag": ":festival_shield:",
+      "colon_syntax": ":festival_shield:",
+      "source": "colon_syntax",
+      "occurrences": 1
+    }
+  },
+  "compound_rules": [
+    {
+      "tokens": [
+        ":kaido:",
+        ":cape:"
+      ],
+      "item_id": "item_104",
+      "item_name": "Dragon Emperor's Cape (Kaido Cape)"
+    },
+    {
+      "tokens": [
+        ":kaidos:",
+        ":cape:"
+      ],
+      "item_id": "item_104",
+      "item_name": "Dragon Emperor's Cape (Kaido Cape)"
+    },
+    {
+      "tokens": [
+        ":dragon:",
+        ":emperor:",
+        ":cape:"
+      ],
+      "item_id": "item_104",
+      "item_name": "Dragon Emperor's Cape (Kaido Cape)"
+    },
+    {
+      "tokens": [
+        ":dragon:",
+        ":cape:"
+      ],
+      "item_id": "item_104",
+      "item_name": "Dragon Emperor's Cape (Kaido Cape)"
+    },
+    {
+      "tokens": [
+        ":de:",
+        ":cape:"
+      ],
+      "item_id": "item_104",
+      "item_name": "Dragon Emperor's Cape (Kaido Cape)"
+    },
+    {
+      "tokens": [
+        ":kaido:",
+        ":gourd:"
+      ],
+      "item_id": "item_105",
+      "item_name": "Dragon Emperor's Gourd (Kaido Gourd)"
+    },
+    {
+      "tokens": [
+        ":dragon:",
+        ":emperor:",
+        ":gourd:"
+      ],
+      "item_id": "item_105",
+      "item_name": "Dragon Emperor's Gourd (Kaido Gourd)"
+    },
+    {
+      "tokens": [
+        ":kaido:",
+        ":outfit:"
+      ],
+      "item_id": "item_108",
+      "item_name": "Dragon Emperor's Outfit (Kaido Outfit)"
+    },
+    {
+      "tokens": [
+        ":kaidos:",
+        ":outfit:"
+      ],
+      "item_id": "item_108",
+      "item_name": "Dragon Emperor's Outfit (Kaido Outfit)"
+    },
+    {
+      "tokens": [
+        ":dragon:",
+        ":emperor:",
+        ":outfit:"
+      ],
+      "item_id": "item_108",
+      "item_name": "Dragon Emperor's Outfit (Kaido Outfit)"
+    },
+    {
+      "tokens": [
+        ":big:",
+        ":mom:",
+        ":cape:"
+      ],
+      "item_id": "item_119",
+      "item_name": "Big Mama's Cape"
+    },
+    {
+      "tokens": [
+        ":big:",
+        ":moms:",
+        ":cape:"
+      ],
+      "item_id": "item_119",
+      "item_name": "Big Mama's Cape"
+    },
+    {
+      "tokens": [
+        ":big:",
+        ":mama:",
+        ":cape:"
+      ],
+      "item_id": "item_119",
+      "item_name": "Big Mama's Cape"
+    },
+    {
+      "tokens": [
+        ":big:",
+        ":mamas:",
+        ":cape:"
+      ],
+      "item_id": "item_119",
+      "item_name": "Big Mama's Cape"
+    },
+    {
+      "tokens": [
+        ":bm:",
+        ":cape:"
+      ],
+      "item_id": "item_119",
+      "item_name": "Big Mama's Cape"
+    },
+    {
+      "tokens": [
+        ":big:",
+        ":mom:",
+        ":hat:"
+      ],
+      "item_id": "item_124",
+      "item_name": "Big Mama's Hat"
+    },
+    {
+      "tokens": [
+        ":big:",
+        ":mama:",
+        ":hat:"
+      ],
+      "item_id": "item_124",
+      "item_name": "Big Mama's Hat"
+    },
+    {
+      "tokens": [
+        ":titan:",
+        ":cape:"
+      ],
+      "item_id": "item_162",
+      "item_name": "Titan of Justice's Cape"
+    },
+    {
+      "tokens": [
+        ":titan:",
+        ":of:",
+        ":justice:",
+        ":cape:"
+      ],
+      "item_id": "item_162",
+      "item_name": "Titan of Justice's Cape"
+    },
+    {
+      "tokens": [
+        ":radiant:",
+        ":cape:"
+      ],
+      "item_id": "item_166",
+      "item_name": "Radiant Admiral's Cape"
+    },
+    {
+      "tokens": [
+        ":radiant:",
+        ":admiral:",
+        ":cape:"
+      ],
+      "item_id": "item_166",
+      "item_name": "Radiant Admiral's Cape"
+    },
+    {
+      "tokens": [
+        ":admiral:",
+        ":cape:"
+      ],
+      "item_id": "item_166",
+      "item_name": "Radiant Admiral's Cape"
+    },
+    {
+      "tokens": [
+        ":ashen:",
+        ":cape:"
+      ],
+      "item_id": "item_165",
+      "item_name": "Ashen's Cape"
+    },
+    {
+      "tokens": [
+        ":captain:",
+        ":zhen:",
+        ":cape:"
+      ],
+      "item_id": "item_184",
+      "item_name": "Captain Zhen's Cape"
+    },
+    {
+      "tokens": [
+        ":zhen:",
+        ":cape:"
+      ],
+      "item_id": "item_184",
+      "item_name": "Captain Zhen's Cape"
+    },
+    {
+      "tokens": [
+        ":marine:",
+        ":cape:"
+      ],
+      "item_id": "item_2",
+      "item_name": "Marine Cape"
+    },
+    {
+      "tokens": [
+        ":soul:",
+        ":king:",
+        ":scarf:"
+      ],
+      "item_id": "item_30",
+      "item_name": "Soul King Scarf"
+    },
+    {
+      "tokens": [
+        ":sk:",
+        ":scarf:"
+      ],
+      "item_id": "item_30",
+      "item_name": "Soul King Scarf"
+    },
+    {
+      "tokens": [
+        ":soul:",
+        ":king:",
+        ":guitar:"
+      ],
+      "item_id": "item_74",
+      "item_name": "Soul King Guitar"
+    },
+    {
+      "tokens": [
+        ":sk:",
+        ":guitar:"
+      ],
+      "item_id": "item_74",
+      "item_name": "Soul King Guitar"
+    },
+    {
+      "tokens": [
+        ":cupid:",
+        ":queen:",
+        ":outfit:"
+      ],
+      "item_id": "item_7",
+      "item_name": "Cupid Queen's Maid Outfit"
+    },
+    {
+      "tokens": [
+        ":cupid:",
+        ":maid:",
+        ":outfit:"
+      ],
+      "item_id": "item_7",
+      "item_name": "Cupid Queen's Maid Outfit"
+    },
+    {
+      "tokens": [
+        ":cupid:",
+        ":maid:"
+      ],
+      "item_id": "item_7",
+      "item_name": "Cupid Queen's Maid Outfit"
+    },
+    {
+      "tokens": [
+        ":q:",
+        ":maid:"
+      ],
+      "item_id": "item_7",
+      "item_name": "Cupid Queen's Maid Outfit"
+    },
+    {
+      "tokens": [
+        ":cupid:",
+        ":outfit:"
+      ],
+      "item_id": "item_79",
+      "item_name": "Cupid Queen Outfit"
+    },
+    {
+      "tokens": [
+        ":jester:",
+        ":outfit:"
+      ],
+      "item_id": "item_21",
+      "item_name": "Jester Outfit"
+    },
+    {
+      "tokens": [
+        ":all:",
+        ":seeing:",
+        ":eye:"
+      ],
+      "item_id": "item_31",
+      "item_name": "All Seeing Eye"
+    },
+    {
+      "tokens": [
+        ":ase:",
+        ":eye:"
+      ],
+      "item_id": "item_31",
+      "item_name": "All Seeing Eye"
+    },
+    {
+      "tokens": [
+        ":all:",
+        ":seeing:",
+        ":egg:"
+      ],
+      "item_id": "item_24",
+      "item_name": "All Seeing Egg"
+    },
+    {
+      "tokens": [
+        ":candy:",
+        ":cane:"
+      ],
+      "item_id": "item_16",
+      "item_name": "Candy Cane"
+    },
+    {
+      "tokens": [
+        ":prestige:",
+        ":candy:",
+        ":cane:"
+      ],
+      "item_id": "item_6",
+      "item_name": "Prestige Candy Cane"
+    },
+    {
+      "tokens": [
+        ":p:",
+        ":cc:"
+      ],
+      "item_id": "item_6",
+      "item_name": "Prestige Candy Cane"
+    },
+    {
+      "tokens": [
+        ":p:",
+        ":candy:",
+        ":cane:"
+      ],
+      "item_id": "item_6",
+      "item_name": "Prestige Candy Cane"
+    },
+    {
+      "tokens": [
+        ":world:",
+        ":ender:"
+      ],
+      "item_id": "item_35",
+      "item_name": "World Ender"
+    },
+    {
+      "tokens": [
+        ":prestige:",
+        ":world:",
+        ":ender:"
+      ],
+      "item_id": "item_8",
+      "item_name": "Prestige World Ender"
+    },
+    {
+      "tokens": [
+        ":p:",
+        ":we:"
+      ],
+      "item_id": "item_8",
+      "item_name": "Prestige World Ender"
+    },
+    {
+      "tokens": [
+        ":p:",
+        ":world:",
+        ":ender:"
+      ],
+      "item_id": "item_8",
+      "item_name": "Prestige World Ender"
+    },
+    {
+      "tokens": [
+        ":firework:",
+        ":lancer:"
+      ],
+      "item_id": "item_70",
+      "item_name": "Firework Lancer"
+    },
+    {
+      "tokens": [
+        ":prestige:",
+        ":firework:",
+        ":lancer:"
+      ],
+      "item_id": "item_9",
+      "item_name": "Prestige Firework Lancer"
+    },
+    {
+      "tokens": [
+        ":p:",
+        ":fl:"
+      ],
+      "item_id": "item_9",
+      "item_name": "Prestige Firework Lancer"
+    },
+    {
+      "tokens": [
+        ":devil:",
+        ":fruit:",
+        ":rod:"
+      ],
+      "item_id": "item_47",
+      "item_name": "Devil Fruit Rod"
+    },
+    {
+      "tokens": [
+        ":df:",
+        ":rod:"
+      ],
+      "item_id": "item_47",
+      "item_name": "Devil Fruit Rod"
+    },
+    {
+      "tokens": [
+        ":elo:",
+        ":hammer:"
+      ],
+      "item_id": "item_82",
+      "item_name": "Elo Hammer"
+    },
+    {
+      "tokens": [
+        ":dark:",
+        ":blade:"
+      ],
+      "item_id": "item_54",
+      "item_name": "Dark Blade (Yoru)"
+    },
+    {
+      "tokens": [
+        ":cool:",
+        ":shades:"
+      ],
+      "item_id": "item_1",
+      "item_name": "Cool Shades"
+    },
+    {
+      "tokens": [
+        ":love:",
+        ":shades:"
+      ],
+      "item_id": "item_209",
+      "item_name": "Love Shades"
+    },
+    {
+      "tokens": [
+        ":heart:",
+        ":shades:"
+      ],
+      "item_id": "item_209",
+      "item_name": "Love Shades"
+    },
+    {
+      "tokens": [
+        ":leg:",
+        ":chest:"
+      ],
+      "item_id": "item_102",
+      "item_name": "Legendary Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":legendary:",
+        ":chest:"
+      ],
+      "item_id": "item_102",
+      "item_name": "Legendary Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":legendary:",
+        ":fruit:",
+        ":chest:"
+      ],
+      "item_id": "item_102",
+      "item_name": "Legendary Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":rare:",
+        ":chest:"
+      ],
+      "item_id": "item_103",
+      "item_name": "Rare Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":rare:",
+        ":fruit:",
+        ":chest:"
+      ],
+      "item_id": "item_103",
+      "item_name": "Rare Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":mythical:",
+        ":chest:"
+      ],
+      "item_id": "item_32",
+      "item_name": "Mythical Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":mythical:",
+        ":fruit:",
+        ":chest:"
+      ],
+      "item_id": "item_32",
+      "item_name": "Mythical Fruit Chest"
+    },
+    {
+      "tokens": [
+        ":sp:",
+        ":reset:"
+      ],
+      "item_id": "item_198",
+      "item_name": "SP Reset Essence"
+    },
+    {
+      "tokens": [
+        ":sp:",
+        ":essence:"
+      ],
+      "item_id": "item_198",
+      "item_name": "SP Reset Essence"
+    },
+    {
+      "tokens": [
+        ":dark:",
+        ":root:"
+      ],
+      "item_id": "item_199",
+      "item_name": "Dark Root"
+    },
+    {
+      "tokens": [
+        ":d:",
+        ":root:"
+      ],
+      "item_id": "item_199",
+      "item_name": "Dark Root"
+    }
+  ]
+}
