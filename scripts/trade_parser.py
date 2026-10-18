@@ -24,7 +24,7 @@ logger = logging.getLogger("TradeParser")
 TOKEN_PATTERN = re.compile(
     r"<a?:([a-zA-Z0-9_]+):\d+>"                        # 1. Кастомные Discord эмодзи <:name:id>
     r"|(\d\ufe0f?\u20e3|🔟|[①-⑩❶-❿➀-➉➊-➓])"          # 2. Цифровые эмодзи (2️⃣, 🔟, ④)
-    r"|(🍶|🇻|🛡️|🛡|❓|❔|➡️|➡|👉|▶️)"                 # 3. Предметные и структурные Unicode эмодзи
+    r"|(🍶|🇻|🇪|🇶|🇧|🪽|🫴|🛡️|🛡|❓|❔|➡️|➡|👉|▶️)"  # 3. Предметные и структурные Unicode эмодзи
     r"|([\u2764\u2665\u2763\U0001F490-\U0001F49F\U0001F90D-\U0001F90F\U0001FA75-\U0001FA77]\ufe0f?)" # 4. Сердца
     r"|(\n)"                                           # 5. Перенос строки
 )
@@ -46,15 +46,16 @@ WORD_NUM_TOKENS: Dict[str, int] = {
 }
 
 # Операторы и модификаторы внутри эмодзи-сообщений
-FOR_TOKENS = {"for", "arrow", "to", "right_arrow", "rightarrow"}
+FOR_TOKENS = {"for", "arrow", "to", "right_arrow", "rightarrow", "w"}
 LF_TOKENS = {"lf", "looking_for", "lookingfor", "want", "w"}
-OFFER_PLACEHOLDERS = {"offer", "offers", "any", "anything", "question"}
+OFFER_PLACEHOLDERS = {"offer", "offers", "any", "anything", "question", "question_mark", "give_offer", "trade"}
 NLF_TOKENS = {"nlf", "not_looking_for", "no_want", "dont_want"}
 OR_TOKENS = {"or", "slash"}
 IGNORE_MODIFIERS = {
     "adds", "add", "small_adds", "smalladds", "strong_adds", "strongadds",
     "good_adds", "big_adds", "max", "wtt", "trading", "have", "h", "fast",
-    "dm", "pm", "plus", "and", "with"
+    "dm", "pm", "plus", "and", "with", "unobs", "verity", "how_many", "set",
+    "weapon", "merchant", "peli", "bounty"
 }
 
 
@@ -90,6 +91,11 @@ class GPOTradeParser:
             kw_norm = self._norm(kw)
             if kw_norm in self.name_to_id:
                 return self.name_to_id[kw_norm]
+        for kw in keywords:
+            kw_norm = self._norm(kw)
+            for name_norm, iid in self.name_to_id.items():
+                if kw_norm and (kw_norm in name_norm or name_norm in kw_norm):
+                    return iid
         for kw in keywords:
             kw_lower = kw.lower()
             for iid, item in self.items_dict.items():
@@ -127,6 +133,7 @@ class GPOTradeParser:
                 logger.error(f"Ошибка чтения {self.items_path}: {e}")
 
         # 2. Динамическая привязка точных ID из базы (с надежными fallback ID)
+        # --- Все виды All Seeing Eye ---
         id_ase          = self._find_id_by_keywords("All Seeing Eye", fallback="item_31")
         id_case         = self._find_id_by_keywords("Chromatic All Seeing Eye", fallback="item_14")
         id_sase         = self._find_id_by_keywords("All Seeing Shamrock", "Shamrock All Seeing Eye", fallback="item_18")
@@ -136,13 +143,17 @@ class GPOTradeParser:
         id_holly_ase    = self._find_id_by_keywords("All Seeing Holly", "Holly All Seeing Eye", fallback="item_28")
         id_cupid_ase    = self._find_id_by_keywords("Cupid's All Seeing Eye", "Cupid All Seeing Eye", fallback="item_29")
 
+        # --- Kaido & Capes & Outfits ---
         id_kaido_cape   = self._find_id_by_keywords("Dragon Emperor's Cape", "Kaido Cape", fallback="item_104")
         id_kaido_gourd  = self._find_id_by_keywords("Dragon Emperor's Gourd", "Kaido Gourd", fallback="item_105")
         id_kaido_outfit = self._find_id_by_keywords("Dragon Emperor's Outfit", "Kaido Outfit", fallback="item_108")
-        id_bm_cape      = self._find_id_by_keywords("Big Mama's Cape", "Big Mom Cape", fallback="item_119")
+        id_bm_cape      = self._find_id_by_keywords("Big Mama’s Cape", "Big Mama's Cape", "Big Mom Cape", fallback="item_119")
+        id_bm_fit       = self._find_id_by_keywords("Big Mama’s Outfit (Male)", "Big Mama's Outfit", "Big Mom Outfit", fallback="item_120")
+        id_bm_hat       = self._find_id_by_keywords("Big Mama’s Hat", "Big Mama's Hat", "Big Mom Hat", fallback="item_124")
         id_marine_cape  = self._find_id_by_keywords("Marine Cape", fallback="item_2")
         id_marine_cap   = self._find_id_by_keywords("Marine Cap", fallback="item_3")
 
+        # --- Оружие ---
         id_cc           = self._find_id_by_keywords("Candy Cane", fallback="item_16")
         id_pcc          = self._find_id_by_keywords("Prestige Candy Cane", fallback="item_6")
         id_icc          = self._find_id_by_keywords("Iceborn Candy Cane", fallback="item_11")
@@ -154,38 +165,119 @@ class GPOTradeParser:
         id_sos          = self._find_id_by_keywords("Sickle of Sorrow", fallback="item_56")
         id_flower_sword = self._find_id_by_keywords("Flower Sword", "Vista's Flower Sword", fallback="item_64")
         id_fest_lancer  = self._find_id_by_keywords("Festival Lancer", fallback="item_205")
-        id_fest_shield  = self._find_id_by_keywords("Festival Shield", fallback="item_206")
+        id_fest_shield  = self._find_id_by_keywords("Festival Shield", fallback="item_81")
         id_thunder_club = self._find_id_by_keywords("Thunder Club", fallback="item_45")
+        id_tttc         = self._find_id_by_keywords("Tung Tung Thunder Club", fallback="item_44")
         id_df_rod       = self._find_id_by_keywords("Devil Fruit Rod", fallback="item_47")
+        id_odm_rod      = self._find_id_by_keywords("ODM Rod", fallback="item_80")
+        id_ls_rod       = self._find_id_by_keywords("Lovestruck Rod", fallback="item_116")
+        id_isoh         = self._find_id_by_keywords("Inverted Spear Of Heaven", fallback="item_46")
+        id_sguns        = self._find_id_by_keywords("Stark Guns", fallback="item_61")
+        id_cbow         = self._find_id_by_keywords("Cupid’s Bow", "Cupid's Bow", fallback="item_140")
+        id_bbow         = self._find_id_by_keywords("Blessed Cupid’s Bow", "Blessed Cupid's Bow", fallback="item_48")
+        id_mtrident     = self._find_id_by_keywords("Mochi Trident", fallback="item_113")
+        id_ntrident     = self._find_id_by_keywords("Neptune's Trident", fallback="item_164")
+        id_sscepter     = self._find_id_by_keywords("Snowcap Scepter", fallback="item_42")
+        id_jscythe      = self._find_id_by_keywords("Demon Jester's Scythe", fallback="item_97")
+        id_elo          = self._find_id_by_keywords("Elo’s Sledgehammer", "Elo's Sledgehammer", fallback="item_82")
+        id_bcs          = self._find_id_by_keywords("Blo’s Crimson Sledgehammer", fallback="item_90")
+        id_bsledge      = self._find_id_by_keywords("Blo’s Sledgehammer", fallback="item_96")
+        id_boneshiver   = self._find_id_by_keywords("Boneshiver", fallback="item_152")
+        id_shusui       = self._find_id_by_keywords("Shusui", fallback="item_179")
+        id_napoleon     = self._find_id_by_keywords("Soul Cleaver", fallback="item_41")
+        id_race         = self._find_id_by_keywords("Roger’s Ace", "Roger's Ace", fallback="item_106")
 
+        # --- Prestige оружие и предметы ---
+        id_pfl          = self._find_id_by_keywords("Prestige Firework Lancer", fallback="item_9")
+        id_pfd          = self._find_id_by_keywords("Prestige Firework Daggers", fallback="item_15")
+        id_pfrl         = self._find_id_by_keywords("Prestige Firework Rocket Launcher", fallback="item_20")
+        id_pbag         = self._find_id_by_keywords("Prestige Fruitbag", fallback="item_13")
+        id_sfbag        = self._find_id_by_keywords("Spare Fruit Bag", fallback="item_121")
+
+        # --- Аксессуары и костюмы ---
         id_hagoromo     = self._find_id_by_keywords("Leo's Inferno Hagoromo", "Inferno Hagoromo", "Hagoromo", fallback="item_17")
         id_mpow         = self._find_id_by_keywords("Mega-Pow", "Mega Pow", fallback="item_37")
+        id_amp          = self._find_id_by_keywords("Anomalized Mega-Pow", fallback="item_12")
         id_bos          = self._find_id_by_keywords("Brand of Sacrifice", fallback="item_39")
         id_nfa          = self._find_id_by_keywords("Nightfall Aura", "Nightfall", fallback="item_40")
+        id_nfs          = self._find_id_by_keywords("Nightfall Shroud", fallback="item_51")
+        id_nfhs         = self._find_id_by_keywords("Nightfall Half Shroud", fallback="item_77")
         id_sks          = self._find_id_by_keywords("Soul King's Scarf", "Soul King Scarf", fallback="item_30")
         id_skg          = self._find_id_by_keywords("Soul King's Guitar", "Soul King Guitar", fallback="item_74")
         id_tbg          = self._find_id_by_keywords("True Ba'al's Guard", "True Baal's Guard", "True Baal Guard", fallback="item_99")
+        id_res_head     = self._find_id_by_keywords("Resurrected Ba'al's Head", "Resurrected Baal's Head", fallback="item_59")
+        id_hob          = self._find_id_by_keywords("Head of Ba'al", "Head of Baal", fallback="item_71")
         id_skeletal     = self._find_id_by_keywords("Dark Skeletal Shark Mask", "Dark Skeletal Mask", fallback="item_91")
-        id_valk_wings   = self._find_id_by_keywords("Valkyrie's Wings", "Valkyrie Wings", "Wings of the Valkyrie", fallback="item_197")
-        id_cupid_scarf  = self._find_id_by_keywords("Cupid's Scarf", "Cupid Queen's Scarf", "Cupid Scarf", fallback="item_78")
-        id_cupid_shield = self._find_id_by_keywords("Cupid's Shield", "Cupid Queen's Shield", "Cupid Shield", fallback="item_81")
-        id_cupid_outfit = self._find_id_by_keywords("Cupid Queen's Outfit", "Cupid's Outfit", "Cupid Outfit", fallback="item_79")
+        id_hfang        = self._find_id_by_keywords("Hollow’s Fang", "Hollow's Fang", fallback="item_95")
+        id_neko         = self._find_id_by_keywords("Snoozy Neko", fallback="item_85")
+        id_coyote       = self._find_id_by_keywords("Coyote Outfit", fallback="item_50")
+        id_toj_fit      = self._find_id_by_keywords("Titan of Justice’s Outfit", "Titan of Justice's Outfit", fallback="item_163")
+        id_toj_cape     = self._find_id_by_keywords("Titan of Justice’s Cape", "Titan of Justice's Cape", fallback="item_162")
+        id_hfit         = self._find_id_by_keywords("Hawk Eye’s Outfit", "Hawk Eye's Outfit", fallback="item_182")
+        id_hhat         = self._find_id_by_keywords("Hawkeye's Hat", "Hawkeye Hat", fallback="item_150")
+        id_rfit         = self._find_id_by_keywords("Roger’s Outfit", "Roger's Outfit", fallback="item_125")
+        id_rhat         = self._find_id_by_keywords("Roger’s Hat", "Roger's Hat", fallback="item_151")
+        id_jfit         = self._find_id_by_keywords("Jester’s Outfit", "Jester's Outfit", fallback="item_21")
+        id_jhat         = self._find_id_by_keywords("Jester’s Hat", "Jester's Hat", fallback="item_115")
+        id_jbox         = self._find_id_by_keywords("Jester Box", fallback="item_131")
+        id_mescarf      = self._find_id_by_keywords("Mochi Emperor’s Scarf", "Mochi Emperor's Scarf", fallback="item_114")
+        id_tdrums       = self._find_id_by_keywords("Tomoe Drums", fallback="item_180")
+        id_kcore        = self._find_id_by_keywords("Sea Serpent's Core & Kraken Core", "Kraken Core", fallback="item_136")
+        id_bswarm       = self._find_id_by_keywords("Bat Swarm", fallback="item_101")
+        id_tsss         = self._find_id_by_keywords("Triple Strongest Slash Scroll", fallback="item_175")
+        id_trc          = self._find_id_by_keywords("Time-Rift Capsule", fallback="item_55")
+        id_tailor       = self._find_id_by_keywords("Special Tailor Token", fallback="item_168")
+
+        # --- Крылья ---
+        id_vqw          = self._find_id_by_keywords("Virtuous Cupid Queen's Wings", fallback="item_57")
+        id_beqw         = self._find_id_by_keywords("Blessed Exalted Cupid Queen’s Wings", fallback="item_23")
+        id_ewings       = self._find_id_by_keywords("Exalted Cupid Queen’s Wings", fallback="item_67")
+        id_qwings       = self._find_id_by_keywords("Cupid Queen’s Wings", fallback="item_78")
+        id_ebw          = self._find_id_by_keywords("Endbringer Wings", fallback="item_83")
+
+        # --- Валькирии ---
+        id_ev           = self._find_id_by_keywords("Emerald Valkyrie", fallback="item_197")
+        id_stv          = self._find_id_by_keywords("Sparkle Time Valkyrie", fallback="item_196")
+        id_iv           = self._find_id_by_keywords("Ice Valkyrie", fallback="item_198")
+        id_vv           = self._find_id_by_keywords("Violet Valkyrie", fallback="item_199")
+        id_bv           = self._find_id_by_keywords("Blackvalk", fallback="item_200")
+        id_vh           = self._find_id_by_keywords("Valkyrie Helm", fallback="item_201")
+
+        # --- Cupid предметы ---
+        id_cupid_scarf  = self._find_id_by_keywords("Cupid's Scarf", "Cupid Queen's Scarf", "Cupid Scarf", fallback="item_94")
+        id_cupid_outfit = self._find_id_by_keywords("Cupid Queen’s Outfit", "Cupid's Outfit", "Cupid Outfit", fallback="item_79")
+        id_cqmaid       = self._find_id_by_keywords("Cupid Queen's Maid Outfit", fallback="item_7")
+        id_bscarf       = self._find_id_by_keywords("Blessed Cupid Queen’s Scarf", fallback="item_43")
+        id_bqfit        = self._find_id_by_keywords("Blessed Exalted Cupid Queen Outfit", fallback="item_49")
+
+        # --- Транспорт ---
+        id_cboat        = self._find_id_by_keywords("Coffin Boat", fallback="item_211")
+        id_hpod         = self._find_id_by_keywords("Hover Pod", fallback="item_65")
+        id_hb           = self._find_id_by_keywords("Hoverboard", fallback="item_213")
+        id_striker      = self._find_id_by_keywords("Striker", fallback="item_212")
+        id_fboat        = self._find_id_by_keywords("Flamingo Boat", fallback="item_68")
+
+        # --- Очки и питомцы ---
         id_cool_shades  = self._find_id_by_keywords("Cool Shades", fallback="item_1")
         id_love_shades  = self._find_id_by_keywords("Love Shades", "Heart Shades", fallback="item_209")
         id_bunyo        = self._find_id_by_keywords("Bunyo The Bunny", "Bunyo", fallback="item_34")
         id_hopiyo       = self._find_id_by_keywords("Hopiyo The Bunny", "Hopiyo", fallback="item_53")
         id_yukio        = self._find_id_by_keywords("Yukio The Bunny", "Yukio", fallback="item_32")
 
+        # --- Сундуки и расходники ---
         id_lc           = self._find_id_by_keywords("Legendary Fruit Chest", fallback="item_102")
         id_mc           = self._find_id_by_keywords("Mythical Fruit Chest", fallback="item_58")
         id_rc           = self._find_id_by_keywords("Rare Fruit Chest", fallback="item_208")
+        id_10mc         = self._find_id_by_keywords("10x  Mythical Fruit Chest", "10x Mythical Fruit Chest", fallback="item_26")
+        id_10lc         = self._find_id_by_keywords("10x Legendary Fruit Chest", fallback="item_60")
+        id_10rc         = self._find_id_by_keywords("10x Rare Fruit Chest", fallback="item_207")
         id_fish_bait    = self._find_id_by_keywords("300x Legendary Fish Bait", "Legendary Fish Bait", "Fish Bait", fallback="item_73")
         id_race_reroll  = self._find_id_by_keywords("Race Reroll", "Max Race Reroll", fallback="item_195")
         id_sp           = self._find_id_by_keywords("SP Reset Essence", fallback="item_194")
         id_droot        = self._find_id_by_keywords("Dark Root", fallback="item_193")
 
-        # 3. Явные правила для эмодзи и их комбинаций
-        # --- Все виды All Seeing Eye (строго разделены!) ---
+        # 3. Регистрация строгих паттернов и комбинаций токенов
+        # --- Все виды All Seeing Eye ---
         self._register_pattern(id_ase, ("ase",), ("all_seeing_eye",))
         self._register_pattern(id_case, ("case",), ("chromatic_ase",), ("chromatic", "ase"))
         self._register_pattern(id_sase, ("sase",), ("shamrock_ase",), ("shamrock", "ase"))
@@ -195,15 +287,17 @@ class GPOTradeParser:
         self._register_pattern(id_holly_ase, ("hollyase",), ("holly_ase",), ("hase",), ("holly", "ase"))
         self._register_pattern(id_cupid_ase, ("cqase",), ("cupid_ase",), ("case_cupid",), ("cupid", "ase"))
 
-        # --- Kaido & Capes (строго отличаем Gourd от Cape!) ---
+        # --- Kaido & Big Mama & Marine ---
         self._register_pattern(id_kaido_gourd, ("kaido", "gourd"), ("kaido_gourd",), ("gourd",), ("de_gourd",))
         self._register_pattern(id_kaido_cape, ("kaido", "cape"), ("kaido_cape",), ("de_cape",), ("dec",))
         self._register_pattern(id_kaido_outfit, ("kaido", "outfit"), ("kaido_outfit",), ("de_outfit",))
-        self._register_pattern(id_bm_cape, ("big", "mom", "cape"), ("big_mom", "cape"), ("bm_cape",), ("bmc",))
+        self._register_pattern(id_bm_cape, ("big", "mom", "cape"), ("big_mom", "cape"), ("bm_cape",), ("bmc",), ("bigmom", "cape"))
+        self._register_pattern(id_bm_fit, ("big", "mom", "outfit"), ("big_mom", "outfit"), ("bm_fit",), ("bmfit",), ("bigmom", "outfit"))
+        self._register_pattern(id_bm_hat, ("big", "mom", "hat"), ("big_mom", "hat"), ("bm_hat",), ("bmhat",), ("bigmom", "hat"))
         self._register_pattern(id_marine_cape, ("marine", "cape"), ("marine_cape",), ("mcape",))
         self._register_pattern(id_marine_cap, ("marine", "cap"), ("marine_cap",), ("mcap",))
 
-        # --- Оружие и комбо-эмодзи ---
+        # --- Оружие и комбо ---
         self._register_pattern(id_cc, ("cc",), ("candy_cane",), ("candycane",))
         self._register_pattern(id_pcc, ("pcc",), ("prestige_cc",), ("prestige", "cc"))
         self._register_pattern(id_icc, ("icc",), ("iceborn_cc",), ("iceborn", "cc"))
@@ -213,25 +307,101 @@ class GPOTradeParser:
         self._register_pattern(id_yoru, ("yoru",), ("db",), ("dark_blade",))
         self._register_pattern(id_kikoku, ("kikoku",))
         self._register_pattern(id_sos, ("sos",), ("sickle_of_sorrow",))
-        self._register_pattern(id_flower_sword, ("flower", "sword"), ("flower_sword",))
-        self._register_pattern(id_fest_shield, ("festival_lancer", "shield"), ("festival", "shield"), ("festival_shield",))
+        self._register_pattern(id_flower_sword, ("flower", "sword"), ("flower_sword",), ("flowers", "sword"))
+        self._register_pattern(id_fest_shield, ("festival_lancer", "shield"), ("festival", "shield"), ("festival_shield",), ("fshield",))
         self._register_pattern(id_fest_lancer, ("festival_lancer",), ("festival", "lancer"), ("flancer",))
         self._register_pattern(id_thunder_club, ("thunder_club",), ("thunder", "club"), ("tc",))
-        self._register_pattern(id_df_rod, ("df_rod",), ("df", "rod"), ("devil_fruit_rod",))
+        self._register_pattern(id_tttc, ("tttc",), ("tung_club",), ("tung_thunder_club",), ("tung", "club"))
+        self._register_pattern(id_df_rod, ("df_rod",), ("df", "rod"), ("devil_fruit_rod",), ("rumbling",), ("rumbling_rod",), ("rumbling", "rod"))
+        self._register_pattern(id_odm_rod, ("odm_rod",), ("odm", "rod"), ("odm",))
+        self._register_pattern(id_ls_rod, ("lsrod",), ("lovestruck_rod",), ("lovestruck", "rod"))
+        self._register_pattern(id_isoh, ("isoh",), ("toji",), ("toji", "spear"), ("toji", "weapon"), ("inverted_spear",))
+        self._register_pattern(id_sguns, ("sguns",), ("stark_guns",), ("stark_gun",), ("stark", "gun"), ("stark", "guns"))
+        self._register_pattern(id_cbow, ("cbow",), ("cupid_bow",), ("cupid", "bow"))
+        self._register_pattern(id_bbow, ("bbow",), ("blessed_bow",), ("blessed", "bow"), ("blessed", "cupid", "bow"))
+        self._register_pattern(id_mtrident, ("mtrident",), ("mochi_trident",), ("mochi", "trident"), ("katakuri", "trident"), ("katakuri", "weapon"))
+        self._register_pattern(id_ntrident, ("ntrident",), ("neptune_trident",), ("neptune", "trident"))
+        self._register_pattern(id_sscepter, ("sscepter",), ("snowcap_scepter",), ("snowcap", "scepter"))
+        self._register_pattern(id_jscythe, ("jscythe",), ("jester_scythe",), ("jester", "scythe"), ("scythe",))
+        self._register_pattern(id_elo, ("elo",), ("elohammer",), ("elo_hammer",), ("elo_sledgehammer",), ("elo", "hammer"))
+        self._register_pattern(id_bcs, ("bcs",), ("blo_crimson_hammer",), ("blo", "crimson", "hammer"))
+        self._register_pattern(id_bsledge, ("bsledge",), ("blo_hammer",), ("blo_sledge",), ("blo", "hammer"), ("blo", "sledge"))
+        self._register_pattern(id_boneshiver, ("boneshiver",))
+        self._register_pattern(id_shusui, ("shusui",))
+        self._register_pattern(id_napoleon, ("soul_cleaver",), ("napoleon",))
+        self._register_pattern(id_race, ("race",), ("roger_ace",), ("roger", "ace"))
 
-        # --- Аксессуары и комбо-эмодзи ---
+        # --- Prestige экипировка ---
+        self._register_pattern(id_pfl, ("pfl",), ("pflancer",), ("prestige_lancer",), ("prestige", "lancer"))
+        self._register_pattern(id_pfd, ("pfd",), ("pfdaggers",), ("prestige_daggers",), ("prestige", "daggers"))
+        self._register_pattern(id_pfrl, ("pfrl",), ("prestige_rocket_launcher",), ("prestige", "rocket_launcher"))
+        self._register_pattern(id_pbag, ("pbag",), ("prestige_bag",), ("prestige_fruitbag",), ("prestige", "bag"))
+        self._register_pattern(id_sfbag, ("sfbag",), ("spare_bag",), ("spare_fruit_bag",), ("spare", "bag"))
+
+        # --- Аксессуары и костюмы ---
         self._register_pattern(id_hagoromo, ("hagoromo",), ("leos_inferno_hagoromo",))
         self._register_pattern(id_mpow, ("mpow",), ("mega_pow",), ("megapow",))
+        self._register_pattern(id_amp, ("amp",), ("ampow",), ("anomalized_megapow",), ("anomalized_mega_pow",), ("anomalized", "mpow"), ("anomalized", "mega_pow"))
         self._register_pattern(id_bos, ("bos",), ("brand_of_sacrifice",))
         self._register_pattern(id_nfa, ("nfa",), ("nightfall_aura",), ("nightfall",))
+        self._register_pattern(id_nfs, ("nfs",), ("nightfall_shroud",), ("nightfall", "shroud"))
+        self._register_pattern(id_nfhs, ("nfhs",), ("nightfall_half_shroud",), ("nightfall", "half", "shroud"))
         self._register_pattern(id_sks, ("sks",), ("soul_king_scarf",))
         self._register_pattern(id_skg, ("skg",), ("soul_king_guitar",))
         self._register_pattern(id_tbg, ("truebaalsguard",), ("true_baals_guard",), ("tbg",))
+        self._register_pattern(id_res_head, ("res_head",), ("reshead",), ("resurrected_baals_head",), ("resurrected_baal_head",), ("resurrected", "head"), ("res", "head"), ("truebaalssnakehead",), ("true_baals_snake_head",), ("true_baal_snake_head",))
+        self._register_pattern(id_hob, ("hob",), ("head_of_baal",), ("baal_head",), ("baal", "head"))
         self._register_pattern(id_skeletal, ("darkskeletalmask",), ("dark_skeletal_mask",), ("skeletal_mask",))
-        self._register_pattern(id_valk_wings, ("v_flag", "wings"), ("valk", "wings"), ("valkyrie", "wings"), ("valkyrie_wings",), ("wings",))
-        self._register_pattern(id_cupid_shield, ("cupid", "scarf", "shield"), ("cupid", "shield"), ("cupid_shield",))
-        self._register_pattern(id_cupid_scarf, ("cupid", "scarf"), ("cupid_scarf",))
-        self._register_pattern(id_cupid_outfit, ("outfit", "cupid"), ("cupid", "outfit"), ("cupid_outfit",))
+        self._register_pattern(id_hfang, ("hfang",), ("hollowfang",), ("hollow_fang",), ("hollows_fang",), ("hollow", "fang"))
+        self._register_pattern(id_neko, ("neko",), ("snoozyneko",), ("snoozy_neko",), ("snoozy", "neko"))
+        self._register_pattern(id_coyote, ("coyote",), ("coyote_outfit",), ("stark_outfit",), ("stark", "outfit"))
+        self._register_pattern(id_toj_fit, ("tojfit",), ("toj_fit",), ("toji", "outfit"), ("titan_of_justice_outfit",), ("titan", "outfit"), ("titan", "justice", "outfit"))
+        self._register_pattern(id_toj_cape, ("tojcape",), ("toj_cape",), ("toji", "cape"), ("titan_of_justice_cape",), ("titan", "cape"), ("titan", "justice", "cape"))
+        self._register_pattern(id_hfit, ("hfit",), ("hawkeye_outfit",), ("hawkeye", "outfit"), ("hawk", "outfit"))
+        self._register_pattern(id_hhat, ("hhat",), ("hawkeye_hat",), ("hawkeye", "hat"), ("hawk", "hat"))
+        self._register_pattern(id_rfit, ("rfit",), ("roger_outfit",), ("roger", "outfit"))
+        self._register_pattern(id_rhat, ("rhat",), ("roger_hat",), ("roger", "hat"))
+        self._register_pattern(id_jfit, ("jfit",), ("jester_outfit",), ("jester", "outfit"))
+        self._register_pattern(id_jhat, ("jhat",), ("jester_hat",), ("jester", "hat"))
+        self._register_pattern(id_jbox, ("jbox",), ("jester_box",), ("jester", "box"))
+        self._register_pattern(id_mescarf, ("mescarf",), ("mochi_scarf",), ("katakuri", "scarf"))
+        self._register_pattern(id_tdrums, ("tdrums",), ("tomoe_drums",), ("drums",), ("susanoo",))
+        self._register_pattern(id_kcore, ("kcore",), ("kraken_core",), ("sea_serpent_core",), ("kraken", "core"), ("core",))
+        self._register_pattern(id_bswarm, ("bswarm",), ("bat_swarm",), ("bats",))
+        self._register_pattern(id_tsss, ("tsss",), ("scroll",), ("slash_scroll",))
+        self._register_pattern(id_trc, ("trc",), ("capsule",), ("timerift_capsule",))
+        self._register_pattern(id_tailor, ("sttoken",), ("tailortoken",), ("tailor_token",), ("tailor", "token"), ("tailor",))
+
+        # --- Крылья ---
+        self._register_pattern(id_vqw, ("vqw",), ("virtuous_wings",), ("virtuous", "wings"), ("v_flag", "wings"), ("v_flag", "q_flag", "wings"))
+        self._register_pattern(id_beqw, ("beqw",), ("blessed_wings",), ("blessed", "wings"), ("blessed", "exalted", "wings"), ("b_flag", "e_flag", "q_flag", "wings"), ("b_flag", "wings"), ("blessed", "wings"))
+        self._register_pattern(id_ewings, ("ewings",), ("exalted_wings",), ("exalted", "wings"), ("e_flag", "q_flag", "wings"), ("e_flag", "wings"))
+        self._register_pattern(id_qwings, ("qwings",), ("cupid_wings",), ("queen_wings",), ("wings",), ("q_flag", "wings"))
+        self._register_pattern(id_ebw, ("ebw",), ("endbringer_wings",), ("endbringer", "wings"))
+
+        # --- Валькирии ---
+        self._register_pattern(id_ev, ("ev",), ("emerald_valk",), ("emerald", "valk"), ("emerald", "valkyrie"), ("valk", "wings"), ("valkyrie", "wings"))
+        self._register_pattern(id_stv, ("stv",), ("sparkle_time_valk",), ("sparkle", "valk"))
+        self._register_pattern(id_iv, ("iv",), ("ice_valk",), ("ice", "valk"))
+        self._register_pattern(id_vv, ("vv",), ("violet_valk",), ("violet", "valk"))
+        self._register_pattern(id_bv, ("bv",), ("blackvalk",), ("black_valk",))
+        self._register_pattern(id_vh, ("vh",), ("valkyrie_helm",), ("valk_helm",), ("valk",))
+
+        # --- Cupid предметы ---
+        self._register_pattern(id_cupid_scarf, ("cupid", "scarf"), ("cupid_scarf",), ("qscarf",))
+        self._register_pattern(id_cupid_outfit, ("outfit", "cupid"), ("cupid", "outfit"), ("cupid_outfit",), ("qfit",))
+        self._register_pattern(id_cqmaid, ("cqmaid",), ("pmaidfit",), ("maid_fit",), ("cupid_maid",), ("cupid", "maid"), ("cupid", "maid", "outfit"))
+        self._register_pattern(id_bscarf, ("bscarf",), ("blessed_cupid_scarf",), ("blessed", "scarf"))
+        self._register_pattern(id_bqfit, ("bqfit",), ("blessed_cupid_outfit",), ("blessed", "outfit"))
+
+        # --- Транспорт ---
+        self._register_pattern(id_cboat, ("cboat",), ("coffinboat",), ("coffin_boat",), ("coffin", "boat"))
+        self._register_pattern(id_hpod, ("hpod",), ("hover_pod",), ("hoverpod",), ("hover", "pod"))
+        self._register_pattern(id_hb, ("hb",), ("hoverboard",))
+        self._register_pattern(id_striker, ("striker",))
+        self._register_pattern(id_fboat, ("fboat",), ("flamingo_boat",), ("flamingo", "boat"))
+
+        # --- Очки и кролики ---
         self._register_pattern(id_love_shades, ("heart", "shades"), ("love_shades",), ("heart_shades",))
         self._register_pattern(id_cool_shades, ("shades",), ("cool_shades",), ("cs",))
         self._register_pattern(id_bunyo, ("bunyo",))
@@ -242,7 +412,10 @@ class GPOTradeParser:
         self._register_pattern(id_lc, ("lc",), ("leg", "chest"), ("legendary", "chest"), ("leg_chest",))
         self._register_pattern(id_mc, ("mc",), ("mythic", "chest"), ("mythical", "chest"), ("mythic_chest",))
         self._register_pattern(id_rc, ("rc",), ("rare", "chest"), ("rare_chest",))
-        self._register_pattern(id_fish_bait, ("legendary", "fish_bait"), ("legendary", "fish", "bait"), ("fish_bait",), ("fish", "bait"))
+        self._register_pattern(id_10lc, ("10x_lc",), ("10xlc",))
+        self._register_pattern(id_10mc, ("10x_mc",), ("10xmc",))
+        self._register_pattern(id_10rc, ("10x_rc",), ("10xrc",))
+        self._register_pattern(id_fish_bait, ("legendary", "fish_bait"), ("legendary", "fish", "bait"), ("fish_bait",), ("fish", "bait"), ("leg_fish",))
         self._register_pattern(id_race_reroll, ("racereroll",), ("race_reroll",), ("race", "reroll"), ("rr",))
         self._register_pattern(id_sp, ("sp",), ("sp_reset",))
         self._register_pattern(id_droot, ("dr",), ("dark_root",), ("droot",))
@@ -251,10 +424,13 @@ class GPOTradeParser:
         fruits = [
             ("mochi", "Mochi"), ("venom", "Venom"), ("pika", "Pika"), ("tori", "Tori"),
             ("ope", "Ope"), ("buddha", "Buddha"), ("magu", "Magu"), ("mera", "Mera"),
-            ("goro", "Goro"), ("suna", "Suna"), ("dragon", "Dragon"), ("leopard", "Leopard"),
-            ("soul", "Soul"), ("ptera", "Pteranodon"), ("pteranodon", "Pteranodon"),
+            ("goro", "Goro"), ("suna", "Suna"), ("dragon", "Dragon"), ("ryu", "Dragon"),
+            ("leopard", "Leopard"), ("leo", "Leopard"), ("soul", "Soul"),
+            ("ptera", "Pteranodon"), ("pteranodon", "Pteranodon"),
             ("gura", "Gura"), ("zushi", "Zushi"), ("ito", "Ito"), ("kage", "Kage"),
-            ("yami", "Yami"), ("paw", "Paw"), ("smoke", "Smoke")
+            ("yami", "Yami"), ("paw", "Paw"), ("smoke", "Smoke"),
+            ("yuki", "Yuki"), ("biscuit", "Biscuit"), ("hie", "Hie"), ("hiei", "Hie"),
+            ("goru", "Goru")
         ]
         for token_name, canonical in fruits:
             fid = self._find_id_by_keywords(canonical, fallback="")
@@ -307,6 +483,16 @@ class GPOTradeParser:
                     raw_tokens.append(("SYM", "gourd"))
                 elif uni_sym == "🇻":
                     raw_tokens.append(("SYM", "v_flag"))
+                elif uni_sym == "🇪":
+                    raw_tokens.append(("SYM", "e_flag"))
+                elif uni_sym == "🇶":
+                    raw_tokens.append(("SYM", "q_flag"))
+                elif uni_sym == "🇧":
+                    raw_tokens.append(("SYM", "b_flag"))
+                elif uni_sym == "🪽":
+                    raw_tokens.append(("SYM", "wings"))
+                elif uni_sym == "🫴":
+                    raw_tokens.append(("OFFER_PH", "offer"))
                 elif uni_sym in ("🛡️", "🛡"):
                     raw_tokens.append(("SYM", "shield"))
                 elif uni_sym in ("❓", "❔"):
@@ -343,9 +529,9 @@ class GPOTradeParser:
         return merged_tokens
 
     def _match_symbol_sequence(self, symbols: List[str], idx: int) -> Tuple[Optional[str], int]:
-        """Жадный поиск самой длинной комбинации символов (от 3 до 1 токена)."""
+        """Жадный поиск самой длинной комбинации символов (от 4 до 1 токена)."""
         n = len(symbols)
-        for span in (3, 2, 1):
+        for span in (4, 3, 2, 1):
             if idx + span <= n:
                 seq = tuple(symbols[idx : idx + span])
                 if seq in self.seq_map:
@@ -436,11 +622,14 @@ class GPOTradeParser:
     def parse_message(self, message: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """
         Разбирает сообщение Discord на чистые пары OFFER и WANT.
-        Сообщения без кастомных эмодзи (текстовый спам, реклама кланов) отбрасываются.
+        Сообщения без кастомных эмодзи или системных Unicode-символов отбрасываются.
         """
         raw_text = message.get("content", "")
-        if not raw_text or "<" not in raw_text:
-            # В настоящих эмодзи-трейдах GPO всегда есть хотя бы один кастомный Discord эмодзи <:...:id>
+        if not raw_text:
+            return None
+
+        # Проверяем наличие кастомных эмодзи (<...>) либо предметных/структурных символов трейдинга
+        if "<" not in raw_text and not any(sym in raw_text for sym in ("🍶", "🇻", "🇪", "🇶", "🇧", "🪽", "🫴")):
             return None
 
         tokens = self.tokenize_emoji_stream(raw_text)
@@ -462,7 +651,6 @@ class GPOTradeParser:
                 filtered_tokens.append((ttype, tval))
 
         # 2. Разбиваем поток токенов на независимые клаузы вокруг операторов FOR и LF
-        # Это идеально решает проблему нескольких сделок в одном сообщении ([01], [03], [05], [08], [24])
         total_offer: List[Tuple[str, int]] = []
         total_want: List[Tuple[str, int]] = []
 
@@ -476,8 +664,6 @@ class GPOTradeParser:
             last_primary_offer_item: Optional[str] = None
 
             # Вычисляем границы сегментов между операторами
-            # Если между двумя FOR стоит несколько предметов (как в [03], [05], [08]),
-            # последний предмет/число перед вторым FOR относится к левой части второго FOR!
             segments: List[List[Tuple[str, Any]]] = []
             start = 0
             for op_idx in op_indices:
@@ -492,12 +678,10 @@ class GPOTradeParser:
                 mid_seg = segments[k + 1]
 
                 if op_curr == "FOR" and op_next == "FOR" and mid_seg:
-                    # Ищем точку разделения между WANT первой сделки и OFFER второй сделки
                     split_pos = self._find_split_between_wants_and_next_offer(mid_seg)
                     want_part = mid_seg[:split_pos]
                     next_offer_part = mid_seg[split_pos:]
-                    segments[k + 1] = want_part
-                    # Сохраняем отрезанный хвост как начало следующего сегмента
+                    # Сохраняем разделенный кортеж частей
                     segments[k + 1] = (want_part, next_offer_part)  # type: ignore
 
             # Проходим по всем операторам и собираем Offer / Want
@@ -519,7 +703,6 @@ class GPOTradeParser:
                     total_offer.extend(lhs_items)
                     total_want.extend(rhs_items)
                 elif op_type == "LF":
-                    # Если перед LF были предметы (и это первый оператор), они идут в Offer, а после LF — в Want
                     if k == 0 and carry_left:
                         lhs_items = self._parse_item_group(carry_left)
                         total_offer.extend(lhs_items)
@@ -528,14 +711,13 @@ class GPOTradeParser:
 
                 carry_left = next_carry
 
-        # 3. Умная консолидация (не суммируем количество, если один и тот же предмет упомянут и до, и после LF в [01])
+        # 3. Умная консолидация
         offer_dict: Dict[str, int] = {}
         for iid, q in total_offer:
             offer_dict[iid] = offer_dict.get(iid, 0) + q
 
         want_dict: Dict[str, int] = {}
         for iid, q in total_want:
-            # Если в [01] человек написал "FOR hagoromo + Blossom_ASE LF hagoromo", не делаем hagoromo x2
             if iid in want_dict and q == 1 and want_dict[iid] == 1:
                 continue
             want_dict[iid] = want_dict.get(iid, 0) + q
@@ -565,16 +747,22 @@ class GPOTradeParser:
             if ttype == "NL":
                 return idx
 
-        # 2. Если внутри есть цифра (например: `<:baal_ase:> 7️⃣`), делим прямо перед цифрой
+        # 2. Защита от мультитрейдов с плейсхолдерами (Offer / ❓ / 🫴):
+        # Если в начале идет OFFER_PH, он завершает первую сделку, а последующие токены относятся ко второй!
+        for idx, (ttype, _) in enumerate(mid_tokens):
+            if ttype == "OFFER_PH":
+                return idx + 1
+
+        # 3. Если внутри есть цифра (например: `<:baal_ase:> 7️⃣`), делим прямо перед цифрой
         for idx in range(1, len(mid_tokens)):
             if mid_tokens[idx][0] == "QTY":
                 return idx
 
-        # 3. Если идет два предмета подряд (например: `<:venom:> <:Max:> <:RaceReroll:>` или `<:lc:> <:SKG:>`),
+        # 4. Если идет два предмета подряд (например: `<:venom:> <:Max:> <:RaceReroll:>` или `<:lc:> <:SKG:>`):
         # первый распознанный предмет относится к WANT первого FOR, а всё остальное — к OFFER второго FOR.
         idx = 0
         n = len(mid_tokens)
-        while idx < n and mid_tokens[idx][0] in ("MOD", "QTY"):
+        while idx < n and mid_tokens[idx][0] in ("MOD", "QTY", "OFFER_PH"):
             idx += 1
 
         if idx < n and mid_tokens[idx][0] == "SYM":
@@ -586,10 +774,9 @@ class GPOTradeParser:
             _, span = self._match_symbol_sequence(sym_chain, 0)
             if span > 0:
                 end_of_first_item = idx + span
-                # Захватываем модификаторы типа <:Small_Adds:> сразу после первого предмета, если они есть
                 while end_of_first_item < n and mid_tokens[end_of_first_item][0] == "MOD":
                     if mid_tokens[end_of_first_item][1] == "max":
-                        break  # <:Max:> относится к следующему предмету (например, <:Max:> <:Fish_Bait:>)
+                        break
                     end_of_first_item += 1
                 return end_of_first_item
 
@@ -626,40 +813,35 @@ class GPOTradeParser:
 if __name__ == "__main__":
     parser = GPOTradeParser()
 
-    # Все 24 твоих реальных примера из логов
-    raw_samples = [
-        '<:CC:1523897313964068963> <:mc:1519457464091803668> <:FOR:1433910700975067146> <:hagoromo:1519457338124402808> <:Blossom_ASE:1543808857892192257>  <:LF:1433928971099177063> <:hagoromo:1519457338124402808>',
-        '<:Leopard:1543808730485755905> <:FOR:1433910700975067146> <:Offer:1433929248669958276>',
-        '<:Max:1433929025021153311> <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:venom:1519457841138761909>  <:Max:1433929025021153311> <:RaceReroll:1523925540392927293> <:FOR:1433910700975067146> <:Pika:1523917220944547850>',
-        '<:df_rod:1519457245958508696> <:FOR:1433910700975067146> 2️⃣ <:mc:1519457464091803668> <:Small_Adds:1433929646512144454>',
-        '8️⃣ <:mc:1519457464091803668> <:FOR:1433910700975067146> <:baal_ase:1519457131697541141>  7️⃣ <:FOR:1433910700975067146> <:ase:1519457110465839155> <:OR:1433929275144142879> <:sks:1519457776424845494>',
-        '<:sase:1519457756740976852> <:blo_ase:1519457155537961133> <:ase:1519457110465839155> <:FOR:1433910700975067146> <:Offer:1433929248669958276>',
-        '<:df_rod:1519457245958508696> <:dragon:1519457318461247618> <:FOR:1433910700975067146> ❓',
-        '<:Kaido:1543801666535555133> 🍶 <:FOR:1433910700975067146> <:lc:1038468258975719444>  <:SKG:1523898730019815494> <:FOR:1433910700975067146> <:Max:1433929025021153311> <:Fish_Bait:1434690900193448059>',
-        '<:HWE:1523899219830902844> <:SOS:1523896968592490506> <:Flower:1468057888248561694> <:Sword:1433929727474663494> 🇻 <:Wings:1433929830466064394> <:FOR:1433910700975067146> <:Offer:1433929248669958276>',
-        '<:Pika:1523917220944547850> <:FOR:1433910700975067146> <:festival_lancer:1559587987220598985> <:OR:1433929275144142879> <:festival_lancer:1559587987220598985> 🛡️',
-        '<:mochi:1519457484874448966> <:FOR:1433910700975067146> <:Offer:1433929248669958276>',
-        '<:hollyase:1519457376564936804> <:sase:1519457756740976852> <:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:CC:1523897313964068963> <:mpow:1523898619789443113> <:Small_Adds:1433929646512144454>',
-        'Perm Invite To Crew "AFT"   #7 PRICE 2-3 MC /  Offers ﺤ═══════ι▬▬⊱🔫 ⊰▬▬ι═══════ﺤ ✦ ADVANTAGES: ⚔️  Prestige Yoru! 👑  Exclusive title (Collector) 🍀  No more Infamy farming! 🤝 We invite first! 👑 Top #7 crew ﺤ═══════ι▬▬⊱𓆩🔥 𓆪⊰▬▬ι═══════ﺤ',
-        '<:NFA:1555378885401649192> <:FOR:1433910700975067146> 🇻 <:Wings:1433929830466064394> <:Adds:1433909995426152519>',
-        '4️⃣  <:mc:1519457464091803668> 🇻 <:Wings:1433929830466064394> <:yoru:1519457861342593318><:SOS:1523896968592490506>  <:FOR:1433910700975067146> <:ase:1519457110465839155>',
-        '<:Kikoku:1120440014883537047> <:lc:1038468258975719444> <:lc:1038468258975719444> <:FOR:1433910700975067146> <:Offer:1433929248669958276>',
-        '<:BOS:1555378662608470107> <:FOR:1433910700975067146> <:hopiyo:1523896400025223168>',
-        '<:Thunder_Club:1543808596595441664> <:mc:1519457464091803668> <:FOR:1433910700975067146> <:dragon:1519457318461247618>',
-        '<:mpow:1523898619789443113> <:BOS:1555378662608470107> <:Cupid:1433910376847904830> <:Scarf:1433929454748565546> 🛡️ <:FOR:1433910700975067146> <:ase:1519457110465839155>',
-        '<:Blossom_ASE:1543808857892192257> <:FOR:1433910700975067146> <:ase:1519457110465839155> <:Strong_Adds:1433929688207855769>',
-        '<:sase:1519457756740976852><:Bunyo:1523916102147768330><:FOR:1433910700975067146><:hagoromo:1519457338124402808><:OR:1433929275144142879><:Offer:1433929248669958276>',
-        '2️⃣ 0️⃣ <:Legendary:1434728891926450276> <:Fish_Bait:1434690900193448059> <:FOR:1433910700975067146> <:smoke:1523902047068356639>',
-        '<:yoru:1519457861342593318> <:buddha:1519457180921757746> <:ptera:1519457706178515016> <:Outfit:1433929299475566592> <:Cupid:1433910376847904830> <:TrueBaalsGuard:1523900180175257742> <:FOR:1433910700975067146> <:mc:1519457464091803668> 2️⃣ <:OR:1433929275144142879> <:df_rod:1519457245958508696>',
-        '<:DarkSkeletalMask:1523918005849817120><:FOR:1433910700975067146><:Offer:1433929248669958276> <:LF:1433928971099177063><:mochi:1519457484874448966><:OR:1433929275144142879><:ptera:1519457706178515016>',
-    ]
-
-    for idx, raw in enumerate(raw_samples, 1):
-        res = parser.parse_message({"id": str(idx), "author_id": f"u_{idx}", "content": raw})
-        print(f"[{idx:02d}] RAW    : {raw}")
+    # Если передан аргумент из командной строки — парсим его
+    if len(sys.argv) > 1:
+        trade_str = " ".join(sys.argv[1:])
+        res = parser.parse_message({"id": "cli", "author_id": "test_user", "content": trade_str})
+        print(f"RAW    : {trade_str}")
         if not res:
-            print("     PARSED : [IGNORED - SPAM / NO EMOJI TRADE]")
+            print("PARSED : [IGNORED - NO EMOJI TRADE]")
         else:
             off_str = ", ".join(f"{parser.get_item_name(i)} (x{q})" for i, q in res["offer_items"]) or "None"
             wnt_str = ", ".join(f"{parser.get_item_name(i)} (x{q})" for i, q in res["want_items"]) or "None"
-            print(f"     PARSED : OFFER: [{off_str}]  ==>  WANT: [{wnt_str}]")
+            print(f"PARSED : OFFER: [{off_str}]  ==>  WANT: [{wnt_str}]")
+    else:
+        # Тестовый набор для валидации всех фиксов и новых токенов
+        print("--- GPO Trade Parser Verification Suite ---")
+        test_cases = [
+            ('<:CC:1523897313964068963> <:mc:1519457464091803668> <:FOR:1433910700975067146> <:hagoromo:1519457338124402808>', "Candy Cane + MC for Hagoromo"),
+            ('<:Leopard:1543808730485755905> <:FOR:1433910700975067146> <:Offer:1433929248669958276> \n<:Stark:1433956131503603754> <:Gun:1433910955997397154> <:FOR:1433910700975067146> <:mc:1519457464091803668>', "Multi-trade: Offer placeholder + Stark Guns"),
+            ('<:Toji:1433957483176792244> <:Outfit:1433929299475566592> <:FOR:1433910700975067146> <:ase:1519457110465839155>', "Toji Outfit (Titan of Justice) for ASE"),
+            ('<:Stark:1433956131503603754> <:Outfit:1433929299475566592> <:FOR:1433910700975067146> <:NFS:1519457528340156586>', "Coyote (Stark Outfit) for Nightfall Shroud"),
+            ('🇻 🪽 <:FOR:1433910700975067146> 🫴', "Virtuous Wings (🇻 🪽) for Offer (🫴)"),
+            ('🇪 🇶 🪽 <:FOR:1433910700975067146> 2️⃣ <:mc:1519457464091803668>', "Exalted Wings (🇪 🇶 🪽) for 2x MC"),
+            ('3️⃣0️⃣ <:TailorToken:1523925590548283413> <:FOR:1433910700975067146> <:Pika:1523917220944547850>', "30x Tailor Token for Pika"),
+            ('<:Biscuit:1543809076767490190> <:Yuki:1523916857328009378> <:FOR:1433910700975067146> <:Offer:1433929248669958276>', "Biscuit + Yuki for Offer"),
+            ('<:TrueBaalsSnakeHead:1523900300887457882> <:FOR:1433910700975067146> <:mc:1519457464091803668>', "Resurrected Ba'al's Head for MC"),
+            ('<:SnoozyNeko:1524554483454054608> <:HollowFang:1523898062710505503> <:FOR:1433910700975067146> <:Offer:1433929248669958276>', "Snoozy Neko + Hollow's Fang for Offer"),
+        ]
+
+        for raw, desc in test_cases:
+            res = parser.parse_message({"id": "t", "author_id": "u", "content": raw})
+            off_str = ", ".join(f"{parser.get_item_name(i)} (x{q})" for i, q in res["offer_items"]) if res else "None"
+            wnt_str = ", ".join(f"{parser.get_item_name(i)} (x{q})" for i, q in res["want_items"]) if res else "None"
+            print(f"[{desc}]\n  OFFER: [{off_str}]  ==>  WANT: [{wnt_str}]")
