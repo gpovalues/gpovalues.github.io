@@ -118,6 +118,7 @@ class DiscordTradeReader:
         # Если список каналов не передан явно, используем дефолтный канал GPO
         self.channel_ids = channel_ids if channel_ids else [self.DEFAULT_CHANNEL_ID]
         self.session = ReadOnlyDiscordSession(self.token) if self.token else None
+        self.latest_read_messages: List[Dict[str, Any]] = []
 
     @staticmethod
     def _resolve_token(explicit_token: Optional[str], base_dir: str) -> str:
@@ -388,6 +389,7 @@ class DiscordTradeReader:
         - Очищает дубликаты и сообщения старше 7.5 дней (180 часов).
         """
         buffer_data = self.load_buffer()
+        self.latest_read_messages = []
 
         if not self.session:
             logger.warning(
@@ -406,6 +408,7 @@ class DiscordTradeReader:
                 )
                 if new_msgs:
                     buffer_data["messages"].extend(new_msgs)
+                    self.latest_read_messages.extend(new_msgs)
                     buffer_data["last_message_ids"][cid] = new_msgs[-1]["id"]
             else:
                 backfill_msgs = self.fetch_channel_messages(
@@ -413,6 +416,7 @@ class DiscordTradeReader:
                 )
                 if backfill_msgs:
                     buffer_data["messages"].extend(backfill_msgs)
+                    self.latest_read_messages.extend(backfill_msgs)
                     # Так как backfill_msgs отсортирован по возрастанию ID, последний элемент — самый свежий
                     buffer_data["last_message_ids"][cid] = backfill_msgs[-1]["id"]
 
@@ -427,8 +431,66 @@ class DiscordTradeReader:
 
 
 if __name__ == "__main__":
-    reader = DiscordTradeReader()
-    trades = reader.fetch_all_trades(max_per_channel=100)
-    print(f"\nЗагружено трейдов в буфере: {len(trades)}. Примеры последних сообщений:")
-    for t in trades[-5:]:
-        print(f" [{t['timestamp']}] ({t['id']}): {t['content']}")
+    import argparse
+    parser = argparse.ArgumentParser(description="GPO Discord Trade Reader & Realtime Audit Pipeline")
+    parser.add_argument("--limit", "-n", type=int, default=100, help="Количество трейдов для чтения/анализа (по умолчанию: 100)")
+    parser.add_argument("--all", "-a", action="store_true", help="Прочитать и показать абсолютно ВСЕ трейды из буфера")
+    parser.add_argument("--channel-id", type=str, default=DiscordTradeReader.DEFAULT_CHANNEL_ID, help="ID канала Discord")
+    parser.add_argument("--update-prices", action="store_true", help="Синхронизировать новые цены в gpo_items.json и items_data.js")
+    args = parser.parse_args()
+
+    # 1. Читаем сообщения через DiscordTradeReader
+    reader = DiscordTradeReader(channel_ids=[args.channel_id])
+    fetch_limit = 10000 if args.all else max(100, args.limit)
+    all_buffer_msgs = reader.fetch_all_trades(max_per_channel=fetch_limit)
+
+    # Определяем сообщения, прочитанные в этой сессии
+    if reader.latest_read_messages:
+        messages_to_process = reader.latest_read_messages
+        print(f"\n[+] С сервера Discord напрямую получено {len(messages_to_process)} новых сообщений.")
+    else:
+        # Если API токена нет или новых нет, берем сообщения из локального буфера
+        target_count = len(all_buffer_msgs) if args.all else min(args.limit, len(all_buffer_msgs))
+        messages_to_process = all_buffer_msgs[-target_count:]
+        print(f"\n[i] Прочитано {len(messages_to_process)} сообщений из локального буфера трейдов.")
+
+    # 2. Парсим сообщения в реальные сделки GPO
+    from trade_parser import GPOTradeParser
+    trade_parser = GPOTradeParser()
+    parsed_trades = trade_parser.parse_all(messages_to_process)
+
+    # 3. Загружаем текущую базу предметов до расчетов
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    items_path = os.path.join(root_dir, "gpo_items.json")
+    with open(items_path, "r", encoding="utf-8") as f:
+        old_items = json.load(f)
+
+    # 4. Рассчитываем цены и состояние тир-листа
+    from price_engine import GPOPriceEngine
+    engine = GPOPriceEngine(items_path=items_path)
+    # Используем прочитанные трейды для обновления тир-листа
+    calc_dataset = parsed_trades if len(parsed_trades) >= 20 else trade_parser.parse_all(all_buffer_msgs[-500:])
+    engine_output = engine.run_pipeline(calc_dataset)
+    new_items = engine_output["items"]
+
+    if args.update_prices:
+        with open(items_path, "w", encoding="utf-8") as f:
+            json.dump(new_items, f, indent=2, ensure_ascii=False)
+        items_js_path = os.path.join(root_dir, "items_data.js")
+        with open(items_js_path, "w", encoding="utf-8") as f:
+            f.write("// Official Grand Piece Online Trading Database (Live Synchronized)\n")
+            f.write("window.GPO_ITEMS = " + json.dumps(new_items, indent=2, ensure_ascii=False) + ";\n")
+        print("[✓] Файлы gpo_items.json и items_data.js успешно обновлены новыми ценами!")
+
+    # 5. Запускаем полный отчет:
+    # - ВСЕ прочитанные трейды (без ограничения в 25 штук!)
+    # - Изменения в тир листе
+    # - Самые популярные предметы
+    # - Предметы, которые вообще не прочитались
+    from trade_reporter import run_full_trade_audit
+    run_full_trade_audit(
+        trades=parsed_trades,
+        old_items=old_items,
+        new_items=new_items,
+        items_dict=trade_parser.items_dict
+    )

@@ -25,6 +25,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 from discord_reader import DiscordTradeReader
 from trade_parser import GPOTradeParser
 from price_engine import GPOPriceEngine
+from trade_reporter import (
+    print_all_trades_log,
+    print_tierlist_changes,
+    print_popular_items_leaderboard,
+    print_unread_items_report
+)
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger("UpdateValues")
@@ -38,6 +44,15 @@ def main():
     items_json_path = os.path.join(root_dir, "gpo_items.json")
     items_js_path = os.path.join(root_dir, "items_data.js")
     values_json_path = os.path.join(data_dir, "values.json")
+
+    # Load current items before updating to track deltas
+    old_items = []
+    if os.path.exists(items_json_path):
+        try:
+            with open(items_json_path, "r", encoding="utf-8") as f:
+                old_items = json.load(f)
+        except Exception:
+            pass
 
     logger.info("=" * 60)
     logger.info("STARTING GPO VALUES HOURLY AUTOMATED UPDATE PIPELINE (10,000 TRADES)")
@@ -100,21 +115,19 @@ def main():
     print(f" • Top 5 Most Demanded Items (LF) : {', '.join(demanded_strs) or 'None'}")
     print(f" • Top 5 Most Offered Items (WTT) : {', '.join(supplied_strs) or 'None'}")
     print(" • Universal Demand Calibration   : STRICT 7-DAY WEEKLY (Max: 10.0/10, Min: 0.0/10)")
-    print("=" * 80)
-    print(" [PARSER VERIFICATION SAMPLES] 25 EXTRACTED HOURLY TRADE SIGNALS:")
-    print("-" * 80)
-
-    # Show 25 diverse trade samples across the dataset
-    sample_trades = trades[:25] if len(trades) >= 25 else trades
-    for idx, tr in enumerate(sample_trades, start=1):
-        raw = tr.get("raw_text", "").replace("\n", " ").strip()
-        offer_desc = [f"{parser.items_dict.get(iid, {}).get('name', iid)} (x{cnt})" for iid, cnt in tr.get("offer_items", [])]
-        want_desc = [f"{parser.items_dict.get(iid, {}).get('name', iid)} (x{cnt})" for iid, cnt in tr.get("want_items", [])]
-        parsed_str = f"OFFER: [{', '.join(offer_desc) or 'None'}]  ==>  WANT: [{', '.join(want_desc) or 'None'}]"
-        print(f"[{idx:02d}] [RAW]    : {raw}")
-        print(f"     [PARSED] : {parsed_str}")
-    print("-" * 80)
-    print(f" >>> Full Multi-Timeframe Dataset Verified: ALL {len(trades)} trade signals loaded into pricing engine. <<<\n")
+    # Show ABSOLUTELY ALL read trades from the live Discord stream or active session
+    if reader.latest_read_messages:
+        display_raw = reader.latest_read_messages
+        display_trades = parser.parse_all(display_raw)
+        print(f"\n[+] С сервера Discord напрямую прочитано {len(display_trades)} новых трейдов:")
+        print_all_trades_log(display_trades, parser.items_dict)
+    elif "--all-trades" in sys.argv:
+        print_all_trades_log(trades, parser.items_dict)
+    else:
+        window_size = min(len(trades), max(100, t1h_cnt))
+        session_trades = trades[-window_size:]
+        print(f"\n[i] Отображение всех {len(session_trades)} прочитанных трейдов текущей часовой сессии:")
+        print_all_trades_log(session_trades, parser.items_dict)
 
     # 3. Check 1-hour cycle for updating website prices & forecast tab
     force_update = ("--force-prices" in sys.argv) or ("--force" in sys.argv)
@@ -211,6 +224,11 @@ def main():
     logger.info(f"Tier Pressure Alerts ({len(alerts)}): {', '.join(it['name'] for it in alerts[:3]) if alerts else 'None'}")
     logger.info("-" * 60)
     logger.info("WEBSITE PRICES & FORECASTS UPDATED SUCCESSFULLY (HOURLY CYCLE).")
+
+    # 7. Print Comprehensive Post-Read Audit & Analytics
+    print_tierlist_changes(old_items, updated_items)
+    print_popular_items_leaderboard(trades, parser.items_dict, top_n=15)
+    print_unread_items_report(trades, old_items)
 
 
 if __name__ == "__main__":
