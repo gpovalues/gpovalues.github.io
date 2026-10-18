@@ -179,24 +179,28 @@ class DiscordTradeReader:
     def clean_trade_content(raw_content: str) -> str:
         """
         Очищает текст сообщения от невидимых символов Unicode (BOM / Zero-Width Space)
-        и убирает спам-дублирование одного и того же трейда, СОХРАНЯЯ переносы строк \n.
+        и убирает спам-дублирование одного и того же трейда внутри одного сообщения.
         """
         if not raw_content:
             return ""
 
-        # 1. Удаляем невидимые символы (\ufeff и др.), ломающие парсинг чисел
+        # 1. Удаляем невидимые символы (\ufeff и др.), ломающие парсинг чисел (напр. 2️⃣\ufeff5️⃣\ufeff0️⃣)
         text = ZERO_WIDTH_RE.sub("", raw_content).strip()
 
-        # 2. Очищаем каждую строку отдельно и убираем дублирующиеся строки
+        # 2. Убираем дублирующиеся строки (если игрок вставил один и тот же трейд с новой строки)
         lines = [MULTI_SPACE_RE.sub(" ", line.strip()) for line in text.splitlines() if line.strip()]
         deduped_lines: List[str] = []
         for line in lines:
-            cleaned_line = SPAM_REPEAT_RE.sub(r"\1", line).strip()
-            if cleaned_line and cleaned_line not in deduped_lines:
+            # Схлопываем горизонтальный копипаст одного и того же трейда в одной строке:
+            # напр. "Napoleon FOR Dragon   Napoleon FOR Dragon" -> "Napoleon FOR Dragon"
+            cleaned_line = SPAM_REPEAT_RE.sub(r"\1", line)
+            if cleaned_line not in deduped_lines:
                 deduped_lines.append(cleaned_line)
 
-        # ВАЖНО: склеиваем через "\n", а НЕ через пробелы, чтобы парсер видел границы строк!
-        return "\n".join(deduped_lines)
+        result = "  ".join(deduped_lines)
+        # Повторная проверка на случай, если весь склеенный текст был дублем
+        result = SPAM_REPEAT_RE.sub(r"\1", MULTI_SPACE_RE.sub(" ", result)).strip()
+        return result
 
     def load_buffer(self) -> Dict[str, Any]:
         """Загружает буфер сообщений с диска."""
