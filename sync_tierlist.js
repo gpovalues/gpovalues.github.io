@@ -325,6 +325,12 @@ async function syncTierList() {
     let val;
     if (orig.name === 'SP Reset Essence') {
       val = 1;
+    } else if (orig.id === 'item_92') {
+      val = 539;
+    } else if (orig.id === 'item_93') {
+      val = 518;
+    } else if (orig.value && typeof orig.value === 'number') {
+      val = orig.value;
     } else {
       const base = nw.unscaledVal >= 120 ? Math.round(nw.unscaledVal / 12) : +(nw.unscaledVal / 12).toFixed(1);
       if (ccIdx !== -1 && idx <= ccIdx) {

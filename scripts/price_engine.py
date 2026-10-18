@@ -244,10 +244,11 @@ class GPOPriceEngine:
         metrics_7d = self.calculate_market_metrics(trades_7d)
 
         # -------------------------------------------------------------
-        # STEP 2: Raw Valuation & Hourly EMA Clamping (+-5% limit)
+        # STEP 2: Hourly Price Revaluation Based on Previous Price
         # -------------------------------------------------------------
-        raw_values: List[float] = []
-        raw_market_estimates: List[float] = []
+        # Every hour, each item updates its price directly from its previous price
+        # (e.g. -5% in hour 1, -5% in hour 2 = -10% total drop, prices do not revert)
+        raw_items_with_val: List[Tuple[Dict[str, Any], float, float]] = []
 
         for it in self.items:
             iid = it["id"]
@@ -261,29 +262,42 @@ class GPOPriceEngine:
                 raw_market_est = obs_median
             else:
                 ratio = (m["demand_count"] + 1.0) / (m["supply_count"] + 1.0)
-                drift_factor = math.tanh((ratio - 1.0) * 0.4) * 0.05  # smooth -5% to +5%
+                drift_factor = math.tanh((ratio - 1.0) * 0.4) * 0.2  # smooth -5% to +5%
                 raw_market_est = curr_val * (1.0 + drift_factor)
 
-            raw_market_estimates.append(raw_market_est)
-
-            # Clamp per 1-hour cycle to maximum +-5% to maintain market stability
+            # Clamp hourly change to at most +-5% of previous price to ensure gradual stability
             clamped = max(curr_val * 0.95, min(curr_val * 1.05, raw_market_est))
-            # EMA Smoothing: 92% current weight + 8% hourly market target
-            smoothed = 0.92 * curr_val + 0.08 * clamped
+
+            # Cumulative hourly update directly based on previous price (no EMA regression)
+            updated_val = clamped
 
             # Preserve baseline for anchor currency (SP Reset ≈ 1)
             if it.get("name") == "SP Reset Essence":
-                smoothed = 1.0
+                updated_val = 1.0
 
-            raw_values.append(smoothed)
+            # Kraken Azure Armor and Blade: keep strictly in 2-3 LC range (1 LC ≈ 233.33)
+            if iid == "item_92":  # Kraken Armor Set (Azure)
+                updated_val = max(466.0, min(700.0, updated_val))
+            elif iid == "item_93":  # Kraken Blade (Azure)
+                updated_val = max(466.0, min(700.0, updated_val))
+
+            raw_items_with_val.append((it, updated_val, raw_market_est))
 
         # -------------------------------------------------------------
-        # STEP 3: Strict Monotonic Constraint (PAVA) & Regularization
+        # STEP 3: Strict Monotonic Ordering & Spacing
         # -------------------------------------------------------------
-        # All items are ordered strictly by official_rank (Rank 1 to 213)
-        pava_fitted = pava_decreasing(raw_values)
+        # Sort items strictly by their newly calculated prices descending
+        raw_items_with_val.sort(key=lambda x: (
+            -float(x[1]),
+            int(x[0].get("rankInTier", 99)),
+            x[0].get("id", "")
+        ))
 
-        spaced_values = list(pava_fitted)
+        self.items = [x[0] for x in raw_items_with_val]
+        raw_market_estimates = [x[2] for x in raw_items_with_val]
+        raw_values = [x[1] for x in raw_items_with_val]
+
+        spaced_values = list(raw_values)
         for i in range(n - 1):
             curr_v = spaced_values[i]
             next_v = spaced_values[i + 1]
@@ -300,6 +314,12 @@ class GPOPriceEngine:
                 final_values.append(round(v, 1))
             else:
                 final_values.append(round(v, 2))
+
+        # Guarantee strict decreasing monotonicity without identical neighboring values
+        for i in range(n - 1):
+            if final_values[i] <= final_values[i + 1]:
+                gap = 1.0 if final_values[i] >= 100 else 0.1
+                final_values[i + 1] = max(0.1, round(final_values[i] - gap, 2 if final_values[i] < 10 else 1 if final_values[i] < 100 else 0))
 
         # -------------------------------------------------------------
         # STEP 4: Universal 7-Day Weekly Demand Calibration (0.0 to 10.0)

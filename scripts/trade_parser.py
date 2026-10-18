@@ -305,6 +305,8 @@ class GPOTradeParser:
         id_shelm        = self._find_id_by_keywords("Sunken Helmet", fallback="item_132")
         id_sarmor       = self._find_id_by_keywords("Sunken Armor", fallback="item_174")
         id_eba          = self._find_id_by_keywords("Endbringer Armor", fallback="item_110")
+        id_azure_armor  = self._find_id_by_keywords("Kraken Armor Set (Azure)", fallback="item_92")
+        id_azure_blade  = self._find_id_by_keywords("Kraken Blade (Azure)", fallback="item_93")
 
         # --- Крылья ---
         id_vqw          = self._find_id_by_keywords("Virtuous Cupid Queen's Wings", fallback="item_57")
@@ -502,6 +504,8 @@ class GPOTradeParser:
         self._register_pattern(id_shelm, ("sunken", "helmet"), ("sunken_helmet",), ("shelm",))
         self._register_pattern(id_sarmor, ("sunken", "armor"), ("sunken_armor",), ("sarmor",))
         self._register_pattern(id_eba, ("endbringer", "armor"), ("endbringer_armor",), ("eba",))
+        self._register_pattern(id_azure_armor, ("azure", "armor"), ("azure", "set"), ("azure_armor",), ("azure_set",), ("kraken", "azure", "armor"), ("kraken", "azure", "set"))
+        self._register_pattern(id_azure_blade, ("azure", "blade"), ("azure_blade",), ("kraken", "azure", "blade"), ("azure", "sword"))
         self._register_pattern(id_snail, ("snail", "monkey"), ("monkey", "snail"), ("merchant", "snail"), ("snail",))
 
         # --- Крылья ---
