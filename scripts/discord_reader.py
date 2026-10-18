@@ -6,6 +6,7 @@ are completely disabled at the class/architecture level.
 """
 
 import os
+import re
 import sys
 import json
 import time
@@ -32,6 +33,15 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S"
 )
 logger = logging.getLogger("DiscordReader")
+
+# Регулярные выражения для предварительной очистки текста трейдов
+ZERO_WIDTH_RE = re.compile(r"[\ufeff\u200b\u200c\u200d\u2060]")
+MULTI_SPACE_RE = re.compile(r"[ \t]{2,}")
+# Находит спам-повторы одной и той же сделки в одной строке (только если внутри есть FOR / 👉 / LF)
+SPAM_REPEAT_RE = re.compile(
+    r"^(.+?(?:<:FOR:\d+>|👉\S*|<:LF:\d+>).*?)\s+\1(?:\s+\1)*$",
+    re.IGNORECASE
+)
 
 
 class ReadOnlyDiscordSession:
@@ -165,6 +175,33 @@ class DiscordTradeReader:
         except Exception:
             return datetime.datetime.now(datetime.timezone.utc)
 
+    @staticmethod
+    def clean_trade_content(raw_content: str) -> str:
+        """
+        Очищает текст сообщения от невидимых символов Unicode (BOM / Zero-Width Space)
+        и убирает спам-дублирование одного и того же трейда внутри одного сообщения.
+        """
+        if not raw_content:
+            return ""
+
+        # 1. Удаляем невидимые символы (\ufeff и др.), ломающие парсинг чисел (напр. 2️⃣\ufeff5️⃣\ufeff0️⃣)
+        text = ZERO_WIDTH_RE.sub("", raw_content).strip()
+
+        # 2. Убираем дублирующиеся строки (если игрок вставил один и тот же трейд с новой строки)
+        lines = [MULTI_SPACE_RE.sub(" ", line.strip()) for line in text.splitlines() if line.strip()]
+        deduped_lines: List[str] = []
+        for line in lines:
+            # Схлопываем горизонтальный копипаст одного и того же трейда в одной строке:
+            # напр. "Napoleon FOR Dragon   Napoleon FOR Dragon" -> "Napoleon FOR Dragon"
+            cleaned_line = SPAM_REPEAT_RE.sub(r"\1", line)
+            if cleaned_line not in deduped_lines:
+                deduped_lines.append(cleaned_line)
+
+        result = "  ".join(deduped_lines)
+        # Повторная проверка на случай, если весь склеенный текст был дублем
+        result = SPAM_REPEAT_RE.sub(r"\1", MULTI_SPACE_RE.sub(" ", result)).strip()
+        return result
+
     def load_buffer(self) -> Dict[str, Any]:
         """Загружает буфер сообщений с диска."""
         if os.path.exists(self.buffer_path):
@@ -200,8 +237,8 @@ class DiscordTradeReader:
 
     def prune_buffer(self, buffer_data: Dict[str, Any], max_age_hours: float = 180.0):
         """
-        Удаляет дубликаты, старые сообщения (старше max_age_hours) и возможный мусор,
-        а также сортирует сообщения строго по возрастанию ID.
+        Удаляет дубликаты, старые сообщения (старше max_age_hours), очищает текст
+        от копипаст-спама и сортирует сообщения строго по возрастанию ID.
         """
         cutoff = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=max_age_hours)
         valid_msgs = []
@@ -209,14 +246,15 @@ class DiscordTradeReader:
 
         for m in buffer_data.get("messages", []):
             mid = str(m.get("id", "")).strip()
-            # Пропускаем пустые ID, дубликаты и любые ненастоящие (не-snowflake) ID
             if not self.is_valid_snowflake(mid) or mid in seen_ids:
                 continue
 
             m_dt = self._parse_timestamp(m.get("timestamp", ""))
             if m_dt >= cutoff:
-                seen_ids.add(mid)
-                valid_msgs.append(m)
+                m["content"] = self.clean_trade_content(m.get("content", ""))
+                if m["content"]:
+                    seen_ids.add(mid)
+                    valid_msgs.append(m)
 
         # Сортируем по числовому значению Snowflake ID (гарантирует хронологический порядок)
         valid_msgs.sort(key=lambda x: int(x["id"]))
@@ -298,7 +336,7 @@ class DiscordTradeReader:
             batch.sort(key=lambda m: int(m.get("id", 0)))
 
             for msg in batch:
-                content = msg.get("content", "").strip()
+                content = self.clean_trade_content(msg.get("content", ""))
                 author = msg.get("author", {})
                 if content and not author.get("bot", False):
                     msg_dt = self._parse_timestamp(msg.get("timestamp", ""))
@@ -353,7 +391,7 @@ class DiscordTradeReader:
                     reached_cutoff = True
                     break
 
-                content = msg.get("content", "").strip()
+                content = self.clean_trade_content(msg.get("content", ""))
                 author = msg.get("author", {})
                 if content and not author.get("bot", False):
                     messages.append({
@@ -397,6 +435,7 @@ class DiscordTradeReader:
                 "Возвращаются только ранее сохраненные сообщения из буфера."
             )
             self.prune_buffer(buffer_data, max_age_hours=180.0)
+            self.save_buffer(buffer_data)
             return buffer_data["messages"]
 
         for cid in self.channel_ids:
@@ -417,10 +456,9 @@ class DiscordTradeReader:
                 if backfill_msgs:
                     buffer_data["messages"].extend(backfill_msgs)
                     self.latest_read_messages.extend(backfill_msgs)
-                    # Так как backfill_msgs отсортирован по возрастанию ID, последний элемент — самый свежий
                     buffer_data["last_message_ids"][cid] = backfill_msgs[-1]["id"]
 
-        # Дедупликация и удаление сообщений старше 7.5 суток (180 часов)
+        # Дедупликация, очистка спама и удаление сообщений старше 7.5 суток (180 часов)
         self.prune_buffer(buffer_data, max_age_hours=180.0)
 
         buffer_data["last_updated"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -444,12 +482,11 @@ if __name__ == "__main__":
     fetch_limit = 10000 if args.all else max(100, args.limit)
     all_buffer_msgs = reader.fetch_all_trades(max_per_channel=fetch_limit)
 
-    # Определяем сообщения, прочитанные в этой сессии
+    # Определяем сообщения, которые нужно вывести в отчете
     if reader.latest_read_messages:
         messages_to_process = reader.latest_read_messages
         print(f"\n[+] С сервера Discord напрямую получено {len(messages_to_process)} новых сообщений.")
     else:
-        # Если API токена нет или новых нет, берем сообщения из локального буфера
         target_count = len(all_buffer_msgs) if args.all else min(args.limit, len(all_buffer_msgs))
         messages_to_process = all_buffer_msgs[-target_count:]
         print(f"\n[i] Прочитано {len(messages_to_process)} сообщений из локального буфера трейдов.")
@@ -465,11 +502,16 @@ if __name__ == "__main__":
     with open(items_path, "r", encoding="utf-8") as f:
         old_items = json.load(f)
 
-    # 4. Рассчитываем цены и состояние тир-листа
+    # 4. Рассчитываем цены и состояние тир-листа на полном буфере истории,
+    # чтобы окна 1h / 24h / 7d считались корректно
     from price_engine import GPOPriceEngine
     engine = GPOPriceEngine(items_path=items_path)
-    # Используем прочитанные трейды для обновления тир-листа
-    calc_dataset = parsed_trades if len(parsed_trades) >= 20 else trade_parser.parse_all(all_buffer_msgs[-500:])
+    full_parsed_buffer = (
+        parsed_trades
+        if len(messages_to_process) == len(all_buffer_msgs)
+        else trade_parser.parse_all(all_buffer_msgs)
+    )
+    calc_dataset = full_parsed_buffer if full_parsed_buffer else parsed_trades
     engine_output = engine.run_pipeline(calc_dataset)
     new_items = engine_output["items"]
 
@@ -482,11 +524,7 @@ if __name__ == "__main__":
             f.write("window.GPO_ITEMS = " + json.dumps(new_items, indent=2, ensure_ascii=False) + ";\n")
         print("[✓] Файлы gpo_items.json и items_data.js успешно обновлены новыми ценами!")
 
-    # 5. Запускаем полный отчет:
-    # - ВСЕ прочитанные трейды (без ограничения в 25 штук!)
-    # - Изменения в тир листе
-    # - Самые популярные предметы
-    # - Предметы, которые вообще не прочитались
+    # 5. Запускаем полный отчет
     from trade_reporter import run_full_trade_audit
     run_full_trade_audit(
         trades=parsed_trades,
