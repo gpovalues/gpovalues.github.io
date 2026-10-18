@@ -1,0 +1,14 @@
+{
+  "token_configured": true,
+  "token_length": 72,
+  "guild_api": {
+    "url": "https://discord.com/api/v9/guilds/842875016524595240/emojis",
+    "status_code": 200,
+    "response_preview": "[{\"id\":\"980501126715699211\",\"name\":\"AllFruits\",\"roles\":[],\"require_colons\":true,\"managed\":false,\"animated\":false,\"available\":true},{\"id\":\"989236728470597702\",\"name\":\"unobs\",\"roles\":[],\"require_colons\""
+  },
+  "channel_api": {
+    "url": "https://discord.com/api/v9/channels/966859339816124438/messages",
+    "status_code": 200,
+    "response_preview": "[{\"type\":0,\"content\":\"<:dragon:1519457318461247618> <:tori:1519457818837778652> <:FOR:1433910700975067146> <:Offer:1433929248669958276>\",\"mentions\":[],\"mention_roles\":[],\"attachments\":[],\"embeds\":[],\""
+  }
+}

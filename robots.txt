@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gpovalues.github.io/sitemap.xml

@@ -1,77 +1,254 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GPO Values & Trade Calculator | Grand Piece Online Trading Tier List</title>
-  <meta name="description" content="Официальный калькулятор трейдов и тир-лист цен Grand Piece Online (GPO). Проверяйте цены на вещи, деманд, фрукты и рассчитывайте трейды на вин или луз!">
-  
+  <meta name="description" content="Accurate Grand Piece Online (GPO) item trading values tier list and trade calculator. Check values, demand, devil fruits, LC chests, abbreviations (BOS, ASE, CC), and win/fair/loss trade verdicts.">
+  <meta name="keywords" content="gpo values, grand piece online, gpo trade calculator, gpo tier list, gpo trading, gpo ценность вещей, калькулятор трейдов гпо, gpo demand list, gpo item values, gpo devil fruits, all seeing eye value, ase gpo, mochi value gpo, venom value gpo, pika value gpo, gpo w/f/l calculator, legendary fruit chest, gpo community">
+  <meta name="author" content="GPO Community">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <link rel="canonical" href="https://gpovalues.github.io/">
+
+  <!-- Open Graph / Facebook / Discord / Telegram -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gpovalues.github.io/">
+  <meta property="og:title" content="GPO Values & Trade Calculator | Grand Piece Online Trading Tier List">
+  <meta property="og:description" content="Accurate GPO item trading values, win/fair/loss trade calculator, demand ratings, and abbreviations (BOS, ASE, CC) for 213+ items. Join our trading community!">
+  <meta property="og:image" content="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
+  <meta property="og:site_name" content="GPO Values">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://gpovalues.github.io/">
+  <meta name="twitter:title" content="GPO Values & Trade Calculator | Grand Piece Online">
+  <meta name="twitter:description" content="Accurate GPO item values, demand tier list, and instant trade profit calculator for 213+ items.">
+  <meta name="twitter:image" content="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
-  
+  <link rel="apple-touch-icon" href="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
+
+  <!-- Schema.org JSON-LD Structured Data for Google Rich Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "GPO Values & Trade Calculator",
+    "url": "https://gpovalues.github.io/",
+    "description": "Grand Piece Online trading tier list, item demand values, and win/fair/loss trade calculator for 213+ items.",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "All",
+    "inLanguage": ["en", "ru"],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
   <!-- Google Fonts: Finger Paint -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 
   <!-- Top Sticky Navigation Bar -->
   <header class="header-banner">
     <div class="header-container">
+      <!-- Left: Mobile Menu Toggle Button (visible on mobile only) -->
+      <button class="mobile-menu-toggle-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu" title="Open Navigation Menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
       <div class="brand-wrapper" id="brandHomeBtn">
         <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="brand-logo-img">
         <div class="brand-text-box">
           <h1>GPO <span>VALUES</span></h1>
-          <div class="brand-subtext" id="brandSubtext">Официальный Трейд Калькулятор</div>
+          <div class="brand-subtext" id="brandSubtext" data-i18n="brand_subtext">Community Trade Calculator</div>
         </div>
       </div>
 
       <nav class="nav-tabs-wrapper">
         <button class="nav-tab-btn active" id="tabBtnCalc" data-tab="calculator">
-          <span>⚖️</span> <span class="tab-label" data-i18n="tab_calculator">Калькулятор Трейдов</span>
+          <span class="icon-slot" data-icon="scale"></span> <span class="tab-label" data-i18n="tab_calculator">Trade Calculator</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnTierlist" data-tab="tierlist">
-          <span>📜</span> <span class="tab-label" data-i18n="tab_tierlist">Тир Лист & Цены</span>
+          <span class="icon-slot" data-icon="scroll"></span> <span class="tab-label" data-i18n="tab_tierlist">Tier List & Values</span>
         </button>
-        <button class="nav-tab-btn" id="tabBtnMerchant" data-tab="merchant">
-          <span>🛒</span> <span class="tab-label" data-i18n="tab_merchant">Странствующий Торговец</span>
+        <button class="nav-tab-btn" id="tabBtnForecasts" data-tab="forecasts">
+          <span class="icon-slot" data-icon="trending-up"></span> <span class="tab-label" data-i18n="tab_forecasts">Forecasts & Trends</span>
+        </button>
+        <button class="nav-tab-btn" id="tabBtnCommunity" data-tab="community">
+          <span class="icon-slot" data-icon="message-square"></span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
         </button>
         <button class="nav-tab-btn" id="tabBtnGuide" data-tab="guide">
-          <span>💡</span> <span class="tab-label" data-i18n="tab_guide">Гайд по Спросу</span>
+          <span class="icon-slot" data-icon="book-open"></span> <span class="tab-label" data-i18n="tab_guide">Trading Guide</span>
         </button>
       </nav>
 
       <div class="header-controls">
-        <button class="lang-btn" id="langToggleBtn" title="Сменить язык / Switch language">
-          <span id="langFlag">🇷🇺</span> <span id="langCode">RU</span>
+        <button class="lang-btn" id="langToggleBtn" title="Switch language / Сменить язык">
+          <span class="icon-slot" data-icon="globe"></span> <span id="langCode">EN</span>
         </button>
-        <button class="audio-toggle-btn" id="audioToggleBtn" title="Звуки трейда">
-          🔊
+        <button class="audio-toggle-btn" id="audioToggleBtn" title="Trade sounds">
+          <span id="audioIcon" class="icon-slot" data-icon="volume-2"></span>
         </button>
       </div>
     </div>
   </header>
 
+  <!-- Mobile Navigation Drawer Backdrop -->
+  <div class="mobile-drawer-backdrop" id="mobileNavBackdrop"></div>
+
+  <!-- Mobile Slide-In Navigation Drawer (Slides from Right) -->
+  <aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+    <div class="mobile-drawer-header">
+      <div class="drawer-header-brand" id="drawerBrandHomeBtn">
+        <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="drawer-brand-img">
+        <div class="drawer-brand-info">
+          <div class="drawer-title">GPO <span>VALUES</span></div>
+          <div class="drawer-subtitle" data-i18n="drawer_subtitle">Navigation Menu</div>
+        </div>
+      </div>
+      <button class="drawer-close-btn" id="mobileDrawerCloseBtn" aria-label="Close Menu"><span class="icon-slot" data-icon="x"></span></button>
+    </div>
+
+    <div class="mobile-drawer-body">
+      <div class="drawer-group-label" data-i18n="drawer_nav_label"><span class="icon-slot" data-icon="compass"></span> TABS & SECTIONS</div>
+      <nav class="drawer-nav-list">
+        <button class="drawer-tab-btn active" data-tab="calculator">
+          <span class="d-tab-icon icon-slot" data-icon="scale"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_calculator">Trade Calculator</span>
+            <small class="d-tab-desc" data-i18n="drawer_calc_desc">Calculate win/loss trades</small>
+          </div>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="tierlist">
+          <span class="d-tab-icon icon-slot" data-icon="scroll"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_tierlist">Tier List & Values</span>
+            <small class="d-tab-desc" data-i18n="drawer_tier_desc">213 items with abbreviations</small>
+          </div>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="forecasts">
+          <span class="d-tab-icon icon-slot" data-icon="trending-up"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_forecasts">Forecasts & Trends</span>
+            <small class="d-tab-desc" data-i18n="drawer_forecast_desc">12h Discord analysis & alerts</small>
+          </div>
+          <span class="d-tab-badge" style="background: var(--purple-glow); color: #fff;">AI</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="community">
+          <span class="d-tab-icon icon-slot" data-icon="message-square"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_community">Community & Chats</span>
+            <small class="d-tab-desc" data-i18n="drawer_comm_desc">Telegram @GPOcHa chat & trade</small>
+          </div>
+          <span class="d-tab-badge">NEW</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="guide">
+          <span class="d-tab-icon icon-slot" data-icon="book-open"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_guide">Trading Guide</span>
+            <small class="d-tab-desc" data-i18n="drawer_guide_desc">Rules & tips from official doc</small>
+          </div>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+      </nav>
+
+      <div class="drawer-divider"></div>
+
+      <!-- Telegram Chat Card in Drawer -->
+      <div class="drawer-group-label" data-i18n="drawer_comm_label"><span class="icon-slot" data-icon="send"></span> TELEGRAM CHAT</div>
+      <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="drawer-tg-card">
+        <div class="drawer-tg-avatar-box">
+          <img src="images/gpocha_avatar.jpg" alt="Chat Avatar" class="drawer-tg-avatar" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
+          <span class="drawer-tg-pin"><span class="icon-slot" data-icon="send"></span></span>
+        </div>
+        <div class="drawer-tg-details">
+          <div class="drawer-tg-name">(公婆) Grand Piece Chat</div>
+          <div class="drawer-tg-handle">@GPOcHa</div>
+          <div class="drawer-tg-stats">
+            <span class="drawer-badge-lang">RU</span>
+            <span><span class="icon-slot" data-icon="users"></span> 190+</span>
+            <span style="color: #4ade80;"><span class="icon-slot" data-icon="check-circle-2"></span> 35+</span>
+          </div>
+        </div>
+        <span class="drawer-tg-join-badge" data-i18n="drawer_btn_join">Join &rarr;</span>
+      </a>
+
+      <!-- Discord Quick Card in Drawer -->
+      <div class="drawer-group-label" style="margin-top: 0.5rem;" data-i18n="drawer_discord_label"><span class="icon-slot" data-icon="gamepad-2"></span> DISCORD SERVER</div>
+      <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="drawer-tg-card drawer-discord-card">
+        <div class="drawer-tg-avatar-box" style="border-color: #5865f2;">
+          <img src="images/fruit_trilogy_avatar.png" alt="Fruit Trilogy" class="drawer-tg-avatar">
+          <span class="drawer-tg-pin" style="background: #5865f2;"><span class="icon-slot" data-icon="gamepad-2"></span></span>
+        </div>
+        <div class="drawer-tg-details">
+          <div class="drawer-tg-name">Fruit Trilogy</div>
+          <div class="drawer-tg-handle" style="color: #a5b4fc;">discord.gg/AxkxVfSnY</div>
+          <div class="drawer-tg-stats">
+            <span class="drawer-badge-lang">RU/EN</span>
+            <span><span class="icon-slot" data-icon="users"></span> 240+</span>
+            <span style="color: #4ade80;"><span class="icon-slot" data-icon="check-circle-2"></span> 45+</span>
+          </div>
+        </div>
+        <span class="drawer-tg-join-badge" style="background: #5865f2;" data-i18n="drawer_btn_join">Join &rarr;</span>
+      </a>
+
+      <div class="drawer-divider"></div>
+
+      <!-- Drawer Quick Controls -->
+      <div class="drawer-controls-row">
+        <button class="drawer-ctrl-btn" id="drawerLangToggleBtn">
+          <span class="icon-slot" data-icon="globe"></span> <span id="drawerLangCode">English</span>
+        </button>
+        <button class="drawer-ctrl-btn" id="drawerAudioToggleBtn">
+          <span id="drawerAudioIcon" class="icon-slot" data-icon="volume-2"></span> <span data-i18n="drawer_sound">Sound</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
   <main class="main-wrapper">
 
     <!-- Hero Promotional & Update Banner -->
     <section class="hero-art-banner">
-      <div class="gpo-tracker-badge">⚔️ GPO VALUES HUB</div>
+      <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="swords"></span> GPO VALUES HUB</div>
       <div class="hero-content">
         <div class="hero-text">
-          <h2 data-i18n="hero_title">Grand Piece Online <span>Трейдинг Хаб</span></h2>
+          <h2 data-i18n="hero_title">Grand Piece Online <span>Trading Hub</span></h2>
           <p data-i18n="hero_desc">
-            Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!
+            All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!
           </p>
+          <div class="hero-community-callout">
+            <span class="callout-icon icon-slot" data-icon="shield-check" data-icon-class="icon-lg icon-gold"></span>
+            <div class="callout-content">
+              <strong data-i18n="hero_callout_title">Fair Trading & GPO Economy Rules:</strong>
+              <span data-i18n="hero_callout_desc">
+                All values are taken directly from the official GPO tier list. Built for players and beginners to learn true item worth, navigate prices easily, and never make bad trades!
+              </span>
+            </div>
+          </div>
           <div class="hero-badges-group">
-            <span class="hero-badge live-update" data-i18n="badge_updated">📅 Обновление: 10/7/2026</span>
-            <span class="hero-badge" data-i18n="badge_items_count">⚔️ 213 Предметов</span>
-            <span class="hero-badge" data-i18n="badge_official_doc">⭐ Официальный GPO Doc</span>
-            <span class="hero-badge" data-i18n="badge_currency">🪙 Валюта: Очки & LC (Leg Chests)</span>
+            <span class="hero-badge live-update" data-i18n="badge_updated"><span class="icon-slot" data-icon="calendar"></span> Updated: 10/11/2026</span>
+            <span class="hero-badge" data-i18n="badge_items_count"><span class="icon-slot" data-icon="swords"></span> 213 Items</span>
+            <span class="hero-badge" data-i18n="badge_official_doc"><span class="icon-slot" data-icon="file-text"></span> Official GPO Doc</span>
+            <span class="hero-badge" data-i18n="badge_currency"><span class="icon-slot" data-icon="coins"></span> SP Reset = 1 pt | 1 LC = 310 pts</span>
           </div>
         </div>
       </div>
@@ -82,30 +259,67 @@
       
       <!-- Trade Master Verdict Bar -->
       <div class="verdict-master-card" id="verdictMasterCard">
-        <div class="gpo-tracker-badge">⚖️ TRADE VERDICT</div>
+        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="scale"></span> TRADE VERDICT</div>
         <div class="verdict-stamp-box">
           <div class="verdict-stamp fair" id="verdictStamp">
-            <span id="verdictIcon">🤝</span>
-            <span id="verdictText" data-i18n="verdict_empty">ДОБАВЬТЕ ПРЕДМЕТЫ</span>
+            <span id="verdictIcon" class="icon-slot" data-icon="scale"></span>
+            <span id="verdictText" data-i18n="verdict_empty">ADD ITEMS TO TRADE</span>
           </div>
           <div class="verdict-metrics-box">
             <div class="verdict-diff-text neutral" id="verdictDiffText">±0 pts (0%)</div>
             <div class="verdict-demand-note" id="verdictDemandNote">
-              <span>⚖️</span> <span data-i18n="demand_neutral_note">Равновесный спрос по обе стороны</span>
+              <span class="icon-slot" data-icon="scale"></span> <span data-i18n="demand_neutral_note">Equal demand on both sides</span>
             </div>
           </div>
         </div>
 
         <div class="verdict-quick-actions">
-          <button class="action-comic-btn swap-btn" id="btnSwapSides" title="Поменять местами">
-            <span>⇄</span> <span data-i18n="btn_swap">Поменять стороны</span>
+          <button class="action-comic-btn swap-btn" id="btnSwapSides" title="Swap Sides">
+            <span class="icon-slot" data-icon="arrow-left-right"></span> <span data-i18n="btn_swap">Swap Sides</span>
           </button>
-          <button class="action-comic-btn clear-btn" id="btnClearTrade" title="Очистить трейд">
-            <span>🗑️</span> <span data-i18n="btn_clear">Очистить всё</span>
+          <button class="action-comic-btn clear-btn" id="btnClearTrade" title="Clear All">
+            <span class="icon-slot" data-icon="trash-2"></span> <span data-i18n="btn_clear">Clear All</span>
           </button>
-          <button class="action-comic-btn" id="btnShareTrade" title="Поделиться ссылкой на трейд">
-            <span>🔗</span> <span data-i18n="btn_share">Поделиться трейдом</span>
+          <button class="action-comic-btn" id="btnShareTrade" title="Share Trade Link">
+            <span class="icon-slot" data-icon="share-2"></span> <span data-i18n="btn_share">Share Trade</span>
           </button>
+          <button class="action-comic-btn discord-export-btn" id="btnDiscordExport" title="Copy formatted trade for Discord">
+            <span class="icon-slot" data-icon="copy"></span> <span data-i18n="btn_discord_export">Discord Export</span>
+          </button>
+        </div>
+
+        <!-- Trade Recommendation / Should You Trade -->
+        <div class="verdict-recommendation-card" id="verdictRecCard">
+          <div class="rec-header">
+            <div class="rec-title-wrap">
+              <span class="rec-badge-label" data-i18n="rec_badge_title"><span class="icon-slot" data-icon="help-circle"></span> WORTH TRADING?</span>
+              <span class="rec-verdict-badge rec-empty" id="recVerdictBadge" data-i18n="rec_status_empty">ADD ITEMS</span>
+            </div>
+          </div>
+          <p class="rec-verdict-advice" id="recVerdictAdvice" data-i18n="rec_advice_empty">
+            Add items to both sides to evaluate nominal points profit and item demand / liquidity risk.
+          </p>
+          <div class="rec-demand-meter-row" id="recDemandMeterRow">
+            <div class="rec-demand-col you">
+              <div class="rec-demand-meta">
+                <span data-i18n="rec_your_demand">Your Demand:</span>
+                <strong id="recYouDemandText">0.0 / 10</strong>
+              </div>
+              <div class="rec-bar-track">
+                <div class="rec-bar-fill you" id="recYouDemandBar" style="width: 0%;"></div>
+              </div>
+            </div>
+            <div class="rec-demand-vs">VS</div>
+            <div class="rec-demand-col they">
+              <div class="rec-demand-meta">
+                <span data-i18n="rec_their_demand">Their Demand:</span>
+                <strong id="recTheyDemandText">0.0 / 10</strong>
+              </div>
+              <div class="rec-bar-track">
+                <div class="rec-bar-fill they" id="recTheyDemandBar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -114,61 +328,67 @@
         
         <!-- You Give (Left) -->
         <div class="trade-side-panel you-side">
-          <div class="gpo-tracker-badge">🎒 YOUR OFFER</div>
+          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="package"></span> YOUR OFFER</div>
           <div class="side-header-bar">
             <div class="side-title-wrap">
-              <span class="side-icon-tag">🎒</span>
+              <span class="side-icon-tag icon-slot" data-icon="package"></span>
               <div>
-                <h3 class="side-title" data-i18n="you_give_title">ТЫ ОТДАЕШЬ (ТВОЙ ПРЕДЛОГ)</h3>
-                <span class="side-total-lc" id="youTotalLc">0.00 LC</span>
+                <h3 class="side-title" data-i18n="you_give_title">YOU GIVE (YOUR OFFER)</h3>
+                <div class="side-sub-badges-row">
+                  <span class="side-total-lc" id="youTotalLc">0.00 LC</span>
+                  <span class="side-demand-score-pill" id="youDemandPill"><span class="icon-slot" data-icon="star"></span> Demand: 0.0/10</span>
+                </div>
               </div>
             </div>
             <div class="side-value-summary">
               <div class="side-total-pts" id="youTotalPts">0 pts</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="total_val_label">Общая ценность</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="total_val_label">Total Value</div>
             </div>
           </div>
 
           <div class="slots-container" id="youSlotsGrid">
             <!-- Dynamic Slots will be rendered here -->
             <div class="add-slot-placeholder" onclick="openPickerModal('you')">
-              <span class="add-slot-icon">➕</span>
-              <span class="add-slot-text" data-i18n="click_to_add">Нажми, чтобы добавить</span>
+              <span class="add-slot-icon icon-slot" data-icon="plus"></span>
+              <span class="add-slot-text" data-i18n="click_to_add">Click to add item</span>
             </div>
           </div>
 
           <button class="side-bottom-add-btn" onclick="openPickerModal('you')">
-            <span>➕</span> <span data-i18n="btn_add_to_you">Добавить предмет (Ты)</span>
+            <span class="icon-slot" data-icon="plus"></span> <span data-i18n="btn_add_to_you">Add Item (You)</span>
           </button>
         </div>
 
         <!-- They Offer (Right) -->
         <div class="trade-side-panel they-side">
-          <div class="gpo-tracker-badge">🤝 THEIR OFFER</div>
+          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="gift"></span> THEIR OFFER</div>
           <div class="side-header-bar">
             <div class="side-title-wrap">
-              <span class="side-icon-tag">🎁</span>
+              <span class="side-icon-tag icon-slot" data-icon="gift"></span>
               <div>
-                <h3 class="side-title" data-i18n="they_offer_title">ДРУГОЙ ИГРОК ПРЕДЛАГАЕТ</h3>
-                <span class="side-total-lc" id="theyTotalLc">0.00 LC</span>
+                <h3 class="side-title" data-i18n="they_offer_title">THEY OFFER (THEIR OFFER)</h3>
+                <div class="side-sub-badges-row">
+                  <span class="side-total-lc" id="theyTotalLc">0.00 LC</span>
+                  <span class="side-demand-score-pill" id="theyDemandPill"><span class="icon-slot" data-icon="star"></span> Demand: 0.0/10</span>
+                </div>
               </div>
             </div>
             <div class="side-value-summary">
               <div class="side-total-pts" id="theyTotalPts">0 pts</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="total_val_label">Общая ценность</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="total_val_label">Total Value</div>
             </div>
           </div>
 
           <div class="slots-container" id="theySlotsGrid">
             <!-- Dynamic Slots will be rendered here -->
             <div class="add-slot-placeholder" onclick="openPickerModal('they')">
-              <span class="add-slot-icon">➕</span>
-              <span class="add-slot-text" data-i18n="click_to_add">Нажми, чтобы добавить</span>
+              <span class="add-slot-icon icon-slot" data-icon="plus"></span>
+              <span class="add-slot-text" data-i18n="click_to_add">Click to add item</span>
             </div>
           </div>
 
           <button class="side-bottom-add-btn" onclick="openPickerModal('they')" style="background: var(--purple-fruit); color: #fff;">
-            <span>➕</span> <span data-i18n="btn_add_to_them">Добавить предмет (Другой игрок)</span>
+            <span class="icon-slot" data-icon="plus"></span> <span data-i18n="btn_add_to_them">Add Item (Them)</span>
           </button>
         </div>
 
@@ -177,42 +397,43 @@
       <!-- Quick Add Item Catalog directly inside Trade View -->
       <div class="quick-catalog-section" style="margin-top: 1.5rem;">
         <div class="toolbar-panel" style="background: linear-gradient(135deg, #131929 0%, #1e263d 100%);">
-          <div class="gpo-tracker-badge">📦 QUICK CATALOG</div>
+          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="boxes"></span> QUICK CATALOG</div>
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
             <h3 style="color: var(--gold-beli); font-size: 1.25rem; text-shadow: 2px 2px 0px #000;">
-              <span>📦</span> <span data-i18n="catalog_title">КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)</span>
+              <span class="icon-slot" data-icon="boxes"></span> <span data-i18n="catalog_title">ITEM CATALOG FOR TRADE (213 ITEMS)</span>
             </h3>
             <span style="font-size: 0.82rem; color: var(--cyan-glow);" data-i18n="catalog_hint">
-              💡 Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!
+              <span class="icon-slot" data-icon="lightbulb"></span> Click [+ You] or [+ Them] on any card for instant adding!
             </span>
           </div>
 
           <div class="search-sort-row">
             <div class="search-input-box">
-              <input type="text" id="quickSearchInput" placeholder="Быстрый поиск (Mochi, ASE, CC, Pika, Око, Леденец...)" data-i18n-placeholder="search_placeholder" oninput="handleQuickSearch(event)">
+              <input type="text" id="quickSearchInput" placeholder="Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)" data-i18n-placeholder="search_placeholder" oninput="handleQuickSearch(event)">
+              <button class="search-clear-btn" id="quickSearchClearBtn" type="button" aria-label="Clear quick search" onclick="window.clearSearchInput('quickSearchInput')"><span class="icon-slot" data-icon="x"></span></button>
             </div>
             <div class="sort-select-box">
               <select id="quickSortSelect" onchange="handleQuickSort(event)">
-                <option value="tier_desc" data-i18n="sort_tier_desc">По тиру (Сверху вниз)</option>
-                <option value="val_desc" data-i18n="sort_val_desc">По ценности: Высокая → Низкая</option>
-                <option value="val_asc" data-i18n="sort_val_asc">По ценности: Низкая → Высокая</option>
-                <option value="demand_desc" data-i18n="sort_demand_desc">По спросу (Высокий спрос)</option>
-                <option value="name_asc" data-i18n="sort_name_asc">По алфавиту (А-Я / A-Z)</option>
+                <option value="tier_desc" data-i18n="sort_tier_desc">By Tier (Top to Bottom)</option>
+                <option value="val_desc" data-i18n="sort_val_desc">By Value: High → Low</option>
+                <option value="val_asc" data-i18n="sort_val_asc">By Value: Low → High</option>
+                <option value="demand_desc" data-i18n="sort_demand_desc">By Demand (High Demand)</option>
+                <option value="name_asc" data-i18n="sort_name_asc">Alphabetical (A-Z)</option>
               </select>
             </div>
           </div>
 
           <!-- Quick Category Filter Pills -->
           <div class="filter-pills-row" id="quickCategoryPillsRow">
-            <span class="filter-category-label" data-i18n="label_category">Категория:</span>
-            <button class="filter-pill-btn active" data-qcat="all" data-i18n="cat_all">Все (213)</button>
-            <button class="filter-pill-btn" data-qcat="fruits" data-i18n="cat_fruits">Дьявольские Фрукты 🍎</button>
-            <button class="filter-pill-btn" data-qcat="weapons" data-i18n="cat_weapons">Оружие ⚔️</button>
-            <button class="filter-pill-btn" data-qcat="chests" data-i18n="cat_chests">Сундуки 📦</button>
-            <button class="filter-pill-btn" data-qcat="accessories" data-i18n="cat_accessories">Аксессуары 👑</button>
-            <button class="filter-pill-btn" data-qcat="outfits" data-i18n="cat_outfits">Костюмы & Броня 🥋</button>
-            <button class="filter-pill-btn" data-qcat="boats" data-i18n="cat_boats">Лодки & Ховеры ⛵</button>
-            <button class="filter-pill-btn" data-qcat="misc" data-i18n="cat_misc">Разное & Расходники 📜</button>
+            <span class="filter-category-label" data-i18n="label_category">Category:</span>
+            <button class="filter-pill-btn active" data-qcat="all" data-i18n="cat_all">All (213)</button>
+            <button class="filter-pill-btn" data-qcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+            <button class="filter-pill-btn" data-qcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+            <button class="filter-pill-btn" data-qcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+            <button class="filter-pill-btn" data-qcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+            <button class="filter-pill-btn" data-qcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
+            <button class="filter-pill-btn" data-qcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
+            <button class="filter-pill-btn" data-qcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
           </div>
         </div>
 
@@ -229,39 +450,41 @@
       
       <!-- Filter & Search Toolbar -->
       <div class="toolbar-panel">
-        <div class="gpo-tracker-badge">📜 TIER LIST & VALUES</div>
+        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="scroll"></span> TIER LIST & VALUES</div>
         <div class="search-sort-row">
           <div class="search-input-box">
-            <input type="text" id="searchInput" placeholder="Поиск предмета по названию или аббревиатуре (ASE, CC, PWE, Mochi, Око...)" data-i18n-placeholder="search_placeholder">
+            <input type="text" id="searchInput" placeholder="Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)" data-i18n-placeholder="search_placeholder">
+            <span class="kbd-shortcut-hint">/</span>
+            <button class="search-clear-btn" id="searchClearBtn" type="button" aria-label="Clear search" onclick="window.clearSearchInput('searchInput')"><span class="icon-slot" data-icon="x"></span></button>
           </div>
           <div class="sort-select-box">
             <select id="sortSelect">
-              <option value="tier_desc" data-i18n="sort_tier_desc">По тиру (Сверху вниз)</option>
-              <option value="val_desc" data-i18n="sort_val_desc">По ценности: Высокая → Низкая</option>
-              <option value="val_asc" data-i18n="sort_val_asc">По ценности: Низкая → Высокая</option>
-              <option value="demand_desc" data-i18n="sort_demand_desc">По спросу (Высокий спрос)</option>
-              <option value="name_asc" data-i18n="sort_name_asc">По алфавиту (А-Я / A-Z)</option>
+              <option value="tier_desc" data-i18n="sort_tier_desc">By Tier (Top to Bottom)</option>
+              <option value="val_desc" data-i18n="sort_val_desc">By Value: High → Low</option>
+              <option value="val_asc" data-i18n="sort_val_asc">By Value: Low → High</option>
+              <option value="demand_desc" data-i18n="sort_demand_desc">By Demand (High Demand)</option>
+              <option value="name_asc" data-i18n="sort_name_asc">Alphabetical (A-Z)</option>
             </select>
           </div>
         </div>
 
         <!-- Categories Row -->
         <div class="filter-pills-row" id="categoryPillsRow">
-          <span class="filter-category-label" data-i18n="label_category">Категория:</span>
-          <button class="filter-pill-btn active" data-cat="all" data-i18n="cat_all">Все (213)</button>
-          <button class="filter-pill-btn" data-cat="fruits" data-i18n="cat_fruits">Дьявольские Фрукты 🍎</button>
-          <button class="filter-pill-btn" data-cat="weapons" data-i18n="cat_weapons">Оружие ⚔️</button>
-          <button class="filter-pill-btn" data-cat="chests" data-i18n="cat_chests">Сундуки 📦</button>
-          <button class="filter-pill-btn" data-cat="accessories" data-i18n="cat_accessories">Аксессуары 👑</button>
-          <button class="filter-pill-btn" data-cat="outfits" data-i18n="cat_outfits">Костюмы & Броня 🥋</button>
-          <button class="filter-pill-btn" data-cat="boats" data-i18n="cat_boats">Лодки & Ховеры ⛵</button>
-          <button class="filter-pill-btn" data-cat="misc" data-i18n="cat_misc">Разное & Расходники 📜</button>
+          <span class="filter-category-label" data-i18n="label_category">Category:</span>
+          <button class="filter-pill-btn active" data-cat="all" data-i18n="cat_all">All (213)</button>
+          <button class="filter-pill-btn" data-cat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-cat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-cat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-cat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-cat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
+          <button class="filter-pill-btn" data-cat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
+          <button class="filter-pill-btn" data-cat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
         </div>
 
         <!-- Tiers Row -->
         <div class="tier-pills-row" id="tierPillsRow">
-          <span class="filter-category-label" data-i18n="label_tier">Тир:</span>
-          <button class="tier-pill-btn active" data-tier="all" data-i18n="tier_all">Все Тиры</button>
+          <span class="filter-category-label" data-i18n="label_tier">Tier:</span>
+          <button class="tier-pill-btn active" data-tier="all" data-i18n="tier_all">All Tiers</button>
           <button class="tier-pill-btn" data-tier="Exclusive">Exclusive</button>
           <button class="tier-pill-btn" data-tier="Tier SS">Tier SS</button>
           <button class="tier-pill-btn" data-tier="Tier S">Tier S</button>
@@ -285,25 +508,153 @@
 
     </section>
 
-    <!-- SECTION 3: TRAVELING MERCHANT -->
-    <section id="sectionMerchant" class="tab-section merchant-view-container" style="display: none;">
+    <!-- SECTION 3: COMMUNITY & CHANNELS -->
+    <section id="sectionCommunity" class="tab-section community-view-container" style="display: none;">
       
-      <div class="merchant-hero-card">
-        <h2 data-i18n="merchant_title">🛒 Странствующий Торговец (Traveling Merchant)</h2>
-        <p data-i18n="merchant_desc">
-          Странствующий торговец появляется каждые 30 минут на случайном острове в Первом и Втором Море и остается всего 10 минут. Он продает сундуки с фруктами и редкие предметы за игровую валюту Peli (Бели).
+      <div class="community-hero-card">
+        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="globe"></span> OUR COMMUNITY</div>
+        <h2 data-i18n="community_title"><span class="icon-slot" data-icon="message-square"></span> Community & Trading Chats</h2>
+        <p data-i18n="community_desc">
+          Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!
         </p>
-        <div class="merchant-stats-pills">
-          <span class="merchant-pill">⏱️ Спавн: Каждые 30 мин</span>
-          <span class="merchant-pill">⏳ Время стоянки: 10 мин</span>
-          <span class="merchant-pill">⚙️ Тематический магазин: Стимпинк (5% шанс)</span>
-          <span class="merchant-pill">❄️ Зимний магазин: Iceborn</span>
+        <div class="community-stats-pills">
+          <span class="community-pill" data-i18n="community_pill_active"><span class="icon-slot" data-icon="zap"></span> Active Trading & Discussions</span>
+          <span class="community-pill" data-i18n="community_pill_rules"><span class="icon-slot" data-icon="shield-check"></span> Safe Trades & Moderation</span>
+          <span class="community-pill" data-i18n="community_pill_giveaways"><span class="icon-slot" data-icon="gift"></span> Events & Giveaways</span>
         </div>
       </div>
 
-      <!-- Merchant Item Stock Cards -->
-      <div class="items-cards-grid" id="merchantCardsGrid">
-        <!-- Filtered merchant items -->
+      <!-- Community Channels Grid -->
+      <div class="community-channels-grid">
+        
+        <!-- Telegram Chat Card -->
+        <div class="channel-comic-card tg-card">
+          <div class="channel-card-top-glow"></div>
+          <div class="channel-card-header">
+            <div class="channel-badge-pill tg-badge">
+              <span class="icon-slot" data-icon="send"></span> <span>Telegram Chat</span>
+            </div>
+            <div class="channel-badge-pill lang-badge" data-i18n="chat_lang_badge">
+              <span class="icon-slot" data-icon="globe"></span> <span>Russian (Русский)</span>
+            </div>
+            <div class="channel-badge-pill status-badge">
+              <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
+            </div>
+          </div>
+
+          <div class="channel-profile-row">
+            <div class="channel-avatar-box">
+              <img src="images/gpocha_avatar.jpg" alt="Grand Piece Chat Avatar" class="channel-avatar-img" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
+              <span class="tg-mini-icon"><span class="icon-slot" data-icon="send"></span></span>
+            </div>
+            <div class="channel-meta-box">
+              <h3 class="channel-title-text">(公婆) Grand Piece Chat</h3>
+              <div class="channel-handle-text">@GPOcHa</div>
+              <div class="channel-counts-row">
+                <span class="count-item-pill">
+                  <span class="count-icon"><span class="icon-slot" data-icon="users"></span></span>
+                  <strong class="count-number">190+</strong>
+                  <span class="count-lbl" data-i18n="members_label">Members</span>
+                </span>
+                <span class="count-item-pill online-pill">
+                  <span class="count-icon"><span class="icon-slot" data-icon="check-circle-2" data-icon-class="icon-green"></span></span>
+                  <strong class="count-number">35+</strong>
+                  <span class="count-lbl" data-i18n="online_label">Online</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="channel-desc-text" data-i18n="chat_desc">
+            Grand Piece Online chat: here you can chat, find profitable trades, check latest prices, and team up for bosses and dungeons! Respect server rules and good luck!
+          </p>
+
+          <div class="channel-specs-box">
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_lang_label"><span class="icon-slot" data-icon="globe"></span> Language:</span>
+              <span class="spec-value" data-i18n="chat_spec_lang_val">Russian (Русский язык)</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_topic_label"><span class="icon-slot" data-icon="crosshair"></span> Focus:</span>
+              <span class="spec-value" data-i18n="chat_spec_topic_val">Trading, Values, Boss Raids & Co-op</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_access_label"><span class="icon-slot" data-icon="unlock"></span> Access:</span>
+              <span class="spec-value" data-i18n="chat_spec_access_val">Public & Free to Join</span>
+            </div>
+          </div>
+
+          <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="channel-join-btn tg-join-btn">
+            <span class="btn-icon"><span class="icon-slot" data-icon="send"></span></span>
+            <span class="btn-text" data-i18n="btn_join_tg">Join Telegram Chat (@GPOcHa)</span>
+            <span class="btn-arrow icon-slot" data-icon="arrow-up-right"></span>
+          </a>
+        </div>
+
+        <!-- Discord Server Card -->
+        <div class="channel-comic-card discord-card">
+          <div class="channel-card-top-glow" style="background: radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.4) 0%, transparent 70%);"></div>
+          <div class="channel-card-header">
+            <div class="channel-badge-pill discord-badge">
+              <span class="icon-slot" data-icon="gamepad-2"></span> <span>Discord Server</span>
+            </div>
+            <div class="channel-badge-pill lang-badge" data-i18n="discord_lang_badge">
+              <span class="icon-slot" data-icon="globe"></span> <span>RU & EN</span>
+            </div>
+            <div class="channel-badge-pill status-badge">
+              <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
+            </div>
+          </div>
+
+          <div class="channel-profile-row">
+            <div class="channel-avatar-box discord-avatar-box">
+              <img src="images/fruit_trilogy_avatar.png" alt="Fruit Trilogy Avatar" class="channel-avatar-img">
+              <span class="discord-mini-icon"><span class="icon-slot" data-icon="gamepad-2"></span></span>
+            </div>
+            <div class="channel-meta-box">
+              <h3 class="channel-title-text">Fruit Trilogy</h3>
+              <div class="channel-handle-text">discord.gg/AxkxVfSnY</div>
+              <div class="channel-counts-row">
+                <span class="count-item-pill">
+                  <span class="count-icon"><span class="icon-slot" data-icon="users"></span></span>
+                  <strong class="count-number">240+</strong>
+                  <span class="count-lbl" data-i18n="members_label">Members</span>
+                </span>
+                <span class="count-item-pill online-pill">
+                  <span class="count-icon"><span class="icon-slot" data-icon="check-circle-2" data-icon-class="icon-green"></span></span>
+                  <strong class="count-number">45+</strong>
+                  <span class="count-lbl" data-i18n="online_label">Online</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <p class="channel-desc-text" data-i18n="discord_card_desc">
+            Grand Piece Online community: trade items, check values, hang out in voice channels, and team up for boss raids and dungeons! Respect server rules and good luck!
+          </p>
+
+          <div class="channel-specs-box">
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_lang_label"><span class="icon-slot" data-icon="globe"></span> Language:</span>
+              <span class="spec-value" data-i18n="discord_spec_lang_val">Russian & English</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_topic_label"><span class="icon-slot" data-icon="crosshair"></span> Focus:</span>
+              <span class="spec-value" data-i18n="discord_spec_topic_val">Trading, Values, Boss Raids & Voice</span>
+            </div>
+            <div class="spec-row">
+              <span class="spec-label" data-i18n="chat_spec_access_label"><span class="icon-slot" data-icon="unlock"></span> Access:</span>
+              <span class="spec-value" data-i18n="discord_spec_access_val">Public & Free to Join</span>
+            </div>
+          </div>
+
+          <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="channel-join-btn discord-join-btn">
+            <span class="btn-icon"><span class="icon-slot" data-icon="gamepad-2"></span></span>
+            <span class="btn-text" data-i18n="btn_join_discord">Join Discord Server (discord.gg/AxkxVfSnY)</span>
+            <span class="btn-arrow icon-slot" data-icon="arrow-up-right"></span>
+          </a>
+        </div>
+
       </div>
 
     </section>
@@ -312,54 +663,231 @@
     <section id="sectionGuide" class="tab-section guide-view-container" style="display: none;">
       
       <div class="merchant-hero-card" style="background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%);">
-        <h2 data-i18n="guide_title">📖 Правила и Советы по Трейдингу GPO</h2>
+        <h2 data-i18n="guide_title"><span class="icon-slot" data-icon="book-open"></span> GPO Trading Rules & Guide</h2>
         <p data-i18n="guide_desc">
-          Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.
+          Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.
+        </p>
+      </div>
+
+      <!-- Fair GPO Trading Initiative Callout -->
+      <div class="guide-intro-banner">
+        <div class="guide-intro-badge"><span class="icon-slot" data-icon="shield-check"></span> FAIR GPO TRADING & NOVICE PROTECTION</div>
+        <h3 data-i18n="guide_mission_title">Official Rules & Protection for Beginner Traders</h3>
+        <p data-i18n="guide_mission_desc">
+          This platform strictly follows official Grand Piece Online trading rules. All item values are taken directly from the official trading tier list. Created for maximum convenience, especially for players who are just starting to trade, so they can understand accurate item prices and never make bad trades!
         </p>
       </div>
 
       <div class="trade-arena-grid" style="margin-top: 1.5rem;">
         
         <div class="trade-side-panel">
-          <h3 style="color: var(--gold-beli); margin-bottom: 0.8rem;">1. Иерархия и Порядковый номер</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;">
-            Положение вещи в тире строго определяет её ценность! Первые предметы в тире всегда ценнее тех, что находятся ниже. Нахождение в одном тире <strong>НЕ гарантирует</strong> одинаковую цену.
+          <h3 style="color: var(--gold-beli); margin-bottom: 0.8rem;" data-i18n="guide_rule1_title">1. Hierarchy & Ranking Order</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule1_desc">
+            An item's position within its tier strictly determines its value! Items placed higher in a tier are always worth more than those below. Being in the same tier does NOT guarantee equal value.
           </p>
           <div style="margin-top: 1rem; padding: 0.75rem; background: #090e1b; border: 2px solid #000; border-radius: 6px;">
-            <p style="font-size: 0.82rem; color: var(--cyan-glow);">
-              💡 Пример: All Seeing Eye (ASE) стоит выше, чем Troll Face и World Ender в том же тире A+.
+            <p style="font-size: 0.82rem; color: var(--cyan-glow);" data-i18n="guide_rule1_example">
+              <span class="icon-slot" data-icon="lightbulb"></span> Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.
             </p>
           </div>
         </div>
 
         <div class="trade-side-panel">
-          <h3 style="color: var(--crimson-glow); margin-bottom: 0.8rem;">2. Ловушка Нестабильных предметов (Unstable)</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;">
-            Предметы из категории <strong>Very Unstable</strong> (например, Valkyrie Helmets, Gift of Fruit, Clown Wig) не имеют фиксированной стоимости. Их цена колеблется в зависимости от хайпа и конкретного покупателя.
+          <h3 style="color: var(--crimson-glow); margin-bottom: 0.8rem;" data-i18n="guide_rule2_title">2. The Unstable Items Trap</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule2_desc">
+            Items in the Very Unstable category (e.g. Valkyrie Helmets, Gift of Fruit, Clown Wig) do not have fixed values. Their price fluctuates heavily based on hype and individual buyers.
           </p>
           <div style="margin-top: 1rem; padding: 0.75rem; background: #090e1b; border: 2px solid #000; border-radius: 6px;">
-            <p style="font-size: 0.82rem; color: var(--crimson-glow);">
-              ⚠️ Будьте осторожны: не отдавайте стабильные ликвидные фрукты (Mochi, Venom, Pika) за вещи с нестабильным спросом!
+            <p style="font-size: 0.82rem; color: var(--crimson-glow);" data-i18n="guide_rule2_example">
+              <span class="icon-slot" data-icon="alert-triangle"></span> Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!
             </p>
           </div>
         </div>
 
         <div class="trade-side-panel">
-          <h3 style="color: var(--green-glow); margin-bottom: 0.8rem;">3. Валюта Обмена: Сундуки (LC и MC)</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;">
-            <strong>Legendary Fruit Chest (LC)</strong> — общепринятая стандартная валюта в игре. Большинство трейдеров выражают стоимость предметов в количестве сундуков LC. Мифический сундук (MC) обычно приравнивается к 10-12 LC.
+          <h3 style="color: var(--green-glow); margin-bottom: 0.8rem;" data-i18n="guide_rule3_title">3. Trading Currency: Chests (LC & MC)</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule3_desc">
+            Legendary Fruit Chest (LC) is the universally accepted standard currency in the game. Most traders express values in number of LC chests. A Mythical Chest (MC) is usually valued at 10-12 LC.
           </p>
         </div>
 
         <div class="trade-side-panel">
-          <h3 style="color: var(--purple-glow); margin-bottom: 0.8rem;">4. Спрос (Demand) важнее номинала</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;">
-            Предмет с высоким спросом (High Demand) всегда можно легко продать с оверпеем (+20% к цене). Предметы с низким спросом (Low Demand) часто приходится отдавать со скидкой.
+          <h3 style="color: var(--purple-glow); margin-bottom: 0.8rem;" data-i18n="guide_rule4_title">4. Demand Over Nominal Value</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule4_desc">
+            An item with High Demand can easily be traded for an overpay (+20% value). Items with Low Demand often have to be traded at a discount.
           </p>
         </div>
 
       </div>
 
+    </section>
+
+    <!-- =====================================================================
+         SECTION 5: MARKET FORECASTS & AI ANALYTICS (12-HOUR AUTONOMOUS ENGINE)
+         ===================================================================== -->
+    <section class="tab-section" id="sectionForecasts" style="display: none;">
+      <!-- Hero Analytics Card -->
+      <div class="trade-side-panel forecast-hero-panel">
+        <div class="forecast-hero-top">
+          <div>
+            <div class="forecast-pill-badge">
+              <span class="icon-slot" data-icon="zap"></span>
+              <span data-i18n="forecast_badge_autonomous">AUTONOMOUS DISCORD HOURLY ENGINE</span>
+            </div>
+            <h2 class="forecast-hero-heading" data-i18n="forecast_hero_title">
+              GPO Market Forecasts & <span class="text-gradient-purple">AI Analytics</span>
+            </h2>
+            <p class="forecast-hero-desc" data-i18n="forecast_hero_desc">
+              Automated parsing of trading channel #966859339816124438 in Discord every hour (10,000 trades). Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and calibrated 0.0–10.0 demand scores.
+            </p>
+          </div>
+
+          <div class="forecast-meta-pills" id="forecastMetaPills">
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_updated_label">Last Analysis:</span>
+              <span class="f-pill-val" id="forecastLastUpdatedVal">Synchronizing...</span>
+            </div>
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_trades_label">Hourly Trades Analyzed:</span>
+              <span class="f-pill-val" id="forecastTradesCountVal">...</span>
+            </div>
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_sentiment_label">Market Sentiment:</span>
+              <span class="f-pill-val" id="forecastSentimentVal" style="color: var(--green-glow);">Bullish</span>
+            </div>
+            <div class="forecast-meta-pill">
+              <span class="f-pill-label" data-i18n="forecast_hierarchy_label">Tier Hierarchy:</span>
+              <span class="f-pill-val" style="color: var(--cyan-glow);">100% Strict Monotonic</span>
+            </div>
+          </div>
+        </div>
+      <!-- Interactive Timeframe Period Switcher: 1 Hour / 24 Hours / 7 Days -->
+      <div class="forecast-timeframe-panel">
+        <div class="f-tf-header-row">
+          <div class="f-tf-title-box">
+            <span class="icon-slot" data-icon="clock" style="color: var(--gold-beli);"></span>
+            <span class="f-tf-title" data-i18n="forecast_tf_title">Период аналитики рынка:</span>
+          </div>
+          <div class="f-tf-buttons-group" id="forecastTimeframeGroup">
+            <button class="f-tf-btn active" data-tf="1h">
+              <span class="icon-slot" data-icon="zap"></span>
+              <span class="f-tf-btn-text" data-i18n="tf_btn_1h">1 Час (1h)</span>
+            </button>
+            <button class="f-tf-btn" data-tf="24h">
+              <span class="icon-slot" data-icon="calendar"></span>
+              <span class="f-tf-btn-text" data-i18n="tf_btn_24h">24 Часа (24h)</span>
+            </button>
+            <button class="f-tf-btn" data-tf="7d">
+              <span class="icon-slot" data-icon="bar-chart-2"></span>
+              <span class="f-tf-btn-text" data-i18n="tf_btn_7d">7 Дней / Неделя (7d)</span>
+            </button>
+          </div>
+        </div>
+        <div class="f-tf-footer-note">
+          <span class="icon-slot" data-icon="shield-check" style="color: var(--gold-glow);"></span>
+          <span data-i18n="tf_demand_rule_note">Спрос (Demand ★) везде на сайте откалиброван по стабильным данным за 7 дней (10/10 максимум, 0/10 минимум)</span>
+        </div>
+      </div>
+
+      <!-- Highlights 3-Card Grid: Rising, Falling, Tier Pressure -->
+      <div class="forecast-highlights-grid">
+        <!-- Card 1: Hyped / Rising -->
+        <div class="forecast-highlight-card card-rising">
+          <div class="highlight-card-header">
+            <div class="highlight-title-box">
+              <span class="icon-slot" data-icon="trending-up" style="color: var(--green-glow);"></span>
+              <h3 data-i18n="forecast_card_rising_title">Лидеры роста (Hyped / Rising)</h3>
+            </div>
+            <span class="highlight-badge-pill pill-rising" data-i18n="forecast_badge_high_demand">ВЫСОКИЙ СПРОС</span>
+          </div>
+          <p class="highlight-card-sub" data-i18n="forecast_card_rising_desc">Предметы с максимальным перевесом покупателей над продавцами (LF > Offer) за последние 12 часов.</p>
+          <div class="highlight-items-list" id="forecastRisingList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Card 2: Falling / High Supply -->
+        <div class="forecast-highlight-card card-falling">
+          <div class="highlight-card-header">
+            <div class="highlight-title-box">
+              <span class="icon-slot" data-icon="trending-down" style="color: var(--red-glow);"></span>
+              <h3 data-i18n="forecast_card_falling_title">Теряют в цене (Falling)</h3>
+            </div>
+            <span class="highlight-badge-pill pill-falling" data-i18n="forecast_badge_high_supply">ИЗБЫТОК СНАБЖЕНИЯ</span>
+          </div>
+          <p class="highlight-card-sub" data-i18n="forecast_card_falling_desc">Предметы, которые активно сбрасывают в Trading, при пониженном количестве запросов на покупку.</p>
+          <div class="highlight-items-list" id="forecastFallingList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Card 3: Tier Pressure Candidates -->
+        <div class="forecast-highlight-card card-alert">
+          <div class="highlight-card-header">
+            <div class="highlight-title-box">
+              <span class="icon-slot" data-icon="alert-triangle" style="color: var(--purple-glow);"></span>
+              <h3 data-i18n="forecast_card_alerts_title">Кандидаты на смену позиции в Офиц. Тир-Листе</h3>
+            </div>
+            <span class="highlight-badge-pill pill-alert" data-i18n="forecast_badge_tier_pressure">TIER PRESSURE</span>
+          </div>
+          <p class="highlight-card-sub" data-i18n="forecast_card_alerts_desc">Рыночная цена в Discord вплотную приблизилась или обогнала соседа сверху. Официальный порядок сохранён, но шанс повышения в след. доке максимален.</p>
+          <div class="highlight-items-list" id="forecastAlertsList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Explorer & Filter Bar -->
+      <div class="trade-side-panel" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+        <div class="forecast-filter-toolbar">
+          <div class="search-input-box" style="flex: 1; min-width: 260px;">
+            <input type="text" id="forecastSearchInput" placeholder="Поиск предмета в прогнозах по названию или тегу..." data-i18n-placeholder="forecast_search_placeholder">
+            <button class="search-clear-btn" id="forecastSearchClearBtn" type="button" aria-label="Clear forecast search" onclick="window.clearSearchInput('forecastSearchInput')"><span class="icon-slot" data-icon="x"></span></button>
+          </div>
+          <div class="filter-pills-row" id="forecastStatusPills">
+            <button class="filter-pill-btn active" data-fstatus="all" data-i18n="forecast_filter_all">Все статусы (213)</button>
+            <button class="filter-pill-btn" data-fstatus="Rising"><span class="icon-slot" data-icon="trending-up"></span> <span data-i18n="forecast_filter_rising">Растут 📈</span></button>
+            <button class="filter-pill-btn" data-fstatus="Overpaid"><span class="icon-slot" data-icon="zap"></span> <span data-i18n="forecast_filter_overpaid">Оверпей 🔥</span></button>
+            <button class="filter-pill-btn" data-fstatus="Falling"><span class="icon-slot" data-icon="trending-down"></span> <span data-i18n="forecast_filter_falling">Падают 📉</span></button>
+            <button class="filter-pill-btn" data-fstatus="Stable"><span data-i18n="forecast_filter_stable">Стабильно ➖</span></button>
+            <button class="filter-pill-btn" data-fstatus="Alert"><span class="icon-slot" data-icon="alert-triangle"></span> <span data-i18n="forecast_filter_alert">Алерты ⚠️</span></button>
+          </div>
+        </div>
+
+        <!-- Category Pills Row -->
+        <div class="filter-pills-row" id="forecastCategoryPills" style="margin-top: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
+          <button class="filter-pill-btn active" data-fcat="all" data-i18n="cat_all">All Categories</button>
+          <button class="filter-pill-btn" data-fcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-fcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-fcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-fcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-fcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits</button>
+          <button class="filter-pill-btn" data-fcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats</button>
+          <button class="filter-pill-btn" data-fcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc</button>
+        </div>
+      </div>
+
+      <!-- Full Analytics Table Container -->
+      <div class="forecast-table-container">
+        <table class="forecast-table" id="forecastMainTable">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th data-i18n="fth_item">Предмет</th>
+              <th data-i18n="fth_value">Офиц. Цена (pts / LC)</th>
+              <th data-i18n="fth_demand">Спрос (0-10)</th>
+              <th data-i18n="fth_lf">Спрос (LF)</th>
+              <th data-i18n="fth_offer">Предлож. (Offer)</th>
+              <th data-i18n="fth_pressure">Давление рынка</th>
+              <th data-i18n="fth_forecast">Прогноз 24–48ч</th>
+              <th data-i18n="fth_alert">Статус / Давление на тир</th>
+            </tr>
+          </thead>
+          <tbody id="forecastTableBody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
   </main>
@@ -371,22 +899,25 @@
     <div class="comic-modal-card">
       <div class="modal-header-bar">
         <h3 class="modal-header-title">
-          <span>📦</span> <span id="pickerModalTitle">Выберите предмет для трейда</span>
+          <span class="icon-slot" data-icon="package"></span> <span id="pickerModalTitle" data-i18n="picker_title">Select Item to Trade</span>
         </h3>
-        <button class="modal-close-btn" onclick="closePickerModal()">✕</button>
+        <button class="modal-close-btn" onclick="closePickerModal()"><span class="icon-slot" data-icon="x"></span></button>
       </div>
 
       <div class="modal-search-row">
         <div class="search-input-box">
-          <input type="text" id="pickerSearchInput" placeholder="Поиск предмета..." oninput="filterPickerItems()">
+          <input type="text" id="pickerSearchInput" placeholder="Search item by name or abbreviation..." data-i18n-placeholder="picker_search_placeholder" oninput="filterPickerItems()">
+          <button class="search-clear-btn" id="pickerSearchClearBtn" type="button" aria-label="Clear picker search" onclick="window.clearSearchInput('pickerSearchInput')"><span class="icon-slot" data-icon="x"></span></button>
         </div>
         <div class="filter-pills-row" id="pickerCategoryPills">
-          <button class="filter-pill-btn active" data-pcat="all">Все</button>
-          <button class="filter-pill-btn" data-pcat="fruits">Фрукты</button>
-          <button class="filter-pill-btn" data-pcat="weapons">Оружие</button>
-          <button class="filter-pill-btn" data-pcat="chests">Сундуки</button>
-          <button class="filter-pill-btn" data-pcat="accessories">Аксессуары</button>
-          <button class="filter-pill-btn" data-pcat="outfits">Костюмы</button>
+          <button class="filter-pill-btn active" data-pcat="all" data-i18n="cat_all">All (213)</button>
+          <button class="filter-pill-btn" data-pcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-pcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-pcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-pcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-pcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
+          <button class="filter-pill-btn" data-pcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
+          <button class="filter-pill-btn" data-pcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
         </div>
       </div>
 
@@ -403,9 +934,9 @@
     <div class="comic-modal-card" style="max-width: 650px;">
       <div class="modal-header-bar">
         <h3 class="modal-header-title">
-          <span>🔍</span> <span id="detailModalTitle">Информация о предмете</span>
+          <span class="icon-slot" data-icon="search"></span> <span id="detailModalTitle" data-i18n="detail_modal_title">Item Details</span>
         </h3>
-        <button class="modal-close-btn" onclick="closeDetailModal()">✕</button>
+        <button class="modal-close-btn" onclick="closeDetailModal()"><span class="icon-slot" data-icon="x"></span></button>
       </div>
 
       <div class="detail-modal-body">
@@ -419,33 +950,33 @@
           </div>
           <div class="detail-stats-table">
             <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_value">Ценность в очках:</span>
+              <span class="detail-stat-label" data-i18n="detail_value">Value in points:</span>
               <span class="detail-stat-val" id="detailValuePts" style="color: var(--gold-beli);">0 pts</span>
             </div>
             <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_lc">Эквивалент в LC:</span>
+              <span class="detail-stat-label" data-i18n="detail_lc">LC equivalent:</span>
               <span class="detail-stat-val" id="detailValueLc" style="color: var(--cyan-glow);">0 LC</span>
             </div>
             <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_demand">Спрос (Demand):</span>
+              <span class="detail-stat-label" data-i18n="detail_demand">Demand:</span>
               <span class="detail-stat-val" id="detailDemandVal">Medium</span>
             </div>
             <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_trend">Тренд на рынке:</span>
+              <span class="detail-stat-label" data-i18n="detail_trend">Market trend:</span>
               <span class="detail-stat-val" id="detailTrendVal">Stable</span>
             </div>
           </div>
 
           <a id="detailWikiLink" href="#" target="_blank" class="detail-wiki-link">
-            <span>🌐</span> <span data-i18n="detail_wiki_btn">Открыть страницу на GPO Fandom Wiki ↗</span>
+            <span class="icon-slot" data-icon="external-link"></span> <span data-i18n="detail_wiki_btn">Open page on GPO Fandom Wiki ↗</span>
           </a>
 
           <div class="card-actions-row" style="margin-top: 0.8rem;">
             <button class="quick-add-btn add-you" id="detailAddYouBtn" style="padding: 0.6rem;">
-              <span>➕</span> <span data-i18n="add_to_you">Добавить Себе</span>
+              <span class="icon-slot" data-icon="plus"></span> <span data-i18n="add_to_you">Add to You</span>
             </button>
             <button class="quick-add-btn add-them" id="detailAddThemBtn" style="padding: 0.6rem;">
-              <span>➕</span> <span data-i18n="add_to_them">Добавить Игроку</span>
+              <span class="icon-slot" data-icon="plus"></span> <span data-i18n="add_to_them">Add to Them</span>
             </button>
           </div>
         </div>
@@ -456,20 +987,24 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="footer-content">
-      <div class="footer-title">⚓ GRAND PIECE ONLINE TRADING VALUE HUB</div>
+      <div class="footer-title" data-i18n="footer_title"><span class="icon-slot" data-icon="anchor"></span> GRAND PIECE ONLINE TRADING VALUE HUB</div>
       <p class="footer-desc" data-i18n="footer_text">
-        Создано сообществом игроков Grand Piece Online. Цены ориентированы на официальный Trading Tier List Google Doc. Игра Grand Piece Online принадлежит Grand Quest Games на платформе Roblox.
+        Created by the Grand Piece Online community in full accordance with GPO trading rules. All prices are synchronized with the official Trading Tier List document. Designed for player convenience and beginners to help understand real item values and make fair, profitable trades.
       </p>
       <div class="footer-links-row">
-        <a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" class="footer-link-item">📄 Официальный Google Doc Tier List</a>
-        <a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" class="footer-link-item">🎮 Страница GPO в Roblox</a>
-        <a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" class="footer-link-item">📚 Grand Piece Online Wiki</a>
+        <a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" class="footer-link-item" data-i18n="footer_link_doc"><span class="icon-slot" data-icon="file-text"></span> Official Google Doc Tier List</a>
+        <a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" class="footer-link-item" data-i18n="footer_link_roblox"><span class="icon-slot" data-icon="gamepad-2"></span> GPO Roblox Page</a>
+        <a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" class="footer-link-item" data-i18n="footer_link_wiki"><span class="icon-slot" data-icon="book-open"></span> Grand Piece Online Wiki</a>
       </div>
     </div>
   </footer>
 
+  <!-- Toast Notification Container -->
+  <div class="gpo-toast-container" id="gpoToastContainer" aria-live="polite"></div>
+
   <!-- Scripts -->
-  <script src="items_data.js"></script>
-  <script src="app.js"></script>
+  <script src="icons.js?v=4"></script>
+  <script src="items_data.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

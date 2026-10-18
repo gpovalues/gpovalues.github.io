@@ -1,0 +1,40 @@
+name: Daily GPO Tier List Sync Bot
+
+on:
+  schedule:
+    # Runs every day at 12:00 UTC (16:00 local time)
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    # Allows manual trigger anytime from GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  sync-tierlist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run Tier List Sync Engine
+        run: node sync_tierlist.js
+
+      - name: Check for Changes and Commit
+        run: |
+          git config --local user.email "bot@gpovalues.com"
+          git config --local user.name "GPO Tier List Sync Bot"
+          if [[ -n $(git status -s) ]]; then
+            echo "Changes detected! Committing and pushing..."
+            git add gpo_items.json items_data.js index.html app.js
+            git commit -m "🤖 Auto-sync tier list with official GPO doc [$(date +'%Y-%m-%d')]"
+            git push origin main
+          else
+            echo "No changes detected. Database is up to date."
+          fi

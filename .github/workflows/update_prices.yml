@@ -1,0 +1,66 @@
+name: GPO Hourly Trade Stream & Pricing Pipeline
+
+on:
+  schedule:
+    # Runs every hour, 24/7, to analyze 10,000 trades from channel #966859339816124438 and update site prices & forecasts
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Allows manual instant triggering with optional forced price update
+    inputs:
+      force_price_update:
+        description: 'Force recalculate website prices immediately'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gpo-price-updates
+  cancel-in-progress: true
+
+jobs:
+  update-market-values:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Hourly Trade Collector & Pricing Pipeline
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_CHANNEL_IDS: "966859339816124438"
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_price_update }}" = "true" ]; then
+            python scripts/update_values.py --force-prices
+          else
+            python scripts/update_values.py
+          fi
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "bot@gpovalues.com"
+          git config --local user.name "GPO Autonomous Value Bot"
+          if [[ -n $(git status -s) ]]; then
+            echo "Changes detected! Staging and committing..."
+            git add data/trades_buffer.json data/values.json data/trade_aliases.json gpo_items.json items_data.js
+            rm -f data/.prices_updated
+            git commit -m "📈 Hourly Market Revaluation & Forecasts [$(date -u +'%Y-%m-%d %H:%M UTC')]"
+            git push origin main
+          else
+            echo "No changes detected. Database is up to date."
+          fi

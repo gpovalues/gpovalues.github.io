@@ -1,44 +1,75 @@
-﻿# Non-project files in D:\gag
+# =====================================================================
+# AI Assistants, IDEs & Machine Learning Artifacts
+# =====================================================================
+.gemini/
+.agents/
+.cursor/
+.vscode/
+.idea/
+.system_generated/
+tempmediaStorage/
+scratchpad*
+media_*
+scratch/
+browser/
+*.tmp
+*.temp
+*.log
+__pycache__/
+*.pyc
+data/.prices_updated
+
+# =====================================================================
+# Temporary & Scratch Development Scripts
+# =====================================================================
+*.txt
+!robots.txt
+!requirements.txt
+!package.json
+!package-lock.json
+!server.js
+!test_suite.js
+build_*.js
+extract_*.js
+update_*.js
+rebuild_*.js
+download_*.js
+fetch_*.js
+find_*.js
+fix_*.js
+check_*.js
+inspect_*.js
+dump_*.js
+parse_*.js
+test_*.js
+translation_helpers.js
+
+# Scratch Data & JSON Dumps
+*.json
+!gpo_items.json
+!data/*.json
+blob_mappings.json
+doc_images.json
+sample_matches.json
+wiki_links.json
+c1_sample.json
+
+# Test & Sample Images
+images_test_*.png
+images/sample_*.png
+
+# =====================================================================
+# Dependencies & OS Files
+# =====================================================================
+node_modules/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# External files in parent directory
 Godot*
 fifthpiece*
 steam*
 *.zip
 *.exe
 test_inspect/
-*.log
-
-# Scratch and extraction files
-all_google_doc_text.txt
-c1_sample.json
-ch1_text.txt
-ch3_text.txt
-ch5_text.txt
-check_*.js
-chunk2.txt
-clean_*.txt
-doc_images.json
-doc_slice.txt
-download_all_images.js
-download_real_item_images.js
-dump_full_text.js
-extract_blob_map.js
-extract_tier_list.js
-extracted_matches.txt
-fetch_fandom_images.js
-find_*.js
-fix_user_items.js
-gpo_full_tier_list.txt
-images_test_*.png
-inspect_text.js
-parse_*.js
-sample_matches.json
-test_map_images.js
-tierlist.txt
-translation_helpers.js
-wiki_links.json
-build_*.js
-blob_mappings.json
-
-# Dependencies
-node_modules/
-.DS_Store
