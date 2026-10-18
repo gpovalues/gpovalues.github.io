@@ -42,6 +42,7 @@ inspect_*.js
 dump_*.js
 parse_*.js
 test_*.js
+!test_suite.js
 translation_helpers.js
 
 # Scratch Data & JSON Dumps

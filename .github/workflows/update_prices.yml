@@ -57,7 +57,7 @@ jobs:
           git config --local user.name "GPO Autonomous Value Bot"
           if [[ -n $(git status -s) ]]; then
             echo "Changes detected! Staging and committing..."
-            git add data/trades_buffer.json data/values.json data/trade_aliases.json gpo_items.json items_data.js
+            git add data/trades_buffer.json data/values.json data/hourly_changes.json data/trade_aliases.json gpo_items.json items_data.js
             rm -f data/.prices_updated
             git commit -m "📈 Hourly Market Revaluation & Forecasts [$(date -u +'%Y-%m-%d %H:%M UTC')]"
             git push origin main

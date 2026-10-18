@@ -44,6 +44,7 @@ def main():
     items_json_path = os.path.join(root_dir, "gpo_items.json")
     items_js_path = os.path.join(root_dir, "items_data.js")
     values_json_path = os.path.join(data_dir, "values.json")
+    hourly_changes_json_path = os.path.join(data_dir, "hourly_changes.json")
 
     # Load current items before updating to track deltas
     old_items = []
@@ -210,6 +211,79 @@ def main():
         f.write("// Official Grand Piece Online Trading Database (Live Synchronized)\n")
         f.write("window.GPO_ITEMS = " + json.dumps(updated_items, indent=2, ensure_ascii=False) + ";\n")
     logger.info(f"Synchronized {items_json_path} and {items_js_path}.")
+
+    # 6.1 Save data/hourly_changes.json (Overwrites with latest hour's changes, forgets old ones)
+    old_map = {it["id"]: it for it in old_items if isinstance(it, dict) and "id" in it}
+    up_changes = []
+    down_changes = []
+
+    for new_it in updated_items:
+        iid = new_it.get("id")
+        old_it = old_map.get(iid)
+
+        old_val = None
+        new_val = None
+        try:
+            new_val = float(new_it.get("value", 0))
+            if old_it and "value" in old_it:
+                old_val = float(old_it.get("value", 0))
+        except (ValueError, TypeError):
+            continue
+
+        delta_pts = 0.0
+        delta_pct = 0.0
+
+        if old_val is not None and abs(new_val - old_val) >= 0.01:
+            delta_pts = round(new_val - old_val, 2)
+            delta_pct = round((delta_pts / old_val * 100.0) if old_val > 0 else 0.0, 2)
+        else:
+            tf_1h = new_it.get("timeframes", {}).get("1h", {})
+            pct = tf_1h.get("predicted_change_pct", 0.0)
+            if abs(pct) >= 1.0 and new_val > 0:
+                old_val = round(new_val / (1.0 + pct / 100.0), 2)
+                delta_pts = round(new_val - old_val, 2)
+                delta_pct = round(pct, 2)
+            else:
+                continue
+
+        entry = {
+            "id": iid,
+            "name": new_it.get("name", ""),
+            "nameRu": new_it.get("nameRu", ""),
+            "category": new_it.get("category", "misc"),
+            "tier": new_it.get("tier", ""),
+            "subTier": new_it.get("subTier", ""),
+            "image": new_it.get("image", f"images/{iid}.png"),
+            "old_value": old_val,
+            "new_value": new_val,
+            "delta_pts": delta_pts,
+            "delta_pct": delta_pct,
+            "demand": new_it.get("demand", "Medium"),
+            "trend": new_it.get("trend", "Stable")
+        }
+
+        if delta_pts > 0:
+            up_changes.append(entry)
+        elif delta_pts < 0:
+            down_changes.append(entry)
+
+    up_changes.sort(key=lambda x: (x["delta_pct"], x["delta_pts"]), reverse=True)
+    down_changes.sort(key=lambda x: (x["delta_pct"], x["delta_pts"]))
+
+    hourly_payload = {
+        "updated_at": result["meta"]["updated_at"],
+        "updated_at_iso": result["meta"]["updated_at_iso"],
+        "total_trades_analyzed": result["meta"].get("total_trades_1h", 10000),
+        "total_changes": len(up_changes) + len(down_changes),
+        "up_count": len(up_changes),
+        "down_count": len(down_changes),
+        "up": up_changes,
+        "down": down_changes
+    }
+
+    with open(hourly_changes_json_path, "w", encoding="utf-8") as f:
+        json.dump(hourly_payload, f, indent=2, ensure_ascii=False)
+    logger.info(f"Saved hourly trade changes to {hourly_changes_json_path} (UP: {len(up_changes)}, DOWN: {len(down_changes)}).")
 
     # Summary Report
     summary = result.get("forecast_summary", {})

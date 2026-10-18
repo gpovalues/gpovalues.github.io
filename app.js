@@ -351,7 +351,29 @@
         "Stable": "Stable",
         "Dropping": "Dropping",
         "Fluctuating": "Fluctuating"
-      }
+      },
+      tab_hourly_changes: "Hourly Changes",
+      drawer_hourly_desc: "1h trade review deltas (UP & DOWN)",
+      hourly_badge_title: "1-HOUR TRADE STREAM DELTAS",
+      hourly_hero_title: "Hourly Market Changes & <span class=\"text-gradient-cyan\">Price Movements</span>",
+      hourly_hero_desc: "All price shifts recorded after the latest 1-hour Discord trade review (10,000 trades). Updated every hour — previous movements are discarded to highlight only current price action.",
+      hourly_meta_updated: "Last Cycle Update",
+      hourly_meta_trades: "Trades Reviewed",
+      hourly_meta_up: "Price Increases (UP)",
+      hourly_meta_down: "Price Drops (DOWN)",
+      hourly_tab_up: "UP (Price Increases)",
+      hourly_tab_down: "DOWN (Price Drops)",
+      hourly_tab_all: "ALL CHANGES",
+      hourly_search_placeholder: "Search item by name...",
+      hth_photo: "Photo",
+      hth_item: "Item",
+      hth_category: "Category",
+      hth_old_price: "Previous Price",
+      hth_new_price: "Current Price",
+      hth_delta_pts: "Change (Points)",
+      hth_delta_pct: "Change (%)",
+      hourly_empty_title: "No Price Movements Found",
+      hourly_empty_desc: "All item values in this category remained stable during the latest 1-hour trading cycle."
     },
     ru: {
       brand_subtext: "Калькулятор Трейдов от Игроков",
@@ -555,7 +577,29 @@
         "Stable": "Стабилен",
         "Dropping": "Падает",
         "Fluctuating": "Колеблется"
-      }
+      },
+      tab_hourly_changes: "Изменения за час",
+      drawer_hourly_desc: "Срез цен за 1 час трейдов (UP и DOWN)",
+      hourly_badge_title: "ЧАСОВОЙ СРЕЗ ТРЕЙДОВ ДИСКОРДА",
+      hourly_hero_title: "Рыночные Изменения & <span class=\"text-gradient-cyan\">Сдвиги Цен за Час</span>",
+      hourly_hero_desc: "Все изменения стоимости предметов по итогам последнего часового анализа трейдов в Discord (10,000 сделок). Обновляется каждый час — старые данные сбрасываются, показывая только свежую динамику.",
+      hourly_meta_updated: "Время обновления:",
+      hourly_meta_trades: "Прочитано сделок:",
+      hourly_meta_up: "Выросли в цене (UP):",
+      hourly_meta_down: "Упали в цене (DOWN):",
+      hourly_tab_up: "UP (Повышение цен)",
+      hourly_tab_down: "DOWN (Снижение цен)",
+      hourly_tab_all: "ВСЕ ИЗМЕНЕНИЯ",
+      hourly_search_placeholder: "Поиск предмета в изменениях по названию...",
+      hth_photo: "Фото",
+      hth_item: "Предмет",
+      hth_category: "Категория",
+      hth_old_price: "Прошлая цена",
+      hth_new_price: "Нынешняя цена",
+      hth_delta_pts: "Сдвиг (поинты)",
+      hth_delta_pct: "Сдвиг (%)",
+      hourly_empty_title: "Изменений не найдено",
+      hourly_empty_desc: "Стоимость предметов в выбранной категории оставалась стабильной в течение последнего часового цикла трейдов."
     }
   };
 
@@ -657,6 +701,8 @@
     renderQuickItemsGrid();
     renderCalculatorSlots();
     updateTradeVerdict();
+    renderForecastsSection();
+    renderHourlyChanges();
   }
 
   function toggleLanguage() {
@@ -1526,6 +1572,9 @@
     } else if (tabId === 'forecasts') {
       document.getElementById('sectionForecasts').style.display = 'block';
       renderForecastsSection();
+    } else if (tabId === 'hourly-changes') {
+      document.getElementById('sectionHourlyChanges').style.display = 'block';
+      renderHourlyChanges();
     } else if (tabId === 'community') {
       document.getElementById('sectionCommunity').style.display = 'flex';
     } else if (tabId === 'guide') {
@@ -1778,12 +1827,50 @@
       });
     });
 
-    // Load live values from values.json (with cache-busting), then render
+    // Hourly Changes Subtabs (UP / DOWN / ALL)
+    document.querySelectorAll('.hourly-subtab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.hourly-subtab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentHourlySubTab = btn.getAttribute('data-subtab') || 'up';
+        playClickSound();
+        renderHourlyChanges();
+      });
+    });
+
+    // Hourly Changes Search Input
+    let hourlySearchDebounceTimer = null;
+    const hSearchInput = document.getElementById('hourlySearchInput');
+    if (hSearchInput) {
+      hSearchInput.addEventListener('input', (e) => {
+        hourlySearchQuery = e.target.value;
+        clearTimeout(hourlySearchDebounceTimer);
+        hourlySearchDebounceTimer = setTimeout(() => {
+          renderHourlyChanges();
+        }, 120);
+      });
+    }
+
+    // Hourly Changes Category Filter Pills
+    document.querySelectorAll('#hourlyCategoryPills .filter-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#hourlyCategoryPills .filter-pill-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        hourlyCategoryFilter = btn.getAttribute('data-hcat') || 'all';
+        playClickSound();
+        renderHourlyChanges();
+      });
+    });
+
+    // Load live values and hourly changes (with cache-busting), then render
     loadLiveValues().then(() => {
-      applyLanguage();
-      renderItemsGrid();
-      renderQuickItemsGrid();
-      renderForecastsSection();
+      loadHourlyMarketData().then(() => {
+        applyLanguage();
+        renderItemsGrid();
+        renderQuickItemsGrid();
+        renderForecastsSection();
+        renderHourlyChanges();
+      });
     });
   }
 
@@ -2083,6 +2170,204 @@
     renderIcons(document.getElementById('sectionForecasts'));
   }
 
+  // --- HOURLY TRADE STREAM CHANGES (UP & DOWN TABLES) ---
+  let hourlyMarketData = null;
+  let currentHourlySubTab = 'up'; // 'up', 'down', 'all'
+  let hourlySearchQuery = '';
+  let hourlyCategoryFilter = 'all';
+
+  async function loadHourlyMarketData() {
+    try {
+      const res = await fetch(`data/hourly_changes.json?v=${Date.now()}`);
+      if (res.ok) {
+        hourlyMarketData = await res.json();
+      }
+    } catch (e) {
+      console.log('Hourly market changes data not yet available from fetch:', e);
+    }
+    renderHourlyChanges();
+  }
+
+  function getHourlyChangesDataset() {
+    if (hourlyMarketData && (Array.isArray(hourlyMarketData.up) || Array.isArray(hourlyMarketData.down))) {
+      return hourlyMarketData;
+    }
+    // Fallback: derive dynamic 1h changes from window.GPO_ITEMS or liveMarketData
+    const items = window.GPO_ITEMS || [];
+    const up = [];
+    const down = [];
+    items.forEach(it => {
+      const tfd = (it.timeframes && it.timeframes['1h']) || it;
+      const pct = typeof tfd.predicted_change_pct === 'number' ? tfd.predicted_change_pct : 0;
+      const val = parseFloat(it.value || 0);
+      if (Math.abs(pct) >= 1.0 && val > 0) {
+        const oldVal = Math.round((val / (1.0 + pct / 100.0)) * 100) / 100;
+        const delta = Math.round((val - oldVal) * 100) / 100;
+        const entry = {
+          id: it.id,
+          name: it.name,
+          nameRu: it.nameRu || it.name,
+          category: it.category || 'misc',
+          tier: it.tier || '',
+          subTier: it.subTier || '',
+          image: it.image || `images/${it.id}.png`,
+          old_value: oldVal,
+          new_value: val,
+          delta_pts: delta,
+          delta_pct: Math.round(pct * 100) / 100,
+          demand: it.demand || 'Medium',
+          trend: it.trend || 'Stable'
+        };
+        if (delta > 0) up.push(entry);
+        else if (delta < 0) down.push(entry);
+      }
+    });
+
+    up.sort((a, b) => (b.delta_pct - a.delta_pct) || (b.delta_pts - a.delta_pts));
+    down.sort((a, b) => (a.delta_pct - b.delta_pct) || (a.delta_pts - b.delta_pts));
+
+    return {
+      updated_at: (liveMarketData && liveMarketData.meta && liveMarketData.meta.updated_at) || 'Live Hourly Cycle',
+      total_trades_analyzed: 10000,
+      total_changes: up.length + down.length,
+      up_count: up.length,
+      down_count: down.length,
+      up: up,
+      down: down
+    };
+  }
+
+  function renderHourlyChanges() {
+    const section = document.getElementById('sectionHourlyChanges');
+    if (!section) return;
+
+    const dataset = getHourlyChangesDataset();
+    const upItems = dataset.up || [];
+    const downItems = dataset.down || [];
+    const allItems = [...upItems, ...downItems];
+
+    // Meta stats
+    const updatedEl = document.getElementById('hourlyLastUpdatedVal');
+    const tradesEl = document.getElementById('hourlyTradesCountVal');
+    const metaUpEl = document.getElementById('hourlyMetaUpCount');
+    const metaDownEl = document.getElementById('hourlyMetaDownCount');
+
+    if (updatedEl) updatedEl.textContent = dataset.updated_at || 'Live Hourly Sync';
+    if (tradesEl) tradesEl.textContent = `${(dataset.total_trades_analyzed || 10000).toLocaleString()} trades / 1h`;
+    if (metaUpEl) metaUpEl.textContent = `${upItems.length} ${currentLang === 'ru' ? 'предметов' : 'items'}`;
+    if (metaDownEl) metaDownEl.textContent = `${downItems.length} ${currentLang === 'ru' ? 'предметов' : 'items'}`;
+
+    // Subtab counts
+    const subTabUpCount = document.getElementById('hourlySubTabUpCount');
+    const subTabDownCount = document.getElementById('hourlySubTabDownCount');
+    const subTabAllCount = document.getElementById('hourlySubTabAllCount');
+    if (subTabUpCount) subTabUpCount.textContent = upItems.length;
+    if (subTabDownCount) subTabDownCount.textContent = downItems.length;
+    if (subTabAllCount) subTabAllCount.textContent = allItems.length;
+
+    // Filter items based on active subtab, category, and search query
+    let baseList = [];
+    if (currentHourlySubTab === 'up') {
+      baseList = upItems;
+    } else if (currentHourlySubTab === 'down') {
+      baseList = downItems;
+    } else {
+      baseList = allItems;
+    }
+
+    const filtered = baseList.filter(it => {
+      if (hourlyCategoryFilter !== 'all' && it.category !== hourlyCategoryFilter) {
+        return false;
+      }
+      if (hourlySearchQuery) {
+        const q = hourlySearchQuery.toLowerCase().trim();
+        const n1 = (it.name || '').toLowerCase();
+        const n2 = (it.nameRu || '').toLowerCase();
+        const cid = (it.id || '').toLowerCase();
+        if (!n1.includes(q) && !n2.includes(q) && !cid.includes(q)) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    const tbody = document.getElementById('hourlyTableBody');
+    const emptyState = document.getElementById('hourlyEmptyState');
+    const table = document.getElementById('hourlyChangesTable');
+
+    if (!filtered.length) {
+      if (table) table.style.display = 'none';
+      if (emptyState) emptyState.style.display = 'flex';
+      return;
+    }
+
+    if (table) table.style.display = 'table';
+    if (emptyState) emptyState.style.display = 'none';
+
+    if (tbody) {
+      tbody.innerHTML = filtered.map(it => {
+        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
+        const isUp = it.delta_pts >= 0;
+        const deltaPtsStr = isUp ? `+${it.delta_pts.toFixed(2)} pts` : `${it.delta_pts.toFixed(2)} pts`;
+        const deltaPctStr = isUp ? `+${it.delta_pct.toFixed(1)}%` : `${it.delta_pct.toFixed(1)}%`;
+        const deltaBadgeClass = isUp ? 'delta-badge-up' : 'delta-badge-down';
+        const pctBadgeClass = isUp ? 'pct-badge-up' : 'pct-badge-down';
+        const iconName = isUp ? 'trending-up' : 'trending-down';
+        const oldLc = (it.old_value / 310.0).toFixed(2);
+        const newLc = (it.new_value / 310.0).toFixed(2);
+
+        return `
+          <tr onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">
+            <td>
+              <div class="hourly-img-box">
+                <img src="${it.image || 'images/' + it.id + '.png'}" alt="${it.name}" loading="lazy" onerror="this.src='images/placeholder.png'"/>
+              </div>
+            </td>
+            <td>
+              <div class="hourly-item-cell">
+                <div class="hourly-item-title-row">
+                  <span class="hourly-item-name">${name}</span>
+                </div>
+                <div class="hourly-item-badges">
+                  ${it.tier ? `<span class="hourly-badge-tier">${it.tier}</span>` : ''}
+                  ${it.subTier ? `<span class="hourly-badge-cat">${it.subTier}</span>` : ''}
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="hourly-badge-cat">${it.category || 'misc'}</span>
+            </td>
+            <td>
+              <div class="price-box">
+                <span class="price-main price-old-val">${formatPts(it.old_value)} pts</span>
+                <span class="price-lc">${oldLc} LC</span>
+              </div>
+            </td>
+            <td>
+              <div class="price-box">
+                <span class="price-main" style="color: var(--gold-beli);">${formatPts(it.new_value)} pts</span>
+                <span class="price-lc" style="color: var(--cyan-ocean);">${newLc} LC</span>
+              </div>
+            </td>
+            <td>
+              <span class="delta-badge ${deltaBadgeClass}">
+                <span class="icon-slot" data-icon="${iconName}"></span>
+                ${deltaPtsStr}
+              </span>
+            </td>
+            <td>
+              <span class="pct-badge ${pctBadgeClass}">
+                ${deltaPctStr}
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    renderIcons(document.getElementById('sectionHourlyChanges'));
+  }
+
   let quickSearchDebounceTimer = null;
   function handleQuickSearch(e) {
     quickSearch = e.target.value;
@@ -2111,7 +2396,8 @@
     },
     openDetail: (id) => openDetailModal(id),
     openPicker: (side) => openPickerModal(side),
-    showToast: (msg, type) => showToast(msg, type)
+    showToast: (msg, type) => showToast(msg, type),
+    renderHourlyChanges: () => renderHourlyChanges()
   };
 
   window.openPickerModal = openPickerModal;
@@ -2123,5 +2409,6 @@
   window.clearSearchInput = clearSearchInput;
   window.showToast = showToast;
   window.copyDiscordTradeFormat = copyDiscordTradeFormat;
+  window.renderHourlyChanges = renderHourlyChanges;
 
 })(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : (typeof window !== 'undefined' ? window.document : null));

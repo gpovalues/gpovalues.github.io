@@ -88,6 +88,9 @@
         <button class="nav-tab-btn" id="tabBtnForecasts" data-tab="forecasts">
           <span class="icon-slot" data-icon="trending-up"></span> <span class="tab-label" data-i18n="tab_forecasts">Forecasts & Trends</span>
         </button>
+        <button class="nav-tab-btn" id="tabBtnHourlyChanges" data-tab="hourly-changes">
+          <span class="icon-slot" data-icon="refresh-cw"></span> <span class="tab-label" data-i18n="tab_hourly_changes">Hourly Changes</span>
+        </button>
         <button class="nav-tab-btn" id="tabBtnCommunity" data-tab="community">
           <span class="icon-slot" data-icon="message-square"></span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
         </button>
@@ -149,6 +152,15 @@
             <small class="d-tab-desc" data-i18n="drawer_forecast_desc">12h Discord analysis & alerts</small>
           </div>
           <span class="d-tab-badge" style="background: var(--purple-glow); color: #fff;">AI</span>
+          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
+        </button>
+        <button class="drawer-tab-btn" data-tab="hourly-changes">
+          <span class="d-tab-icon icon-slot" data-icon="refresh-cw"></span>
+          <div class="d-tab-info">
+            <span class="d-tab-name" data-i18n="tab_hourly_changes">Hourly Changes</span>
+            <small class="d-tab-desc" data-i18n="drawer_hourly_desc">1h trade review deltas (UP & DOWN)</small>
+          </div>
+          <span class="d-tab-badge" style="background: var(--cyan-ocean); color: #000; font-weight: 800;">1H</span>
           <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
         </button>
         <button class="drawer-tab-btn" data-tab="community">
@@ -887,6 +899,131 @@
             <!-- Rendered via JS -->
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 6: HOURLY TRADE CHANGES (UP & DOWN DELTA TABLES)
+         ===================================================================== -->
+    <section class="tab-section hourly-changes-view-container" id="sectionHourlyChanges" style="display: none;">
+      <!-- Hero Analytics Card -->
+      <div class="trade-side-panel hourly-hero-panel">
+        <div class="hourly-hero-top">
+          <div>
+            <div class="hourly-pill-badge">
+              <span class="hourly-pulse-dot"></span>
+              <span class="icon-slot" data-icon="refresh-cw"></span>
+              <span data-i18n="hourly_badge_title">1-HOUR TRADE STREAM DELTAS</span>
+            </div>
+            <h2 class="hourly-hero-heading" data-i18n="hourly_hero_title">
+              Hourly Market Changes & <span class="text-gradient-cyan">Price Movements</span>
+            </h2>
+            <p class="hourly-hero-desc" data-i18n="hourly_hero_desc">
+              All price shifts recorded after the latest 1-hour Discord trade review (10,000 trades). Updated every hour — previous movements are discarded to highlight only current price action.
+            </p>
+          </div>
+        </div>
+
+        <!-- Meta Pills Row -->
+        <div class="hourly-meta-grid">
+          <div class="hourly-meta-card">
+            <span class="hourly-meta-label icon-slot" data-icon="clock"></span>
+            <div>
+              <div class="meta-label-title" data-i18n="hourly_meta_updated">Last Cycle Update</div>
+              <div class="meta-label-val" id="hourlyLastUpdatedVal">Synchronizing...</div>
+            </div>
+          </div>
+          <div class="hourly-meta-card">
+            <span class="hourly-meta-label icon-slot" data-icon="bar-chart-2"></span>
+            <div>
+              <div class="meta-label-title" data-i18n="hourly_meta_trades">Trades Reviewed</div>
+              <div class="meta-label-val" id="hourlyTradesCountVal">10,000 trades / 1h</div>
+            </div>
+          </div>
+          <div class="hourly-meta-card">
+            <span class="hourly-meta-label icon-slot" data-icon="trending-up" style="color: var(--green-win);"></span>
+            <div>
+              <div class="meta-label-title" data-i18n="hourly_meta_up">Price Increases (UP)</div>
+              <div class="meta-label-val val-up-glow" id="hourlyMetaUpCount">0 items</div>
+            </div>
+          </div>
+          <div class="hourly-meta-card">
+            <span class="hourly-meta-label icon-slot" data-icon="trending-down" style="color: var(--crimson-red);"></span>
+            <div>
+              <div class="meta-label-title" data-i18n="hourly_meta_down">Price Drops (DOWN)</div>
+              <div class="meta-label-val val-down-glow" id="hourlyMetaDownCount">0 items</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Subtabs Bar -->
+      <div class="trade-side-panel hourly-controls-panel">
+        <div class="hourly-nav-controls">
+          <!-- 2 Main Sections UP and DOWN + All -->
+          <div class="hourly-subtabs-row" role="tablist">
+            <button class="hourly-subtab-btn subtab-up active" id="hourlySubTabUp" data-subtab="up">
+              <span class="icon-slot" data-icon="trending-up"></span>
+              <span data-i18n="hourly_tab_up">UP (Price Increases)</span>
+              <span class="subtab-badge-count up-badge" id="hourlySubTabUpCount">0</span>
+            </button>
+            <button class="hourly-subtab-btn subtab-down" id="hourlySubTabDown" data-subtab="down">
+              <span class="icon-slot" data-icon="trending-down"></span>
+              <span data-i18n="hourly_tab_down">DOWN (Price Drops)</span>
+              <span class="subtab-badge-count down-badge" id="hourlySubTabDownCount">0</span>
+            </button>
+            <button class="hourly-subtab-btn subtab-all" id="hourlySubTabAll" data-subtab="all">
+              <span class="icon-slot" data-icon="bar-chart-2"></span>
+              <span data-i18n="hourly_tab_all">ALL CHANGES</span>
+              <span class="subtab-badge-count all-badge" id="hourlySubTabAllCount">0</span>
+            </button>
+          </div>
+
+          <!-- Search Box -->
+          <div class="search-input-box hourly-search-box">
+            <input type="text" id="hourlySearchInput" placeholder="Search item by name..." data-i18n-placeholder="hourly_search_placeholder">
+            <button class="search-clear-btn" id="hourlySearchClearBtn" type="button" aria-label="Clear search" onclick="window.clearSearchInput('hourlySearchInput')"><span class="icon-slot" data-icon="x"></span></button>
+          </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="filter-pills-row hourly-category-pills" id="hourlyCategoryPills">
+          <button class="filter-pill-btn active" data-hcat="all" data-i18n="cat_all">All Categories</button>
+          <button class="filter-pill-btn" data-hcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
+          <button class="filter-pill-btn" data-hcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
+          <button class="filter-pill-btn" data-hcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
+          <button class="filter-pill-btn" data-hcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
+          <button class="filter-pill-btn" data-hcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits</button>
+          <button class="filter-pill-btn" data-hcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats</button>
+          <button class="filter-pill-btn" data-hcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc</button>
+        </div>
+      </div>
+
+      <!-- Main Changes Table Container -->
+      <div class="hourly-table-wrapper">
+        <table class="hourly-changes-table" id="hourlyChangesTable">
+          <thead>
+            <tr>
+              <th style="width: 70px;" data-i18n="hth_photo">Photo</th>
+              <th data-i18n="hth_item">Item</th>
+              <th data-i18n="hth_category">Category</th>
+              <th data-i18n="hth_old_price">Previous Price</th>
+              <th data-i18n="hth_new_price">Current Price</th>
+              <th data-i18n="hth_delta_pts">Change (Points)</th>
+              <th data-i18n="hth_delta_pct">Change (%)</th>
+            </tr>
+          </thead>
+          <tbody id="hourlyTableBody">
+            <!-- Rendered via JS -->
+          </tbody>
+        </table>
+
+        <!-- Empty State Message -->
+        <div class="hourly-empty-state" id="hourlyEmptyState" style="display: none;">
+          <div class="empty-state-icon"><span class="icon-slot" data-icon="refresh-cw"></span></div>
+          <h3 data-i18n="hourly_empty_title">No Price Movements Found</h3>
+          <p data-i18n="hourly_empty_desc">All item values in this category remained stable during the latest 1-hour trading cycle.</p>
+        </div>
       </div>
     </section>
 
