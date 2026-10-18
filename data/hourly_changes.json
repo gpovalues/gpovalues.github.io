@@ -2,9 +2,9 @@
   "updated_at": "2026-10-18 13:54:00 UTC",
   "updated_at_iso": "2026-10-18T13:54:00.798796+00:00",
   "total_trades_analyzed": 10000,
-  "total_changes": 148,
+  "total_changes": 149,
   "up_count": 56,
-  "down_count": 92,
+  "down_count": 93,
   "up": [
     {
       "id": "item_104",
@@ -849,6 +849,36 @@
   ],
   "down": [
     {
+      "id": "item_92",
+      "name": "Kraken Armor Set (Azure)",
+      "nameRu": "Лазурный Сет Брони Кракена",
+      "category": "outfits",
+      "tier": "Very Unstable",
+      "subTier": "Standard",
+      "image": "images/item_92.png",
+      "old_value": 19500.0,
+      "new_value": 539.0,
+      "delta_pts": -18961.0,
+      "delta_pct": -97.24,
+      "demand": "Very Low",
+      "trend": "Falling"
+    },
+    {
+      "id": "item_93",
+      "name": "Kraken Blade (Azure)",
+      "nameRu": "Лазурный Клинок Кракена",
+      "category": "weapons",
+      "tier": "Very Unstable",
+      "subTier": "Standard",
+      "image": "images/item_93.png",
+      "old_value": 8326.0,
+      "new_value": 518.0,
+      "delta_pts": -7808.0,
+      "delta_pct": -93.78,
+      "demand": "Very Low",
+      "trend": "Falling"
+    },
+    {
       "id": "item_155",
       "name": "Smoke",
       "nameRu": "Фрукт Дыма (Моку Моку)",
@@ -1431,21 +1461,6 @@
       "delta_pts": -79.0,
       "delta_pct": -0.4,
       "demand": "High",
-      "trend": "Stable"
-    },
-    {
-      "id": "item_92",
-      "name": "Kraken Armor Set (Azure)",
-      "nameRu": "Лазурный Сет Брони Кракена",
-      "category": "outfits",
-      "tier": "Very Unstable",
-      "subTier": "Standard",
-      "image": "images/item_92.png",
-      "old_value": 19579.0,
-      "new_value": 19500.0,
-      "delta_pts": -79.0,
-      "delta_pct": -0.4,
-      "demand": "Very Low",
       "trend": "Stable"
     },
     {
