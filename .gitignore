@@ -24,6 +24,7 @@ data/.prices_updated
 # =====================================================================
 *.txt
 !robots.txt
+!ads.txt
 !requirements.txt
 !package.json
 !package-lock.json
