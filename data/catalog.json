@@ -3841,7 +3841,7 @@
       "rarity": "Mythical",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Dominus_Empyreus",
       "rank_locked": false,
-      "seed_value": 98286,
+      "seed_value": 59351.61,
       "unit_id": "item_195",
       "unit_quantity": 1
     },
@@ -3860,7 +3860,7 @@
       "rarity": "Mythical",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Valkyries",
       "rank_locked": false,
-      "seed_value": 68717,
+      "seed_value": 41086.21,
       "unit_id": "item_196",
       "unit_quantity": 1
     },
@@ -3879,7 +3879,7 @@
       "rarity": "Mythical",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Valkyries",
       "rank_locked": false,
-      "seed_value": 89610,
+      "seed_value": 38989.23,
       "unit_id": "item_197",
       "unit_quantity": 1
     },
@@ -3898,7 +3898,7 @@
       "rarity": "Legendary",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Valkyries",
       "rank_locked": false,
-      "seed_value": 89880,
+      "seed_value": 6441.61,
       "unit_id": "item_198",
       "unit_quantity": 1
     },
@@ -3917,7 +3917,7 @@
       "rarity": "Legendary",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Valkyries",
       "rank_locked": false,
-      "seed_value": 60624,
+      "seed_value": 20773.5,
       "unit_id": "item_199",
       "unit_quantity": 1
     },
@@ -3936,7 +3936,7 @@
       "rarity": "Mythical",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Valkyries",
       "rank_locked": false,
-      "seed_value": 66667,
+      "seed_value": 14556.82,
       "unit_id": "item_200",
       "unit_quantity": 1
     },
@@ -3955,7 +3955,7 @@
       "rarity": "Legendary",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Valkyries",
       "rank_locked": false,
-      "seed_value": 27955,
+      "seed_value": 6798.6,
       "unit_id": "item_201",
       "unit_quantity": 1
     },
@@ -3974,7 +3974,7 @@
       "rarity": "Rare",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Gift_of_Fruit",
       "rank_locked": false,
-      "seed_value": 43218,
+      "seed_value": null,
       "unit_id": "item_202",
       "unit_quantity": 1
     },
@@ -3993,7 +3993,7 @@
       "rarity": "Epic",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Clown_Wig",
       "rank_locked": false,
-      "seed_value": 31667,
+      "seed_value": 4693.35,
       "unit_id": "item_203",
       "unit_quantity": 1
     },
@@ -4012,7 +4012,7 @@
       "rarity": "Legendary Chroma",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Kraken_Armor_Set",
       "rank_locked": false,
-      "seed_value": 539,
+      "seed_value": null,
       "unit_id": "item_92",
       "unit_quantity": 1
     },
@@ -4031,7 +4031,7 @@
       "rarity": "Legendary Chroma",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Kraken_Blade",
       "rank_locked": false,
-      "seed_value": 518,
+      "seed_value": 161.32,
       "unit_id": "item_93",
       "unit_quantity": 1
     },
@@ -4050,7 +4050,7 @@
       "rarity": "Epic",
       "rarity_source": "https://grand-piece-online.fandom.com/wiki/Epic_Banana",
       "rank_locked": false,
-      "seed_value": 0.15,
+      "seed_value": 2337.23,
       "unit_id": "item_204",
       "unit_quantity": 1
     },

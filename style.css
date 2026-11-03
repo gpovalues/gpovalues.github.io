@@ -253,6 +253,28 @@ select { min-height: 46px; padding: .5rem .6rem; color: var(--ink); background: 
 .delta-negative { color: var(--negative); font-weight: 700; white-space: nowrap; }
 .reason-label { color: var(--muted); font-size: .82rem; }
 
+.changes-tabs { flex-wrap: wrap; max-width: 100%; }
+.changes-tabs button { font-size: .78rem; }
+.changes-tabs button:last-child { flex-grow: 1; }
+.read-trades-list { list-style: none; padding: 0; margin: 0; }
+.read-trade-row { padding: 1rem 0; border-top: 1px solid var(--line); }
+.read-trade-row:first-child { border-top: 0; padding-top: .2rem; }
+.read-trade-meta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; margin-bottom: .4rem; font-size: .76rem; }
+.read-trade-time { color: var(--subtle); }
+.read-trade-decision { display: inline-flex; align-items: center; gap: .4rem; color: var(--muted); }
+.read-trade-row[data-decision="used"] .read-trade-decision { color: var(--positive); }
+.read-trade-row[data-decision="retained"] .read-trade-decision { color: var(--sea); }
+.read-trade-row:is([data-decision="waiting"], [data-decision="unpriced"]) .read-trade-decision { color: var(--gold); }
+.read-trade-exchange { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: .75rem; }
+.read-trade-side { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; min-width: 0; }
+.read-trade-side.offer { justify-content: flex-end; }
+.read-trade-for { font-size: 1.7rem; line-height: 1; }
+.read-trade-item { position: relative; flex: 0 0 68px; width: 68px; height: 80px; padding: 0; border: 0; background: none; color: var(--ink); }
+.read-trade-item .item-art { --art-size: 64px; width: 68px; height: 80px; }
+.read-trade-item:hover img { transform: translateY(-2px); }
+.read-trade-quantity { position: absolute; bottom: 0; right: 1px; padding: 0 .25rem; font-size: .62rem; line-height: 1.7; color: var(--gold); background: var(--panel); border: 1px solid var(--line); }
+.read-trade-missing { display: grid; place-items: center; width: 68px; height: 80px; color: var(--muted); font-size: 1.7rem; }
+
 .guide-grid, .community-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.2rem; }
 .prose { padding: 26px; }
 .prose h2 { color: #f8deb0; margin: 1rem 0 .8rem; font-size: 1.15rem; }
@@ -481,6 +503,10 @@ html[data-effects="off"] .effects-toggle { color: #94909f; }
   .market-stats strong { font-size: 1.7rem; }
   .market-table { font-size: .85rem; }
   .market-table td, .market-table th { padding-inline: .8rem; }
+  .read-trade-exchange { gap: .4rem; }
+  .read-trade-item { flex-basis: 60px; width: 60px; height: 72px; }
+  .read-trade-item .item-art { --art-size: 56px; width: 60px; height: 72px; }
+  .read-trade-missing { width: 60px; height: 72px; }
   .guide-grid, .community-grid { grid-template-columns: 1fr; gap: 1rem; }
   .prose { padding: 20px; }
   .prose h2 { font-size: 1.07rem; }

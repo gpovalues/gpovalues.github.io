@@ -164,6 +164,16 @@ async function main() {
     await page.locator('#hourlyEmptyState').waitFor({ state: 'visible' });
     await page.locator('#hourlySearchClearBtn').click();
     assert.equal(await page.locator('#hourlySearchInput').inputValue(), '');
+    await page.locator('#hourlySubTabRead').click();
+    assert.equal(await page.locator('#readTradesPanel').isVisible(), true);
+    assert.equal(await page.locator('#changesTablePanel').isVisible(), false);
+    const readCount = await page.evaluate(async () => (await (await fetch('data/values.json')).json()).read_trades?.length || 0);
+    assert.equal(await page.locator('#readTradesList .read-trade-row').count(), Math.min(readCount, 24));
+    assert.equal(await page.locator('#readTradesEmpty').isVisible(), readCount === 0);
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#hourlySubTabRead').getAttribute('aria-pressed'), 'true');
+    await checkLayout(page, 'Read trades');
+    await page.screenshot({ path: path.join(output, 'gpo-read-trades.png') });
     await page.locator('.main-nav [data-tab="guide"]').click();
     assert.equal(await page.locator('#sectionGuide article').count(), 6);
     await page.screenshot({ path: path.join(output, 'gpo-guide.png') });
@@ -225,6 +235,10 @@ async function main() {
       for (const name of ['calculator', 'tierlist', 'forecasts', 'hourly-changes', 'guide', 'community']) {
         await phone.locator(`.main-nav [data-tab="${name}"]`).click();
         await checkLayout(phone, `${name} at ${width}px`);
+        if (name === 'hourly-changes') {
+          await phone.locator('#hourlySubTabRead').click();
+          await checkLayout(phone, `Read trades at ${width}px`);
+        }
       }
       await phone.locator('.main-nav [data-tab="calculator"]').click();
       await phone.locator('[data-action="picker"][data-side="you"]').click();

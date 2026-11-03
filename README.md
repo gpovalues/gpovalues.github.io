@@ -6,6 +6,7 @@ A community trading companion for [Grand Piece Online](https://www.roblox.com/ga
 - GPO Wiki silhouettes, torn rarity frames, Finger Paint lettering, English/Russian localization, and layouts down to 320px.
 - Two-sided calculator with quantities, point/LC totals, swap, undo, shareable URLs, and Discord text export.
 - Search by name or abbreviation, category/tier/rarity filters, item details with source links, and recorded price history.
+- Changes includes an icon-only **Read trades · 1h** feed with quantities, a 👉 separator, and the price engine's processing decision for each offer.
 - Market activity over 1 hour, 24 hours, and 7 days; recorded changes are separate from estimates.
 - Local WebP images and fonts, lazy item rendering, keyboard-accessible dialogs, and optional sound. Ads are disabled in `site_config.js` by default.
 - Animated rarity gradients use the Wiki's colour stops, including Chroma variants. The sparkle control pauses effects; reduced-motion preferences are respected.
@@ -25,6 +26,16 @@ The [official document](https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7
 - Complete barter offers are fitted together. A relationship needs at least five independent authors before it affects prices; repeated posts do not add influence.
 - Confidence reflects recent evidence and the strength of the connection to SP. An unanchored market remains on a historical point scale with limited confidence.
 - Initial references and retained prices are marked explicitly. Unpriced items stay unpriced. These are estimates from offers, not proof of completed trades or guaranteed profit.
+
+### Reviewed Unstable References
+
+On 3 November 2026, all twelve **Very Unstable** items, including all six Valkyries, were checked against [gpo.gg](https://www.gpo.gg/values), [GPO Values](https://gpovalues.com/api/v1/items.json), [VVX](https://gpo.vaultedvaluesx.com/value-list), and [GPO Tracker](https://gpotracker.com/values/). `data/price_references.json` records each selected source, its quote date where stated, and its own LC scale. Ten references were repriced; Gift of Fruit and Kraken Armor Set (Azure) have no supported numerical quote and are unpriced. Violet uses the latest found reference from 24 October; the VVX pages do not state their quote dates.
+
+Published item-to-LC ratios are converted using the retained **151.08 points per LC**. They are labelled **Price-checked reference**, with source links and dates in the item record; they do not add Discord observations or claim a verified SP conversion. A checked reference replaces an older collector checkpoint, while newer supported market prices take precedence. References are reapplied when loading an older catalogue checkpoint.
+
+### Read Trade Feed
+
+`data/values.json` includes `read_trades` for the hour ending at the snapshot timestamp, newest first. The feed uses the same deduplicated, normalized offers as the price engine, including recognized parts of incomplete offers. Each report contains item IDs and quantities, a timestamp, an anonymous stable ID, the number of independent authors supporting its barter relationship, and a decision: used, already included, waiting for five authors, incomplete, unpriced, paused, or no price relationship. Unknown parts remain excluded from market counts. The feed omits raw Discord text, author IDs and channel IDs. An empty collection produces an empty feed.
 
 ## Run Locally
 
@@ -68,6 +79,7 @@ For live collection, provide `DISCORD_TOKEN` through the environment and optiona
 | --- | --- |
 | `data/catalog.json` | Official order, stable IDs, item metadata and unit relationships |
 | `data/rarities.json` | Reviewed game rarities and correct Wiki source links |
+| `data/price_references.json` | Reviewed Unstable price sources and LC-scale conversions |
 | `data/values.json` | Validated, public price/activity snapshot |
 | `data/history.json` | Public sampled price history |
 | `.state/market.sqlite3` | Collector messages, cursors and retained snapshots |

@@ -102,6 +102,30 @@ test('game rarity is shown separately from the official trading tier', async () 
   } finally { app.dom.window.close(); }
 });
 
+test('a reviewed price exposes its source and is distinguished from market changes', async () => {
+  const payload = structuredClone(live);
+  Object.assign(payload.items.find(item => item.id === 'item_92'), {
+    price_status: 'reviewed', reference_basis: 'lc',
+    price_reference: { checked_at: '2026-11-03T12:00:00Z', source_updated_at: '2026-10-24', source_url: 'https://example.org/azure' },
+  });
+  payload.changes[0].reason = 'reviewed_reference';
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.document.querySelector('#quickItemsCardsGrid [data-action="detail"][data-id="item_92"]').click();
+    const detail = app.document.getElementById('detailBody');
+    assert.equal(detail.querySelector('.evidence-tag').textContent, 'Price-checked reference');
+    const source = detail.querySelector('a[href="https://example.org/azure"]');
+    assert.ok(source, 'The price-check source should be accessible from the item record');
+    assert.equal(source.rel, 'noopener noreferrer');
+    assert.ok(detail.querySelector('dl').textContent.includes('Oct'));
+    const quoteDate = [...detail.querySelectorAll('.detail-fact')].find(fact => fact.querySelector('dt').textContent === 'Source quote date');
+    assert.equal(quoteDate.querySelector('dd').textContent, 'Oct 24, 2026');
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    assert.equal(app.document.querySelector('#hourlyTableBody .reason-label').textContent, 'Price check');
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
 test('rarity filtering keeps the selected game rarity in the URL', async () => {
   const app = await boot();
   try {
@@ -185,6 +209,62 @@ test('clearing the changes search restores all rows', async () => {
     app.window.clearSearchInput('hourlySearchInput');
     assert.equal(app.document.getElementById('hourlyTableBody').children.length, 2);
     assert.equal(app.document.getElementById('hourlySearchClearBtn').hidden, true);
+  } finally { app.dom.window.close(); }
+});
+
+test('Changes can show recent read trades as item icons with processing conclusions', async () => {
+  const payload = structuredClone(live);
+  const record = (id, timestamp, offer, want, decision = 'waiting') => ({
+    id, timestamp, offer, want, decision, independent_authors: decision === 'used' ? 6 : 1,
+  });
+  payload.read_trades = [
+    record('earlier', '2026-11-03T11:45:00Z', [['item_86', 1]], [['item_72', 1]]),
+    record('latest', '2026-11-03T11:55:00Z', [['item_58', 1]], [['item_102', 8]], 'used'),
+    record('old', '2026-11-03T10:00:00Z', [['item_92', 1]], [['item_102', 1]]),
+    record('future', '2026-11-03T13:00:00Z', [['item_92', 1]], [['item_102', 1]]),
+    record('unsafe', '2026-11-03T11:59:00Z', [['item_102', '<img id=tradeProbe onerror=window.injected=true>']], [['item_72', 1]]),
+  ];
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.window.history.replaceState(null, '', '?tab=hourly-changes&direction=trades');
+    app.window.dispatchEvent(new app.window.PopStateEvent('popstate'));
+    const toggle = app.document.getElementById('hourlySubTabRead');
+    assert.ok(toggle, 'Changes needs a read-trades sub-tab');
+    assert.equal(toggle.getAttribute('aria-pressed'), 'true');
+    assert.equal(app.document.getElementById('changesTablePanel').hidden, true);
+    assert.equal(app.document.getElementById('readTradesPanel').hidden, false);
+    const rows = [...app.document.querySelectorAll('#readTradesList .read-trade-row')];
+    assert.deepEqual(rows.map(row => row.dataset.tradeId), ['latest', 'earlier']);
+    assert.equal(rows[0].querySelector('.read-trade-for').textContent, '👉');
+    assert.deepEqual([...rows[0].querySelectorAll('img')].map(img => img.alt), ['Mythical Fruit Chest', 'Legendary Fruit Chest']);
+    assert.equal(rows[0].querySelector('.read-trade-quantity').textContent, '×8');
+    assert.equal(rows[0].querySelector('.read-trade-decision').textContent, 'Used in pricing');
+    assert.equal(rows[0].textContent.includes('Mythical Fruit Chest'), false);
+    assert.equal(app.document.getElementById('tradeProbe'), null);
+    const input = app.document.getElementById('hourlySearchInput');
+    input.value = 'pika';
+    input.dispatchEvent(new app.window.Event('input', { bubbles: true }));
+    await new Promise(resolve => setTimeout(resolve, 110));
+    assert.equal(app.document.querySelector('#readTradesList .read-trade-row').dataset.tradeId, 'earlier');
+    app.document.getElementById('hourlySearchClearBtn').click();
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 2);
+    app.document.getElementById('hourlySubTabAll').click();
+    assert.equal(app.document.getElementById('readTradesPanel').hidden, true);
+    assert.equal(app.document.getElementById('hourlyTableBody').children.length, 2);
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('the read-trades tab has an empty state when Discord has not supplied trades', async () => {
+  const app = await boot();
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    const toggle = app.document.getElementById('hourlySubTabRead');
+    assert.ok(toggle, 'Changes needs a read-trades sub-tab');
+    toggle.click();
+    assert.equal(app.document.getElementById('readTradesEmpty').hidden, false);
+    assert.equal(app.document.getElementById('readTradesList').children.length, 0);
+    assert.equal(new URL(app.window.location.href).searchParams.get('direction'), 'trades');
   } finally { app.dom.window.close(); }
 });
 

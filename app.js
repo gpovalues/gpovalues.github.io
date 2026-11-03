@@ -10,6 +10,7 @@
   const inputs = { quick: 'quickSearchInput', catalog: 'searchInput', market: 'forecastSearchInput', changes: 'hourlySearchInput', picker: 'pickerSearchInput' };
   const scopes = { calculator: 'quick', tierlist: 'catalog', forecasts: 'market', 'hourly-changes': 'changes' };
   const tierColors = { Exclusive: '#e9ad97', 'Tier SS': '#ecb857', 'Tier S': '#d6b46f', 'Tier A+': '#c9abdb', 'Tier A': '#8cb8d2', 'Tier A-': '#83bea8', 'Tier B+': '#afd394', 'Tier B': '#82afb6', 'Tier B-': '#9faebd', 'Tier C': '#a2a3b8', 'Tier F': '#8b939e', 'Very Unstable': '#edb0ce', 'New Items': '#afd6e9' };
+  const readDecisionIcons = { used: 'check-circle-2', retained: 'check', waiting: 'users', incomplete: 'help-circle', unpriced: 'help-circle', paused: 'clock', no_relation: 'minus' };
   const batchSize = 24;
   const filters = Object.fromEntries(Object.keys(inputs).map(scope => [scope, { query: '', category: 'all', limit: batchSize }]));
   let data = null;
@@ -46,7 +47,7 @@
   const nameOf = item => lang === 'ru' ? item.nameRu || item.name : item.name;
   const number = (value, digits = 2) => value === null || !Number.isFinite(value) ? '—' : new Intl.NumberFormat(lang, { maximumFractionDigits: digits }).format(value);
   const points = value => value === null || !Number.isFinite(value) ? '—' : `${number(value)} pts`;
-  const dateText = value => !value || !Number.isFinite(Date.parse(value)) ? '—' : new Intl.DateTimeFormat(lang, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
+  const dateText = value => !value || !Number.isFinite(Date.parse(value)) ? '—' : new Intl.DateTimeFormat(lang, /^\d{4}-\d{2}-\d{2}$/.test(value) ? { dateStyle: 'medium', timeZone: 'UTC' } : { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
   const normalize = value => String(value || '').normalize('NFKC').toLowerCase().replace(/['’`"()\-–—]/g, '').replace(/\s+/g, ' ').trim();
 
   function element(tag, className = '', text) {
@@ -361,6 +362,7 @@
   function evidence(item) {
     if (item.value === null) return t('price_unknown');
     if (item.price_status === 'baseline') return t('price_baseline');
+    if (item.price_status === 'reviewed') return t('price_reviewed');
     if (item.price_status === 'carried') return t('price_carried');
     return t(item.confidence >= 0.7 ? 'evidence_high' : item.confidence >= 0.35 ? 'evidence_medium' : 'evidence_low');
   }
@@ -495,10 +497,20 @@
   }
   function renderChanges(start = 0) {
     if (!data) return;
+    $('changesTime').textContent = dateText(data.meta.updated_at_iso);
+    $('readTradesPanel').hidden = direction !== 'trades';
+    const more = document.querySelector('[data-action="more"][data-scope="changes"]');
+    more.dataset.i18n = direction === 'trades' ? 'show_more_trades' : 'show_more';
+    more.textContent = t(more.dataset.i18n);
+    if (direction === 'trades') {
+      $('changesTablePanel').hidden = true;
+      $('hourlyEmptyState').hidden = true;
+      renderReadTrades(start);
+      return;
+    }
     const allowed = new Set(filtered('changes').map(item => item.id));
     const changes = (data.changes || []).filter(change => allowed.has(change.id) &&
       (direction === 'all' || (direction === 'up' ? change.delta_pts > 0 : change.delta_pts < 0)));
-    $('changesTime').textContent = dateText(data.meta.updated_at_iso);
     $('changesTablePanel').hidden = !changes.length;
     $('hourlyEmptyState').hidden = Boolean(changes.length);
     const fragment = document.createDocumentFragment();
@@ -507,11 +519,76 @@
       const row = element('tr');
       const delta = element('span', change.delta_pts > 0 ? 'delta-positive' : 'delta-negative', `${change.delta_pts > 0 ? '+' : '−'}${points(Math.abs(change.delta_pts))}`);
       delta.append(element('span', 'secondary-number', `${change.delta_pct > 0 ? '+' : '−'}${number(Math.abs(change.delta_pct), 1)}%`));
-      row.append(cell(tableItem(item)), cell(points(change.old_value)), cell(points(change.new_value), 'table-number'), cell(delta), cell(t(change.reason === 'official_order' ? 'reason_official' : 'reason_market'), 'reason-label'));
+      row.append(cell(tableItem(item)), cell(points(change.old_value)), cell(points(change.new_value), 'table-number'), cell(delta), cell(t(change.reason === 'official_order' ? 'reason_official' : change.reason === 'reviewed_reference' ? 'reason_reviewed' : 'reason_market'), 'reason-label'));
       fragment.append(row);
     }
     if (start) $('hourlyTableBody').append(fragment); else $('hourlyTableBody').replaceChildren(fragment);
     moreState('changes', changes.length);
+  }
+  function renderReadTrades(start = 0) {
+    const filter = filters.changes;
+    const words = normalize(filter.query).split(' ').filter(Boolean);
+    const snapshotTime = Date.parse(data.meta.updated_at_iso);
+    const records = Array.isArray(data.read_trades) ? data.read_trades : [];
+    const list = records.filter(record => {
+      if (!record || !Object.hasOwn(readDecisionIcons, record.decision) || !Array.isArray(record.offer) || !Array.isArray(record.want)) return false;
+      const age = snapshotTime - Date.parse(record.timestamp);
+      const entries = [...record.offer, ...record.want];
+      if (!Number.isFinite(age) || age < 0 || age > 3600000 || !entries.length || entries.some(entry => !Array.isArray(entry) || entry.length !== 2 || !byId.has(entry[0]) || !Number.isSafeInteger(entry[1]) || entry[1] < 1)) return false;
+      const search = entries.map(([id]) => searchKeys.get(id)).join(' ');
+      return words.every(word => search.includes(word)) && (filter.category === 'all' || entries.some(([id]) => byId.get(id).category === filter.category));
+    }).sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
+    $('readTradesSummary').textContent = t('read_trades_summary', { count: number(list.length), time: dateText(data.meta.updated_at_iso) });
+    $('readTradesEmpty').hidden = Boolean(list.length);
+    const fragment = document.createDocumentFragment();
+    for (const record of list.slice(start, filter.limit)) {
+      const row = element('li', 'read-trade-row');
+      row.dataset.tradeId = record.id;
+      row.dataset.decision = record.decision;
+      const meta = element('div', 'read-trade-meta');
+      const time = element('time', 'read-trade-time', new Intl.DateTimeFormat(lang, { hour: '2-digit', minute: '2-digit' }).format(new Date(record.timestamp)));
+      time.dateTime = record.timestamp;
+      time.title = dateText(record.timestamp);
+      const decision = element('span', 'read-trade-decision');
+      decision.append(icon(readDecisionIcons[record.decision]), document.createTextNode(t(`read_${record.decision}`, { count: number(record.independent_authors, 0) })));
+      meta.append(time, decision);
+      const exchange = element('div', 'read-trade-exchange');
+      for (const side of ['offer', 'want']) {
+        if (side === 'want') {
+          const hand = element('span', 'read-trade-for', '👉');
+          hand.setAttribute('role', 'img');
+          hand.setAttribute('aria-label', t('read_for'));
+          exchange.append(hand);
+        }
+        const group = element('div', `read-trade-side ${side}`);
+        group.setAttribute('role', 'group');
+        group.setAttribute('aria-label', t(`read_${side}`));
+        for (const [id, quantity] of record[side]) {
+          const item = byId.get(id);
+          const node = button('', 'detail', 'read-trade-item', { id });
+          node.dataset.rarity = rarityKey(item);
+          node.title = `${nameOf(item)} ×${number(quantity, 0)}`;
+          node.setAttribute('aria-label', node.title);
+          const art = element('span', 'item-art');
+          art.append(image(item, 48));
+          node.append(art);
+          if (quantity > 1) node.append(element('span', 'read-trade-quantity', `×${quantity}`));
+          group.append(node);
+        }
+        if (!record[side].length) {
+          const missing = element('span', 'read-trade-missing');
+          missing.setAttribute('role', 'img');
+          missing.setAttribute('aria-label', t('read_side_unknown'));
+          missing.append(icon('help-circle'));
+          group.append(missing);
+        }
+        exchange.append(group);
+      }
+      row.append(meta, exchange);
+      fragment.append(row);
+    }
+    if (start) $('readTradesList').append(fragment); else $('readTradesList').replaceChildren(fragment);
+    moreState('changes', list.length);
   }
   function renderPicker(start = 0) {
     if (!data) return;
@@ -594,6 +671,10 @@
       ['weekly_demand', item.demandScore === null || item.demandScore === undefined ? '—' : `${number(item.demandScore, 1)} / 10`],
       ['source_position', `#${item.official_rank} · ${item.tier}`],
     ];
+    if (item.price_reference) entries.push(
+      ['price_checked', dateText(item.price_reference.checked_at)],
+      ['reference_date', item.price_reference.source_updated_at ? dateText(item.price_reference.source_updated_at) : t('source_date_unknown')],
+    );
     for (const [key, value] of entries) { const fact = element('div', 'detail-fact'); fact.append(element('dt', '', t(key)), element('dd', '', value)); facts.append(fact); }
     const chart = element('div', 'history-block');
     chart.id = 'detailHistory';
@@ -611,7 +692,13 @@
       Object.assign(source, { href: item.rarity_source, target: '_blank', rel: 'noopener noreferrer' });
       body.append(source);
     }
+    if (/^https:\/\/[^\s]+$/.test(item.price_reference?.source_url || '')) {
+      const source = element('a', 'rarity-source', t('price_reference_source'));
+      Object.assign(source, { href: item.price_reference.source_url, target: '_blank', rel: 'noopener noreferrer' });
+      body.append(source);
+    }
     if (item.value === null) body.append(element('p', 'detail-note', t('unknown_note')));
+    else if (item.price_status === 'reviewed') body.append(element('p', 'detail-note', t('reviewed_note')));
     else if ((item.observation_authors || 0) < 5) body.append(element('p', 'detail-note', t('preliminary_note')));
     else if (item.constraint_applied) body.append(element('p', 'detail-note', t('rank_constraint')));
     if (!item.rank_locked) body.append(element('p', 'fine-print', t('flexible_note')));
@@ -679,7 +766,7 @@
     }
     tier = params.get('tier') || 'all';
     rarity = [...rarities, 'unknown'].includes(params.get('rarity')) ? params.get('rarity') : 'all';
-    direction = ['up', 'down'].includes(params.get('direction')) ? params.get('direction') : 'all';
+    direction = ['up', 'down', 'trades'].includes(params.get('direction')) ? params.get('direction') : 'all';
     showTab();
   }
   function showTab() {

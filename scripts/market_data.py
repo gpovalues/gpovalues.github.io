@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FLEXIBLE_TIERS = {"Very Unstable", "New Items"}
+READ_TRADE_DECISIONS = {"used", "retained", "waiting", "incomplete", "unpriced", "paused", "no_relation"}
 
 
 def utc_time(value):
@@ -28,9 +29,14 @@ def iso_time(value):
 
 
 def load_catalog(path=None):
-    payload = json.loads(Path(path or ROOT / "data/catalog.json").read_text(encoding="utf-8"))
+    path = Path(path or ROOT / "data/catalog.json")
+    payload = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(payload, list):
         payload = {"schema_version": 1, "source": {"revision": "legacy"}, "items": payload}
+    reference_path = path.with_name("price_references.json")
+    references = json.loads(reference_path.read_text(encoding="utf-8")) if reference_path.exists() else None
+    if references:
+        utc_time(references.get("checked_at"))
     ids = set()
     for index, item in enumerate(payload["items"], 1):
         if not item.get("id") or item["id"] in ids:
@@ -42,6 +48,20 @@ def load_catalog(path=None):
         item.setdefault("unit_quantity", 1)
         if not isinstance(item["unit_quantity"], int) or item["unit_quantity"] < 1:
             raise ValueError("Invalid catalogue pack quantity")
+        reference = references.get("items", {}).get(item["id"]) if references else None
+        if reference and not item["rank_locked"]:
+            source_value = reference.get("source_value")
+            lc_points = references.get("lc_points")
+            source_lc = reference.get("source_lc_value")
+            numbers = [lc_points, source_lc] + ([] if source_value is None else [source_value])
+            if any(isinstance(value, bool) or not isinstance(value, (int, float)) or
+                   not math.isfinite(value) or value <= 0 for value in numbers):
+                raise ValueError(f"Invalid price reference: {item['id']}")
+            value = source_value / source_lc * lc_points if source_value is not None else None
+            if value is not None and (not math.isfinite(value) or round(value, 2) <= 0):
+                raise ValueError(f"Invalid price reference: {item['id']}")
+            item["seed_value"] = round(value, 2) if value is not None else None
+            item["price_reference"] = {**reference, "checked_at": references["checked_at"], "lc_points": lc_points}
     return payload
 
 
@@ -96,3 +116,23 @@ def validate_snapshot(snapshot, catalog):
                 raise ValueError("Pack has a price without its unit")
             if value is not None and abs(value - round(unit["value"] / unit_quantity * original["unit_quantity"], 2)) > 0.001:
                 raise ValueError("Pack price is not the sum of its units")
+    reports = snapshot.get("read_trades", [])
+    if not isinstance(reports, list):
+        raise ValueError("Invalid read trade list")
+    report_ids = set()
+    for report in reports:
+        try:
+            age = (utc_time(snapshot["meta"]["updated_at_iso"]) - utc_time(report["timestamp"])).total_seconds()
+            if not report.get("id") or report["id"] in report_ids or not 0 <= age <= 3600:
+                raise ValueError("Invalid read trade")
+            if report["decision"] not in READ_TRADE_DECISIONS or type(report["independent_authors"]) is not int or report["independent_authors"] < 0:
+                raise ValueError("Invalid read trade")
+            for side in ("offer", "want"):
+                if not isinstance(report[side], list):
+                    raise ValueError("Invalid read trade")
+                for iid, quantity in report[side]:
+                    if iid not in expected or type(quantity) is not int or quantity < 1:
+                        raise ValueError("Invalid read trade")
+            report_ids.add(report["id"])
+        except (KeyError, TypeError, ValueError) as error:
+            raise ValueError("Invalid read trade") from error

@@ -51,16 +51,18 @@ class GPOPriceEngine:
             try:
                 stamp = utc_time(trade.get("timestamp"))
                 age = (now - stamp).total_seconds() / 3600
-                if not 0 <= age <= 168 or not trade.get("author_id") or not trade.get("counts_eligible", True):
+                if not 0 <= age <= 168 or not trade.get("author_id"):
                     continue
                 offer, want = self._side(trade.get("offer_items", [])), self._side(trade.get("want_items", []))
             except (ValueError, TypeError, OverflowError):
                 continue
             signature = json.dumps([sorted(offer.items()), sorted(want.items()), trade.get("issues", [])])
             key = (str(trade["author_id"]), signature)
+            counted = bool(trade.get("counts_eligible", True))
             record = {"author": key[0], "signature": signature, "stamp": stamp, "age": age,
                       "offer": offer, "want": want,
-                      "eligible": bool(offer and want and trade.get("pricing_eligible", True))}
+                      "counts_eligible": counted,
+                      "eligible": bool(counted and offer and want and trade.get("pricing_eligible", True))}
             if key not in latest or stamp > latest[key]["stamp"]:
                 latest[key] = record
         return list(latest.values())
@@ -69,11 +71,19 @@ class GPOPriceEngine:
         old = {item["id"]: item for item in (previous or {}).get("items", [])}
         candidates = defaultdict(list)
         minimum_pack = {}
+        reviewed = set()
         for item in self.items:
             unit = item["unit_id"]
             quantity = item["unit_quantity"]
             minimum_pack[unit] = min(minimum_pack.get(unit, quantity), quantity)
-            value = old.get(item["id"], {}).get("value", item.get("seed_value", item.get("value")))
+            prior = old.get(item["id"], {})
+            reference = item.get("price_reference")
+            if reference and (not prior.get("price_updated_at") or
+                              utc_time(reference["checked_at"]) > utc_time(prior["price_updated_at"])):
+                value = item["seed_value"]
+                reviewed.add(item["id"])
+            else:
+                value = prior.get("value", item.get("seed_value", item.get("value")))
             if isinstance(value, (int, float)) and math.isfinite(value) and value > 0:
                 # A ranked pack is a better initial reference than a formerly unconstrained single.
                 priority = (bool(item["rank_locked"]), quantity == 1)
@@ -81,7 +91,7 @@ class GPOPriceEngine:
         base = {unit: max(values, key=lambda candidate: candidate[0])[1] for unit, values in candidates.items()}
         base[self.anchor] = 1.0
         quantum = {unit: 0.01 / quantity for unit, quantity in minimum_pack.items()}
-        return base, quantum, old
+        return base, quantum, old, reviewed
 
     @staticmethod
     def _vector(observation):
@@ -228,15 +238,45 @@ class GPOPriceEngine:
             raise ValueError(f"Constrained price fit did not converge: {fitted.message}")
         return dict(zip(keys, map(float, fitted.x * scale))), dict(zip(keys, map(float, raw.x * scale))), authors
 
+    def _read_trades(self, observations, supporters, active_quotes, units, allow_updates):
+        active = {(quote["author"], quote["signature"]) for quote in active_quotes}
+        result = []
+        for quote in sorted(observations, key=lambda quote: quote["stamp"], reverse=True):
+            if quote["age"] > 1:
+                continue
+            vector = self._vector(quote)
+            authors = len(supporters.get(frozenset(vector), {}))
+            if not quote["eligible"]:
+                decision = "incomplete"
+            elif not (any(count > 0 for count in vector.values()) and any(count < 0 for count in vector.values())):
+                decision = "no_relation"
+            elif authors < MIN_AUTHORS:
+                decision = "waiting"
+            elif not (quote["offer"].keys() | quote["want"].keys()) <= units.keys():
+                decision = "unpriced"
+            elif not allow_updates:
+                decision = "paused"
+            else:
+                decision = "used" if (quote["author"], quote["signature"]) in active else "retained"
+            result.append({
+                "id": hashlib.sha256(json.dumps([quote["author"], quote["signature"]]).encode()).hexdigest()[:20],
+                "timestamp": quote["stamp"].isoformat(),
+                "offer": [[iid, int(quantity)] for iid, quantity in quote["offer"].items()],
+                "want": [[iid, int(quantity)] for iid, quantity in quote["want"].items()],
+                "decision": decision, "independent_authors": authors,
+            })
+        return result
+
     def run_pipeline(self, trades, previous=None, as_of=None, allow_updates=True):
         now = utc_time(as_of) if as_of else dt.datetime.now(dt.timezone.utc)
-        observations = self._observations(trades, now)
+        all_observations = self._observations(trades, now)
+        observations = [quote for quote in all_observations if quote["counts_eligible"]]
         quotes = []
         for quote in observations:
             vector = self._vector(quote)
             if quote["eligible"] and any(count > 0 for count in vector.values()) and any(count < 0 for count in vector.values()):
                 quotes.append(quote)
-        base, quantum, old_items = self._baseline(previous)
+        base, quantum, old_items, reviewed = self._baseline(previous)
         existing_units = set(base)
         repair = not self._ordered_prices_valid(base)
         supporters = defaultdict(dict)
@@ -318,13 +358,20 @@ class GPOPriceEngine:
             confidence = round(min(confidence, reference_strength.get(unit, 0.3)), 2)
             raw_value = round(raw_units[unit] * pack, 2) if unit in raw_units else None
             constrained = value is not None and raw_value is not None and abs(value - raw_value) > 0.02
-            price_status = "unknown" if value is None else "estimated" if sample_count >= MIN_AUTHORS else "carried" if old.get("price_status") in ("estimated", "carried") else "baseline"
+            price_status = ("unknown" if value is None else "estimated" if sample_count >= MIN_AUTHORS else
+                            "reviewed" if iid in reviewed or old.get("price_status") == "reviewed" else
+                            "carried" if old.get("price_status") in ("estimated", "carried") else "baseline")
+            price_time = old.get("price_updated_at")
+            if changed or (value is not None and old_value is None and active_quotes and sample_count >= MIN_AUTHORS):
+                price_time = now.isoformat()
+            elif iid in reviewed:
+                price_time = item["price_reference"]["checked_at"]
             record = {key: val for key, val in item.items() if key not in ("seed_value", "value", "lcValue")}
             record.update({
                 "value": value, "price_status": price_status,
-                "price_updated_at": now.isoformat() if changed or (value is not None and not old and active_quotes and sample_count >= MIN_AUTHORS) else old.get("price_updated_at"),
+                "price_updated_at": price_time,
                 "confidence": confidence, "observation_authors": sample_count,
-                "reference_basis": "unknown" if value is None else "sp" if unit in reference_strength else "historical",
+                "reference_basis": "unknown" if value is None else "sp" if unit in reference_strength else "lc" if price_status == "reviewed" else "historical",
                 "quote_range": quote_range,
                 "last_observed_at": (now - dt.timedelta(hours=latest_age)).isoformat() if latest_age is not None else None,
                 "demandScore": round(10 * (d + 2) / (d + s + 4), 1) if d + s else None,
@@ -337,7 +384,7 @@ class GPOPriceEngine:
                 changes.append({"id": iid, "old_value": old_value, "new_value": value,
                                 "delta_pts": round(value - old_value, 2),
                                 "delta_pct": round((value / old_value - 1) * 100, 2),
-                                "reason": "official_order" if repair or (new_units and sample_count < MIN_AUTHORS) else "market"})
+                                 "reason": "official_order" if repair or (new_units and sample_count < MIN_AUTHORS) else "reviewed_reference" if iid in reviewed else "market"})
 
         by_id = {item["id"]: item for item in records}
         ordered = [by_id[item["id"]] for item in self.locked]
@@ -365,7 +412,8 @@ class GPOPriceEngine:
         }
         snapshot = {"schema_version": 2, "meta": meta, "official_source": self.catalog["source"],
                     "currency": {"anchor_id": self.anchor, "lc_id": lc["id"] if lc else None},
-                    "items": ordered, "changes": changes}
+                    "items": ordered, "changes": changes,
+                    "read_trades": self._read_trades(all_observations, supporters, active_quotes, units, allow_updates)}
         validate_snapshot(snapshot, self.catalog)
         snapshot["revision"] = hashlib.sha256(json.dumps(snapshot, sort_keys=True, allow_nan=False).encode()).hexdigest()[:20]
         return snapshot

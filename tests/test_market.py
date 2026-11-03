@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 from scripts.discord_reader import DiscordTradeReader
+from scripts.market_data import validate_snapshot
 from scripts.price_engine import GPOPriceEngine
 from scripts.trade_parser import GPOTradeParser
 
@@ -266,6 +267,68 @@ class PriceRegressionTests(unittest.TestCase):
                    "want_items": [("F", 2)], "pricing_eligible": True} for i in range(10)]
         result = self.run_prices(trades)
         self.assertEqual(next(item["value"] for item in result["items"] if item["id"] == "F"), 800)
+
+    def test_read_trades_keep_only_the_latest_hour_without_publishing_author_data(self):
+        now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(seconds=1)
+        trades = [{**message("private message", author="private-author", age_hours=age),
+                   "offer_items": [("F", 1)], "want_items": [("SP", 800)]}
+                  for age in (0.75, 0.25, 2, -2)]
+        result = GPOPriceEngine(self.path).run_pipeline(trades, as_of=now)
+        records = result.get("read_trades", [])
+        self.assertEqual(len(records), 1)
+        self.assertEqual(records[0]["timestamp"], trades[1]["timestamp"])
+        self.assertEqual(records[0]["offer"], [["F", 1]])
+        self.assertEqual(records[0]["want"], [["SP", 800]])
+        self.assertEqual(records[0]["decision"], "waiting")
+        self.assertEqual(records[0]["independent_authors"], 1)
+        self.assertNotIn("private-author", json.dumps(records))
+        self.assertNotIn("private message", json.dumps(records))
+
+    def test_incomplete_read_trades_are_visible_without_counting_unknown_parts_as_market_activity(self):
+        trades = [{**message("", author=str(i), age_hours=0.1), "offer_items": [("F", 1)],
+                   "want_items": [("SP", 800)], "pricing_eligible": False,
+                   "counts_eligible": i == 0, "issues": ["unspecified:adds" if i == 0 else "unknown:secret"]}
+                  for i in range(2)]
+        result = self.run_prices(trades)
+        self.assertEqual([record["decision"] for record in result.get("read_trades", [])], ["incomplete", "incomplete"])
+        self.assertEqual(result["meta"]["total_trades_1h"], 1)
+        self.assertNotIn("secret", json.dumps(result["read_trades"]))
+
+    def test_read_trade_decisions_distinguish_used_retained_and_paused_evidence(self):
+        now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(seconds=1)
+        trades = [{**message("", author=str(i), age_hours=0.1), "offer_items": [("F", 1)],
+                   "want_items": [("SP", 800)]} for i in range(6)]
+        engine = GPOPriceEngine(self.path)
+        first = engine.run_pipeline(trades, as_of=now)
+        self.assertEqual({record["decision"] for record in first.get("read_trades", [])}, {"used"})
+        self.assertEqual({record["independent_authors"] for record in first["read_trades"]}, {6})
+        second = engine.run_pipeline(trades, previous=first, as_of=now + dt.timedelta(minutes=1))
+        self.assertEqual({record["decision"] for record in second["read_trades"]}, {"retained"})
+        paused = engine.run_pipeline(trades, previous=first, as_of=now, allow_updates=False)
+        self.assertEqual({record["decision"] for record in paused["read_trades"]}, {"paused"})
+
+    def test_read_trades_explain_unpriced_and_non_pricing_relationships(self):
+        items = copy.deepcopy(self.items)
+        items[2]["value"] = None
+        items.append({"id": "U", "name": "Unpriced", "tier": "New Items", "value": None, "official_rank": 5})
+        self.path.write_text(json.dumps(items), encoding="utf-8")
+        trades = [{**message("", author=str(i), age_hours=0.1), "offer_items": [("F", 1)],
+                   "want_items": [("U", 1)]} for i in range(6)]
+        trades.append({**message("", author="self", age_hours=0.1), "offer_items": [("SP", 1)], "want_items": [("SP", 2)]})
+        result = self.run_prices(trades)
+        self.assertEqual({record["decision"] for record in result.get("read_trades", [])}, {"unpriced", "no_relation"})
+
+    def test_invalid_read_trades_cannot_be_published(self):
+        engine = GPOPriceEngine(self.path)
+        snapshot = engine.run_pipeline([])
+        record = {"id": "read-offer", "timestamp": snapshot["meta"]["updated_at_iso"],
+                  "offer": [["F", 1]], "want": [["SP", 800]], "decision": "waiting", "independent_authors": 1}
+        stale = (dt.datetime.fromisoformat(record["timestamp"]) - dt.timedelta(hours=2)).isoformat()
+        for invalid in ({"want": [["missing", 1]]}, {"offer": [["F", True]]}, {"timestamp": stale}):
+            with self.subTest(invalid=invalid):
+                snapshot["read_trades"] = [{**record, **invalid}]
+                with self.assertRaisesRegex(ValueError, "Invalid read trade"):
+                    validate_snapshot(snapshot, engine.catalog)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-11-03T17:06:33.813109+00:00",
+  "lc_points": 151.08,
+  "method": "Published item-to-LC ratios, converted to the retained point scale. References are estimates, not collected trade observations.",
+  "items": {
+    "item_195": {
+      "source_value": 353564,
+      "source_lc_value": 900,
+      "source_url": "https://www.gpo.gg/accessories/dominus-empyreus",
+      "source_updated_at": "2026-11-02",
+      "note": "Low-confidence published estimate; cross-checked against the VVX list."
+    },
+    "item_196": {
+      "source_value": 244755,
+      "source_lc_value": 900,
+      "source_url": "https://www.gpo.gg/accessories/sparkle-time-valkyrie",
+      "source_updated_at": "2026-11-01",
+      "note": "Low-confidence published estimate; cross-checked against the VVX list."
+    },
+    "item_197": {
+      "source_value": 258070.086,
+      "source_lc_value": 1000,
+      "source_url": "https://gpo.vaultedvaluesx.com/gpo/items/source-6f7c6921-5d81-44fa-8f85-d363de3e9020?list=87dab3d7-3345-54a5-a033-3c7e75308811",
+      "source_updated_at": null,
+      "note": "Published VVX team estimate; the item page does not state its quote date. gpo.gg has no recent price."
+    },
+    "item_198": {
+      "source_value": 42637.068,
+      "source_lc_value": 1000,
+      "source_url": "https://gpo.vaultedvaluesx.com/gpo/items/source-6827427f-6941-49ef-8e38-6d0ab8191748?list=87dab3d7-3345-54a5-a033-3c7e75308811",
+      "source_updated_at": null,
+      "note": "Published VVX team estimate; the item page does not state its quote date. gpo.gg has no recent price."
+    },
+    "item_199": {
+      "source_value": 55000,
+      "source_lc_value": 400,
+      "source_url": "https://gpotracker.com/values/",
+      "evidence_url": "https://www.youtube.com/watch?v=1vpfgnDsFC0&t=787s",
+      "source_updated_at": "2026-10-24",
+      "note": "Latest found quote: Watashi Ruby #30, transcribed by GPO Tracker. This is an older reference, not a November live quote."
+    },
+    "item_200": {
+      "source_value": 96351.74,
+      "source_lc_value": 1000,
+      "source_url": "https://gpovalues.com/item/blackvalk",
+      "source_updated_at": "2026-11-03",
+      "note": "Public API snapshot at 2026-11-03T16:32:29.214807+00:00; cross-checked against gpo.gg and VVX."
+    },
+    "item_201": {
+      "source_value": 45000,
+      "source_lc_value": 1000,
+      "source_url": "https://gpo.vaultedvaluesx.com/gpo/items/source-cb0a5b76-bc2e-4611-86e1-9e5b33078195?list=87dab3d7-3345-54a5-a033-3c7e75308811",
+      "source_updated_at": null,
+      "note": "Published VVX team estimate; the item page does not state its quote date. gpo.gg has no recent price."
+    },
+    "item_202": {
+      "source_value": null,
+      "source_lc_value": 900,
+      "source_url": "https://www.gpo.gg/accessories/gift-of-fruit",
+      "source_updated_at": null,
+      "note": "No supported numerical quote on gpo.gg, VVX or GPO Tracker; the old unsupported seed was removed."
+    },
+    "item_203": {
+      "source_value": 31065.34,
+      "source_lc_value": 1000,
+      "source_url": "https://gpovalues.com/item/clown-wig",
+      "source_updated_at": "2026-11-03",
+      "note": "Low-confidence public API estimate at 2026-11-03T16:32:29.214807+00:00; cross-checked against gpo.gg."
+    },
+    "item_92": {
+      "source_value": null,
+      "source_lc_value": 900,
+      "source_url": "https://www.gpo.gg/accessories/kraken-armor-set-azure",
+      "source_updated_at": "2026-10-20",
+      "note": "No supported numerical quote on gpo.gg, VVX or GPO Tracker; the old unsupported seed was removed."
+    },
+    "item_93": {
+      "source_value": 961,
+      "source_lc_value": 900,
+      "source_url": "https://www.gpo.gg/swords/kraken-blade-azure",
+      "source_updated_at": "2026-11-02",
+      "note": "Low-confidence published estimate; cross-checked against the VVX list."
+    },
+    "item_204": {
+      "source_value": 15470.118,
+      "source_lc_value": 1000,
+      "source_url": "https://gpo.vaultedvaluesx.com/gpo/items/source-ea5c4491-209b-4623-8f90-0871397ecdbc?list=87dab3d7-3345-54a5-a033-3c7e75308811",
+      "source_updated_at": null,
+      "note": "Published VVX team estimate; the item page does not state its quote date. The previous 0.15-point seed was unsupported."
+    }
+  }
+}
