@@ -225,6 +225,10 @@ class GPOPriceEngine:
             normalizer = max(abs(row).max(), 1)
             # Leave enough space for both prices to be rounded, including packs.
             gap = 2 * (above["unit_quantity"] * quantum[above["unit_id"]] + below["unit_quantity"] * quantum[below["unit_id"]])
+            # Retained, rounded gaps must stay feasible when their neighbors cannot move.
+            if not repair and not ({above["unit_id"], below["unit_id"]} & new_units):
+                retained_gap = base[above["unit_id"]] * above["unit_quantity"] - base[below["unit_id"]] * below["unit_quantity"]
+                gap = min(gap, retained_gap)
             constraints.append(row / normalizer)
             lower.append(gap / normalizer)
 
@@ -233,7 +237,8 @@ class GPOPriceEngine:
         if not raw.success:
             raise ValueError(f"Market fit did not converge: {raw.message}")
         linear = [LinearConstraint(np.array(constraints), np.array(lower), np.inf)] if constraints else []
-        fitted = minimize(objective, raw.x, jac=True, bounds=bounds, constraints=linear, method="SLSQP", options=options)
+        initial = np.ones(len(keys)) if not repair and not inserting_ranked else raw.x
+        fitted = minimize(objective, initial, jac=True, bounds=bounds, constraints=linear, method="SLSQP", options=options)
         if not fitted.success:
             raise ValueError(f"Constrained price fit did not converge: {fitted.message}")
         return dict(zip(keys, map(float, fitted.x * scale))), dict(zip(keys, map(float, raw.x * scale))), authors

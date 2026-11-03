@@ -170,6 +170,60 @@ class PriceRegressionTests(unittest.TestCase):
         by_id = {x["id"]: x["value"] for x in result["items"]}
         self.assertAlmostEqual(by_id["pack"], 10 * by_id["chest"], places=2)
 
+    def test_repricing_a_single_in_a_tight_retained_pack_band_is_feasible(self):
+        self.path.write_text(json.dumps([
+            {"id": "upper", "name": "Upper", "tier": "Tier A", "value": 2.54, "official_rank": 1},
+            {"id": "LC", "name": "Legendary Fruit Chest", "tier": "Tier A", "value": 2.5, "official_rank": 2},
+            {"id": "pack", "name": "10x Chest", "tier": "Tier A", "value": 2.3, "official_rank": 3,
+             "unit_id": "chest", "unit_quantity": 10},
+            {"id": "SP", "name": "SP Reset Essence", "tier": "Tier F", "value": 1, "official_rank": 4},
+            {"id": "chest", "name": "Chest", "tier": "New Items", "value": 0.23, "official_rank": 5},
+        ]), encoding="utf-8")
+        engine = GPOPriceEngine(self.path)
+        previous = engine.run_pipeline([])
+        trades = [{**message("", author=str(i), age_hours=0.1), "offer_items": [("LC", 1)],
+                   "want_items": [("SP", 2)]} for i in range(6)]
+        try:
+            result = engine.run_pipeline(trades, previous=previous)
+        except ValueError as error:
+            self.fail(f"A valid retained hierarchy must remain feasible: {error}")
+        items = {item["id"]: item for item in result["items"]}
+        self.assertEqual(items["upper"]["value"], 2.54)
+        self.assertEqual(items["pack"]["value"], 2.3)
+        self.assertEqual(items["SP"]["value"], 1)
+        self.assertGreater(items["LC"]["value"], 2.3)
+        self.assertLess(items["LC"]["value"], 2.54)
+        self.assertTrue(items["LC"]["constraint_applied"])
+        self.assertLess(items["LC"]["market_estimate"], items["LC"]["value"])
+        validate_snapshot(result, engine.catalog)
+
+    def test_repricing_a_pack_in_a_tight_retained_band_is_feasible(self):
+        self.path.write_text(json.dumps([
+            {"id": "upper", "name": "Upper", "tier": "Tier A", "value": 2.54, "official_rank": 1},
+            {"id": "pack", "name": "10x Chest", "tier": "Tier A", "value": 2.5, "official_rank": 2,
+             "unit_id": "chest", "unit_quantity": 10},
+            {"id": "lower", "name": "Lower", "tier": "Tier A", "value": 2.48, "official_rank": 3},
+            {"id": "SP", "name": "SP Reset Essence", "tier": "Tier F", "value": 1, "official_rank": 4},
+            {"id": "chest", "name": "Chest", "tier": "New Items", "value": 0.25, "official_rank": 5},
+        ]), encoding="utf-8")
+        engine = GPOPriceEngine(self.path)
+        previous = engine.run_pipeline([])
+        trades = [{**message("", author=str(i), age_hours=0.1), "offer_items": [("SP", 1)],
+                   "want_items": [("chest", 1)]} for i in range(6)]
+        try:
+            result = engine.run_pipeline(trades, previous=previous)
+        except ValueError as error:
+            self.fail(f"A valid retained pack hierarchy must remain feasible: {error}")
+        items = {item["id"]: item for item in result["items"]}
+        self.assertEqual(items["upper"]["value"], 2.54)
+        self.assertEqual(items["lower"]["value"], 2.48)
+        self.assertEqual(items["SP"]["value"], 1)
+        self.assertGreater(items["pack"]["value"], 2.48)
+        self.assertLess(items["pack"]["value"], 2.54)
+        self.assertEqual(items["pack"]["value"], round(10 * items["chest"]["value"], 2))
+        self.assertTrue(items["pack"]["constraint_applied"])
+        validate_snapshot(result, engine.catalog)
+
     def test_unknown_counterpart_cannot_be_assigned_a_default_price(self):
         trade = {**message(""), "offer_items": [("unknown", 1)], "want_items": [("F", 1)],
                  "pricing_eligible": True}
