@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FLEXIBLE_TIERS = {"Very Unstable", "New Items"}
 READ_TRADE_DECISIONS = {"used", "retained", "waiting", "incomplete", "unpriced", "paused", "no_relation"}
+READ_TRADE_MARKERS = {"unknown", "adds", "small_adds", "big_adds", "offers"}
 
 
 def utc_time(value):
@@ -133,6 +134,10 @@ def validate_snapshot(snapshot, catalog):
                 for iid, quantity in report[side]:
                     if iid not in expected or type(quantity) is not int or quantity < 1:
                         raise ValueError("Invalid read trade")
+                markers = report.get(f"{side}_markers", [])
+                if (not isinstance(markers, list) or any(marker not in READ_TRADE_MARKERS for marker in markers)
+                        or (markers and report["decision"] != "incomplete")):
+                    raise ValueError("Invalid read trade")
             report_ids.add(report["id"])
         except (KeyError, TypeError, ValueError) as error:
             raise ValueError("Invalid read trade") from error

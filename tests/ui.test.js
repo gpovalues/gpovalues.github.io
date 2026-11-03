@@ -32,6 +32,12 @@ const live = {
     { id: 'item_58', old_value: 90, new_value: 80, delta_pts: -10, delta_pct: -11.11, reason: 'market' },
   ],
 };
+const readFeed = [
+  { id: 'latest', timestamp: '2026-11-03T11:59:00Z', offer: [['item_58', 1]], want: [['item_102', 8]], decision: 'used', independent_authors: 6 },
+  { id: 'earlier', timestamp: '2026-11-03T11:40:00Z', offer: [['item_86', 1]], want: [['item_72', 1]], decision: 'waiting', independent_authors: 1 },
+  { id: 'partial', timestamp: '2026-11-03T11:50:00Z', offer: [['item_72', 1]], want: [['item_86', 1]], want_markers: ['unknown', 'small_adds'], decision: 'incomplete', independent_authors: 0 },
+  { id: 'offered-pika', timestamp: '2026-11-03T11:55:00Z', offer: [['item_86', 1]], want: [['item_102', 5]], decision: 'used', independent_authors: 9 },
+];
 
 async function boot(trade = { y: [], t: [] }, payload = live) {
   const errors = [];
@@ -265,6 +271,220 @@ test('the read-trades tab has an empty state when Discord has not supplied trade
     assert.equal(app.document.getElementById('readTradesEmpty').hidden, false);
     assert.equal(app.document.getElementById('readTradesList').children.length, 0);
     assert.equal(new URL(app.window.location.href).searchParams.get('direction'), 'trades');
+  } finally { app.dom.window.close(); }
+});
+
+test('unread parts and each adds size remain visible on their own side of the exchange', async () => {
+  const payload = structuredClone(live);
+  payload.read_trades = [{
+    id: 'partial', timestamp: '2026-11-03T11:55:00Z', offer: [['item_72', 1]], want: [['item_86', 1]],
+    offer_markers: ['small_adds', 'unknown'], want_markers: ['adds', 'big_adds', 'offers'],
+    decision: 'incomplete', independent_authors: 0,
+  }];
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    const row = app.document.querySelector('#readTradesList .read-trade-row');
+    assert.deepEqual([...row.querySelectorAll('.offer [data-marker]')].map(node => node.dataset.marker), ['small_adds', 'unknown']);
+    assert.deepEqual([...row.querySelectorAll('.want [data-marker]')].map(node => node.dataset.marker), ['adds', 'big_adds', 'offers']);
+    assert.ok(row.querySelector('[data-marker="unknown"] svg'), 'Unread content needs a question icon');
+    assert.ok(row.querySelector('[data-marker="unknown"]').getAttribute('aria-label'));
+    assert.ok(row.querySelector('[data-marker="adds"]').textContent.includes('ADDS'));
+    assert.ok(row.querySelector('[data-marker="small_adds"]').textContent.includes('Small Adds'));
+    assert.ok(row.querySelector('[data-marker="big_adds"]').textContent.includes('Big Adds'));
+    assert.deepEqual([...row.querySelectorAll('.read-trade-item')].map(node => node.dataset.id), ['item_72', 'item_86']);
+    app.document.getElementById('langToggleBtn').click();
+    assert.equal(app.document.querySelectorAll('#readTradesList [data-marker]').length, 5);
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('untrusted read-trade markers cannot be rendered as a recognized exchange', async () => {
+  const payload = structuredClone(live);
+  const record = {
+    id: 'invalid', timestamp: '2026-11-03T11:55:00Z', offer: [['item_72', 1]], want: [['item_86', 1]],
+    decision: 'incomplete', independent_authors: 0,
+  };
+  payload.read_trades = [
+    { ...record, offer_markers: ['<img id=markerProbe onerror=window.injected=true>'] },
+    { ...record, id: 'wrong-type', want_markers: 'adds' },
+    { ...record, id: 'false-pricing', decision: 'used', offer_markers: ['adds'] },
+    { ...record, id: 'object-marker', offer_markers: [{ toString: 0 }] },
+    { ...record, id: 'object-time', timestamp: { toString: 0 } },
+    { ...record, id: 'object-decision', decision: { toString: 0 } },
+    { ...record, id: 'valid', decision: 'waiting', independent_authors: 1 },
+  ];
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 1);
+    assert.equal(app.document.querySelector('#readTradesList .read-trade-row').dataset.tradeId, 'valid');
+    assert.equal(app.document.getElementById('markerProbe'), null);
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('an explicit unread exchange stays visible even when neither item is recognized', async () => {
+  const payload = structuredClone(live);
+  payload.read_trades = [{
+    id: 'unread', timestamp: '2026-11-03T11:55:00Z', offer: [], want: [],
+    offer_markers: ['unknown'], want_markers: ['unknown'], decision: 'incomplete', independent_authors: 0,
+  }];
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 1);
+    assert.equal(app.document.querySelectorAll('#readTradesList [data-marker="unknown"]').length, 2);
+    assert.equal(app.document.getElementById('readTradesEmpty').hidden, true);
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('read-trade quantities of bait describe individual units rather than 300-item packs', async () => {
+  const payload = structuredClone(live);
+  payload.items.push(item('item_73', '300x Legendary Fish Bait', 15, 22, {
+    unit_quantity: 300, rank_locked: false, tier: 'New Items',
+  }));
+  payload.read_trades = [{
+    id: 'bait', timestamp: '2026-11-03T11:55:00Z', offer: [['item_73', 50]], want: [['item_72', 1]],
+    decision: 'waiting', independent_authors: 1,
+  }];
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    const bait = app.document.querySelector('#readTradesList [data-id="item_73"]');
+    assert.equal(bait.getAttribute('aria-label'), 'Legendary Fish Bait ×50');
+    assert.equal(bait.querySelector('.read-trade-quantity').textContent, '×50');
+    assert.equal(bait.querySelector('img').alt, 'Legendary Fish Bait');
+  } finally { app.dom.window.close(); }
+});
+
+test('read-trade filters compose with item search and distinguish offering from requesting', async () => {
+  const app = await boot({ y: [], t: [] }, { ...structuredClone(live), read_trades: structuredClone(readFeed) });
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    const status = app.document.getElementById('readTradeStatus');
+    assert.ok(status, 'Read trades needs a processing-status filter');
+    status.value = 'used';
+    status.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+    const category = app.document.querySelector('[data-scope="changes"][data-category="fruits"]');
+    assert.ok(category, 'Read trades needs category filters');
+    category.click();
+    const input = app.document.getElementById('hourlySearchInput');
+    input.value = 'pika';
+    input.dispatchEvent(new app.window.Event('input', { bubbles: true }));
+    await new Promise(resolve => setTimeout(resolve, 110));
+    assert.deepEqual([...app.document.querySelectorAll('#readTradesList .read-trade-row')].map(row => row.dataset.tradeId), ['offered-pika']);
+    const side = app.document.getElementById('readTradeSide');
+    side.value = 'want';
+    side.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+    assert.equal(app.document.getElementById('readTradesEmpty').hidden, false);
+    side.value = 'offer';
+    side.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+    assert.equal(app.document.querySelector('#readTradesList .read-trade-row').dataset.tradeId, 'offered-pika');
+    assert.equal(new URL(app.window.location.href).searchParams.get('trade_side'), 'offer');
+    app.document.getElementById('readTradesResetBtn').click();
+    assert.equal(status.value, 'all');
+    assert.equal(side.value, 'either');
+    assert.equal(input.value, '');
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 4);
+    assert.equal(app.document.activeElement, input);
+    assert.equal(new URL(app.window.location.href).searchParams.has('trade_status'), false);
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('read-trade content filters find unread parts and adds without hiding known items', async () => {
+  const app = await boot({ y: [], t: [] }, { ...structuredClone(live), read_trades: structuredClone(readFeed) });
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    const content = app.document.getElementById('readTradeContent');
+    assert.ok(content, 'Read trades needs a recognition/content filter');
+    for (const [value, ids] of [
+      ['unknown', ['partial']], ['adds', ['partial']], ['complete', ['latest', 'offered-pika', 'earlier']],
+    ]) {
+      content.value = value;
+      content.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+      assert.deepEqual([...app.document.querySelectorAll('#readTradesList .read-trade-row')].map(row => row.dataset.tradeId), ids);
+    }
+    content.value = 'all';
+    content.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+    const input = app.document.getElementById('hourlySearchInput');
+    input.value = 'Small Adds';
+    input.dispatchEvent(new app.window.Event('input', { bubbles: true }));
+    await new Promise(resolve => setTimeout(resolve, 110));
+    assert.deepEqual([...app.document.querySelectorAll('#readTradesList .read-trade-row')].map(row => row.dataset.tradeId), ['partial']);
+    assert.equal(app.document.querySelector('#readTradesList [data-id="item_72"]').title, 'Mochi ×1');
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('read trades sort by time or independent support and restore filters from the URL', async () => {
+  const app = await boot({ y: [], t: [] }, { ...structuredClone(live), read_trades: structuredClone(readFeed) });
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    const sort = app.document.getElementById('readTradeSort');
+    assert.ok(sort, 'Read trades needs sorting');
+    for (const [value, ids] of [
+      ['oldest', ['earlier', 'partial', 'offered-pika', 'latest']],
+      ['support', ['offered-pika', 'latest', 'earlier', 'partial']],
+    ]) {
+      sort.value = value;
+      sort.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+      assert.deepEqual([...app.document.querySelectorAll('#readTradesList .read-trade-row')].map(row => row.dataset.tradeId), ids);
+      assert.equal(new URL(app.window.location.href).searchParams.get('trade_sort'), value);
+    }
+    app.window.history.replaceState(null, '', '?tab=hourly-changes&direction=trades&q=Mochi&category=fruits&trade_status=waiting&trade_content=complete&trade_side=want&trade_sort=oldest');
+    app.window.dispatchEvent(new app.window.PopStateEvent('popstate'));
+    assert.equal(app.document.getElementById('readTradeStatus').value, 'waiting');
+    assert.equal(app.document.getElementById('readTradeContent').value, 'complete');
+    assert.equal(app.document.getElementById('readTradeSide').value, 'want');
+    assert.equal(sort.value, 'oldest');
+    assert.equal(app.document.querySelector('#readTradesList .read-trade-row').dataset.tradeId, 'earlier');
+    app.window.history.replaceState(null, '', '?tab=hourly-changes&direction=trades&trade_status=invalid&trade_sort=invalid');
+    app.window.dispatchEvent(new app.window.PopStateEvent('popstate'));
+    assert.equal(app.document.getElementById('readTradeStatus').value, 'all');
+    assert.equal(sort.value, 'newest');
+    assert.equal(app.document.querySelector('#readTradesList .read-trade-row').dataset.tradeId, 'latest');
+    assert.deepEqual(app.errors, []);
+  } finally { app.dom.window.close(); }
+});
+
+test('changing read-trade filters resets pagination and never leaves rows from the previous view', async () => {
+  const payload = structuredClone(live);
+  payload.read_trades = Array.from({ length: 32 }, (_, index) => ({
+    id: `trade-${index}`, timestamp: `2026-11-03T11:${String(index).padStart(2, '0')}:00Z`,
+    offer: [['item_58', 1]], want: [['item_102', 8]],
+    decision: index % 2 ? 'used' : 'waiting', independent_authors: index % 2 ? 6 : 1,
+  }));
+  const app = await boot({ y: [], t: [] }, payload);
+  try {
+    app.document.querySelector('.main-nav [data-tab="hourly-changes"]').click();
+    app.document.getElementById('hourlySubTabRead').click();
+    const more = app.document.querySelector('[data-action="more"][data-scope="changes"]');
+    more.click();
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 32);
+    const status = app.document.getElementById('readTradeStatus');
+    assert.ok(status, 'Read trades needs filters that reset pagination');
+    status.value = 'used';
+    status.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 16);
+    assert.equal(app.document.querySelectorAll('#readTradesList [data-decision="waiting"]').length, 0);
+    assert.equal(more.hidden, true);
+    app.document.getElementById('readTradesResetBtn').click();
+    assert.equal(app.document.querySelectorAll('#readTradesList .read-trade-row').length, 24);
+    assert.equal(more.hidden, false);
+    app.document.getElementById('hourlySubTabAll').click();
+    assert.equal(app.document.getElementById('readTradeControls').hidden, true);
+    assert.equal(app.document.getElementById('hourlyTableBody').children.length, 2);
+    assert.deepEqual(app.errors, []);
   } finally { app.dom.window.close(); }
 });
 

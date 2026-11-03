@@ -12,7 +12,7 @@ from collections import Counter, defaultdict
 import numpy as np
 from scipy.optimize import LinearConstraint, minimize
 
-from scripts.market_data import load_catalog, utc_time, validate_snapshot
+from scripts.market_data import READ_TRADE_MARKERS, load_catalog, utc_time, validate_snapshot
 
 
 MIN_AUTHORS = 5
@@ -54,15 +54,23 @@ class GPOPriceEngine:
                 if not 0 <= age <= 168 or not trade.get("author_id"):
                     continue
                 offer, want = self._side(trade.get("offer_items", [])), self._side(trade.get("want_items", []))
+                markers = {side: trade.get(f"{side}_markers", []) for side in ("offer", "want")}
+                if any(not isinstance(parts, list) or any(part not in READ_TRADE_MARKERS for part in parts)
+                       for parts in markers.values()):
+                    raise ValueError("Invalid trade markers")
             except (ValueError, TypeError, OverflowError):
                 continue
             signature = json.dumps([sorted(offer.items()), sorted(want.items()), trade.get("issues", [])])
+            if any(markers.values()):
+                signature = json.dumps([signature, markers["offer"], markers["want"]])
             key = (str(trade["author_id"]), signature)
-            counted = bool(trade.get("counts_eligible", True))
+            counted = bool(trade.get("counts_eligible", True) and "unknown" not in markers["offer"] + markers["want"])
             record = {"author": key[0], "signature": signature, "stamp": stamp, "age": age,
                       "offer": offer, "want": want,
+                      "markers": markers,
                       "counts_eligible": counted,
-                      "eligible": bool(counted and offer and want and trade.get("pricing_eligible", True))}
+                      "eligible": bool(counted and offer and want and not any(markers.values())
+                                       and not trade.get("issues") and trade.get("pricing_eligible", True))}
             if key not in latest or stamp > latest[key]["stamp"]:
                 latest[key] = record
         return list(latest.values())
@@ -285,6 +293,7 @@ class GPOPriceEngine:
                 "timestamp": quote["stamp"].isoformat(),
                 "offer": [[iid, int(quantity)] for iid, quantity in quote["offer"].items()],
                 "want": [[iid, int(quantity)] for iid, quantity in quote["want"].items()],
+                **{f"{side}_markers": parts for side, parts in quote["markers"].items() if parts},
                 "decision": decision, "independent_authors": authors,
             })
         return result

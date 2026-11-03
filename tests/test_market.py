@@ -95,6 +95,160 @@ class ParserRegressionTests(unittest.TestCase):
         self.assertTrue(trades)
         self.assertFalse(trades[0]["pricing_eligible"])
 
+    def test_unknown_parts_are_marked_on_the_side_that_could_not_be_read(self):
+        trade = self.parse(":Mochi: :FOR: :Pika: :NFASE:")[0]
+        self.assertEqual(trade["offer_items"], [("item_72", 1)])
+        self.assertEqual(trade["want_items"], [("item_86", 1)])
+        self.assertEqual(trade.get("offer_markers"), [])
+        self.assertEqual(trade.get("want_markers"), ["unknown"])
+        self.assertFalse(trade["pricing_eligible"])
+        self.assertFalse(trade["counts_eligible"])
+
+    def test_an_explicit_trade_with_two_unknown_items_is_not_silently_lost(self):
+        trades = self.parse(":NFASE: :FOR: :PMR:")
+        self.assertEqual(len(trades), 1)
+        self.assertEqual(trades[0]["offer_items"], [])
+        self.assertEqual(trades[0]["want_items"], [])
+        self.assertEqual(trades[0].get("offer_markers"), ["unknown"])
+        self.assertEqual(trades[0].get("want_markers"), ["unknown"])
+        self.assertFalse(trades[0]["pricing_eligible"])
+        self.assertEqual(self.parser.stats["messages_recognized"], 0)
+        self.assertEqual(self.parser.stats["messages_unrecognized"], 1)
+        self.assertEqual(self.parse("unrelated conversation"), [])
+
+    def test_adds_preserve_their_size_and_side_instead_of_becoming_zero_value(self):
+        cases = [
+            ("Mochi + adds for Pika", ["adds"], []),
+            ("Mochi for Pika :SmallAdds:", [], ["small_adds"]),
+            ("Mochi :Strong_Adds: for Pika", ["big_adds"], []),
+            ("Mochi for Pika :BigAdds:", [], ["big_adds"]),
+        ]
+        for text, offer, want in cases:
+            with self.subTest(text=text):
+                trade = self.parse(text)[0]
+                self.assertEqual(trade.get("offer_markers"), offer)
+                self.assertEqual(trade.get("want_markers"), want)
+                self.assertFalse(trade["pricing_eligible"])
+                self.assertTrue(trade["counts_eligible"])
+
+    def test_a_bounty_amount_cannot_be_assigned_to_the_previous_item(self):
+        trade = self.parse(":Suna: :CupidsChakram: 3️⃣ 0️⃣ 🇰 :Bounty: :FOR: :Merchant_Snail:")[0]
+        self.assertEqual(trade["offer_items"], [("item_135", 1), ("item_103", 1)])
+        self.assertEqual(trade.get("offer_markers"), ["unknown"])
+        self.assertFalse(trade["pricing_eligible"])
+
+    def test_negative_looking_for_notes_do_not_become_requested_items(self):
+        trade = self.parse("Mochi for 2 LC, not looking for Pika")[0]
+        self.assertEqual(trade["offer_items"], [("item_72", 1)])
+        self.assertEqual(trade["want_items"], [("item_102", 2)])
+        self.assertTrue(trade["pricing_eligible"])
+
+    def test_unlisted_variants_are_not_downgraded_to_an_ordinary_item(self):
+        for text, want in [
+            ("Mochi for Prestige Moonreaver", []),
+            ("Mochi for Nightfall ASE + Pika", [("item_86", 1)]),
+        ]:
+            with self.subTest(text=text):
+                trade = self.parse(text)[0]
+                self.assertEqual(trade["want_items"], want)
+                self.assertEqual(trade.get("want_markers"), ["unknown"])
+                self.assertFalse(trade["pricing_eligible"])
+
+    def test_compound_names_are_matched_before_generic_trade_words(self):
+        cases = [
+            ("Big Mama's Cape", "item_119"),
+            ("Trading Sign", "item_130"),
+            (":Exalted: :Cupid: :Outfit:", "item_98"),
+            (":Blessed: :Bow:", "item_48"),
+            (":Stark: :Outfit:", "item_50"),
+            ("Big Mama :Outfit: Male", "item_120"),
+            (":OG: :Cupid: :Wings:", "item_78"),
+            (":Fish_Bait: :Legendary:", "item_73"),
+            ("Kiko", "item_62"),
+            ("Titan Aura", "item_22"),
+            ("OG QWings", "item_78"),
+            ("OG QFIT", "item_79"),
+        ]
+        for text, iid in cases:
+            with self.subTest(text=text):
+                trade = self.parse(f"{text} for LC")[0]
+                self.assertEqual(trade["offer_items"], [(iid, 1)])
+                self.assertTrue(trade["pricing_eligible"])
+
+    def test_explicit_multiline_continuations_stay_one_exchange(self):
+        for text, offer in [
+            ("Mochi FOR\n10 LC", [("item_72", 1)]),
+            ("Mochi +\nPika\nFOR\n10 LC", [("item_72", 1), ("item_86", 1)]),
+        ]:
+            with self.subTest(text=text):
+                trades = self.parse(text)
+                self.assertEqual(len(trades), 1)
+                self.assertEqual(trades[0]["offer_items"], offer)
+                self.assertEqual(trades[0]["want_items"], [("item_102", 10)])
+                self.assertTrue(trades[0]["pricing_eligible"])
+
+    def test_an_empty_request_does_not_absorb_the_next_independent_trade(self):
+        trades = self.parse("Suna FOR\n40 Fish_Bait FOR DarkSkeletalMask Swordfish_Rapier")
+        self.assertEqual(len(trades), 2)
+        self.assertEqual(trades[0]["offer_items"], [("item_135", 1)])
+        self.assertEqual(trades[0]["want_items"], [])
+        self.assertEqual(trades[1]["offer_items"], [("item_73", 40)])
+        self.assertEqual(trades[1]["want_items"], [("item_91", 1), ("item_143", 1)])
+
+    def test_adds_on_an_explicit_continuation_line_belong_to_the_request(self):
+        trades = self.parse("Mochi for LC\n+ small adds")
+        self.assertEqual(len(trades), 1)
+        self.assertEqual(trades[0].get("want_markers"), ["small_adds"])
+        self.assertFalse(trades[0]["pricing_eligible"])
+
+    def test_trading_sign_on_the_requested_side_does_not_start_a_new_clause(self):
+        trades = self.parse("Mochi for Trading Sign")
+        self.assertEqual(len(trades), 1)
+        self.assertEqual(trades[0]["want_items"], [("item_130", 1)])
+        self.assertTrue(trades[0]["pricing_eligible"])
+
+    def test_ambiguous_clause_boundaries_show_questions_without_inventing_a_bundle(self):
+        trades = self.parse("Mochi FOR Pika FOR Tori")
+        self.assertEqual(len(trades), 1)
+        self.assertEqual(trades[0]["offer_items"], [])
+        self.assertEqual(trades[0]["want_items"], [])
+        self.assertEqual(trades[0].get("offer_markers"), ["unknown"])
+        self.assertEqual(trades[0].get("want_markers"), ["unknown"])
+        self.assertFalse(trades[0]["counts_eligible"])
+
+    def test_unrecognized_emoji_inside_a_request_does_not_silently_disappear(self):
+        trade = self.parse("Mochi FOR Pika 🧩")[0]
+        self.assertEqual(trade["want_items"], [("item_86", 1)])
+        self.assertEqual(trade.get("want_markers"), ["unknown"])
+        self.assertFalse(trade["pricing_eligible"])
+
+    def test_attachment_uncertainty_is_visible_on_the_trade(self):
+        trade = self.parser.parse_message({**message("Mochi for LC"), "has_attachments": True})[0]
+        self.assertEqual(trade.get("offer_markers"), ["unknown"])
+        self.assertEqual(trade.get("want_markers"), ["unknown"])
+        self.assertFalse(trade["pricing_eligible"])
+
+    def test_an_attachment_only_message_is_shown_as_unread_instead_of_disappearing(self):
+        trades = self.parser.parse_all([{**message(""), "has_attachments": True}])
+        self.assertEqual(len(trades), 1)
+        self.assertEqual(trades[0]["offer_items"], [])
+        self.assertEqual(trades[0]["want_items"], [])
+        self.assertEqual(trades[0].get("offer_markers"), ["unknown"])
+        self.assertEqual(trades[0].get("want_markers"), ["unknown"])
+        self.assertFalse(trades[0]["pricing_eligible"])
+        self.assertFalse(trades[0]["counts_eligible"])
+        self.assertEqual(self.parser.stats["messages_recognized"], 0)
+        self.assertEqual(self.parser.stats["messages_unrecognized"], 1)
+
+    def test_a_markdown_bullet_does_not_make_a_positive_quantity_negative(self):
+        trade = self.parse("- 6 LC FOR Mochi")[0]
+        self.assertEqual(trade["offer_items"], [("item_102", 6)])
+        self.assertTrue(trade["pricing_eligible"])
+        negative = self.parse("-6 LC FOR Mochi")[0]
+        self.assertEqual(negative["offer_items"], [])
+        self.assertFalse(negative["pricing_eligible"])
+        self.assertEqual(negative.get("offer_markers"), ["unknown"])
+
 
 class PriceRegressionTests(unittest.TestCase):
     def setUp(self):
@@ -370,6 +524,29 @@ class PriceRegressionTests(unittest.TestCase):
         self.assertEqual(result["meta"]["total_trades_1h"], 1)
         self.assertNotIn("secret", json.dumps(result["read_trades"]))
 
+    def test_read_trade_markers_cannot_enter_pricing_even_if_the_input_flag_is_wrong(self):
+        trades = [{**message("private raw text", author=str(i), age_hours=0.1),
+                   "offer_items": [("F", 1)], "want_items": [("SP", 10000)],
+                   "offer_markers": ["unknown"], "want_markers": ["small_adds"],
+                   "pricing_eligible": True, "counts_eligible": True} for i in range(6)]
+        result = self.run_prices(trades)
+        self.assertEqual(next(item["value"] for item in result["items"] if item["id"] == "F"), 800)
+        self.assertEqual(result["meta"]["total_trades_1h"], 0)
+        self.assertEqual(result["meta"]["supported_observations"], 0)
+        self.assertEqual({record["decision"] for record in result["read_trades"]}, {"incomplete"})
+        self.assertEqual(result["read_trades"][0].get("offer_markers"), ["unknown"])
+        self.assertEqual(result["read_trades"][0].get("want_markers"), ["small_adds"])
+        self.assertNotIn("private raw text", json.dumps(result))
+
+    def test_repeats_with_adds_on_opposite_sides_remain_distinct(self):
+        trades = [{**message("", age_hours=0.1), "offer_items": [("F", 1)],
+                   "want_items": [("SP", 800)], "pricing_eligible": False,
+                   "offer_markers": offer, "want_markers": want, "issues": ["unspecified:adds"]}
+                  for offer, want in [(["adds"], []), ([], ["adds"])]]
+        result = self.run_prices(trades)
+        self.assertEqual(len(result["read_trades"]), 2)
+        self.assertEqual(len({record["id"] for record in result["read_trades"]}), 2)
+
     def test_read_trade_decisions_distinguish_used_retained_and_paused_evidence(self):
         now = dt.datetime.now(dt.timezone.utc) + dt.timedelta(seconds=1)
         trades = [{**message("", author=str(i), age_hours=0.1), "offer_items": [("F", 1)],
@@ -400,7 +577,9 @@ class PriceRegressionTests(unittest.TestCase):
         record = {"id": "read-offer", "timestamp": snapshot["meta"]["updated_at_iso"],
                   "offer": [["F", 1]], "want": [["SP", 800]], "decision": "waiting", "independent_authors": 1}
         stale = (dt.datetime.fromisoformat(record["timestamp"]) - dt.timedelta(hours=2)).isoformat()
-        for invalid in ({"want": [["missing", 1]]}, {"offer": [["F", True]]}, {"timestamp": stale}):
+        for invalid in ({"want": [["missing", 1]]}, {"offer": [["F", True]]}, {"timestamp": stale},
+                        {"offer_markers": ["untrusted raw text"]}, {"want_markers": "adds"},
+                        {"decision": "used", "offer_markers": ["adds"]}):
             with self.subTest(invalid=invalid):
                 snapshot["read_trades"] = [{**record, **invalid}]
                 with self.assertRaisesRegex(ValueError, "Invalid read trade"):

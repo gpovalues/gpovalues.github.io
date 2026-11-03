@@ -27,6 +27,69 @@ async function checkLayout(page, label) {
   assert.deepEqual(problems, [], label);
 }
 
+async function checkPopulatedReadTrades(context, base, snapshot, output) {
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  const stamp = minutes => new Date(Date.parse(snapshot.meta.updated_at_iso) - minutes * 60000).toISOString();
+  const fixture = structuredClone(snapshot);
+  fixture.read_trades = [
+    { id: 'partial', timestamp: stamp(1), offer: [['item_72', 1], ['item_86', 2]], want: [['item_58', 1]], offer_markers: ['small_adds', 'unknown'], want_markers: ['big_adds'], decision: 'incomplete', independent_authors: 0 },
+    { id: 'adds', timestamp: stamp(2), offer: [['item_31', 1]], want: [['item_58', 4]], want_markers: ['adds'], decision: 'incomplete', independent_authors: 0 },
+    { id: 'unread', timestamp: stamp(3), offer: [], want: [], offer_markers: ['unknown'], want_markers: ['unknown'], decision: 'incomplete', independent_authors: 0 },
+    ...Array.from({ length: 24 }, (_, index) => ({ id: `used-${index}`, timestamp: stamp(index + 4), offer: [['item_58', 1]], want: [['item_102', 8]], decision: 'used', independent_authors: 6 })),
+  ];
+  try {
+    await page.route('**/data/values.json', route => route.fulfill({ json: fixture }));
+    await page.goto(`${base}/?tab=hourly-changes&direction=trades&lang=en`, { waitUntil: 'networkidle' });
+    await page.evaluate(() => document.fonts.ready);
+    const rows = page.locator('#readTradesList .read-trade-row');
+    assert.equal(await rows.count(), 24);
+    await page.locator('[data-action="more"][data-scope="changes"]').click();
+    assert.equal(await rows.count(), 27);
+    for (const kind of ['adds', 'small_adds', 'big_adds', 'unknown']) {
+      assert.ok(await page.locator(`#readTradesList [data-marker="${kind}"]`).count() > 0);
+    }
+    await page.locator('#readTradeContent').selectOption('adds');
+    assert.equal(await rows.count(), 2);
+    await page.locator('#hourlySearchInput').fill('Small Adds');
+    await page.waitForFunction(() => document.querySelectorAll('#readTradesList .read-trade-row').length === 1);
+    await page.locator('#readTradeSide').selectOption('want');
+    assert.equal(await page.locator('#readTradesEmpty').isVisible(), true);
+    await page.locator('#readTradeSide').selectOption('offer');
+    await page.locator('#readTradeSort').selectOption('oldest');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#readTradeContent').inputValue(), 'adds');
+    assert.equal(await page.locator('#readTradeSide').inputValue(), 'offer');
+    assert.equal(await page.locator('#readTradeSort').inputValue(), 'oldest');
+    assert.equal(await page.locator('#hourlySearchInput').inputValue(), 'Small Adds');
+    assert.equal(await rows.first().getAttribute('data-trade-id'), 'partial');
+    await page.locator('#readTradesResetBtn').click();
+    assert.equal(await rows.count(), 24);
+    assert.equal(await page.evaluate(() => document.activeElement?.id), 'hourlySearchInput');
+    await page.locator('[data-action="more"][data-scope="changes"]').click();
+    await page.locator('#readTradesList [data-id="item_72"]').click();
+    assert.equal(await page.locator('#itemDetailModal').isVisible(), true);
+    await page.keyboard.press('Escape');
+    assert.equal(await page.evaluate(() => document.activeElement?.dataset.id), 'item_72');
+    for (const width of [1440, 320, 390, 768, 1024]) {
+      await page.setViewportSize({ width, height: 1080 });
+      if (width === 320) await page.locator('#langToggleBtn').click();
+      await checkLayout(page, `Populated read trades at ${width}px`);
+      const escaped = await page.locator('.read-trade-item, .read-trade-marker').evaluateAll(nodes => nodes.filter(node => {
+        const side = node.closest('.read-trade-side').getBoundingClientRect();
+        const rect = node.getBoundingClientRect();
+        return rect.left < side.left - 1 || rect.right > side.right + 1;
+      }).length);
+      assert.equal(escaped, 0, `A trade icon escapes its side at ${width}px`);
+      if (width === 1440 || width === 390) {
+        await page.screenshot({ path: path.join(output, `gpo-read-trades-populated-${width}.png`) });
+      }
+    }
+    assert.deepEqual(errors, []);
+  } finally { await page.close(); }
+}
+
 async function main() {
   const siteRoot = path.resolve(__dirname, '../dist');
   assert.ok(fs.existsSync(path.join(siteRoot, 'index.html')), 'Run npm run build before the browser checks');
@@ -167,13 +230,15 @@ async function main() {
     await page.locator('#hourlySubTabRead').click();
     assert.equal(await page.locator('#readTradesPanel').isVisible(), true);
     assert.equal(await page.locator('#changesTablePanel').isVisible(), false);
-    const readCount = await page.evaluate(async () => (await (await fetch('data/values.json')).json()).read_trades?.length || 0);
+    const readSnapshot = await page.evaluate(async () => (await (await fetch('data/values.json')).json()));
+    const readCount = readSnapshot.read_trades?.length || 0;
     assert.equal(await page.locator('#readTradesList .read-trade-row').count(), Math.min(readCount, 24));
     assert.equal(await page.locator('#readTradesEmpty').isVisible(), readCount === 0);
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.locator('#hourlySubTabRead').getAttribute('aria-pressed'), 'true');
     await checkLayout(page, 'Read trades');
     await page.screenshot({ path: path.join(output, 'gpo-read-trades.png') });
+    await checkPopulatedReadTrades(context, base, readSnapshot, output);
     await page.locator('.main-nav [data-tab="guide"]').click();
     assert.equal(await page.locator('#sectionGuide article').count(), 6);
     await page.screenshot({ path: path.join(output, 'gpo-guide.png') });

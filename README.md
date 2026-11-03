@@ -6,7 +6,7 @@ A community trading companion for [Grand Piece Online](https://www.roblox.com/ga
 - GPO Wiki silhouettes, torn rarity frames, Finger Paint lettering, English/Russian localization, and layouts down to 320px.
 - Two-sided calculator with quantities, point/LC totals, swap, undo, shareable URLs, and Discord text export.
 - Search by name or abbreviation, category/tier/rarity filters, item details with source links, and recorded price history.
-- Changes includes an icon-only **Read trades · 1h** feed with quantities, a 👉 separator, and the price engine's processing decision for each offer.
+- Changes includes **Read trades · 1h** with larger item icons, quantities, a 👉 separator, and each offer's processing decision. Search either side, filter by category/status/recognition, and sort by time or independent traders; filters stay in the URL.
 - Market activity over 1 hour, 24 hours, and 7 days; recorded changes are separate from estimates.
 - Local WebP images and fonts, lazy item rendering, keyboard-accessible dialogs, and optional sound. Ads are disabled in `site_config.js` by default.
 - Animated rarity gradients use the Wiki's colour stops, including Chroma variants. The sparkle control pauses effects; reduced-motion preferences are respected.
@@ -35,7 +35,11 @@ Published item-to-LC ratios are converted using the retained **151.08 points per
 
 ### Read Trade Feed
 
-`data/values.json` includes `read_trades` for the hour ending at the snapshot timestamp, newest first. The feed uses the same deduplicated, normalized offers as the price engine, including recognized parts of incomplete offers. Each report contains item IDs and quantities, a timestamp, an anonymous stable ID, the number of independent authors supporting its barter relationship, and a decision: used, already included, waiting for five authors, incomplete, unpriced, paused, or no price relationship. Unknown parts remain excluded from market counts. The feed omits raw Discord text, author IDs and channel IDs. An empty collection produces an empty feed.
+`data/values.json` includes `read_trades` for the hour ending at the snapshot timestamp, newest first. The feed uses the same deduplicated, normalized offers as the price engine, including recognized parts of incomplete offers. Each report contains item IDs and physical-unit quantities, a timestamp, an anonymous stable ID, the number of independent authors supporting its barter relationship, and a decision: used, already included, waiting for five authors, incomplete, unpriced, paused, or no price relationship. Bait quantities describe individual bait, not multiples of the catalogue's 300-item pack.
+
+Optional `offer_markers` and `want_markers` preserve unread parts (`unknown`), `adds`, `small_adds`, `big_adds` (including Strong Adds), and open-ended `offers` on the correct side. Unread parts show a question icon; adds have distinct labelled icons. An explicitly unread exchange remains visible even when neither item is recognized. Unknown variants are never replaced with their ordinary counterpart, and amounts before an unread currency cannot multiply the previous item. Explicit continuation lines stay together; ambiguous clause boundaries stay unread.
+
+Trades with unread parts remain excluded from market counts, and all unresolved markers are excluded from pricing. The feed omits raw Discord text, unknown names, author IDs and channel IDs. An empty collection produces an empty feed.
 
 ## Run Locally
 

@@ -256,6 +256,10 @@ select { min-height: 46px; padding: .5rem .6rem; color: var(--ink); background: 
 .changes-tabs { flex-wrap: wrap; max-width: 100%; }
 .changes-tabs button { font-size: .78rem; }
 .changes-tabs button:last-child { flex-grow: 1; }
+.read-trade-filters { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)) auto; align-items: end; padding-top: 1rem; }
+.read-trade-filters select { width: 100%; max-width: 100%; min-width: 0; }
+.read-trade-filters .select-label { min-width: 0; }
+.read-trade-filters > button { min-height: 46px; }
 .read-trades-list { list-style: none; padding: 0; margin: 0; }
 .read-trade-row { padding: 1rem 0; border-top: 1px solid var(--line); }
 .read-trade-row:first-child { border-top: 0; padding-top: .2rem; }
@@ -269,11 +273,19 @@ select { min-height: 46px; padding: .5rem .6rem; color: var(--ink); background: 
 .read-trade-side { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; min-width: 0; }
 .read-trade-side.offer { justify-content: flex-end; }
 .read-trade-for { font-size: 1.7rem; line-height: 1; }
-.read-trade-item { position: relative; flex: 0 0 68px; width: 68px; height: 80px; padding: 0; border: 0; background: none; color: var(--ink); }
-.read-trade-item .item-art { --art-size: 64px; width: 68px; height: 80px; }
+:is(.read-trade-item, .read-trade-marker) { position: relative; flex: 0 0 80px; width: 80px; height: 92px; padding: 0; border: 0; background: none; color: var(--ink); }
+:is(.read-trade-item, .read-trade-marker) .item-art { --art-size: 76px; width: 80px; height: 92px; }
 .read-trade-item:hover img { transform: translateY(-2px); }
-.read-trade-quantity { position: absolute; bottom: 0; right: 1px; padding: 0 .25rem; font-size: .62rem; line-height: 1.7; color: var(--gold); background: var(--panel); border: 1px solid var(--line); }
-.read-trade-missing { display: grid; place-items: center; width: 68px; height: 80px; color: var(--muted); font-size: 1.7rem; }
+.read-trade-quantity { position: absolute; bottom: 0; right: 1px; padding: 0 .25rem; font-size: .7rem; line-height: 1.7; color: var(--gold); background: var(--panel); border: 1px solid var(--line); }
+.read-trade-marker { color: var(--muted); --rarity-gradient: linear-gradient(110deg,#8f8b9f,#d0cddd); }
+.read-trade-marker .item-art::before { animation: none; }
+.read-trade-marker .icon { font-size: 1.7rem; }
+.read-trade-marker:not([data-marker="unknown"]) .icon { margin-top: -14px; }
+.read-trade-marker-label { position: absolute; bottom: 12px; max-width: 64px; padding-inline: 2px; color: var(--ink); font-size: .63rem; line-height: 1.25; text-align: center; }
+.read-trade-marker[data-marker="small_adds"] { color: var(--sea); --rarity-gradient: linear-gradient(110deg,#7caabb,#aaffff); }
+.read-trade-marker[data-marker="small_adds"] .icon { font-size: 1.25rem; }
+.read-trade-marker:is([data-marker="adds"], [data-marker="big_adds"]) { color: var(--gold); --rarity-gradient: linear-gradient(110deg,#b58b48,#ffd991); }
+.read-trade-marker[data-marker="big_adds"] .icon { font-size: 2rem; }
 
 .guide-grid, .community-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1.2rem; }
 .prose { padding: 26px; }
@@ -403,6 +415,8 @@ html[data-effects="off"] .effects-toggle { color: #94909f; }
   .market-stats { gap: .7rem; }
   .market-stats .gpo-panel { padding: 16px; }
   .market-stats .stat-text { font-size: 1.05rem; }
+  .read-trade-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .read-trade-filters > button { grid-column: 1/-1; justify-self: end; }
 }
 @media (max-width: 600px) {
   html { scroll-padding-top: 130px; }
@@ -504,9 +518,9 @@ html[data-effects="off"] .effects-toggle { color: #94909f; }
   .market-table { font-size: .85rem; }
   .market-table td, .market-table th { padding-inline: .8rem; }
   .read-trade-exchange { gap: .4rem; }
-  .read-trade-item { flex-basis: 60px; width: 60px; height: 72px; }
-  .read-trade-item .item-art { --art-size: 56px; width: 60px; height: 72px; }
-  .read-trade-missing { width: 60px; height: 72px; }
+  .read-trade-side { gap: .2rem; }
+  :is(.read-trade-item, .read-trade-marker) { flex-basis: 68px; width: 68px; height: 80px; }
+  :is(.read-trade-item, .read-trade-marker) .item-art { --art-size: 64px; width: 68px; height: 80px; }
   .guide-grid, .community-grid { grid-template-columns: 1fr; gap: 1rem; }
   .prose { padding: 20px; }
   .prose h2 { font-size: 1.07rem; }

@@ -17,8 +17,15 @@ FILLER = {"wtt", "trading", "trade", "have", "h", "my", "отдам", "трей�
           "and", "plus", "with", "и", "плюс", "the", "dm", "me", "pm", "fast", "only"}
 UNCERTAIN = {"adds", "add", "small", "big", "strong", "good", "max", "offer", "offers",
              "any", "anything", "upgrade", "downgrade", "bounty", "peli", "доп", "допы"}
+ADDS = {"adds", "add", "доп", "допы"}
+ADD_SIZES = {"small": "small_adds", "little": "small_adds", "big": "big_adds",
+             "large": "big_adds", "strong": "big_adds"}
+VARIANT_WORDS = {"prestige", "nightfall", "blessed", "exalted", "virtuous", "chromatic",
+                 "chroma", "iceborn", "hollow", "hollows", "azure", "blue", "red", "green",
+                 "violet", "black", "og", "vflag", "eflag", "qflag", "bflag", "oflag", "gflag"}
 UNICODE_WORDS = {"🍶": "gourd", "🪽": "wings", "💂": "guard", "✨": "sparkle",
                  "🐌": "snail", "🐒": "monkey", "🐵": "monkey", "🛡": "shield",
+                 "🏹": "bow",
                  "🇻": "vflag", "🇪": "eflag", "🇶": "qflag", "🇧": "bflag",
                  "🇴": "oflag", "🇬": "gflag", "🫴": "offers", "❓": "offers", "❔": "offers"}
 NUMBER_WORDS = dict(zip(["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"], range(11)))
@@ -63,10 +70,11 @@ class GPOTradeParser:
 
     def tokenize(self, content):
         text = ZERO_WIDTH.sub("", content)
+        text = re.sub(r"(?m)^[ \t]*[-•][ \t]+", "", text)
 
         def emoji(match):
-            name = match.group(1).casefold()
-            return f" {NUMBER_WORDS.get(name, name)} "
+            name = match.group(1)
+            return f" {NUMBER_WORDS.get(name.casefold(), name)} "
 
         text = re.sub(r"<a?:([\w]+):\d+>", emoji, text)
         text = re.sub(r":([\w]+):", emoji, text)
@@ -81,15 +89,18 @@ class GPOTradeParser:
             text = text.replace(char, f" {word} ")
         text = re.sub(r"[♥❤💖💗💘💙💚💛💜🖤🤍]", " heart ", text)
         text = re.sub(r"(?:<[-=]+>|[-=]+>|👉|➡|▶)", " for ", text).replace("➕", "+")
+        text = re.sub(r"[\U0001f3fb-\U0001f3ff]", "", text)
+        text = re.sub(r"[\U0001f000-\U0001faff]", " unknownemoji ", text)
         text = normalize(text)
-        text = re.sub(r"\b(?:looking\s+for)\b", "lf", text)
         text = re.sub(r"\b(?:not\s+looking\s+for|dont\s+want|не\s+предлагать|не\s+ищу)\b", "nlf", text)
+        text = re.sub(r"\b(?:looking\s+for)\b", "lf", text)
         text = re.sub(r"(?<=[^\W\d_])-(?=[^\W\d_])", " ", text)
         return WORDS.findall(text)
 
     def _match(self, tokens, start):
         for size in range(min(self.max_span, len(tokens) - start), 0, -1):
-            iid = self.aliases.get(tuple(tokens[start:start + size]))
+            span = tuple(tokens[start:start + size])
+            iid = self.aliases.get(span) or self.aliases.get(("".join(span),))
             if iid:
                 return iid, size
         return None, 0
@@ -112,41 +123,61 @@ class GPOTradeParser:
     def _side(self, tokens):
         found = {}
         issues = []
+        markers = []
         i = 0
         while i < len(tokens):
-            if tokens[i] in FILLER or tokens[i] in ("+", "=", ","):
-                i += 1
-                continue
-            if tokens[i] in UNCERTAIN:
-                issues.append(f"unspecified:{tokens[i]}")
-                i += 1
-                continue
             qty, consumed = self._quantity(tokens, i)
             prefix = consumed > 0
             if prefix:
                 i += consumed
             iid, span = self._match(tokens, i)
             if not iid:
-                if i < len(tokens):
-                    issues.append(f"unknown:{tokens[i]}")
-                else:
+                if i >= len(tokens):
                     issues.append("quantity_without_item")
-                i += 1
+                    markers.append("unknown")
+                    break
+                token = tokens[i]
+                if not prefix and (token in FILLER or token in ("+", "=", ",", "-")):
+                    i += 1
+                    continue
+                if token in ADD_SIZES and i + 1 < len(tokens) and tokens[i + 1] in ADDS:
+                    marker = ADD_SIZES[token]
+                    issues.append(f"unspecified:{marker}")
+                    markers.append(marker)
+                    i += 2
+                    continue
+                if token in ADDS or token in ("offer", "offers"):
+                    marker = "adds" if token in ADDS else "offers"
+                    issues.append(f"unspecified:{marker}")
+                    markers.append(marker)
+                    i += 1
+                    continue
+                end = i + 1
+                if token in VARIANT_WORDS:
+                    while end < len(tokens) and tokens[end] in VARIANT_WORDS:
+                        end += 1
+                    nested, nested_span = self._match(tokens, end)
+                    if nested:
+                        end += nested_span
+                issues.append(f"{'unspecified' if token in UNCERTAIN else 'unknown'}:{' '.join(tokens[i:end])}")
+                markers.append("unknown")
+                i = end
                 continue
             i += span
             qty = qty if prefix else 1
             suffix, consumed = self._quantity(tokens, i)
             if consumed and not prefix:
-                # In "MC 2 LC", the number belongs to LC. In "MC 25", it belongs to MC.
-                next_item, _ = self._match(tokens, i + consumed)
-                if not next_item:
+                # A number before an unread item/currency must not multiply the previous item.
+                after = i + consumed
+                if after == len(tokens) or tokens[after] in {"+", "="} | ADDS | ADD_SIZES.keys() | {"offer", "offers"}:
                     qty = suffix
                     i += consumed
             if not 1 <= qty <= 100000 or qty != int(qty):
                 issues.append("invalid_quantity")
+                markers.append("unknown")
                 continue
             found[iid] = found.get(iid, 0) + int(qty)
-        return list(found.items()), issues
+        return list(found.items()), issues, list(dict.fromkeys(markers))
 
     @staticmethod
     def _alternatives(tokens):
@@ -160,19 +191,29 @@ class GPOTradeParser:
 
     def parse_message(self, message):
         content = message.get("content", "")
-        if not isinstance(content, str) or not content.strip():
+        if not isinstance(content, str) or (not content.strip() and not message.get("has_attachments")):
             return []
-        tokens = self.tokenize(content)
+        tokens = self.tokenize(content) if content.strip() else ["unreadattachment", "for", "unreadattachment"]
         lines = [[]]
-        for token in tokens:
+        for index, token in enumerate(tokens):
             if token in ("\n", "|", ";"):
                 lines.append([])
-            elif token in LF | {"wtt", "trading", "отдам"} and any(word in FOR for word in lines[-1]):
+            elif (token in LF | {"wtt", "trading", "отдам"} and any(word in FOR for word in lines[-1])
+                  and not self._match(tokens, index)[0]):
                 lines.append([token])
             else:
                 lines[-1].append(token)
+        clauses = []
+        for line in filter(None, lines):
+            previous = clauses[-1] if clauses else []
+            separate = any(word in FOR for word in line) or line[0] in LF | {"wtt", "trading", "отдам"}
+            if previous and ((line[0] in FOR and not any(word in FOR for word in previous)) or
+                             (not separate and (previous[-1] in FOR | {"+"} or line[0] == "+"))):
+                previous.extend(line)
+            else:
+                clauses.append(line)
         records = []
-        for line_number, line in enumerate(lines):
+        for line_number, line in enumerate(clauses):
             nlf = next((i for i, word in enumerate(line) if word in NLF), len(line))
             line = line[:nlf]
             if not line:
@@ -181,8 +222,9 @@ class GPOTradeParser:
             issues = []
             if len(separators) > 1:
                 # Never infer clause boundaries by comparing current prices.
-                continue
-            if separators:
+                offer, want = [], []
+                issues = ["ambiguous_clauses", f"unknown:{' '.join(line)}"]
+            elif separators:
                 split = separators[0]
                 left, right = line[:split], line[split + 1:]
                 if left and left[0] in LF:
@@ -197,14 +239,19 @@ class GPOTradeParser:
             if len(offers) * len(wants) > 16:
                 continue
             for variant, (off, wanted) in enumerate(itertools.product(offers, wants)):
-                off_items, off_issues = self._side(off)
-                want_items, want_issues = self._side(wanted)
-                if not off_items and not want_items:
+                off_items, off_issues, off_markers = self._side(off)
+                want_items, want_issues, want_markers = self._side(wanted)
+                if len(separators) > 1:
+                    off_markers = want_markers = ["unknown"]
+                explicit = separators or any(token in LF | {"wtt", "trading", "отдам"} for token in line)
+                if not off_items and not want_items and not (explicit and (off_markers or want_markers)):
                     continue
                 problems = issues + off_issues + want_issues
                 if message.get("has_attachments"):
                     problems.append("attachment_not_parsed")
-                signature = json.dumps([sorted(off_items), sorted(want_items), sorted(set(problems))], ensure_ascii=False)
+                    off_markers = list(dict.fromkeys(off_markers + ["unknown"]))
+                    want_markers = list(dict.fromkeys(want_markers + ["unknown"]))
+                signature = json.dumps([sorted(off_items), sorted(want_items), sorted(set(problems)), off_markers, want_markers], ensure_ascii=False)
                 records.append({
                     "id": f"{message.get('id', '')}:{line_number}:{variant}",
                     "message_id": message.get("id"),
@@ -212,8 +259,9 @@ class GPOTradeParser:
                     "channel_id": str(message.get("channel_id") or ""),
                     "timestamp": message.get("edited_at") or message.get("timestamp"),
                     "offer_items": off_items, "want_items": want_items,
+                    "offer_markers": off_markers, "want_markers": want_markers,
                     "kind": "offer", "pricing_eligible": bool(off_items and want_items and not problems),
-                    "counts_eligible": not any(problem.startswith("unknown:") or problem == "invalid_quantity" for problem in problems),
+                    "counts_eligible": "unknown" not in off_markers + want_markers,
                     "issues": sorted(set(problems)),
                     "variant_count": len(offers) * len(wants),
                     "signature": hashlib.sha256(signature.encode()).hexdigest(),
@@ -225,7 +273,7 @@ class GPOTradeParser:
         recognized = 0
         for message in messages:
             records = self.parse_message(message)
-            recognized += bool(records)
+            recognized += any(record["offer_items"] or record["want_items"] for record in records)
             for record in records:
                 author = record["author_id"] or record["message_id"]
                 key = (author, record["signature"])

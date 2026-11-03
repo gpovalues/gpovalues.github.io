@@ -11,6 +11,9 @@
   const scopes = { calculator: 'quick', tierlist: 'catalog', forecasts: 'market', 'hourly-changes': 'changes' };
   const tierColors = { Exclusive: '#e9ad97', 'Tier SS': '#ecb857', 'Tier S': '#d6b46f', 'Tier A+': '#c9abdb', 'Tier A': '#8cb8d2', 'Tier A-': '#83bea8', 'Tier B+': '#afd394', 'Tier B': '#82afb6', 'Tier B-': '#9faebd', 'Tier C': '#a2a3b8', 'Tier F': '#8b939e', 'Very Unstable': '#edb0ce', 'New Items': '#afd6e9' };
   const readDecisionIcons = { used: 'check-circle-2', retained: 'check', waiting: 'users', incomplete: 'help-circle', unpriced: 'help-circle', paused: 'clock', no_relation: 'minus' };
+  const readMarkerLabels = { unknown: 'read_unknown_part', adds: 'read_adds', small_adds: 'read_small_adds', big_adds: 'read_big_adds', offers: 'read_open_offer' };
+  const readFilterOptions = { status: ['all', ...Object.keys(readDecisionIcons)], content: ['all', 'complete', 'unknown', 'adds'], side: ['either', 'offer', 'want'], sort: ['newest', 'oldest', 'support'] };
+  const readFilters = Object.fromEntries(Object.entries(readFilterOptions).map(([key, options]) => [key, options[0]]));
   const batchSize = 24;
   const filters = Object.fromEntries(Object.keys(inputs).map(scope => [scope, { query: '', category: 'all', limit: batchSize }]));
   let data = null;
@@ -499,6 +502,9 @@
     if (!data) return;
     $('changesTime').textContent = dateText(data.meta.updated_at_iso);
     $('readTradesPanel').hidden = direction !== 'trades';
+    $('readTradeControls').hidden = direction !== 'trades';
+    $('hourlySearchInput').dataset.placeholder = direction === 'trades' ? 'read_trade_search_placeholder' : 'search_placeholder';
+    $('hourlySearchInput').placeholder = t($('hourlySearchInput').dataset.placeholder);
     const more = document.querySelector('[data-action="more"][data-scope="changes"]');
     more.dataset.i18n = direction === 'trades' ? 'show_more_trades' : 'show_more';
     more.textContent = t(more.dataset.i18n);
@@ -530,15 +536,33 @@
     const words = normalize(filter.query).split(' ').filter(Boolean);
     const snapshotTime = Date.parse(data.meta.updated_at_iso);
     const records = Array.isArray(data.read_trades) ? data.read_trades : [];
+    document.querySelectorAll('[data-read-filter]').forEach(node => { node.value = readFilters[node.dataset.readFilter]; });
+    $('readTradesResetBtn').hidden = !filter.query && filter.category === 'all' && Object.entries(readFilterOptions).every(([key, options]) => readFilters[key] === options[0]);
+    let total = 0;
     const list = records.filter(record => {
-      if (!record || !Object.hasOwn(readDecisionIcons, record.decision) || !Array.isArray(record.offer) || !Array.isArray(record.want)) return false;
+      if (!record || typeof record.id !== 'string' || !record.id || typeof record.timestamp !== 'string' || typeof record.decision !== 'string' || !Object.hasOwn(readDecisionIcons, record.decision) || !Number.isSafeInteger(record.independent_authors) || record.independent_authors < 0 || !Array.isArray(record.offer) || !Array.isArray(record.want)) return false;
       const age = snapshotTime - Date.parse(record.timestamp);
       const entries = [...record.offer, ...record.want];
-      if (!Number.isFinite(age) || age < 0 || age > 3600000 || !entries.length || entries.some(entry => !Array.isArray(entry) || entry.length !== 2 || !byId.has(entry[0]) || !Number.isSafeInteger(entry[1]) || entry[1] < 1)) return false;
-      const search = entries.map(([id]) => searchKeys.get(id)).join(' ');
-      return words.every(word => search.includes(word)) && (filter.category === 'all' || entries.some(([id]) => byId.get(id).category === filter.category));
-    }).sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
-    $('readTradesSummary').textContent = t('read_trades_summary', { count: number(list.length), time: dateText(data.meta.updated_at_iso) });
+      const markers = ['offer', 'want'].map(side => record[`${side}_markers`] === undefined ? [] : record[`${side}_markers`]);
+      if (markers.some(parts => !Array.isArray(parts) || parts.some(part => typeof part !== 'string' || !Object.hasOwn(readMarkerLabels, part))) || (markers.some(parts => parts.length) && record.decision !== 'incomplete')) return false;
+      if (!Number.isFinite(age) || age < 0 || age > 3600000 || (!entries.length && !markers.some(parts => parts.length)) || entries.some(entry => !Array.isArray(entry) || entry.length !== 2 || !byId.has(entry[0]) || !Number.isSafeInteger(entry[1]) || entry[1] < 1)) return false;
+      total += 1;
+      if (readFilters.status !== 'all' && record.decision !== readFilters.status) return false;
+      const parts = markers.flat();
+      const unread = parts.includes('unknown') || ['offer', 'want'].some((side, index) => !record[side].length && !markers[index].length);
+      if (readFilters.content === 'complete' && (record.decision === 'incomplete' || !record.offer.length || !record.want.length || parts.length)) return false;
+      if (readFilters.content === 'unknown' && !unread) return false;
+      if (readFilters.content === 'adds' && !parts.some(part => part.endsWith('adds'))) return false;
+      const sides = readFilters.side === 'either' ? ['offer', 'want'] : [readFilters.side];
+      const searchedItems = sides.flatMap(side => record[side]);
+      const searchedMarkers = sides.flatMap(side => record[`${side}_markers`] || []);
+      const search = normalize(`${searchedItems.map(([id]) => searchKeys.get(id)).join(' ')} ${searchedMarkers.map(part => `${part.replace(/_/g, ' ')} ${t(readMarkerLabels[part])}`).join(' ')}`);
+      return words.every(word => search.includes(word)) && (filter.category === 'all' || searchedItems.some(([id]) => byId.get(id).category === filter.category));
+    }).sort((a, b) => {
+      const time = Date.parse(b.timestamp) - Date.parse(a.timestamp);
+      return (readFilters.sort === 'support' ? b.independent_authors - a.independent_authors || time : readFilters.sort === 'oldest' ? -time : time) || a.id.localeCompare(b.id);
+    });
+    $('readTradesSummary').textContent = t('read_trades_summary', { shown: number(Math.min(list.length, filter.limit)), count: number(list.length), total: number(total), time: dateText(data.meta.updated_at_iso) });
     $('readTradesEmpty').hidden = Boolean(list.length);
     const fragment = document.createDocumentFragment();
     for (const record of list.slice(start, filter.limit)) {
@@ -565,23 +589,19 @@
         group.setAttribute('aria-label', t(`read_${side}`));
         for (const [id, quantity] of record[side]) {
           const item = byId.get(id);
+          const displayItem = item.unit_id === id && item.unit_quantity > 1 ? { ...item, name: item.name.replace(/^\d+x\s*/i, ''), nameRu: item.nameRu?.replace(/^\d+x\s*/i, '') } : item;
           const node = button('', 'detail', 'read-trade-item', { id });
           node.dataset.rarity = rarityKey(item);
-          node.title = `${nameOf(item)} ×${number(quantity, 0)}`;
+          node.title = `${nameOf(displayItem)} ×${number(quantity, 0)}`;
           node.setAttribute('aria-label', node.title);
           const art = element('span', 'item-art');
-          art.append(image(item, 48));
+          art.append(image(displayItem, 48));
           node.append(art);
           if (quantity > 1) node.append(element('span', 'read-trade-quantity', `×${quantity}`));
           group.append(node);
         }
-        if (!record[side].length) {
-          const missing = element('span', 'read-trade-missing');
-          missing.setAttribute('role', 'img');
-          missing.setAttribute('aria-label', t('read_side_unknown'));
-          missing.append(icon('help-circle'));
-          group.append(missing);
-        }
+        (record[`${side}_markers`] || []).forEach(marker => group.append(readTradeMarker(marker)));
+        if (!group.children.length) group.append(readTradeMarker('unknown'));
         exchange.append(group);
       }
       row.append(meta, exchange);
@@ -589,6 +609,18 @@
     }
     if (start) $('readTradesList').append(fragment); else $('readTradesList').replaceChildren(fragment);
     moreState('changes', list.length);
+  }
+  function readTradeMarker(kind) {
+    const node = element('span', 'read-trade-marker');
+    node.dataset.marker = kind;
+    node.title = t(readMarkerLabels[kind]);
+    node.setAttribute('role', 'img');
+    node.setAttribute('aria-label', node.title);
+    const art = element('span', 'item-art');
+    art.append(icon(kind === 'unknown' || kind === 'offers' ? 'help-circle' : 'plus'));
+    if (kind !== 'unknown') art.append(element('span', 'read-trade-marker-label', node.title));
+    node.append(art);
+    return node;
   }
   function renderPicker(start = 0) {
     if (!data) return;
@@ -751,6 +783,10 @@
     for (const [key, value] of Object.entries({ q: filter?.query || '', category: filter?.category === 'all' ? '' : filter?.category || '', tier: tab === 'tierlist' && tier !== 'all' ? tier : '', rarity: tab === 'tierlist' && rarity !== 'all' ? rarity : '', direction: tab === 'hourly-changes' && direction !== 'all' ? direction : '' })) {
       if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
     }
+    for (const [key, options] of Object.entries(readFilterOptions)) {
+      const value = tab === 'hourly-changes' && direction === 'trades' && readFilters[key] !== options[0] ? readFilters[key] : '';
+      if (value) url.searchParams.set(`trade_${key}`, value); else url.searchParams.delete(`trade_${key}`);
+    }
     history[push ? 'pushState' : 'replaceState'](null, '', url);
   }
   function readRoute() {
@@ -767,6 +803,7 @@
     tier = params.get('tier') || 'all';
     rarity = [...rarities, 'unknown'].includes(params.get('rarity')) ? params.get('rarity') : 'all';
     direction = ['up', 'down', 'trades'].includes(params.get('direction')) ? params.get('direction') : 'all';
+    for (const [key, options] of Object.entries(readFilterOptions)) readFilters[key] = options.includes(params.get(`trade_${key}`)) ? params.get(`trade_${key}`) : options[0];
     showTab();
   }
   function showTab() {
@@ -843,6 +880,12 @@
       else if (action === 'audio') { audioEnabled = !audioEnabled; store('gpo_audio', String(audioEnabled)); translate(); if (audioEnabled) sound('click'); }
       else if (action === 'effects') { effectsEnabled = !effectsEnabled; store('gpo_effects', String(effectsEnabled)); translate(); }
       else if (action === 'clear-search') clearSearch(scope);
+      else if (action === 'reset-read-trades') {
+        Object.entries(readFilterOptions).forEach(([key, options]) => { readFilters[key] = options[0]; });
+        filters.changes.category = 'all';
+        renderCategories();
+        clearSearch('changes');
+      }
       else if (action === 'category') { filters[scope].category = node.dataset.category; filters[scope].limit = batchSize; renderCategories(); renderScope(scope); if (scope !== 'picker') writeFilters(); }
       else if (action === 'more') { const start = filters[scope].limit; filters[scope].limit += batchSize; renderScope(scope, start); }
       else if (action === 'timeframe') { timeframe = node.dataset.tf; filters.market.limit = batchSize; document.querySelectorAll('[data-action="timeframe"]').forEach(button => { const active = button.dataset.tf === timeframe; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); }); renderMarket(); }
@@ -862,6 +905,12 @@
       if (event.target.classList.contains('qty-num')) setQuantity(event.target.dataset.side, event.target.dataset.id, Number(event.target.value));
       if (event.target.id === 'tierSelect') { tier = event.target.value; filters.catalog.limit = batchSize; renderCatalog('catalog'); writeFilters(); }
       if (event.target.id === 'raritySelect') { rarity = event.target.value; filters.catalog.limit = batchSize; renderCatalog('catalog'); writeFilters(); }
+      const key = event.target.dataset.readFilter;
+      if (Object.hasOwn(readFilterOptions, key) && readFilterOptions[key].includes(event.target.value)) {
+        readFilters[key] = event.target.value;
+        filters.changes.limit = batchSize;
+        renderChanges(); writeFilters();
+      }
     });
     document.querySelectorAll('dialog').forEach(dialog => {
       dialog.addEventListener('click', event => { if (event.target === dialog) closeDialog(dialog); });
