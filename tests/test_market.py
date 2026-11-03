@@ -224,6 +224,28 @@ class PriceRegressionTests(unittest.TestCase):
         self.assertTrue(items["pack"]["constraint_applied"])
         validate_snapshot(result, engine.catalog)
 
+    def test_many_independent_offers_do_not_break_a_tightly_ranked_market(self):
+        self.path.write_text(json.dumps([
+            {"id": "A", "name": "A", "tier": "Tier A", "value": 1000000, "official_rank": 1},
+            {"id": "B", "name": "B", "tier": "Tier A", "value": 999999.96, "official_rank": 2},
+            {"id": "SP", "name": "SP Reset Essence", "tier": "Tier F", "value": 1, "official_rank": 3},
+        ]), encoding="utf-8")
+        now = dt.datetime.now(dt.timezone.utc)
+        trades = [{"author_id": str(i), "timestamp": now.isoformat(),
+                   "offer_items": [("A" if i % 2 else "B", 1)],
+                   "want_items": [("B" if i % 2 else "A", 2)]} for i in range(3000)]
+        engine = GPOPriceEngine(self.path)
+        try:
+            result = engine.run_pipeline(trades, as_of=now)
+        except ValueError as error:
+            self.fail(f"A large independent offer sample must remain solvable: {error}")
+        items = {item["id"]: item for item in result["items"]}
+        self.assertGreater(items["A"]["value"], items["B"]["value"])
+        self.assertEqual(items["SP"]["value"], 1)
+        self.assertEqual(items["A"]["observation_authors"], 3000)
+        self.assertEqual(result["meta"]["supported_observations"], 3000)
+        validate_snapshot(result, engine.catalog)
+
     def test_unknown_counterpart_cannot_be_assigned_a_default_price(self):
         trade = {**message(""), "offer_items": [("unknown", 1)], "want_items": [("F", 1)],
                  "pricing_eligible": True}

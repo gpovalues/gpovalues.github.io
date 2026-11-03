@@ -193,6 +193,13 @@ class GPOPriceEngine:
         movable = {unit for unit, (low, high) in zip(keys, bounds) if high is None or high > low}
         if not movable:
             return base.copy(), base.copy(), authors
+        free = [index for index, unit in enumerate(keys) if unit in movable]
+        free_bounds = [bounds[index] for index in free]
+
+        def expand(x):
+            point = np.ones(len(keys))
+            point[free] = x
+            return point
 
         author_counts = Counter(quote["author"] for quote in quotes)
         rows, weights = [], []
@@ -206,13 +213,17 @@ class GPOPriceEngine:
         matrix = np.array(rows) if rows else np.empty((0, len(keys)))
         weights = np.array(weights)
         prior_strength = np.full(len(keys), 0.03 if quotes else 1.0)
+        loss_scale = max(float(weights.sum()), 1.0)
 
         def objective(x):
-            residual = matrix @ x
+            point = expand(x)
+            residual = matrix @ point
             clipped = np.clip(residual, -0.15, 0.15)
             loss = np.where(np.abs(residual) <= 0.15, residual ** 2 / 2, 0.15 * (np.abs(residual) - 0.075))
-            prior = x - 1
-            return float(weights @ loss + np.sum(prior_strength * prior ** 2) / 2), matrix.T @ (weights * clipped) + prior_strength * prior
+            prior = point - 1
+            gradient = matrix.T @ (weights * clipped) + prior_strength * prior
+            # Scale the whole objective, preserving the market/prior balance for large batches.
+            return float(weights @ loss + np.sum(prior_strength * prior ** 2) / 2) / loss_scale, gradient[free] / loss_scale
 
         constraints, lower = [], []
         priced = [item for item in self.locked if item["unit_id"] in base]
@@ -233,15 +244,21 @@ class GPOPriceEngine:
             lower.append(gap / normalizer)
 
         options = {"maxiter": 500, "ftol": 1e-12}
-        raw = minimize(objective, np.ones(len(keys)), jac=True, bounds=bounds, method="SLSQP", options=options)
+        raw = minimize(objective, np.ones(len(free)), jac=True, bounds=free_bounds, method="SLSQP", options=options)
         if not raw.success:
             raise ValueError(f"Market fit did not converge: {raw.message}")
-        linear = [LinearConstraint(np.array(constraints), np.array(lower), np.inf)] if constraints else []
-        initial = np.ones(len(keys)) if not repair and not inserting_ranked else raw.x
-        fitted = minimize(objective, initial, jac=True, bounds=bounds, constraints=linear, method="SLSQP", options=options)
+        linear = []
+        if constraints:
+            ordered_matrix = np.array(constraints)
+            fixed = np.ones(len(keys))
+            fixed[free] = 0
+            # Keep fixed prices as constants, rather than degenerate optimizer bounds.
+            linear = [LinearConstraint(ordered_matrix[:, free], np.array(lower) - ordered_matrix @ fixed, np.inf)]
+        initial = np.ones(len(free)) if not repair and not inserting_ranked else raw.x
+        fitted = minimize(objective, initial, jac=True, bounds=free_bounds, constraints=linear, method="SLSQP", options=options)
         if not fitted.success:
             raise ValueError(f"Constrained price fit did not converge: {fitted.message}")
-        return dict(zip(keys, map(float, fitted.x * scale))), dict(zip(keys, map(float, raw.x * scale))), authors
+        return dict(zip(keys, map(float, expand(fitted.x) * scale))), dict(zip(keys, map(float, expand(raw.x) * scale))), authors
 
     def _read_trades(self, observations, supporters, active_quotes, units, allow_updates):
         active = {(quote["author"], quote["signature"]) for quote in active_quotes}
