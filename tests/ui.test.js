@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '..');
 const item = (id, name, value, rank, extra = {}) => ({
   id, name, nameRu: name, value, official_rank: rank, display_rank: rank,
   tier: 'Tier A', rank_locked: true, category: 'misc', abbreviation: '',
-  image: 'images/placeholder.svg', price_status: 'baseline', confidence: 0,
+  image: 'images/placeholder.svg', price_status: 'baseline', confidence: 0, rarity: null,
   lcValue: value === null ? null : value / 10, unit_id: id, unit_quantity: 1,
   ...extra,
 });
@@ -17,12 +17,12 @@ const live = {
   meta: { updated_at_iso: '2026-11-03T12:00:00Z', total_trades_1h: 0, supported_observations: 0 },
   discord_source: { mode: 'offline', complete: false },
   items: [
-    item('item_1', 'Cool Shades', 1000, 1),
+    item('item_1', 'Cool Shades', 1000, 1, { rarity: 'Collectable' }),
     item('item_92', 'Kraken Armor Set (Azure)', 502, 20, { tier: 'Very Unstable', rank_locked: false }),
     item('item_60', '10x Legendary Fruit Chest', 100, 2, { unit_id: 'item_102', unit_quantity: 10 }),
     item('item_58', 'Mythical Fruit Chest', 80, 3),
-    item('item_72', 'Mochi', 60, 4, { category: 'fruits' }),
-    item('item_86', 'Pika', 50, 5, { category: 'fruits' }),
+    item('item_72', 'Mochi', 60, 4, { category: 'fruits', rarity: 'Mythical' }),
+    item('item_86', 'Pika', 50, 5, { category: 'fruits', rarity: 'Legendary' }),
     item('item_102', 'Legendary Fruit Chest', 10, 6),
     item('item_194', 'SP Reset Essence', 1, 7, { tier: 'Tier F' }),
     item('item_verity', 'Verity', null, 21, { tier: 'New Items', rank_locked: false }),
@@ -88,6 +88,42 @@ test('the header chest conversion uses the loaded price snapshot', async () => {
   const app = await boot();
   try {
     assert.equal(app.document.getElementById('heroLcValue')?.textContent, '10 pts');
+  } finally { app.dom.window.close(); }
+});
+
+test('game rarity is shown separately from the official trading tier', async () => {
+  const app = await boot();
+  try {
+    const card = app.document.querySelector('#quickItemsCardsGrid [data-id="item_1"]').closest('article');
+    assert.equal(card.querySelector('.rarity-label')?.textContent, 'Collectable');
+    assert.equal(card.querySelector('.tier-tag').textContent, 'A');
+    const unknown = app.document.querySelector('#quickItemsCardsGrid [data-id="item_verity"]').closest('article');
+    assert.equal(unknown.dataset.rarity, 'unknown');
+  } finally { app.dom.window.close(); }
+});
+
+test('rarity filtering keeps the selected game rarity in the URL', async () => {
+  const app = await boot();
+  try {
+    app.document.querySelector('.main-nav [data-tab="tierlist"]').click();
+    const select = app.document.getElementById('raritySelect');
+    assert.ok(select, 'Rarity filter is missing');
+    select.value = 'Mythical';
+    select.dispatchEvent(new app.window.Event('change', { bubbles: true }));
+    assert.deepEqual([...app.document.querySelectorAll('#itemsCardsGrid .item-open-button')].map(node => node.dataset.id), ['item_72']);
+    assert.equal(new URL(app.window.location.href).searchParams.get('rarity'), 'Mythical');
+  } finally { app.dom.window.close(); }
+});
+
+test('gradient effects can be paused and the preference is saved', async () => {
+  const app = await boot();
+  try {
+    const toggle = app.document.getElementById('effectsToggleBtn');
+    assert.ok(toggle, 'Effects control is missing');
+    toggle.click();
+    assert.equal(app.document.documentElement.dataset.effects, 'off');
+    assert.equal(toggle.getAttribute('aria-pressed'), 'false');
+    assert.equal(app.window.localStorage.getItem('gpo_effects'), 'false');
   } finally { app.dom.window.close(); }
 });
 

@@ -7,6 +7,25 @@ const DOC_URL = 'https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq856
 const TIERS = ['Exclusive', 'Tier SS', 'Tier S', 'Tier A+', 'Tier A', 'Tier A-',
   'Tier B+', 'Tier B', 'Tier B-', 'Tier C', 'Tier F', 'Very Unstable', 'New Items'];
 const FLEXIBLE = new Set(['Very Unstable', 'New Items']);
+const RARITIES = new Set(['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythical', 'Collectable', 'Rare Chroma', 'Legendary Chroma']);
+const WIKI_BASE = 'https://grand-piece-online.fandom.com/wiki/';
+
+function wikiLink(title) {
+  const url = new URL(title, WIKI_BASE);
+  if (url.origin !== 'https://grand-piece-online.fandom.com' || !url.pathname.startsWith('/wiki/')) {
+    throw new Error(`Invalid wiki source: ${title}`);
+  }
+  return url.href;
+}
+
+function withRarity(item, rarities) {
+  const verified = rarities[item.id];
+  const rarity = verified ? verified.rarity : item.rarity ?? null;
+  if (rarity !== null && !RARITIES.has(rarity)) throw new Error(`Invalid game rarity: ${item.name}`);
+  const wikiUrl = verified?.wiki ? wikiLink(verified.wiki) : item.wikiUrl;
+  const rarity_source = verified?.source ? wikiLink(verified.source) : verified?.wiki ? wikiUrl : item.rarity_source || null;
+  return { ...item, rarity, wikiUrl, rarity_source };
+}
 
 async function fetchUrl(url) {
   const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
@@ -67,7 +86,7 @@ const NEW_METADATA = {
   'Prestige Eclipse Moonreaver': ['weapons', 'Престижный Лунный Жнец Затмения'],
 };
 
-function buildCatalog(text, previous) {
+function buildCatalog(text, previous, rarities = {}) {
   const parsed = parseTierDoc(text);
   const oldItems = Array.isArray(previous) ? previous : previous.items;
   const retired = Array.isArray(previous.retired_items) ? previous.retired_items : [];
@@ -90,19 +109,21 @@ function buildCatalog(text, previous) {
     ids.add(id);
     const metadata = NEW_METADATA[record.name] || ['misc', record.name];
     const seed = old.seed_value ?? old.value;
-    return {
+    return withRarity({
       id, ...record,
       nameRu: old.nameRu || metadata[1],
       abbreviation: old.abbreviation || '',
       category: old.category || metadata[0],
       image: fs.existsSync(path.join(__dirname, 'images/items', `${id}.webp`)) ? `images/items/${id}.webp` :
         old.image && fs.existsSync(path.join(__dirname, old.image)) ? old.image : 'images/placeholder.svg',
-      wikiUrl: old.wikiUrl || `https://grand-piece-online.fandom.com/wiki/${encodeURIComponent(record.name.replace(/ /g, '_'))}`,
+      wikiUrl: old.wikiUrl || `${WIKI_BASE}${encodeURIComponent(record.name.replace(/ /g, '_'))}`,
+      rarity: old.rarity,
+      rarity_source: old.rarity_source,
       rank_locked: !FLEXIBLE.has(record.tier),
       seed_value: Number.isFinite(seed) && seed > 0 ? seed : null,
       unit_id: id,
       unit_quantity: 1,
-    };
+    }, rarities);
   });
   const byName = new Map(items.map(item => [normalizeName(item.name), item]));
   for (const item of items) {
@@ -137,14 +158,15 @@ async function syncTierList() {
   const checkpointPath = path.join(__dirname, '.state', 'catalog.json');
   const previousPath = fs.existsSync(checkpointPath) ? checkpointPath : catalogPath;
   const previous = JSON.parse(fs.readFileSync(previousPath, 'utf8'));
-  // Keep the restored catalogue usable when Google is temporarily unavailable.
-  if (previousPath === checkpointPath) {
-    fs.writeFileSync(`${catalogPath}.tmp`, JSON.stringify(previous) + '\n', 'utf8');
-    fs.renameSync(`${catalogPath}.tmp`, catalogPath);
-  }
+  const rarityPath = path.join(__dirname, 'data', 'rarities.json');
+  const rarities = fs.existsSync(rarityPath) ? JSON.parse(fs.readFileSync(rarityPath, 'utf8')).items : {};
+  // Reviewed Wiki metadata stays available even when Google cannot refresh the order.
+  previous.items = previous.items.map(item => withRarity(item, rarities));
+  fs.writeFileSync(`${catalogPath}.tmp`, JSON.stringify(previous) + '\n', 'utf8');
+  fs.renameSync(`${catalogPath}.tmp`, catalogPath);
   const html = await fetchUrl(DOC_URL);
   const text = documentText(html);
-  const catalog = buildCatalog(text, previous);
+  const catalog = buildCatalog(text, previous, rarities);
   fs.mkdirSync(path.dirname(catalogPath), { recursive: true });
   fs.writeFileSync(`${catalogPath}.tmp`, JSON.stringify(catalog, null, 2) + '\n', 'utf8');
   fs.renameSync(`${catalogPath}.tmp`, catalogPath);

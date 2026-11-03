@@ -24,7 +24,7 @@ function createServer(root = __dirname) {
       relative = path.posix.normalize(pathname).replace(/^\/+/, '') || 'index.html';
     } catch { response.writeHead(400); response.end('Invalid URL'); return; }
     const asset = /^(images|audio|fonts)\/[a-zA-Z0-9_./-]+\.(webp|png|jpe?g|svg|woff2|wav)$/.test(relative);
-    const license = /^fonts\/(Finger-Paint|PT-Sans|Neucha)-OFL\.txt$/.test(relative);
+    const license = relative === 'fonts/Finger-Paint-OFL.txt';
     if (/(^|\/)\./.test(relative) || (!files.has(relative) && !asset && !license)) {
       response.writeHead(404); response.end('Not found'); return;
     }

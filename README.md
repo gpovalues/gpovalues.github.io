@@ -3,11 +3,18 @@
 A community trading companion for [Grand Piece Online](https://www.roblox.com/games/1730877806/Grand-Piece-Online): compare offers, browse the official item order, and see the evidence behind estimated values.
 
 ## Features
-- GPO-inspired artwork, hand-drawn headings, English/Russian localization, and responsive layouts down to 320px.
+- GPO Wiki silhouettes, torn rarity frames, Finger Paint lettering, English/Russian localization, and layouts down to 320px.
 - Two-sided calculator with quantities, point/LC totals, swap, undo, shareable URLs, and Discord text export.
-- Search by name or abbreviation, category/tier filters, item details, and recorded price history.
+- Search by name or abbreviation, category/tier/rarity filters, item details with source links, and recorded price history.
 - Market activity over 1 hour, 24 hours, and 7 days; recorded changes are separate from estimates.
 - Local WebP images and fonts, lazy item rendering, keyboard-accessible dialogs, and optional sound. Ads are disabled in `site_config.js` by default.
+- Animated rarity gradients use the Wiki's colour stops, including Chroma variants. The sparkle control pauses effects; reduced-motion preferences are respected.
+
+## Game Rarities
+
+Game rarity is separate from a trading tier and never changes the official price order. `data/rarities.json` contains reviewed Wiki metadata, keyed by stable item ID, with an item page and, where different, the evidence page. Official catalogue sync reapplies these records even when restoring an older collector checkpoint.
+
+On 3 November 2026, 219 of the 224 listed items have a supported rarity. Cupid Queen's Maid Outfit, Hunter's Journal, Tung Sahur Costume, Triple Strongest Slash Scroll, and Special Tailor Token remain explicitly **unconfirmed** because the reviewed pages do not establish a rarity. Neither their trading rank nor their drop chance is used to guess one. For variants and incomplete individual pages, sources include the Valkyries table, Fishing/Rods and Baits, Accessories, Halloween 2025, and the season-specific Battle Pass pages.
 
 ## How Values Work
 
@@ -60,6 +67,7 @@ For live collection, provide `DISCORD_TOKEN` through the environment and optiona
 | Path | Purpose |
 | --- | --- |
 | `data/catalog.json` | Official order, stable IDs, item metadata and unit relationships |
+| `data/rarities.json` | Reviewed game rarities and correct Wiki source links |
 | `data/values.json` | Validated, public price/activity snapshot |
 | `data/history.json` | Public sampled price history |
 | `.state/market.sqlite3` | Collector messages, cursors and retained snapshots |
@@ -83,4 +91,6 @@ Pull requests and pushes also run `.github/workflows/checks.yml` against the com
 
 ## Artwork and Fonts
 
-The visual direction draws on the original GPO Values site and [GPO Wiki](https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki). Game artwork belongs to its respective creators. Finger Paint, PT Sans, and the Cyrillic Neucha font are self-hosted with their SIL Open Font License files under `fonts/`. `scripts/prepare_assets.py` is a one-time asset utility and additionally requires Pillow.
+The panel/title silhouettes, button shapes, torn item masks, and rarity gradients are adapted from [GPO Wiki](https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki); attribution and source links are in `images/ui/NOTICE.md`. Wiki community content is available under [CC BY-SA](https://www.fandom.com/licensing) unless otherwise noted. Game artwork belongs to its respective creators.
+
+**Finger Paint is the only web font**, self-hosted with its SIL Open Font License under `fonts/`. It does not contain Cyrillic glyphs, so Russian characters use the browser's built-in fallback, as on the Wiki. `scripts/prepare_assets.py` is a one-time asset utility and additionally requires Pillow.

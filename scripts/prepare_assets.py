@@ -11,15 +11,8 @@ from scripts.market_data import ROOT, atomic_json
 
 
 FONTS = {
-    "neucha-cyrillic.woff2": "https://fonts.gstatic.com/s/neucha/v18/q5uGsou0JOdh94bfuQltOxU.woff2",
-    "Neucha-OFL.txt": "https://raw.githubusercontent.com/google/fonts/main/ofl/neucha/OFL.txt",
     "finger-paint.woff2": "https://fonts.gstatic.com/s/fingerpaint/v21/0QInMXVJ-o-oRn_7dron8YW-9JzT.woff2",
-    "pt-sans-latin.woff2": "https://fonts.gstatic.com/s/ptsans/v18/jizaRExUiTo99u79D0KExQ.woff2",
-    "pt-sans-cyrillic.woff2": "https://fonts.gstatic.com/s/ptsans/v18/jizaRExUiTo99u79D0aExdGM.woff2",
-    "pt-sans-bold-latin.woff2": "https://fonts.gstatic.com/s/ptsans/v18/jizfRExUiTo99u79B_mh0O6tLQ.woff2",
-    "pt-sans-bold-cyrillic.woff2": "https://fonts.gstatic.com/s/ptsans/v18/jizfRExUiTo99u79B_mh0OqtLQ0Z.woff2",
     "Finger-Paint-OFL.txt": "https://raw.githubusercontent.com/google/fonts/main/ofl/fingerpaint/OFL.txt",
-    "PT-Sans-OFL.txt": "https://raw.githubusercontent.com/google/fonts/main/ofl/ptsans/OFL.txt",
 }
 ART = {
     "background.webp": "https://tr.rbxcdn.com/180DAY-7ea3d13248b544e712d0dbe4d1bc84e3/768/432/Image/Png/noFilter",

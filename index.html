@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d1016">
+  <meta name="theme-color" content="#141416">
   <title>GPO Values — Grand Piece Online Trade Calculator</title>
   <meta name="description" content="Grand Piece Online trade calculator, official item order and transparent estimates from player offers. Compare prices in SP points and Legendary Chests.">
   <link rel="canonical" href="https://gpovalues.github.io/">
@@ -14,7 +14,6 @@
   <meta property="og:image" content="https://gpovalues.github.io/images/ui/background.webp">
   <link rel="icon" href="images/ui/gpo-logo.webp" type="image/webp">
   <link rel="preload" href="fonts/finger-paint.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/pt-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
   <script src="site_config.js" defer></script>
   <script src="icons.js" defer></script>
@@ -34,6 +33,7 @@
         <div class="header-controls">
           <button class="quiet-button" id="langToggleBtn" data-action="language" aria-label="Switch language / Сменить язык"><span data-icon="globe"></span><span id="langCode">EN</span></button>
           <button class="quiet-button icon-button" id="audioToggleBtn" data-action="audio" aria-label="Enable sound" aria-pressed="false"><span data-icon="volume-x"></span></button>
+          <button class="quiet-button icon-button effects-toggle" id="effectsToggleBtn" data-action="effects" aria-label="Pause gradient effects" aria-pressed="true"><span data-icon="sparkles"></span></button>
           <a class="quiet-button wiki-button" href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" rel="noopener noreferrer"><span data-icon="book-open"></span><span>GPO Wiki</span><span data-icon="external-link"></span></a>
         </div>
       </div>
@@ -112,8 +112,9 @@
 
       <section class="tab-section" id="sectionTierlist" data-section="tierlist" hidden>
         <div class="section-heading"><div><h1 data-i18n="values_title">The trading ledger</h1><p data-i18n="values_intro">Official order for regular tiers. Market positions for New and Unstable items.</p></div><span class="result-count" id="catalogResultCount"></span></div>
+        <div class="rarity-legend"><a href="https://grand-piece-online.fandom.com/wiki/Rarities" target="_blank" rel="noopener noreferrer" data-i18n="game_rarity">Game rarity</a><span data-rarity="common" class="rarity-text">Common</span><span data-rarity="uncommon" class="rarity-text">Uncommon</span><span data-rarity="rare" class="rarity-text">Rare</span><span data-rarity="epic" class="rarity-text">Epic</span><span data-rarity="legendary" class="rarity-text">Legendary</span><span data-rarity="mythical" class="rarity-text">Mythical</span><span data-rarity="collectable" class="rarity-text">Collectable</span></div>
         <div class="gpo-panel filter-toolbar">
-          <div class="filter-top-row"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="searchInput" data-i18n="search_label">Search items</label><input id="searchInput" type="search" name="catalogue-search" autocomplete="off" spellcheck="false" data-search="catalog" data-placeholder="search_placeholder"><button class="search-clear-btn" data-action="clear-search" data-scope="catalog" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><label class="select-label"><span data-i18n="tier">Tier</span><select id="tierSelect" name="tier" data-filter="tier"><option value="all" data-i18n="all_tiers">All tiers</option></select></label></div>
+          <div class="filter-top-row"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="searchInput" data-i18n="search_label">Search items</label><input id="searchInput" type="search" name="catalogue-search" autocomplete="off" spellcheck="false" data-search="catalog" data-placeholder="search_placeholder"><button class="search-clear-btn" data-action="clear-search" data-scope="catalog" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><div class="filter-selects"><label class="select-label"><span data-i18n="tier">Tier</span><select id="tierSelect" name="tier" data-filter="tier"><option value="all" data-i18n="all_tiers">All tiers</option></select></label><label class="select-label"><span data-i18n="game_rarity">Game rarity</span><select id="raritySelect" name="rarity"><option value="all" data-i18n="all_rarities">All rarities</option><option>Common</option><option>Uncommon</option><option>Rare</option><option>Epic</option><option>Legendary</option><option>Mythical</option><option>Collectable</option><option>Rare Chroma</option><option>Legendary Chroma</option><option value="unknown" data-i18n="rarity_unknown">Unconfirmed</option></select></label></div></div>
           <div class="filter-pills-row" id="categoryPillsRow" data-categories="catalog"></div>
         </div>
         <div class="ledger-legend"><span><span data-icon="shield-check"></span><span data-i18n="locked_order">Official order</span></span><span><span data-icon="trending-up"></span><span data-i18n="flexible_order">Free market position</span></span><span data-i18n="baseline_note">A preliminary price is marked when recent evidence is missing.</span></div>
@@ -156,7 +157,7 @@
       </section>
     </main>
 
-    <footer class="site-footer"><div><strong translate="no">GPO Values</strong><p data-i18n="footer_note">A community tool. Official ranks; independently calculated offer estimates.</p></div><div class="footer-links"><a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" rel="noopener noreferrer" data-i18n="official_doc">Official tier list</a><a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" rel="noopener noreferrer">GPO Wiki</a><a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" rel="noopener noreferrer" data-i18n="play_gpo">Play GPO</a></div></footer>
+    <footer class="site-footer"><div><strong translate="no">GPO Values</strong><p data-i18n="footer_note">A community tool. Official ranks; independently calculated offer estimates.</p><p class="wiki-credits"><a href="https://grand-piece-online.fandom.com/wiki/MediaWiki:Common.css" target="_blank" rel="noopener noreferrer" data-i18n="wiki_credit">UI assets by GPO Wiki contributors</a> · <a href="https://www.fandom.com/licensing" target="_blank" rel="noopener noreferrer">CC BY-SA</a></p></div><div class="footer-links"><a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" rel="noopener noreferrer" data-i18n="official_doc">Official tier list</a><a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" rel="noopener noreferrer">GPO Wiki</a><a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" rel="noopener noreferrer" data-i18n="play_gpo">Play GPO</a></div></footer>
   </div>
 
   <dialog id="itemPickerModal" class="game-dialog" aria-labelledby="pickerModalTitle"><div class="dialog-content"><div class="dialog-header"><h2 id="pickerModalTitle" data-i18n="picker_title">Choose an item</h2><button class="quiet-button icon-button" data-action="close-dialog" aria-label="Close dialog"><span data-icon="x"></span></button></div><div class="dialog-filters"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="pickerSearchInput" data-i18n="search_label">Search items</label><input id="pickerSearchInput" type="search" name="picker-search" autocomplete="off" spellcheck="false" data-search="picker" data-placeholder="search_placeholder"><button class="search-clear-btn" data-action="clear-search" data-scope="picker" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><div class="filter-pills-row" id="pickerCategoryPills" data-categories="picker"></div></div><div class="dialog-scroll"><div class="picker-grid" id="pickerItemsGrid"></div><button class="more-button game-button" data-action="more" data-scope="picker" hidden data-i18n="show_more">Show more items</button></div></div></dialog>

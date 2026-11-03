@@ -4,6 +4,8 @@
   const $ = id => document.getElementById(id);
   const tabs = ['calculator', 'tierlist', 'forecasts', 'hourly-changes', 'guide', 'community'];
   const categories = ['all', 'fruits', 'weapons', 'chests', 'accessories', 'outfits', 'boats', 'misc'];
+  const rarities = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythical', 'Collectable', 'Rare Chroma', 'Legendary Chroma'];
+  const rarityKey = item => rarities.includes(item.rarity) ? item.rarity.toLowerCase().replace(/ /g, '-') : 'unknown';
   const categoryIcons = { all: 'boxes', fruits: 'apple', weapons: 'swords', chests: 'package', accessories: 'crown', outfits: 'shirt', boats: 'ship', misc: 'sparkles' };
   const inputs = { quick: 'quickSearchInput', catalog: 'searchInput', market: 'forecastSearchInput', changes: 'hourlySearchInput', picker: 'pickerSearchInput' };
   const scopes = { calculator: 'quick', tierlist: 'catalog', forecasts: 'market', 'hourly-changes': 'changes' };
@@ -16,6 +18,7 @@
   let trade = { you: [], they: [] };
   let tab = 'calculator';
   let tier = 'all';
+  let rarity = 'all';
   let timeframe = '1h';
   let direction = 'all';
   let pickerSide = 'you';
@@ -38,6 +41,7 @@
   const initialLang = new URLSearchParams(location.search).get('lang') || stored('gpo_lang') || ((navigator.language || '').startsWith('ru') ? 'ru' : 'en');
   let lang = initialLang === 'ru' ? 'ru' : 'en';
   let audioEnabled = stored('gpo_audio') === 'true';
+  let effectsEnabled = stored('gpo_effects') !== 'false' && !window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
   const t = (key, values = {}) => (window.GPO_TRANSLATIONS[lang][key] || key).replace(/\{(\w+)\}/g, (_, name) => String(values[name] ?? ''));
   const nameOf = item => lang === 'ru' ? item.nameRu || item.name : item.name;
   const number = (value, digits = 2) => value === null || !Number.isFinite(value) ? '—' : new Intl.NumberFormat(lang, { maximumFractionDigits: digits }).format(value);
@@ -262,11 +266,12 @@
       for (const entry of trade[side]) {
         const item = byId.get(entry.id) || { id: entry.id, name: t('unavailable_item'), image: 'images/placeholder.svg', value: null };
         const card = element('div', 'trade-slot-card');
+        card.dataset.rarity = rarityKey(item);
         const remove = button('', 'remove', 'slot-remove-btn', { side, id: item.id });
         remove.append(icon('x'));
         remove.setAttribute('aria-label', t('remove', { name: nameOf(item) }));
         const title = element('div', 'slot-item-name', nameOf(item));
-        title.title = nameOf(item);
+        title.title = `${nameOf(item)} · ${item.rarity || t('rarity_unknown')}`;
         const controls = element('div', 'slot-qty-controls');
         const minus = button('−', 'quantity-step', 'qty-btn', { side, id: item.id, delta: '-1' });
         minus.setAttribute('aria-label', t('decrease', { name: nameOf(item) }));
@@ -366,11 +371,18 @@
   }
   function tierTag(item) {
     const tag = element('span', 'tier-tag', item.tier.replace(/^Tier /, ''));
+    tag.title = t('trade_tier');
     tag.style.setProperty('--tier-color', tierColors[item.tier] || '#91a8b4');
+    return tag;
+  }
+  function rarityTag(item) {
+    const tag = element('span', 'rarity-label rarity-text', item.rarity || t('rarity_unknown'));
+    tag.title = t('game_rarity');
     return tag;
   }
   function card(item) {
     const node = element('article', 'item-comic-card');
+    node.dataset.rarity = rarityKey(item);
     node.style.setProperty('--tier-color', tierColors[item.tier] || '#91a8b4');
     const top = element('div', 'item-card-top');
     const rank = element('span', `rank-indicator${item.rank_locked ? '' : ' flexible'}`, `#${item.display_rank}`);
@@ -386,14 +398,16 @@
     values.append(element('span', 'item-price', points(item.value)), element('span', 'item-lc', `${number(item.lcValue)} LC`));
     const actions = element('div', 'card-actions-row');
     actions.append(button(t('add_you'), 'add', 'quick-add-btn add-you', { id: item.id, side: 'you' }), button(t('add_they'), 'add', 'quick-add-btn add-them', { id: item.id, side: 'they' }));
-    node.append(top, open, element('div', 'item-abbr', item.abbreviation || (lang === 'ru' ? item.name : t(`cat_${item.category}`))), values, evidenceTag(item), actions);
+    node.append(top, open, rarityTag(item), element('div', 'item-abbr', item.abbreviation || (lang === 'ru' ? item.name : t(`cat_${item.category}`))), values, evidenceTag(item), actions);
     return node;
   }
   function filtered(scope) {
     const filter = filters[scope];
     const words = normalize(filter.query).split(' ').filter(Boolean);
     return (data?.items || []).filter(item => (filter.category === 'all' || item.category === filter.category) &&
-      (scope !== 'catalog' || tier === 'all' || item.tier === tier) && words.every(word => searchKeys.get(item.id)?.includes(word)));
+      (scope !== 'catalog' || tier === 'all' || item.tier === tier) &&
+      (scope !== 'catalog' || rarity === 'all' || (rarity === 'unknown' ? !item.rarity : item.rarity === rarity)) &&
+      words.every(word => searchKeys.get(item.id)?.includes(word)));
   }
   function emptyResults() {
     const node = element('div', 'empty-state');
@@ -446,8 +460,9 @@
   }
   function tableItem(item) {
     const open = button('', 'detail', 'table-item-button', { id: item.id });
+    open.dataset.rarity = rarityKey(item);
     const text = element('span');
-    text.append(element('strong', '', nameOf(item)), element('small', '', `${item.tier}${item.abbreviation ? ` · ${item.abbreviation}` : ''}`));
+    text.append(element('strong', '', nameOf(item)), rarityTag(item), element('small', '', `${item.tier}${item.abbreviation ? ` · ${item.abbreviation}` : ''}`));
     open.append(image(item, 44), text);
     return open;
   }
@@ -504,7 +519,10 @@
     const fragment = document.createDocumentFragment();
     for (const item of list.slice(start, filters.picker.limit)) {
       const node = button('', 'pick', 'picker-item-btn', { id: item.id });
-      node.append(image(item, 72), element('span', 'item-name', nameOf(item)), element('span', 'item-price', points(item.value)));
+      node.dataset.rarity = rarityKey(item);
+      const art = element('span', 'item-art picker-art');
+      art.append(image(item, 88));
+      node.append(art, element('span', 'item-name', nameOf(item)), rarityTag(item), element('span', 'item-price', points(item.value)));
       fragment.append(node);
     }
     if (!list.length) fragment.append(emptyResults());
@@ -553,6 +571,7 @@
     const item = byId.get(id);
     if (!item) return;
     const body = $('detailBody');
+    body.dataset.rarity = rarityKey(item);
     const top = element('div', 'detail-top');
     const text = element('div');
     const title = element('h2', '', nameOf(item));
@@ -560,9 +579,11 @@
     const price = element('div', 'detail-price', points(item.value));
     price.append(element('span', 'detail-lc', `${number(item.lcValue)} LC`));
     const badges = element('div', 'detail-badges');
-    badges.append(tierTag(item), element('span', '', t(item.rank_locked ? 'locked_order' : 'flexible_order')));
+    badges.append(rarityTag(item), tierTag(item), element('span', '', t(item.rank_locked ? 'locked_order' : 'flexible_order')));
     text.append(badges, title, price, evidenceTag(item));
-    top.append(image(item, 135, 'detail-image'), text);
+    const art = element('span', 'item-art detail-art');
+    art.append(image(item, 135, 'detail-image'));
+    top.append(art, text);
     const facts = element('dl', 'detail-facts');
     const entries = [
       ['independent_traders', number(item.observation_authors ?? 0)],
@@ -585,6 +606,11 @@
       actions.append(link);
     }
     body.replaceChildren(top, facts);
+    if (/^https:\/\/grand-piece-online\.fandom\.com\/wiki\//.test(item.rarity_source || '')) {
+      const source = element('a', 'rarity-source', t('rarity_source'));
+      Object.assign(source, { href: item.rarity_source, target: '_blank', rel: 'noopener noreferrer' });
+      body.append(source);
+    }
     if (item.value === null) body.append(element('p', 'detail-note', t('unknown_note')));
     else if ((item.observation_authors || 0) < 5) body.append(element('p', 'detail-note', t('preliminary_note')));
     else if (item.constraint_applied) body.append(element('p', 'detail-note', t('rank_constraint')));
@@ -635,7 +661,7 @@
     const url = new URL(location.href);
     url.searchParams.set('tab', tab);
     const filter = filters[scopes[tab]];
-    for (const [key, value] of Object.entries({ q: filter?.query || '', category: filter?.category === 'all' ? '' : filter?.category || '', tier: tab === 'tierlist' && tier !== 'all' ? tier : '', direction: tab === 'hourly-changes' && direction !== 'all' ? direction : '' })) {
+    for (const [key, value] of Object.entries({ q: filter?.query || '', category: filter?.category === 'all' ? '' : filter?.category || '', tier: tab === 'tierlist' && tier !== 'all' ? tier : '', rarity: tab === 'tierlist' && rarity !== 'all' ? rarity : '', direction: tab === 'hourly-changes' && direction !== 'all' ? direction : '' })) {
       if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
     }
     history[push ? 'pushState' : 'replaceState'](null, '', url);
@@ -652,10 +678,12 @@
       updateSearchClear(scopes[tab]);
     }
     tier = params.get('tier') || 'all';
+    rarity = [...rarities, 'unknown'].includes(params.get('rarity')) ? params.get('rarity') : 'all';
     direction = ['up', 'down'].includes(params.get('direction')) ? params.get('direction') : 'all';
     showTab();
   }
   function showTab() {
+    $('raritySelect').value = rarity;
     document.querySelectorAll('[data-section]').forEach(section => { section.hidden = section.dataset.section !== tab; });
     document.querySelectorAll('.main-nav [data-tab]').forEach(link => {
       const active = link.dataset.tab === tab;
@@ -679,6 +707,10 @@
     $('audioToggleBtn').setAttribute('aria-label', t(audioEnabled ? 'sound_on' : 'sound_off'));
     $('audioToggleBtn').setAttribute('aria-pressed', String(audioEnabled));
     $('audioToggleBtn').replaceChildren(icon(audioEnabled ? 'volume-2' : 'volume-x'));
+    document.documentElement.dataset.effects = effectsEnabled ? 'on' : 'off';
+    $('effectsToggleBtn').setAttribute('aria-pressed', String(effectsEnabled));
+    $('effectsToggleBtn').setAttribute('aria-label', t(effectsEnabled ? 'effects_pause' : 'effects_resume'));
+    $('effectsToggleBtn').title = t(effectsEnabled ? 'effects_pause' : 'effects_resume');
     document.querySelectorAll('[data-action="close-dialog"]').forEach(node => node.setAttribute('aria-label', t('close')));
     $('hourlySubTabUp').setAttribute('aria-label', t('increases'));
     $('hourlySubTabDown').setAttribute('aria-label', t('decreases'));
@@ -722,6 +754,7 @@
       else if (action === 'apply-update' && pendingData) applySnapshot(pendingData);
       else if (action === 'language') { lang = lang === 'en' ? 'ru' : 'en'; store('gpo_lang', lang); const url = new URL(location.href); url.searchParams.set('lang', lang); history.replaceState(null, '', url); translate(); }
       else if (action === 'audio') { audioEnabled = !audioEnabled; store('gpo_audio', String(audioEnabled)); translate(); if (audioEnabled) sound('click'); }
+      else if (action === 'effects') { effectsEnabled = !effectsEnabled; store('gpo_effects', String(effectsEnabled)); translate(); }
       else if (action === 'clear-search') clearSearch(scope);
       else if (action === 'category') { filters[scope].category = node.dataset.category; filters[scope].limit = batchSize; renderCategories(); renderScope(scope); if (scope !== 'picker') writeFilters(); }
       else if (action === 'more') { const start = filters[scope].limit; filters[scope].limit += batchSize; renderScope(scope, start); }
@@ -741,6 +774,7 @@
     document.addEventListener('change', event => {
       if (event.target.classList.contains('qty-num')) setQuantity(event.target.dataset.side, event.target.dataset.id, Number(event.target.value));
       if (event.target.id === 'tierSelect') { tier = event.target.value; filters.catalog.limit = batchSize; renderCatalog('catalog'); writeFilters(); }
+      if (event.target.id === 'raritySelect') { rarity = event.target.value; filters.catalog.limit = batchSize; renderCatalog('catalog'); writeFilters(); }
     });
     document.querySelectorAll('dialog').forEach(dialog => {
       dialog.addEventListener('click', event => { if (event.target === dialog) closeDialog(dialog); });

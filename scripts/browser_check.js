@@ -9,6 +9,11 @@ async function checkLayout(page, label) {
   const problems = await page.evaluate(() => {
     const issues = [];
     if (document.documentElement.scrollWidth > innerWidth + 1) issues.push('page overflows horizontally');
+    document.querySelectorAll('button').forEach(button => {
+      if (button.getClientRects().length && button.scrollWidth > button.clientWidth + 1) {
+        issues.push(`button content overflows: ${button.id || button.dataset.action}`);
+      }
+    });
     document.querySelectorAll('.trade-slot-card, .item-comic-card').forEach(card => {
       if (!card.getClientRects().length) return;
       const bounds = card.getBoundingClientRect();
@@ -52,6 +57,9 @@ async function main() {
     assert.ok(initialNodes < 5000, `Initial DOM is too large: ${initialNodes}`);
     assert.ok(requests.every(url => url.startsWith(base)), 'Disabled ads or assets made an external request');
     assert.equal(requests.filter(url => url.includes('/audio/')).length, 0, 'Muted audio was fetched eagerly');
+    assert.ok(requests.filter(url => url.includes('/fonts/') && url.endsWith('.woff2')).every(url => url.endsWith('/finger-paint.woff2')), 'A second web font was loaded');
+    assert.match(await page.evaluate(() => getComputedStyle(document.body).fontFamily), /Finger Paint/);
+    assert.equal(await page.locator('.rarity-label').first().evaluate(node => getComputedStyle(node).animationName), 'none', 'Reduced motion was ignored');
     assert.equal(requests.filter(url => url.includes('/data/history.json')).length, 0, 'History was fetched before opening an item');
     await checkLayout(page, 'Desktop calculator');
     await page.screenshot({ path: path.join(output, 'gpo-desktop.png') });
@@ -94,6 +102,8 @@ async function main() {
     await page.locator('#searchInput').fill('Mochi');
     await page.locator('#itemsCardsGrid [data-action="detail"][data-id="item_72"]').click();
     assert.equal(await page.locator('#itemDetailModal').isVisible(), true);
+    assert.equal(await page.locator('#detailBody .rarity-label').textContent(), 'Mythical');
+    assert.match(await page.locator('#detailBody .rarity-source').getAttribute('href'), /Mochi_Mochi_no_Mi/);
     await page.locator('#detailHistory .history-empty, #detailHistory .history-chart').waitFor();
     await page.screenshot({ path: path.join(output, 'gpo-item-detail.png') });
     await page.keyboard.press('Escape');
@@ -118,6 +128,19 @@ async function main() {
     assert.equal(await page.locator('#searchInput').inputValue(), 'SP Reset', 'Search did not survive reload');
     await page.locator('[data-action="clear-search"][data-scope="catalog"]').click();
     await page.locator('#tierSelect').selectOption('all');
+    await page.locator('#raritySelect').selectOption('Mythical');
+    await page.reload({ waitUntil: 'networkidle' });
+    assert.equal(await page.locator('#raritySelect').inputValue(), 'Mythical');
+    assert.ok(await page.locator('#itemsCardsGrid article').count() > 0);
+    assert.equal(await page.locator('#itemsCardsGrid article:not([data-rarity="mythical"])').count(), 0);
+    await page.screenshot({ path: path.join(output, 'gpo-mythical-values.png') });
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.locator('#effectsToggleBtn').click();
+    assert.equal(await page.locator('#itemsCardsGrid .rarity-label').first().evaluate(node => getComputedStyle(node).animationPlayState), 'running');
+    await page.locator('#effectsToggleBtn').click();
+    assert.equal(await page.locator('#itemsCardsGrid .rarity-label').first().evaluate(node => getComputedStyle(node).animationPlayState), 'paused');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.locator('#raritySelect').selectOption('all');
     await page.locator('#langToggleBtn').click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'ru');
     await page.screenshot({ path: path.join(output, 'gpo-values-ru.png') });
@@ -208,8 +231,25 @@ async function main() {
       await checkLayout(phone, `Picker at ${width}px`);
       await phone.keyboard.press('Escape');
     }
+    await phone.setViewportSize({ width: 390, height: 844 });
+    await phone.emulateMedia({ reducedMotion: 'no-preference' });
+    await phone.locator('#effectsToggleBtn').click();
+    await phone.locator('.main-nav [data-tab="tierlist"]').click();
+    await phone.locator('#raritySelect').selectOption('Legendary');
+    await phone.locator('#itemsCardsGrid article').first().scrollIntoViewIfNeeded();
+    assert.equal(await phone.locator('#itemsCardsGrid .rarity-label').first().evaluate(node => getComputedStyle(node).animationPlayState), 'running');
+    const animatedUpdateTime = await phone.evaluate(async () => {
+      const start = performance.now();
+      window.GPO_APP.quickAdd('you', 'item_86');
+      await new Promise(requestAnimationFrame);
+      return performance.now() - start;
+    });
+    assert.equal(await phone.locator('#youSlotsGrid .trade-slot-card').count(), 2);
+    await phone.locator('.gpo-toast [data-action="dismiss-toast"]').evaluateAll(buttons => buttons.forEach(button => button.click()));
+    await checkLayout(phone, 'Animated legendary catalogue at 390px');
+    await phone.screenshot({ path: path.join(output, 'gpo-legendary-effects.png') });
     assert.deepEqual(errors, []);
-    console.log(JSON.stringify({ initial_dom_elements: initialNodes, mobile_update_ms_at_6x_cpu: Math.round(updateTime), checked_widths: [1440, ...viewports], screenshots: output }, null, 2));
+    console.log(JSON.stringify({ initial_dom_elements: initialNodes, mobile_update_ms_at_6x_cpu: Math.round(updateTime), animated_mobile_update_ms_at_6x_cpu: Math.round(animatedUpdateTime), checked_widths: [1440, ...viewports], screenshots: output }, null, 2));
   } finally {
     if (browser) await browser.close();
     await new Promise(resolve => server.close(resolve));
