@@ -1,66 +1,119 @@
-name: GPO Hourly Trade Stream & Pricing Pipeline
+name: Collect market and publish GPO Values
 
 on:
+  push:
+    branches: [main]
   schedule:
-    # Runs every hour, 24/7, to analyze 10,000 trades from channel #966859339816124438 and update site prices & forecasts
-    - cron: '0 * * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
-    # Allows manual instant triggering with optional forced price update
-    inputs:
-      force_price_update:
-        description: 'Force recalculate website prices immediately'
-        required: false
-        type: boolean
-        default: true
 
 permissions:
-  contents: write
+  contents: read
+  actions: write
+  pages: write
+  id-token: write
 
 concurrency:
-  group: gpo-price-updates
-  cancel-in-progress: true
+  group: gpo-market-publisher
+  cancel-in-progress: false
 
 jobs:
-  update-market-values:
+  publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
+    timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
-      - name: Install Dependencies
+          cache: pip
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          npm ci
+          python -m pip install -r requirements.txt
 
-      - name: Run Hourly Trade Collector & Pricing Pipeline
+      - name: Restore the latest trusted collector checkpoint
+        id: restore
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .state
+          artifact=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=gpo-market-state&per_page=100" --jq 'first(.artifacts[] | select(.expired == false and .workflow_run.head_branch == "main" and .workflow_run.head_repository_id == ${{ github.repository_id }})) | .id // empty')
+          if [ -n "$artifact" ]; then
+            run_id=$(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact" --jq '.workflow_run.id')
+            workflow=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id" --jq '.path')
+            test "$workflow" = '.github/workflows/update_prices.yml'
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact/zip" > "$RUNNER_TEMP/gpo-state.zip"
+            python - <<'PY'
+          import os, pathlib, shutil, sqlite3, zipfile
+          with zipfile.ZipFile(pathlib.Path(os.environ['RUNNER_TEMP']) / 'gpo-state.zip') as archive:
+              for name in ('market.sqlite3', 'catalog.json'):
+                  with archive.open(name) as source, open(pathlib.Path('.state') / name, 'wb') as target:
+                      shutil.copyfileobj(source, target)
+          with sqlite3.connect('.state/market.sqlite3') as db:
+              assert db.execute('PRAGMA quick_check').fetchone()[0] == 'ok', 'Corrupt checkpoint'
+          PY
+          fi
+
+      - name: Synchronize official order
+        id: official
+        continue-on-error: true
+        run: node sync_tierlist.js
+
+      - name: Collect Discord and calculate a validated snapshot
+        id: collect
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          DISCORD_CHANNEL_IDS: "966859339816124438"
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.force_price_update }}" = "true" ]; then
-            python scripts/update_values.py --force-prices
-          else
-            python scripts/update_values.py
-          fi
+          DISCORD_CHANNEL_IDS: ${{ vars.DISCORD_CHANNEL_IDS || '966859339816124438' }}
+        run: python -m scripts.update_values
 
-      - name: Commit and Push Changes
+      - name: Save the checkpoint even if publication fails
+        id: checkpoint
+        if: >-
+          always() && steps.restore.outcome == 'success' && steps.collect.outcome != 'skipped'
+          && hashFiles('.state/market.sqlite3') != '' && hashFiles('.state/catalog.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: gpo-market-state
+          path: |
+            .state/market.sqlite3
+            .state/catalog.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Keep the three newest collector backups
+        if: always() && steps.checkpoint.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git config --local user.email "bot@gpovalues.com"
-          git config --local user.name "GPO Autonomous Value Bot"
-          if [[ -n $(git status -s) ]]; then
-            echo "Changes detected! Staging and committing..."
-            git add data/trades_buffer.json data/values.json data/hourly_changes.json data/trade_aliases.json gpo_items.json items_data.js
-            rm -f data/.prices_updated
-            git commit -m "📈 Hourly Market Revaluation & Forecasts [$(date -u +'%Y-%m-%d %H:%M UTC')]"
-            git push origin main
-          else
-            echo "No changes detected. Database is up to date."
-          fi
+          mapfile -t artifacts < <(gh api "repos/$GITHUB_REPOSITORY/actions/artifacts?name=gpo-market-state&per_page=100" --jq '.artifacts[] | select(.workflow_run.head_branch == "main" and .workflow_run.head_repository_id == ${{ github.repository_id }}) | .id')
+          for artifact in "${artifacts[@]:3}"; do
+            gh api --method DELETE "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact"
+          done
+
+      - name: Run regression checks
+        run: npm test
+      - name: Build public files only
+        run: python -m scripts.build_site
+      - name: Check the built site in a real browser
+        run: npm run test:browser
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4
+        id: deployment

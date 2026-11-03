@@ -1,1163 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GPO Values & Trade Calculator | Grand Piece Online Trading Tier List</title>
-  <meta name="description" content="Accurate Grand Piece Online (GPO) item trading values tier list and trade calculator. Check values, demand, devil fruits, LC chests, abbreviations (BOS, ASE, CC), and win/fair/loss trade verdicts.">
-  <meta name="keywords" content="gpo values, grand piece online, gpo trade calculator, gpo tier list, gpo trading, gpo ценность вещей, калькулятор трейдов гпо, gpo demand list, gpo item values, gpo devil fruits, all seeing eye value, ase gpo, mochi value gpo, venom value gpo, pika value gpo, gpo w/f/l calculator, legendary fruit chest, gpo community">
-  <meta name="author" content="GPO Community">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d1016">
+  <title>GPO Values — Grand Piece Online Trade Calculator</title>
+  <meta name="description" content="Grand Piece Online trade calculator, official item order and transparent estimates from player offers. Compare prices in SP points and Legendary Chests.">
   <link rel="canonical" href="https://gpovalues.github.io/">
-
-  <!-- Open Graph / Facebook / Discord / Telegram -->
+  <meta property="og:title" content="GPO Values — Trading companion">
+  <meta property="og:description" content="Compare your trade. Explore GPO items, player offers and the official tier order.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://gpovalues.github.io/">
-  <meta property="og:title" content="GPO Values & Trade Calculator | Grand Piece Online Trading Tier List">
-  <meta property="og:description" content="Accurate GPO item trading values, win/fair/loss trade calculator, demand ratings, and abbreviations (BOS, ASE, CC) for 213+ items. Join our trading community!">
-  <meta property="og:image" content="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
-  <meta property="og:site_name" content="GPO Values">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="ru_RU">
-
-  <!-- Twitter / X Cards -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:url" content="https://gpovalues.github.io/">
-  <meta name="twitter:title" content="GPO Values & Trade Calculator | Grand Piece Online">
-  <meta name="twitter:description" content="Accurate GPO item values, demand tier list, and instant trade profit calculator for 213+ items.">
-  <meta name="twitter:image" content="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
-  <link rel="apple-touch-icon" href="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter">
-
-  <!-- Schema.org JSON-LD Structured Data for Google Rich Results -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "GPO Values & Trade Calculator",
-    "url": "https://gpovalues.github.io/",
-    "description": "Grand Piece Online trading tier list, item demand values, and win/fair/loss trade calculator for 213+ items.",
-    "applicationCategory": "GameApplication",
-    "operatingSystem": "All",
-    "inLanguage": ["en", "ru"],
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
-  }
-  </script>
-
-  <!-- Google Fonts: Finger Paint -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="style.css?v=3">
-
-  <!-- Yandex.RTB & Autoplacement 20264146 -->
-  <script>window.yaContextCb=window.yaContextCb||[]</script>
-  <script src="https://yandex.ru/ads/system/context.js" async></script>
-  <script data-page-id="20264146" src="https://yandex.ru/ads/system/ap-loader.js" async></script>
+  <meta property="og:image" content="https://gpovalues.github.io/images/ui/background.webp">
+  <link rel="icon" href="images/ui/gpo-logo.webp" type="image/webp">
+  <link rel="preload" href="fonts/finger-paint.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/pt-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="site_config.js" defer></script>
+  <script src="icons.js" defer></script>
+  <script src="translations.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="ads.js" defer></script>
 </head>
 <body>
-
-  <!-- Top Sticky Navigation Bar -->
-  <header class="header-banner">
-    <div class="header-container">
-      <!-- Left: Mobile Menu Toggle Button (visible on mobile only) -->
-      <button class="mobile-menu-toggle-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu" title="Open Navigation Menu">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-
-      <div class="brand-wrapper" id="brandHomeBtn">
-        <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="brand-logo-img">
-        <div class="brand-text-box">
-          <h1>GPO <span>VALUES</span></h1>
-          <div class="brand-subtext" id="brandSubtext" data-i18n="brand_subtext">Community Trade Calculator</div>
-        </div>
-      </div>
-
-      <nav class="nav-tabs-wrapper">
-        <button class="nav-tab-btn active" id="tabBtnCalc" data-tab="calculator">
-          <span class="icon-slot" data-icon="scale"></span> <span class="tab-label" data-i18n="tab_calculator">Trade Calculator</span>
-        </button>
-        <button class="nav-tab-btn" id="tabBtnTierlist" data-tab="tierlist">
-          <span class="icon-slot" data-icon="scroll"></span> <span class="tab-label" data-i18n="tab_tierlist">Tier List & Values</span>
-        </button>
-        <button class="nav-tab-btn" id="tabBtnForecasts" data-tab="forecasts">
-          <span class="icon-slot" data-icon="trending-up"></span> <span class="tab-label" data-i18n="tab_forecasts">Forecasts & Trends</span>
-        </button>
-        <button class="nav-tab-btn" id="tabBtnHourlyChanges" data-tab="hourly-changes">
-          <span class="icon-slot" data-icon="refresh-cw"></span> <span class="tab-label" data-i18n="tab_hourly_changes">Hourly Changes</span>
-        </button>
-        <button class="nav-tab-btn" id="tabBtnCommunity" data-tab="community">
-          <span class="icon-slot" data-icon="message-square"></span> <span class="tab-label" data-i18n="tab_community">Community & Chats</span>
-        </button>
-        <button class="nav-tab-btn" id="tabBtnGuide" data-tab="guide">
-          <span class="icon-slot" data-icon="book-open"></span> <span class="tab-label" data-i18n="tab_guide">Trading Guide</span>
-        </button>
-      </nav>
-
-      <div class="header-controls">
-        <button class="lang-btn" id="langToggleBtn" title="Switch language / Сменить язык">
-          <span class="icon-slot" data-icon="globe"></span> <span id="langCode">EN</span>
-        </button>
-        <button class="audio-toggle-btn" id="audioToggleBtn" title="Trade sounds">
-          <span id="audioIcon" class="icon-slot" data-icon="volume-2"></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Mobile Navigation Drawer Backdrop -->
-  <div class="mobile-drawer-backdrop" id="mobileNavBackdrop"></div>
-
-  <!-- Mobile Slide-In Navigation Drawer (Slides from Right) -->
-  <aside class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
-    <div class="mobile-drawer-header">
-      <div class="drawer-header-brand" id="drawerBrandHomeBtn">
-        <img src="https://tr.rbxcdn.com/180DAY-ac5cae9ca606a1a3d2e9a81b3ad29247/512/512/Image/Png/noFilter" alt="GPO Logo" class="drawer-brand-img">
-        <div class="drawer-brand-info">
-          <div class="drawer-title">GPO <span>VALUES</span></div>
-          <div class="drawer-subtitle" data-i18n="drawer_subtitle">Navigation Menu</div>
-        </div>
-      </div>
-      <button class="drawer-close-btn" id="mobileDrawerCloseBtn" aria-label="Close Menu"><span class="icon-slot" data-icon="x"></span></button>
-    </div>
-
-    <div class="mobile-drawer-body">
-      <div class="drawer-group-label" data-i18n="drawer_nav_label"><span class="icon-slot" data-icon="compass"></span> TABS & SECTIONS</div>
-      <nav class="drawer-nav-list">
-        <button class="drawer-tab-btn active" data-tab="calculator">
-          <span class="d-tab-icon icon-slot" data-icon="scale"></span>
-          <div class="d-tab-info">
-            <span class="d-tab-name" data-i18n="tab_calculator">Trade Calculator</span>
-            <small class="d-tab-desc" data-i18n="drawer_calc_desc">Calculate win/loss trades</small>
-          </div>
-          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
-        </button>
-        <button class="drawer-tab-btn" data-tab="tierlist">
-          <span class="d-tab-icon icon-slot" data-icon="scroll"></span>
-          <div class="d-tab-info">
-            <span class="d-tab-name" data-i18n="tab_tierlist">Tier List & Values</span>
-            <small class="d-tab-desc" data-i18n="drawer_tier_desc">213 items with abbreviations</small>
-          </div>
-          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
-        </button>
-        <button class="drawer-tab-btn" data-tab="forecasts">
-          <span class="d-tab-icon icon-slot" data-icon="trending-up"></span>
-          <div class="d-tab-info">
-            <span class="d-tab-name" data-i18n="tab_forecasts">Forecasts & Trends</span>
-            <small class="d-tab-desc" data-i18n="drawer_forecast_desc">12h Discord analysis & alerts</small>
-          </div>
-          <span class="d-tab-badge" style="background: var(--purple-glow); color: #fff;">AI</span>
-          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
-        </button>
-        <button class="drawer-tab-btn" data-tab="hourly-changes">
-          <span class="d-tab-icon icon-slot" data-icon="refresh-cw"></span>
-          <div class="d-tab-info">
-            <span class="d-tab-name" data-i18n="tab_hourly_changes">Hourly Changes</span>
-            <small class="d-tab-desc" data-i18n="drawer_hourly_desc">1h trade review deltas (UP & DOWN)</small>
-          </div>
-          <span class="d-tab-badge" style="background: var(--cyan-ocean); color: #000; font-weight: 800;">1H</span>
-          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
-        </button>
-        <button class="drawer-tab-btn" data-tab="community">
-          <span class="d-tab-icon icon-slot" data-icon="message-square"></span>
-          <div class="d-tab-info">
-            <span class="d-tab-name" data-i18n="tab_community">Community & Chats</span>
-            <small class="d-tab-desc" data-i18n="drawer_comm_desc">Telegram @GPOcHa chat & trade</small>
-          </div>
-          <span class="d-tab-badge">NEW</span>
-          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
-        </button>
-        <button class="drawer-tab-btn" data-tab="guide">
-          <span class="d-tab-icon icon-slot" data-icon="book-open"></span>
-          <div class="d-tab-info">
-            <span class="d-tab-name" data-i18n="tab_guide">Trading Guide</span>
-            <small class="d-tab-desc" data-i18n="drawer_guide_desc">Rules & tips from official doc</small>
-          </div>
-          <span class="d-tab-arrow icon-slot" data-icon="arrow-up-right"></span>
-        </button>
-      </nav>
-
-      <div class="drawer-divider"></div>
-
-      <!-- Telegram Chat Card in Drawer -->
-      <div class="drawer-group-label" data-i18n="drawer_comm_label"><span class="icon-slot" data-icon="send"></span> TELEGRAM CHAT</div>
-      <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="drawer-tg-card">
-        <div class="drawer-tg-avatar-box">
-          <img src="images/gpocha_avatar.jpg" alt="Chat Avatar" class="drawer-tg-avatar" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
-          <span class="drawer-tg-pin"><span class="icon-slot" data-icon="send"></span></span>
-        </div>
-        <div class="drawer-tg-details">
-          <div class="drawer-tg-name">(公婆) Grand Piece Chat</div>
-          <div class="drawer-tg-handle">@GPOcHa</div>
-          <div class="drawer-tg-stats">
-            <span class="drawer-badge-lang">RU</span>
-            <span><span class="icon-slot" data-icon="users"></span> 190+</span>
-            <span style="color: #4ade80;"><span class="icon-slot" data-icon="check-circle-2"></span> 35+</span>
-          </div>
-        </div>
-        <span class="drawer-tg-join-badge" data-i18n="drawer_btn_join">Join &rarr;</span>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div class="page-shell">
+    <header class="masthead">
+      <a class="brand" id="brandHomeBtn" href="?tab=calculator" data-tab="calculator" aria-label="GPO Values home">
+        <img src="images/ui/gpo-logo.webp" alt="Grand Piece Online" width="88" height="60" fetchpriority="high">
+        <div class="brand-copy"><span class="brand-name" translate="no">GPO <b>Values</b></span><span class="brand-tagline" data-i18n="tagline">Made for Grand Piece traders</span></div>
       </a>
-
-      <!-- Discord Quick Card in Drawer -->
-      <div class="drawer-group-label" style="margin-top: 0.5rem;" data-i18n="drawer_discord_label"><span class="icon-slot" data-icon="gamepad-2"></span> DISCORD SERVER</div>
-      <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="drawer-tg-card drawer-discord-card">
-        <div class="drawer-tg-avatar-box" style="border-color: #5865f2;">
-          <img src="images/fruit_trilogy_avatar.png" alt="Fruit Trilogy" class="drawer-tg-avatar">
-          <span class="drawer-tg-pin" style="background: #5865f2;"><span class="icon-slot" data-icon="gamepad-2"></span></span>
+      <div class="masthead-right">
+        <div class="header-controls">
+          <button class="quiet-button" id="langToggleBtn" data-action="language" aria-label="Switch language / Сменить язык"><span data-icon="globe"></span><span id="langCode">EN</span></button>
+          <button class="quiet-button icon-button" id="audioToggleBtn" data-action="audio" aria-label="Enable sound" aria-pressed="false"><span data-icon="volume-x"></span></button>
+          <a class="quiet-button wiki-button" href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" rel="noopener noreferrer"><span data-icon="book-open"></span><span>GPO Wiki</span><span data-icon="external-link"></span></a>
         </div>
-        <div class="drawer-tg-details">
-          <div class="drawer-tg-name">Fruit Trilogy</div>
-          <div class="drawer-tg-handle" style="color: #a5b4fc;">discord.gg/AxkxVfSnY</div>
-          <div class="drawer-tg-stats">
-            <span class="drawer-badge-lang">RU/EN</span>
-            <span><span class="icon-slot" data-icon="users"></span> 240+</span>
-            <span style="color: #4ade80;"><span class="icon-slot" data-icon="check-circle-2"></span> 45+</span>
-          </div>
-        </div>
-        <span class="drawer-tg-join-badge" style="background: #5865f2;" data-i18n="drawer_btn_join">Join &rarr;</span>
-      </a>
-
-      <div class="drawer-divider"></div>
-
-      <!-- Drawer Quick Controls -->
-      <div class="drawer-controls-row">
-        <button class="drawer-ctrl-btn" id="drawerLangToggleBtn">
-          <span class="icon-slot" data-icon="globe"></span> <span id="drawerLangCode">English</span>
-        </button>
-        <button class="drawer-ctrl-btn" id="drawerAudioToggleBtn">
-          <span id="drawerAudioIcon" class="icon-slot" data-icon="volume-2"></span> <span data-i18n="drawer_sound">Sound</span>
-        </button>
       </div>
+    </header>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-tab-btn active" href="?tab=calculator" data-tab="calculator" aria-current="page"><span data-icon="scale"></span><span data-i18n="nav_calculator">Calculator</span></a>
+      <a class="nav-tab-btn" href="?tab=tierlist" data-tab="tierlist"><span data-icon="scroll"></span><span data-i18n="nav_tierlist">Values & tiers</span></a>
+      <a class="nav-tab-btn" href="?tab=forecasts" data-tab="forecasts"><span data-icon="bar-chart-2"></span><span data-i18n="nav_forecasts">Market activity</span></a>
+      <a class="nav-tab-btn" href="?tab=hourly-changes" data-tab="hourly-changes"><span data-icon="trending-up"></span><span data-i18n="nav_changes">Price changes</span></a>
+      <a class="nav-tab-btn" href="?tab=guide" data-tab="guide"><span data-icon="compass"></span><span data-i18n="nav_guide">How it works</span></a>
+      <a class="nav-tab-btn" href="?tab=community" data-tab="community"><span data-icon="users"></span><span data-i18n="nav_community">Community</span></a>
+    </nav>
+
+    <div class="source-strip" role="status">
+      <span class="source-indicator waiting" id="sourceIndicator"></span>
+      <strong id="sourceStatus" data-i18n="loading">Loading the catalogue…</strong>
+      <span class="source-description" id="sourceDescription"></span>
+      <button class="text-button" id="refreshDataBtn" data-action="refresh"><span data-icon="refresh-cw"></span><span data-i18n="refresh">Refresh</span></button>
     </div>
-  </aside>
+    <div class="notice update-notice" id="newDataNotice" hidden><span data-i18n="new_data">A new price snapshot is available.</span><button class="game-button compact" data-action="apply-update" data-i18n="apply_update">Update this calculation</button></div>
+    <div class="notice error-notice" id="loadError" role="alert" hidden><span id="loadErrorText"></span><button class="game-button compact" data-action="refresh" data-i18n="retry">Try again</button></div>
 
-  <main class="main-wrapper">
-
-    <!-- Hero Promotional & Update Banner -->
-    <section class="hero-art-banner">
-      <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="swords"></span> GPO VALUES HUB</div>
-      <div class="hero-content">
-        <div class="hero-text">
-          <h2 data-i18n="hero_title">Grand Piece Online <span>Trading Hub</span></h2>
-          <p data-i18n="hero_desc">
-            All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!
-          </p>
-          <div class="hero-community-callout">
-            <span class="callout-icon icon-slot" data-icon="shield-check" data-icon-class="icon-lg icon-gold"></span>
-            <div class="callout-content">
-              <strong data-i18n="hero_callout_title">Fair Trading & GPO Economy Rules:</strong>
-              <span data-i18n="hero_callout_desc">
-                All values are taken directly from the official GPO tier list. Built for players and beginners to learn true item worth, navigate prices easily, and never make bad trades!
-              </span>
-            </div>
+    <main id="main" aria-busy="true">
+      <section class="tab-section" id="sectionCalculator" data-section="calculator">
+        <div class="hero-banner">
+          <img class="hero-art" src="images/ui/background.webp" alt="" width="768" height="432" fetchpriority="high">
+          <div class="hero-copy">
+            <h1 data-i18n="calculator_title">Grand Piece Trading Hub</h1>
+            <p data-i18n="calculator_intro">From your first fruit to your next big trade. Find item values and compare both sides of the deal.</p>
+            <a class="game-button gold-button hero-cta" href="?tab=tierlist" data-tab="tierlist"><span data-icon="scroll"></span><span data-i18n="browse_values">Explore item values</span></a>
           </div>
-          <div class="hero-badges-group">
-            <span class="hero-badge live-update" data-i18n="badge_updated"><span class="icon-slot" data-icon="calendar"></span> Updated: 10/11/2026</span>
-            <span class="hero-badge" data-i18n="badge_items_count"><span class="icon-slot" data-icon="swords"></span> 213 Items</span>
-            <span class="hero-badge" data-i18n="badge_official_doc"><span class="icon-slot" data-icon="file-text"></span> Official GPO Doc</span>
-            <span class="hero-badge" data-i18n="badge_currency"><span class="icon-slot" data-icon="coins"></span> SP Reset = 1 pt | 1 LC = 310 pts</span>
+          <div class="hero-facts">
+            <span class="currency-note"><span data-icon="coins"></span><span data-i18n="currency_note">1 SP Reset = 1 point</span></span>
+            <span class="chest-rate"><img src="images/items/item_102.webp" alt="" width="26" height="26"><span>1 LC = <strong id="heroLcValue">—</strong></span></span>
+            <a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" rel="noopener noreferrer"><span data-icon="shield-check"></span><span data-i18n="official_doc">Official tier list</span><span data-icon="external-link"></span></a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- SECTION 1: TRADE CALCULATOR -->
-    <section id="sectionCalculator" class="tab-section calculator-view-container">
-      
-      <!-- Trade Master Verdict Bar -->
-      <div class="verdict-master-card" id="verdictMasterCard">
-        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="scale"></span> TRADE VERDICT</div>
-        <div class="verdict-stamp-box">
-          <div class="verdict-stamp fair" id="verdictStamp">
-            <span id="verdictIcon" class="icon-slot" data-icon="scale"></span>
-            <span id="verdictText" data-i18n="verdict_empty">ADD ITEMS TO TRADE</span>
-          </div>
-          <div class="verdict-metrics-box">
-            <div class="verdict-diff-text neutral" id="verdictDiffText">±0 pts (0%)</div>
-            <div class="verdict-demand-note" id="verdictDemandNote">
-              <span class="icon-slot" data-icon="scale"></span> <span data-i18n="demand_neutral_note">Equal demand on both sides</span>
-            </div>
+        <div class="calculator-toolbar">
+          <h2><span data-icon="scale"></span><span data-i18n="trade_calculator">Trade calculator</span></h2>
+          <div class="trade-actions">
+            <button class="game-button" id="btnSwapSides" data-action="swap" data-requires-data disabled><span data-icon="arrow-left-right"></span><span data-i18n="swap">Swap</span></button>
+            <button class="game-button" id="btnShareTrade" data-action="share" data-requires-data disabled><span data-icon="share-2"></span><span data-i18n="share">Share</span></button>
+            <button class="game-button" id="btnDiscordExport" data-action="export" data-requires-data disabled><span data-icon="copy"></span><span data-i18n="export">Discord text</span></button>
+            <button class="quiet-button" id="btnClearTrade" data-action="clear" disabled><span data-icon="trash-2"></span><span data-i18n="clear">Clear</span></button>
           </div>
         </div>
-
-        <div class="verdict-quick-actions">
-          <button class="action-comic-btn swap-btn" id="btnSwapSides" title="Swap Sides">
-            <span class="icon-slot" data-icon="arrow-left-right"></span> <span data-i18n="btn_swap">Swap Sides</span>
-          </button>
-          <button class="action-comic-btn clear-btn" id="btnClearTrade" title="Clear All">
-            <span class="icon-slot" data-icon="trash-2"></span> <span data-i18n="btn_clear">Clear All</span>
-          </button>
-          <button class="action-comic-btn" id="btnShareTrade" title="Share Trade Link">
-            <span class="icon-slot" data-icon="share-2"></span> <span data-i18n="btn_share">Share Trade</span>
-          </button>
-          <button class="action-comic-btn discord-export-btn" id="btnDiscordExport" title="Copy formatted trade for Discord">
-            <span class="icon-slot" data-icon="copy"></span> <span data-i18n="btn_discord_export">Discord Export</span>
-          </button>
+        <div class="trade-arena-grid">
+          <section class="gpo-panel trade-side you-side" aria-labelledby="youTitle">
+            <div class="panel-title"><h2 id="youTitle"><span data-icon="package"></span><span data-i18n="you_give">You give</span></h2><span class="side-count" id="youCount">0</span></div>
+            <div class="slots-container" id="youSlotsGrid"></div>
+            <button class="add-offer-button" data-action="picker" data-side="you" data-requires-data disabled><span data-icon="plus"></span><span data-i18n="add_item">Add an item</span></button>
+            <div class="side-total"><span data-i18n="total">Total value</span><div><strong id="youTotalPts">0 pts</strong><span id="youTotalLc">0 LC</span></div></div>
+          </section>
+          <div class="gpo-panel verdict-panel">
+            <div class="verdict-copy" role="status" aria-atomic="true"><div class="verdict-stamp empty" id="verdictStamp"><span data-icon="scale"></span><strong id="verdictText" data-i18n="verdict_empty">What’s the trade?</strong></div><div id="verdictDiffText" class="verdict-difference">—</div><p id="verdictAdvice" data-i18n="verdict_hint">Add items on both sides to compare their estimated value.</p></div>
+            <a class="verdict-help" href="?tab=guide" data-tab="guide"><span data-icon="info"></span><span data-i18n="understand_trade">How are values calculated?</span></a>
+          </div>
+          <section class="gpo-panel trade-side they-side" aria-labelledby="theyTitle">
+            <div class="panel-title"><h2 id="theyTitle"><span data-icon="gift"></span><span data-i18n="they_give">You receive</span></h2><span class="side-count" id="theyCount">0</span></div>
+            <div class="slots-container" id="theySlotsGrid"></div>
+            <button class="add-offer-button" data-action="picker" data-side="they" data-requires-data disabled><span data-icon="plus"></span><span data-i18n="add_item">Add an item</span></button>
+            <div class="side-total"><span data-i18n="total">Total value</span><div><strong id="theyTotalPts">0 pts</strong><span id="theyTotalLc">0 LC</span></div></div>
+          </section>
         </div>
+        <section class="catalogue-block" aria-labelledby="quickTitle">
+          <div class="section-heading small"><div><h2 id="quickTitle" data-i18n="quick_title">The item catalogue</h2><p data-i18n="quick_hint">Find your item. Check its value. Add it to either offer.</p></div><span class="result-count" id="quickResultCount"></span></div>
+          <div class="gpo-panel filter-toolbar">
+            <div class="search-box"><span data-icon="search"></span><label class="sr-only" for="quickSearchInput" data-i18n="search_label">Search items</label><input id="quickSearchInput" type="search" name="quick-search" autocomplete="off" spellcheck="false" data-search="quick" data-placeholder="search_placeholder" placeholder="Name or abbreviation: ASE, Mochi…"><kbd class="search-shortcut" aria-hidden="true">/</kbd><button class="search-clear-btn" data-action="clear-search" data-scope="quick" aria-label="Clear search" hidden><span data-icon="x"></span></button></div>
+            <div class="filter-pills-row" id="quickCategoryPillsRow" data-categories="quick"></div>
+          </div>
+          <div class="items-cards-grid" id="quickItemsCardsGrid"></div>
+          <button class="more-button game-button" data-action="more" data-scope="quick" hidden data-i18n="show_more">Show more items</button>
+        </section>
+      </section>
 
-        <!-- Trade Recommendation / Should You Trade -->
-        <div class="verdict-recommendation-card" id="verdictRecCard">
-          <div class="rec-header">
-            <div class="rec-title-wrap">
-              <span class="rec-badge-label" data-i18n="rec_badge_title"><span class="icon-slot" data-icon="help-circle"></span> WORTH TRADING?</span>
-              <span class="rec-verdict-badge rec-empty" id="recVerdictBadge" data-i18n="rec_status_empty">ADD ITEMS</span>
-            </div>
-          </div>
-          <p class="rec-verdict-advice" id="recVerdictAdvice" data-i18n="rec_advice_empty">
-            Add items to both sides to evaluate nominal points profit and item demand / liquidity risk.
-          </p>
-          <div class="rec-demand-meter-row" id="recDemandMeterRow">
-            <div class="rec-demand-col you">
-              <div class="rec-demand-meta">
-                <span data-i18n="rec_your_demand">Your Demand:</span>
-                <strong id="recYouDemandText">0.0 / 10</strong>
-              </div>
-              <div class="rec-bar-track">
-                <div class="rec-bar-fill you" id="recYouDemandBar" style="width: 0%;"></div>
-              </div>
-            </div>
-            <div class="rec-demand-vs">VS</div>
-            <div class="rec-demand-col they">
-              <div class="rec-demand-meta">
-                <span data-i18n="rec_their_demand">Their Demand:</span>
-                <strong id="recTheyDemandText">0.0 / 10</strong>
-              </div>
-              <div class="rec-bar-track">
-                <div class="rec-bar-fill they" id="recTheyDemandBar" style="width: 0%;"></div>
-              </div>
-            </div>
-          </div>
+      <section class="tab-section" id="sectionTierlist" data-section="tierlist" hidden>
+        <div class="section-heading"><div><h1 data-i18n="values_title">The trading ledger</h1><p data-i18n="values_intro">Official order for regular tiers. Market positions for New and Unstable items.</p></div><span class="result-count" id="catalogResultCount"></span></div>
+        <div class="gpo-panel filter-toolbar">
+          <div class="filter-top-row"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="searchInput" data-i18n="search_label">Search items</label><input id="searchInput" type="search" name="catalogue-search" autocomplete="off" spellcheck="false" data-search="catalog" data-placeholder="search_placeholder"><button class="search-clear-btn" data-action="clear-search" data-scope="catalog" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><label class="select-label"><span data-i18n="tier">Tier</span><select id="tierSelect" name="tier" data-filter="tier"><option value="all" data-i18n="all_tiers">All tiers</option></select></label></div>
+          <div class="filter-pills-row" id="categoryPillsRow" data-categories="catalog"></div>
         </div>
-      </div>
+        <div class="ledger-legend"><span><span data-icon="shield-check"></span><span data-i18n="locked_order">Official order</span></span><span><span data-icon="trending-up"></span><span data-i18n="flexible_order">Free market position</span></span><span data-i18n="baseline_note">A preliminary price is marked when recent evidence is missing.</span></div>
+        <div class="items-cards-grid" id="itemsCardsGrid"></div>
+        <button class="more-button game-button" data-action="more" data-scope="catalog" hidden data-i18n="show_more">Show more items</button>
+      </section>
 
-      <!-- Trade Arena: Left (You Give) vs Right (They Offer) -->
-      <div class="trade-arena-grid">
-        
-        <!-- You Give (Left) -->
-        <div class="trade-side-panel you-side">
-          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="package"></span> YOUR OFFER</div>
-          <div class="side-header-bar">
-            <div class="side-title-wrap">
-              <span class="side-icon-tag icon-slot" data-icon="package"></span>
-              <div>
-                <h3 class="side-title" data-i18n="you_give_title">YOU GIVE (YOUR OFFER)</h3>
-                <div class="side-sub-badges-row">
-                  <span class="side-total-lc" id="youTotalLc">0.00 LC</span>
-                  <span class="side-demand-score-pill" id="youDemandPill"><span class="icon-slot" data-icon="star"></span> Demand: 0.0/10</span>
-                </div>
-              </div>
-            </div>
-            <div class="side-value-summary">
-              <div class="side-total-pts" id="youTotalPts">0 pts</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="total_val_label">Total Value</div>
-            </div>
-          </div>
+      <section class="tab-section" id="sectionForecasts" data-section="forecasts" hidden>
+        <div class="section-heading"><div><h1 data-i18n="market_title">Signals from the trading hub</h1><p data-i18n="market_intro">Observed offers and requests. Each trader is counted once per item and side.</p></div><div class="timeframe-buttons" id="forecastTimeframeGroup" aria-label="Analysis period"><button class="f-tf-btn active" data-action="timeframe" data-tf="1h" aria-pressed="true">1h</button><button class="f-tf-btn" data-action="timeframe" data-tf="24h" aria-pressed="false">24h</button><button class="f-tf-btn" data-action="timeframe" data-tf="7d" aria-pressed="false">7d</button></div></div>
+        <div class="market-stats"><div class="gpo-panel"><span data-i18n="unique_offers">Unique offers</span><strong id="marketOffersCount">0</strong></div><div class="gpo-panel"><span data-i18n="usable_observations">Supported price observations</span><strong id="marketSupportedCount">0</strong></div><div class="gpo-panel"><span data-i18n="collection_status">Collection status</span><strong class="stat-text" id="marketCoverage">—</strong></div></div>
+        <div class="gpo-panel filter-toolbar"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="forecastSearchInput" data-i18n="search_label">Search items</label><input id="forecastSearchInput" type="search" name="market-search" autocomplete="off" spellcheck="false" data-search="market" data-placeholder="search_placeholder"><button class="search-clear-btn" data-action="clear-search" data-scope="market" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><div class="filter-pills-row" data-categories="market"></div></div>
+        <p class="table-note" id="marketPeriodNote"></p>
+        <div class="gpo-panel table-scroll" tabindex="0" role="region" aria-labelledby="marketTableCaption"><table class="market-table"><caption id="marketTableCaption" class="sr-only" data-i18n="market_title">Market activity</caption><thead><tr><th data-i18n="item">Item</th><th data-i18n="value">Value</th><th data-i18n="buyers">Looking for</th><th data-i18n="sellers">Offering</th><th data-i18n="confidence">Evidence</th></tr></thead><tbody id="forecastTableBody"></tbody></table></div>
+        <button class="more-button game-button" data-action="more" data-scope="market" hidden data-i18n="show_more">Show more items</button>
+      </section>
 
-          <div class="slots-container" id="youSlotsGrid">
-            <!-- Dynamic Slots will be rendered here -->
-            <div class="add-slot-placeholder" onclick="openPickerModal('you')">
-              <span class="add-slot-icon icon-slot" data-icon="plus"></span>
-              <span class="add-slot-text" data-i18n="click_to_add">Click to add item</span>
-            </div>
-          </div>
+      <section class="tab-section" id="sectionHourlyChanges" data-section="hourly-changes" hidden>
+        <div class="section-heading"><div><h1 data-i18n="changes_title">What actually changed</h1><p data-i18n="changes_intro">The difference between two calculated snapshots. No forecasts are added to this history.</p></div><span class="result-count" id="changesTime"></span></div>
+        <div class="gpo-panel filter-toolbar"><div class="filter-top-row"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="hourlySearchInput" data-i18n="search_label">Search items</label><input id="hourlySearchInput" type="search" name="changes-search" autocomplete="off" spellcheck="false" data-search="changes" data-placeholder="search_placeholder"><button class="search-clear-btn" id="hourlySearchClearBtn" data-action="clear-search" data-scope="changes" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><div class="timeframe-buttons"><button id="hourlySubTabAll" class="active" data-action="change-filter" data-direction="all" aria-pressed="true" data-i18n="all_changes">All changes</button><button id="hourlySubTabUp" data-action="change-filter" data-direction="up" aria-pressed="false">↑</button><button id="hourlySubTabDown" data-action="change-filter" data-direction="down" aria-pressed="false">↓</button></div></div></div>
+        <div class="gpo-panel table-scroll" id="changesTablePanel" tabindex="0" role="region" aria-labelledby="changesTableCaption"><table class="market-table" id="hourlyChangesTable"><caption id="changesTableCaption" class="sr-only" data-i18n="changes_title">Price changes</caption><thead><tr><th data-i18n="item">Item</th><th data-i18n="previous_price">Previous</th><th data-i18n="current_price">Current</th><th data-i18n="change">Change</th><th data-i18n="reason">Reason</th></tr></thead><tbody id="hourlyTableBody"></tbody></table></div>
+        <div class="gpo-panel empty-state" id="hourlyEmptyState" hidden><span data-icon="scale"></span><h2 data-i18n="no_changes">No recorded changes</h2><p data-i18n="no_changes_hint">There are no price changes matching this view in the latest snapshot.</p></div>
+        <button class="more-button game-button" data-action="more" data-scope="changes" hidden data-i18n="show_more">Show more items</button>
+      </section>
 
-          <button class="side-bottom-add-btn" onclick="openPickerModal('you')">
-            <span class="icon-slot" data-icon="plus"></span> <span data-i18n="btn_add_to_you">Add Item (You)</span>
-          </button>
+      <section class="tab-section" id="sectionGuide" data-section="guide" hidden>
+        <div class="section-heading"><div><h1 data-i18n="guide_title">Read the market, not just a number</h1><p data-i18n="guide_intro">How the catalogue and estimates work.</p></div></div>
+        <div class="guide-grid">
+          <article class="gpo-panel prose"><span class="guide-icon" data-icon="scroll"></span><h2 data-i18n="guide_order_title">The official order</h2><p data-i18n="guide_order">Regular tiers keep their order from the official document. New and Very Unstable items can move by estimated value. A new document can change the official order.</p><a class="text-link" href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" rel="noopener noreferrer" data-i18n="official_doc">Open the official tier list</a></article>
+          <article class="gpo-panel prose"><span class="guide-icon" data-icon="coins"></span><h2 data-i18n="guide_units_title">One consistent scale</h2><p data-i18n="guide_units">SP Reset is the reference: 1 point. An item’s LC equivalent is its value divided by the current value of one Legendary Chest. A pack of ten always equals ten single chests.</p></article>
+          <article class="gpo-panel prose"><span class="guide-icon" data-icon="users"></span><h2 data-i18n="guide_offers_title">Offers are not sales</h2><p data-i18n="guide_offers">A barter relationship needs at least five independent traders before it can affect prices. Quantities may differ between offers. Repeated posts from one author do not gain extra influence. Incomplete offers, unknown items and unspecified adds are excluded from pricing.</p></article>
+          <article class="gpo-panel prose"><span class="guide-icon" data-icon="shield-check"></span><h2 data-i18n="guide_evidence_title">Evidence stays visible</h2><p data-i18n="guide_evidence">Open an item to see traders, freshness, asking-price range, point reference and history. Without a supported chain to SP Reset, the point scale remains historical and confidence is limited. With no recent evidence, the previous or preliminary value is retained. Unpriced items remain unpriced.</p></article>
+          <article class="gpo-panel prose"><span class="guide-icon" data-icon="scale"></span><h2 data-i18n="guide_model_title">How prices are fitted</h2><p data-i18n="guide_model">Whole barter bundles are fitted together with a robust loss that limits outliers. Newer offers have more weight. Chest ratios, the SP anchor and regular-tier order are checked together, including after rounding.</p></article>
+          <article class="gpo-panel prose"><span class="guide-icon" data-icon="clock"></span><h2 data-i18n="guide_schedule_title">Scheduled collection</h2><p data-i18n="guide_schedule">GitHub Actions collects on a schedule and resumes from its saved checkpoint. Missed history is backfilled across runs. A source failure pauses market repricing. Empty time windows stay empty.</p><p class="fine-print" data-i18n="guide_limits">The initial references are inherited estimates, not verified trades. Offer estimates do not guarantee that someone will accept your trade.</p></article>
         </div>
+      </section>
 
-        <!-- They Offer (Right) -->
-        <div class="trade-side-panel they-side">
-          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="gift"></span> THEIR OFFER</div>
-          <div class="side-header-bar">
-            <div class="side-title-wrap">
-              <span class="side-icon-tag icon-slot" data-icon="gift"></span>
-              <div>
-                <h3 class="side-title" data-i18n="they_offer_title">THEY OFFER (THEIR OFFER)</h3>
-                <div class="side-sub-badges-row">
-                  <span class="side-total-lc" id="theyTotalLc">0.00 LC</span>
-                  <span class="side-demand-score-pill" id="theyDemandPill"><span class="icon-slot" data-icon="star"></span> Demand: 0.0/10</span>
-                </div>
-              </div>
-            </div>
-            <div class="side-value-summary">
-              <div class="side-total-pts" id="theyTotalPts">0 pts</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted);" data-i18n="total_val_label">Total Value</div>
-            </div>
-          </div>
+      <section class="tab-section" id="sectionCommunity" data-section="community" hidden>
+        <div class="section-heading"><div><h1 data-i18n="community_title">Find your crew</h1><p data-i18n="community_intro">Talk about items, compare offers and meet other GPO players.</p></div></div>
+        <div class="community-grid"><article class="gpo-panel community-card"><img src="images/ui/gpocha.webp" alt="Grand Piece Chat" width="88" height="88" loading="lazy"><div><span class="platform-label">Telegram · RU</span><h2>Grand Piece Chat</h2><p data-i18n="telegram_desc">Trading, game discussion and players looking for a crew.</p><a class="game-button gold-button" href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer"><span data-i18n="join_chat">Open chat</span><span data-icon="external-link"></span></a></div></article><article class="gpo-panel community-card"><img src="images/ui/fruit-trilogy.webp" alt="Fruit Trilogy" width="88" height="88" loading="lazy"><div><span class="platform-label">Discord · RU / EN</span><h2>Fruit Trilogy</h2><p data-i18n="discord_desc">A place to discuss GPO, trade and team up for the next raid.</p><a class="game-button gold-button" href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer"><span data-i18n="join_server">Open server</span><span data-icon="external-link"></span></a></div></article></div>
+      </section>
+    </main>
 
-          <div class="slots-container" id="theySlotsGrid">
-            <!-- Dynamic Slots will be rendered here -->
-            <div class="add-slot-placeholder" onclick="openPickerModal('they')">
-              <span class="add-slot-icon icon-slot" data-icon="plus"></span>
-              <span class="add-slot-text" data-i18n="click_to_add">Click to add item</span>
-            </div>
-          </div>
-
-          <button class="side-bottom-add-btn" onclick="openPickerModal('they')" style="background: var(--purple-fruit); color: #fff;">
-            <span class="icon-slot" data-icon="plus"></span> <span data-i18n="btn_add_to_them">Add Item (Them)</span>
-          </button>
-        </div>
-
-      </div>
-
-      <!-- Quick Add Item Catalog directly inside Trade View -->
-      <div class="quick-catalog-section" style="margin-top: 1.5rem;">
-        <div class="toolbar-panel" style="background: linear-gradient(135deg, #131929 0%, #1e263d 100%);">
-          <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="boxes"></span> QUICK CATALOG</div>
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <h3 style="color: var(--gold-beli); font-size: 1.25rem; text-shadow: 2px 2px 0px #000;">
-              <span class="icon-slot" data-icon="boxes"></span> <span data-i18n="catalog_title">ITEM CATALOG FOR TRADE (213 ITEMS)</span>
-            </h3>
-            <span style="font-size: 0.82rem; color: var(--cyan-glow);" data-i18n="catalog_hint">
-              <span class="icon-slot" data-icon="lightbulb"></span> Click [+ You] or [+ Them] on any card for instant adding!
-            </span>
-          </div>
-
-          <div class="search-sort-row">
-            <div class="search-input-box">
-              <input type="text" id="quickSearchInput" placeholder="Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)" data-i18n-placeholder="search_placeholder" oninput="handleQuickSearch(event)">
-              <button class="search-clear-btn" id="quickSearchClearBtn" type="button" aria-label="Clear quick search" onclick="window.clearSearchInput('quickSearchInput')"><span class="icon-slot" data-icon="x"></span></button>
-            </div>
-            <div class="sort-select-box">
-              <select id="quickSortSelect" onchange="handleQuickSort(event)">
-                <option value="tier_desc" data-i18n="sort_tier_desc">By Tier (Top to Bottom)</option>
-                <option value="val_desc" data-i18n="sort_val_desc">By Value: High → Low</option>
-                <option value="val_asc" data-i18n="sort_val_asc">By Value: Low → High</option>
-                <option value="demand_desc" data-i18n="sort_demand_desc">By Demand (High Demand)</option>
-                <option value="name_asc" data-i18n="sort_name_asc">Alphabetical (A-Z)</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Quick Category Filter Pills -->
-          <div class="filter-pills-row" id="quickCategoryPillsRow">
-            <span class="filter-category-label" data-i18n="label_category">Category:</span>
-            <button class="filter-pill-btn active" data-qcat="all" data-i18n="cat_all">All (213)</button>
-            <button class="filter-pill-btn" data-qcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
-            <button class="filter-pill-btn" data-qcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
-            <button class="filter-pill-btn" data-qcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
-            <button class="filter-pill-btn" data-qcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
-            <button class="filter-pill-btn" data-qcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
-            <button class="filter-pill-btn" data-qcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
-            <button class="filter-pill-btn" data-qcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
-          </div>
-        </div>
-
-        <!-- Live Items Cards in Calculator -->
-        <div class="items-cards-grid" id="quickItemsCardsGrid" style="margin-top: 1.25rem;">
-          <!-- Dynamically populated by app.js -->
-        </div>
-      </div>
-
-    </section>
-
-    <!-- SECTION 2: TIER LIST & ITEM DATABASE -->
-    <section id="sectionTierlist" class="tab-section tierlist-view-container" style="display: none;">
-      
-      <!-- Filter & Search Toolbar -->
-      <div class="toolbar-panel">
-        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="scroll"></span> TIER LIST & VALUES</div>
-        <div class="search-sort-row">
-          <div class="search-input-box">
-            <input type="text" id="searchInput" placeholder="Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)" data-i18n-placeholder="search_placeholder">
-            <span class="kbd-shortcut-hint">/</span>
-            <button class="search-clear-btn" id="searchClearBtn" type="button" aria-label="Clear search" onclick="window.clearSearchInput('searchInput')"><span class="icon-slot" data-icon="x"></span></button>
-          </div>
-          <div class="sort-select-box">
-            <select id="sortSelect">
-              <option value="tier_desc" data-i18n="sort_tier_desc">By Tier (Top to Bottom)</option>
-              <option value="val_desc" data-i18n="sort_val_desc">By Value: High → Low</option>
-              <option value="val_asc" data-i18n="sort_val_asc">By Value: Low → High</option>
-              <option value="demand_desc" data-i18n="sort_demand_desc">By Demand (High Demand)</option>
-              <option value="name_asc" data-i18n="sort_name_asc">Alphabetical (A-Z)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Categories Row -->
-        <div class="filter-pills-row" id="categoryPillsRow">
-          <span class="filter-category-label" data-i18n="label_category">Category:</span>
-          <button class="filter-pill-btn active" data-cat="all" data-i18n="cat_all">All (213)</button>
-          <button class="filter-pill-btn" data-cat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
-          <button class="filter-pill-btn" data-cat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
-          <button class="filter-pill-btn" data-cat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
-          <button class="filter-pill-btn" data-cat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
-          <button class="filter-pill-btn" data-cat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
-          <button class="filter-pill-btn" data-cat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
-          <button class="filter-pill-btn" data-cat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
-        </div>
-
-        <!-- Tiers Row -->
-        <div class="tier-pills-row" id="tierPillsRow">
-          <span class="filter-category-label" data-i18n="label_tier">Tier:</span>
-          <button class="tier-pill-btn active" data-tier="all" data-i18n="tier_all">All Tiers</button>
-          <button class="tier-pill-btn" data-tier="Exclusive">Exclusive</button>
-          <button class="tier-pill-btn" data-tier="Tier SS">Tier SS</button>
-          <button class="tier-pill-btn" data-tier="Tier S">Tier S</button>
-          <button class="tier-pill-btn" data-tier="Tier A+">Tier A+</button>
-          <button class="tier-pill-btn" data-tier="Tier A">Tier A</button>
-          <button class="tier-pill-btn" data-tier="Tier A-">Tier A-</button>
-          <button class="tier-pill-btn" data-tier="Tier B+">Tier B+</button>
-          <button class="tier-pill-btn" data-tier="Tier B">Tier B</button>
-          <button class="tier-pill-btn" data-tier="Tier B-">Tier B-</button>
-          <button class="tier-pill-btn" data-tier="Tier C">Tier C</button>
-          <button class="tier-pill-btn" data-tier="Tier F">Tier F</button>
-          <button class="tier-pill-btn" data-tier="Very Unstable">Unstable</button>
-          <button class="tier-pill-btn" data-tier="New Items">New Items</button>
-        </div>
-      </div>
-
-      <!-- Item Cards Container -->
-      <div class="items-cards-grid" id="itemsCardsGrid">
-        <!-- Rendered via Javascript -->
-      </div>
-
-    </section>
-
-    <!-- SECTION 3: COMMUNITY & CHANNELS -->
-    <section id="sectionCommunity" class="tab-section community-view-container" style="display: none;">
-      
-      <div class="community-hero-card">
-        <div class="gpo-tracker-badge"><span class="icon-slot" data-icon="globe"></span> OUR COMMUNITY</div>
-        <h2 data-i18n="community_title"><span class="icon-slot" data-icon="message-square"></span> Community & Trading Chats</h2>
-        <p data-i18n="community_desc">
-          Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!
-        </p>
-        <div class="community-stats-pills">
-          <span class="community-pill" data-i18n="community_pill_active"><span class="icon-slot" data-icon="zap"></span> Active Trading & Discussions</span>
-          <span class="community-pill" data-i18n="community_pill_rules"><span class="icon-slot" data-icon="shield-check"></span> Safe Trades & Moderation</span>
-          <span class="community-pill" data-i18n="community_pill_giveaways"><span class="icon-slot" data-icon="gift"></span> Events & Giveaways</span>
-        </div>
-      </div>
-
-      <!-- Community Channels Grid -->
-      <div class="community-channels-grid">
-        
-        <!-- Telegram Chat Card -->
-        <div class="channel-comic-card tg-card">
-          <div class="channel-card-top-glow"></div>
-          <div class="channel-card-header">
-            <div class="channel-badge-pill tg-badge">
-              <span class="icon-slot" data-icon="send"></span> <span>Telegram Chat</span>
-            </div>
-            <div class="channel-badge-pill lang-badge" data-i18n="chat_lang_badge">
-              <span class="icon-slot" data-icon="globe"></span> <span>Russian (Русский)</span>
-            </div>
-            <div class="channel-badge-pill status-badge">
-              <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
-            </div>
-          </div>
-
-          <div class="channel-profile-row">
-            <div class="channel-avatar-box">
-              <img src="images/gpocha_avatar.jpg" alt="Grand Piece Chat Avatar" class="channel-avatar-img" onerror="this.src='https://cdn4.telesco.pe/file/fW8v5cPF04quDQfoyG45JbgMa2SnYUkt8b4ZQL9LdvQSpH230f1IAkpg_X6Y9f92djRszAeYvQ7A1qtCmlfX6fTMPgziICsUgPKuSgGjR6ufbNktVbW110n75TuyT5ec7tX17-iohrt-OOQArSiVGunHsgtmY-dioeWu6x65JPI8g1NiBM4JXqeLo9LHaR-SYxm5ifs5F-nObnIF758FsNHi2VPguilJeZmag9yFe4PzWpRUdTb4oqbecsRctUtnvjKrUI89IyoUVH6MtHin6nCWZVSEV91t7yEzTkE5_y6lD2iLkE51JxJyXQxbwZ_qwnHhGy7FTw453nVXYpm42w.jpg'">
-              <span class="tg-mini-icon"><span class="icon-slot" data-icon="send"></span></span>
-            </div>
-            <div class="channel-meta-box">
-              <h3 class="channel-title-text">(公婆) Grand Piece Chat</h3>
-              <div class="channel-handle-text">@GPOcHa</div>
-              <div class="channel-counts-row">
-                <span class="count-item-pill">
-                  <span class="count-icon"><span class="icon-slot" data-icon="users"></span></span>
-                  <strong class="count-number">190+</strong>
-                  <span class="count-lbl" data-i18n="members_label">Members</span>
-                </span>
-                <span class="count-item-pill online-pill">
-                  <span class="count-icon"><span class="icon-slot" data-icon="check-circle-2" data-icon-class="icon-green"></span></span>
-                  <strong class="count-number">35+</strong>
-                  <span class="count-lbl" data-i18n="online_label">Online</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <p class="channel-desc-text" data-i18n="chat_desc">
-            Grand Piece Online chat: here you can chat, find profitable trades, check latest prices, and team up for bosses and dungeons! Respect server rules and good luck!
-          </p>
-
-          <div class="channel-specs-box">
-            <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_lang_label"><span class="icon-slot" data-icon="globe"></span> Language:</span>
-              <span class="spec-value" data-i18n="chat_spec_lang_val">Russian (Русский язык)</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_topic_label"><span class="icon-slot" data-icon="crosshair"></span> Focus:</span>
-              <span class="spec-value" data-i18n="chat_spec_topic_val">Trading, Values, Boss Raids & Co-op</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_access_label"><span class="icon-slot" data-icon="unlock"></span> Access:</span>
-              <span class="spec-value" data-i18n="chat_spec_access_val">Public & Free to Join</span>
-            </div>
-          </div>
-
-          <a href="https://t.me/GPOcHa" target="_blank" rel="noopener noreferrer" class="channel-join-btn tg-join-btn">
-            <span class="btn-icon"><span class="icon-slot" data-icon="send"></span></span>
-            <span class="btn-text" data-i18n="btn_join_tg">Join Telegram Chat (@GPOcHa)</span>
-            <span class="btn-arrow icon-slot" data-icon="arrow-up-right"></span>
-          </a>
-        </div>
-
-        <!-- Discord Server Card -->
-        <div class="channel-comic-card discord-card">
-          <div class="channel-card-top-glow" style="background: radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.4) 0%, transparent 70%);"></div>
-          <div class="channel-card-header">
-            <div class="channel-badge-pill discord-badge">
-              <span class="icon-slot" data-icon="gamepad-2"></span> <span>Discord Server</span>
-            </div>
-            <div class="channel-badge-pill lang-badge" data-i18n="discord_lang_badge">
-              <span class="icon-slot" data-icon="globe"></span> <span>RU & EN</span>
-            </div>
-            <div class="channel-badge-pill status-badge">
-              <span class="pulse-dot"></span> <span data-i18n="chat_active_badge">Active</span>
-            </div>
-          </div>
-
-          <div class="channel-profile-row">
-            <div class="channel-avatar-box discord-avatar-box">
-              <img src="images/fruit_trilogy_avatar.png" alt="Fruit Trilogy Avatar" class="channel-avatar-img">
-              <span class="discord-mini-icon"><span class="icon-slot" data-icon="gamepad-2"></span></span>
-            </div>
-            <div class="channel-meta-box">
-              <h3 class="channel-title-text">Fruit Trilogy</h3>
-              <div class="channel-handle-text">discord.gg/AxkxVfSnY</div>
-              <div class="channel-counts-row">
-                <span class="count-item-pill">
-                  <span class="count-icon"><span class="icon-slot" data-icon="users"></span></span>
-                  <strong class="count-number">240+</strong>
-                  <span class="count-lbl" data-i18n="members_label">Members</span>
-                </span>
-                <span class="count-item-pill online-pill">
-                  <span class="count-icon"><span class="icon-slot" data-icon="check-circle-2" data-icon-class="icon-green"></span></span>
-                  <strong class="count-number">45+</strong>
-                  <span class="count-lbl" data-i18n="online_label">Online</span>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <p class="channel-desc-text" data-i18n="discord_card_desc">
-            Grand Piece Online community: trade items, check values, hang out in voice channels, and team up for boss raids and dungeons! Respect server rules and good luck!
-          </p>
-
-          <div class="channel-specs-box">
-            <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_lang_label"><span class="icon-slot" data-icon="globe"></span> Language:</span>
-              <span class="spec-value" data-i18n="discord_spec_lang_val">Russian & English</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_topic_label"><span class="icon-slot" data-icon="crosshair"></span> Focus:</span>
-              <span class="spec-value" data-i18n="discord_spec_topic_val">Trading, Values, Boss Raids & Voice</span>
-            </div>
-            <div class="spec-row">
-              <span class="spec-label" data-i18n="chat_spec_access_label"><span class="icon-slot" data-icon="unlock"></span> Access:</span>
-              <span class="spec-value" data-i18n="discord_spec_access_val">Public & Free to Join</span>
-            </div>
-          </div>
-
-          <a href="https://discord.gg/AxkxVfSnY" target="_blank" rel="noopener noreferrer" class="channel-join-btn discord-join-btn">
-            <span class="btn-icon"><span class="icon-slot" data-icon="gamepad-2"></span></span>
-            <span class="btn-text" data-i18n="btn_join_discord">Join Discord Server (discord.gg/AxkxVfSnY)</span>
-            <span class="btn-arrow icon-slot" data-icon="arrow-up-right"></span>
-          </a>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- SECTION 4: GUIDE & DEMAND EXPLANATION -->
-    <section id="sectionGuide" class="tab-section guide-view-container" style="display: none;">
-      
-      <div class="merchant-hero-card" style="background: linear-gradient(135deg, #2e1065 0%, #0f172a 100%);">
-        <h2 data-i18n="guide_title"><span class="icon-slot" data-icon="book-open"></span> GPO Trading Rules & Guide</h2>
-        <p data-i18n="guide_desc">
-          Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.
-        </p>
-      </div>
-
-      <!-- Fair GPO Trading Initiative Callout -->
-      <div class="guide-intro-banner">
-        <div class="guide-intro-badge"><span class="icon-slot" data-icon="shield-check"></span> FAIR GPO TRADING & NOVICE PROTECTION</div>
-        <h3 data-i18n="guide_mission_title">Official Rules & Protection for Beginner Traders</h3>
-        <p data-i18n="guide_mission_desc">
-          This platform strictly follows official Grand Piece Online trading rules. All item values are taken directly from the official trading tier list. Created for maximum convenience, especially for players who are just starting to trade, so they can understand accurate item prices and never make bad trades!
-        </p>
-      </div>
-
-      <div class="trade-arena-grid" style="margin-top: 1.5rem;">
-        
-        <div class="trade-side-panel">
-          <h3 style="color: var(--gold-beli); margin-bottom: 0.8rem;" data-i18n="guide_rule1_title">1. Hierarchy & Ranking Order</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule1_desc">
-            An item's position within its tier strictly determines its value! Items placed higher in a tier are always worth more than those below. Being in the same tier does NOT guarantee equal value.
-          </p>
-          <div style="margin-top: 1rem; padding: 0.75rem; background: #090e1b; border: 2px solid #000; border-radius: 6px;">
-            <p style="font-size: 0.82rem; color: var(--cyan-glow);" data-i18n="guide_rule1_example">
-              <span class="icon-slot" data-icon="lightbulb"></span> Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.
-            </p>
-          </div>
-        </div>
-
-        <div class="trade-side-panel">
-          <h3 style="color: var(--crimson-glow); margin-bottom: 0.8rem;" data-i18n="guide_rule2_title">2. The Unstable Items Trap</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule2_desc">
-            Items in the Very Unstable category (e.g. Valkyrie Helmets, Gift of Fruit, Clown Wig) do not have fixed values. Their price fluctuates heavily based on hype and individual buyers.
-          </p>
-          <div style="margin-top: 1rem; padding: 0.75rem; background: #090e1b; border: 2px solid #000; border-radius: 6px;">
-            <p style="font-size: 0.82rem; color: var(--crimson-glow);" data-i18n="guide_rule2_example">
-              <span class="icon-slot" data-icon="alert-triangle"></span> Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!
-            </p>
-          </div>
-        </div>
-
-        <div class="trade-side-panel">
-          <h3 style="color: var(--green-glow); margin-bottom: 0.8rem;" data-i18n="guide_rule3_title">3. Trading Currency: Chests (LC & MC)</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule3_desc">
-            Legendary Fruit Chest (LC) is the universally accepted standard currency in the game. Most traders express values in number of LC chests. A Mythical Chest (MC) is usually valued at 10-12 LC.
-          </p>
-        </div>
-
-        <div class="trade-side-panel">
-          <h3 style="color: var(--purple-glow); margin-bottom: 0.8rem;" data-i18n="guide_rule4_title">4. Demand Over Nominal Value</h3>
-          <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5;" data-i18n="guide_rule4_desc">
-            An item with High Demand can easily be traded for an overpay (+20% value). Items with Low Demand often have to be traded at a discount.
-          </p>
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- =====================================================================
-         SECTION 5: MARKET FORECASTS & AI ANALYTICS (12-HOUR AUTONOMOUS ENGINE)
-         ===================================================================== -->
-    <section class="tab-section" id="sectionForecasts" style="display: none;">
-      <!-- Hero Analytics Card -->
-      <div class="trade-side-panel forecast-hero-panel">
-        <div class="forecast-hero-top">
-          <div>
-            <div class="forecast-pill-badge">
-              <span class="icon-slot" data-icon="zap"></span>
-              <span data-i18n="forecast_badge_autonomous">AUTONOMOUS DISCORD HOURLY ENGINE</span>
-            </div>
-            <h2 class="forecast-hero-heading" data-i18n="forecast_hero_title">
-              GPO Market Forecasts & <span class="text-gradient-purple">AI Analytics</span>
-            </h2>
-            <p class="forecast-hero-desc" data-i18n="forecast_hero_desc">
-              Automated parsing of trading channel #966859339816124438 in Discord every hour (10,000 trades). Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and calibrated 0.0–10.0 demand scores.
-            </p>
-          </div>
-
-          <div class="forecast-meta-pills" id="forecastMetaPills">
-            <div class="forecast-meta-pill">
-              <span class="f-pill-label" data-i18n="forecast_updated_label">Last Analysis:</span>
-              <span class="f-pill-val" id="forecastLastUpdatedVal">Synchronizing...</span>
-            </div>
-            <div class="forecast-meta-pill">
-              <span class="f-pill-label" data-i18n="forecast_trades_label">Hourly Trades Analyzed:</span>
-              <span class="f-pill-val" id="forecastTradesCountVal">...</span>
-            </div>
-            <div class="forecast-meta-pill">
-              <span class="f-pill-label" data-i18n="forecast_sentiment_label">Market Sentiment:</span>
-              <span class="f-pill-val" id="forecastSentimentVal" style="color: var(--green-glow);">Bullish</span>
-            </div>
-            <div class="forecast-meta-pill">
-              <span class="f-pill-label" data-i18n="forecast_hierarchy_label">Tier Hierarchy:</span>
-              <span class="f-pill-val" style="color: var(--cyan-glow);">100% Strict Monotonic</span>
-            </div>
-          </div>
-        </div>
-      <!-- Interactive Timeframe Period Switcher: 1 Hour / 24 Hours / 7 Days -->
-      <div class="forecast-timeframe-panel">
-        <div class="f-tf-header-row">
-          <div class="f-tf-title-box">
-            <span class="icon-slot" data-icon="clock" style="color: var(--gold-beli);"></span>
-            <span class="f-tf-title" data-i18n="forecast_tf_title">Период аналитики рынка:</span>
-          </div>
-          <div class="f-tf-buttons-group" id="forecastTimeframeGroup">
-            <button class="f-tf-btn active" data-tf="1h">
-              <span class="icon-slot" data-icon="zap"></span>
-              <span class="f-tf-btn-text" data-i18n="tf_btn_1h">1 Час (1h)</span>
-            </button>
-            <button class="f-tf-btn" data-tf="24h">
-              <span class="icon-slot" data-icon="calendar"></span>
-              <span class="f-tf-btn-text" data-i18n="tf_btn_24h">24 Часа (24h)</span>
-            </button>
-            <button class="f-tf-btn" data-tf="7d">
-              <span class="icon-slot" data-icon="bar-chart-2"></span>
-              <span class="f-tf-btn-text" data-i18n="tf_btn_7d">7 Дней / Неделя (7d)</span>
-            </button>
-          </div>
-        </div>
-        <div class="f-tf-footer-note">
-          <span class="icon-slot" data-icon="shield-check" style="color: var(--gold-glow);"></span>
-          <span data-i18n="tf_demand_rule_note">Спрос (Demand ★) везде на сайте откалиброван по стабильным данным за 7 дней (10/10 максимум, 0/10 минимум)</span>
-        </div>
-      </div>
-
-      <!-- Highlights 3-Card Grid: Rising, Falling, Tier Pressure -->
-      <div class="forecast-highlights-grid">
-        <!-- Card 1: Hyped / Rising -->
-        <div class="forecast-highlight-card card-rising">
-          <div class="highlight-card-header">
-            <div class="highlight-title-box">
-              <span class="icon-slot" data-icon="trending-up" style="color: var(--green-glow);"></span>
-              <h3 data-i18n="forecast_card_rising_title">Лидеры роста (Hyped / Rising)</h3>
-            </div>
-            <span class="highlight-badge-pill pill-rising" data-i18n="forecast_badge_high_demand">ВЫСОКИЙ СПРОС</span>
-          </div>
-          <p class="highlight-card-sub" data-i18n="forecast_card_rising_desc">Предметы с максимальным перевесом покупателей над продавцами (LF > Offer) за последние 12 часов.</p>
-          <div class="highlight-items-list" id="forecastRisingList">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-
-        <!-- Card 2: Falling / High Supply -->
-        <div class="forecast-highlight-card card-falling">
-          <div class="highlight-card-header">
-            <div class="highlight-title-box">
-              <span class="icon-slot" data-icon="trending-down" style="color: var(--red-glow);"></span>
-              <h3 data-i18n="forecast_card_falling_title">Теряют в цене (Falling)</h3>
-            </div>
-            <span class="highlight-badge-pill pill-falling" data-i18n="forecast_badge_high_supply">ИЗБЫТОК СНАБЖЕНИЯ</span>
-          </div>
-          <p class="highlight-card-sub" data-i18n="forecast_card_falling_desc">Предметы, которые активно сбрасывают в Trading, при пониженном количестве запросов на покупку.</p>
-          <div class="highlight-items-list" id="forecastFallingList">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-
-        <!-- Card 3: Tier Pressure Candidates -->
-        <div class="forecast-highlight-card card-alert">
-          <div class="highlight-card-header">
-            <div class="highlight-title-box">
-              <span class="icon-slot" data-icon="alert-triangle" style="color: var(--purple-glow);"></span>
-              <h3 data-i18n="forecast_card_alerts_title">Кандидаты на смену позиции в Офиц. Тир-Листе</h3>
-            </div>
-            <span class="highlight-badge-pill pill-alert" data-i18n="forecast_badge_tier_pressure">TIER PRESSURE</span>
-          </div>
-          <p class="highlight-card-sub" data-i18n="forecast_card_alerts_desc">Рыночная цена в Discord вплотную приблизилась или обогнала соседа сверху. Официальный порядок сохранён, но шанс повышения в след. доке максимален.</p>
-          <div class="highlight-items-list" id="forecastAlertsList">
-            <!-- Rendered via JS -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Interactive Explorer & Filter Bar -->
-      <div class="trade-side-panel" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-        <div class="forecast-filter-toolbar">
-          <div class="search-input-box" style="flex: 1; min-width: 260px;">
-            <input type="text" id="forecastSearchInput" placeholder="Поиск предмета в прогнозах по названию или тегу..." data-i18n-placeholder="forecast_search_placeholder">
-            <button class="search-clear-btn" id="forecastSearchClearBtn" type="button" aria-label="Clear forecast search" onclick="window.clearSearchInput('forecastSearchInput')"><span class="icon-slot" data-icon="x"></span></button>
-          </div>
-          <div class="filter-pills-row" id="forecastStatusPills">
-            <button class="filter-pill-btn active" data-fstatus="all" data-i18n="forecast_filter_all">Все статусы (213)</button>
-            <button class="filter-pill-btn" data-fstatus="Rising"><span class="icon-slot" data-icon="trending-up"></span> <span data-i18n="forecast_filter_rising">Растут 📈</span></button>
-            <button class="filter-pill-btn" data-fstatus="Overpaid"><span class="icon-slot" data-icon="zap"></span> <span data-i18n="forecast_filter_overpaid">Оверпей 🔥</span></button>
-            <button class="filter-pill-btn" data-fstatus="Falling"><span class="icon-slot" data-icon="trending-down"></span> <span data-i18n="forecast_filter_falling">Падают 📉</span></button>
-            <button class="filter-pill-btn" data-fstatus="Stable"><span data-i18n="forecast_filter_stable">Стабильно ➖</span></button>
-            <button class="filter-pill-btn" data-fstatus="Alert"><span class="icon-slot" data-icon="alert-triangle"></span> <span data-i18n="forecast_filter_alert">Алерты ⚠️</span></button>
-          </div>
-        </div>
-
-        <!-- Category Pills Row -->
-        <div class="filter-pills-row" id="forecastCategoryPills" style="margin-top: 0.8rem; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
-          <button class="filter-pill-btn active" data-fcat="all" data-i18n="cat_all">All Categories</button>
-          <button class="filter-pill-btn" data-fcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
-          <button class="filter-pill-btn" data-fcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
-          <button class="filter-pill-btn" data-fcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
-          <button class="filter-pill-btn" data-fcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
-          <button class="filter-pill-btn" data-fcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits</button>
-          <button class="filter-pill-btn" data-fcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats</button>
-          <button class="filter-pill-btn" data-fcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc</button>
-        </div>
-      </div>
-
-      <!-- Full Analytics Table Container -->
-      <div class="forecast-table-container">
-        <table class="forecast-table" id="forecastMainTable">
-          <thead>
-            <tr>
-              <th style="width: 50px;">#</th>
-              <th data-i18n="fth_item">Предмет</th>
-              <th data-i18n="fth_value">Офиц. Цена (pts / LC)</th>
-              <th data-i18n="fth_demand">Спрос (0-10)</th>
-              <th data-i18n="fth_lf">Спрос (LF)</th>
-              <th data-i18n="fth_offer">Предлож. (Offer)</th>
-              <th data-i18n="fth_pressure">Давление рынка</th>
-              <th data-i18n="fth_forecast">Прогноз 24–48ч</th>
-              <th data-i18n="fth_alert">Статус / Давление на тир</th>
-            </tr>
-          </thead>
-          <tbody id="forecastTableBody">
-            <!-- Rendered via JS -->
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-         SECTION 6: HOURLY TRADE CHANGES (UP & DOWN DELTA TABLES)
-         ===================================================================== -->
-    <section class="tab-section hourly-changes-view-container" id="sectionHourlyChanges" style="display: none;">
-      <!-- Hero Analytics Card -->
-      <div class="trade-side-panel hourly-hero-panel">
-        <div class="hourly-hero-top">
-          <div>
-            <div class="hourly-pill-badge">
-              <span class="hourly-pulse-dot"></span>
-              <span class="icon-slot" data-icon="refresh-cw"></span>
-              <span data-i18n="hourly_badge_title">1-HOUR TRADE STREAM DELTAS</span>
-            </div>
-            <h2 class="hourly-hero-heading" data-i18n="hourly_hero_title">
-              Hourly Market Changes & <span class="text-gradient-cyan">Price Movements</span>
-            </h2>
-            <p class="hourly-hero-desc" data-i18n="hourly_hero_desc">
-              All price shifts recorded after the latest 1-hour Discord trade review (10,000 trades). Updated every hour — previous movements are discarded to highlight only current price action.
-            </p>
-          </div>
-        </div>
-
-        <!-- Meta Pills Row -->
-        <div class="hourly-meta-grid">
-          <div class="hourly-meta-card">
-            <span class="hourly-meta-label icon-slot" data-icon="clock"></span>
-            <div>
-              <div class="meta-label-title" data-i18n="hourly_meta_updated">Last Cycle Update</div>
-              <div class="meta-label-val" id="hourlyLastUpdatedVal">Synchronizing...</div>
-            </div>
-          </div>
-          <div class="hourly-meta-card">
-            <span class="hourly-meta-label icon-slot" data-icon="bar-chart-2"></span>
-            <div>
-              <div class="meta-label-title" data-i18n="hourly_meta_trades">Trades Reviewed</div>
-              <div class="meta-label-val" id="hourlyTradesCountVal">10,000 trades / 1h</div>
-            </div>
-          </div>
-          <div class="hourly-meta-card">
-            <span class="hourly-meta-label icon-slot" data-icon="trending-up" style="color: var(--green-win);"></span>
-            <div>
-              <div class="meta-label-title" data-i18n="hourly_meta_up">Price Increases (UP)</div>
-              <div class="meta-label-val val-up-glow" id="hourlyMetaUpCount">0 items</div>
-            </div>
-          </div>
-          <div class="hourly-meta-card">
-            <span class="hourly-meta-label icon-slot" data-icon="trending-down" style="color: var(--crimson-red);"></span>
-            <div>
-              <div class="meta-label-title" data-i18n="hourly_meta_down">Price Drops (DOWN)</div>
-              <div class="meta-label-val val-down-glow" id="hourlyMetaDownCount">0 items</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Controls & Subtabs Bar -->
-      <div class="trade-side-panel hourly-controls-panel">
-        <div class="hourly-nav-controls">
-          <!-- 2 Main Sections UP and DOWN + All -->
-          <div class="hourly-subtabs-row" role="tablist">
-            <button class="hourly-subtab-btn subtab-up active" id="hourlySubTabUp" data-subtab="up">
-              <span class="icon-slot" data-icon="trending-up"></span>
-              <span data-i18n="hourly_tab_up">UP (Price Increases)</span>
-              <span class="subtab-badge-count up-badge" id="hourlySubTabUpCount">0</span>
-            </button>
-            <button class="hourly-subtab-btn subtab-down" id="hourlySubTabDown" data-subtab="down">
-              <span class="icon-slot" data-icon="trending-down"></span>
-              <span data-i18n="hourly_tab_down">DOWN (Price Drops)</span>
-              <span class="subtab-badge-count down-badge" id="hourlySubTabDownCount">0</span>
-            </button>
-            <button class="hourly-subtab-btn subtab-all" id="hourlySubTabAll" data-subtab="all">
-              <span class="icon-slot" data-icon="bar-chart-2"></span>
-              <span data-i18n="hourly_tab_all">ALL CHANGES</span>
-              <span class="subtab-badge-count all-badge" id="hourlySubTabAllCount">0</span>
-            </button>
-          </div>
-
-          <!-- Search Box -->
-          <div class="search-input-box hourly-search-box">
-            <input type="text" id="hourlySearchInput" placeholder="Search item by name..." data-i18n-placeholder="hourly_search_placeholder">
-            <button class="search-clear-btn" id="hourlySearchClearBtn" type="button" aria-label="Clear search" onclick="window.clearSearchInput('hourlySearchInput')"><span class="icon-slot" data-icon="x"></span></button>
-          </div>
-        </div>
-
-        <!-- Category Filters -->
-        <div class="filter-pills-row hourly-category-pills" id="hourlyCategoryPills">
-          <button class="filter-pill-btn active" data-hcat="all" data-i18n="cat_all">All Categories</button>
-          <button class="filter-pill-btn" data-hcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
-          <button class="filter-pill-btn" data-hcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
-          <button class="filter-pill-btn" data-hcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
-          <button class="filter-pill-btn" data-hcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
-          <button class="filter-pill-btn" data-hcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits</button>
-          <button class="filter-pill-btn" data-hcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats</button>
-          <button class="filter-pill-btn" data-hcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc</button>
-        </div>
-      </div>
-
-      <!-- Main Changes Table Container -->
-      <div class="hourly-table-wrapper">
-        <table class="hourly-changes-table" id="hourlyChangesTable">
-          <thead>
-            <tr>
-              <th style="width: 70px;" data-i18n="hth_photo">Photo</th>
-              <th data-i18n="hth_item">Item</th>
-              <th data-i18n="hth_category">Category</th>
-              <th data-i18n="hth_old_price">Previous Price</th>
-              <th data-i18n="hth_new_price">Current Price</th>
-              <th data-i18n="hth_delta_pts">Change (Points)</th>
-              <th data-i18n="hth_delta_pct">Change (%)</th>
-            </tr>
-          </thead>
-          <tbody id="hourlyTableBody">
-            <!-- Rendered via JS -->
-          </tbody>
-        </table>
-
-        <!-- Empty State Message -->
-        <div class="hourly-empty-state" id="hourlyEmptyState" style="display: none;">
-          <div class="empty-state-icon"><span class="icon-slot" data-icon="refresh-cw"></span></div>
-          <h3 data-i18n="hourly_empty_title">No Price Movements Found</h3>
-          <p data-i18n="hourly_empty_desc">All item values in this category remained stable during the latest 1-hour trading cycle.</p>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- =====================================================================
-       MODAL 1: ITEM PICKER FOR TRADE CALCULATOR
-       ===================================================================== -->
-  <div class="comic-modal-overlay" id="itemPickerModal">
-    <div class="comic-modal-card">
-      <div class="modal-header-bar">
-        <h3 class="modal-header-title">
-          <span class="icon-slot" data-icon="package"></span> <span id="pickerModalTitle" data-i18n="picker_title">Select Item to Trade</span>
-        </h3>
-        <button class="modal-close-btn" onclick="closePickerModal()"><span class="icon-slot" data-icon="x"></span></button>
-      </div>
-
-      <div class="modal-search-row">
-        <div class="search-input-box">
-          <input type="text" id="pickerSearchInput" placeholder="Search item by name or abbreviation..." data-i18n-placeholder="picker_search_placeholder" oninput="filterPickerItems()">
-          <button class="search-clear-btn" id="pickerSearchClearBtn" type="button" aria-label="Clear picker search" onclick="window.clearSearchInput('pickerSearchInput')"><span class="icon-slot" data-icon="x"></span></button>
-        </div>
-        <div class="filter-pills-row" id="pickerCategoryPills">
-          <button class="filter-pill-btn active" data-pcat="all" data-i18n="cat_all">All (213)</button>
-          <button class="filter-pill-btn" data-pcat="fruits" data-i18n="cat_fruits"><span class="icon-slot" data-icon="apple"></span> Devil Fruits</button>
-          <button class="filter-pill-btn" data-pcat="weapons" data-i18n="cat_weapons"><span class="icon-slot" data-icon="swords"></span> Weapons</button>
-          <button class="filter-pill-btn" data-pcat="chests" data-i18n="cat_chests"><span class="icon-slot" data-icon="package"></span> Chests</button>
-          <button class="filter-pill-btn" data-pcat="accessories" data-i18n="cat_accessories"><span class="icon-slot" data-icon="crown"></span> Accessories</button>
-          <button class="filter-pill-btn" data-pcat="outfits" data-i18n="cat_outfits"><span class="icon-slot" data-icon="shirt"></span> Outfits & Armor</button>
-          <button class="filter-pill-btn" data-pcat="boats" data-i18n="cat_boats"><span class="icon-slot" data-icon="ship"></span> Boats & Mounts</button>
-          <button class="filter-pill-btn" data-pcat="misc" data-i18n="cat_misc"><span class="icon-slot" data-icon="sparkles"></span> Misc & Items</button>
-        </div>
-      </div>
-
-      <div class="modal-items-scroll" id="pickerItemsGrid">
-        <!-- Rendered via JS -->
-      </div>
-    </div>
+    <footer class="site-footer"><div><strong translate="no">GPO Values</strong><p data-i18n="footer_note">A community tool. Official ranks; independently calculated offer estimates.</p></div><div class="footer-links"><a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" rel="noopener noreferrer" data-i18n="official_doc">Official tier list</a><a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" rel="noopener noreferrer">GPO Wiki</a><a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" rel="noopener noreferrer" data-i18n="play_gpo">Play GPO</a></div></footer>
   </div>
 
-  <!-- =====================================================================
-       MODAL 2: ITEM DETAIL QUICK VIEW
-       ===================================================================== -->
-  <div class="comic-modal-overlay" id="itemDetailModal">
-    <div class="comic-modal-card" style="max-width: 650px;">
-      <div class="modal-header-bar">
-        <h3 class="modal-header-title">
-          <span class="icon-slot" data-icon="search"></span> <span id="detailModalTitle" data-i18n="detail_modal_title">Item Details</span>
-        </h3>
-        <button class="modal-close-btn" onclick="closeDetailModal()"><span class="icon-slot" data-icon="x"></span></button>
-      </div>
-
-      <div class="detail-modal-body">
-        <div class="detail-img-box">
-          <img id="detailImg" src="" alt="">
-        </div>
-        <div class="detail-info-box">
-          <h2 class="detail-name-title" id="detailName">Item Name</h2>
-          <div class="detail-tags-group" id="detailTags">
-            <!-- Badges -->
-          </div>
-          <div class="detail-stats-table">
-            <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_value">Value in points:</span>
-              <span class="detail-stat-val" id="detailValuePts" style="color: var(--gold-beli);">0 pts</span>
-            </div>
-            <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_lc">LC equivalent:</span>
-              <span class="detail-stat-val" id="detailValueLc" style="color: var(--cyan-glow);">0 LC</span>
-            </div>
-            <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_demand">Demand:</span>
-              <span class="detail-stat-val" id="detailDemandVal">Medium</span>
-            </div>
-            <div class="detail-stat-row">
-              <span class="detail-stat-label" data-i18n="detail_trend">Market trend:</span>
-              <span class="detail-stat-val" id="detailTrendVal">Stable</span>
-            </div>
-          </div>
-
-          <a id="detailWikiLink" href="#" target="_blank" class="detail-wiki-link">
-            <span class="icon-slot" data-icon="external-link"></span> <span data-i18n="detail_wiki_btn">Open page on GPO Fandom Wiki ↗</span>
-          </a>
-
-          <div class="card-actions-row" style="margin-top: 0.8rem;">
-            <button class="quick-add-btn add-you" id="detailAddYouBtn" style="padding: 0.6rem;">
-              <span class="icon-slot" data-icon="plus"></span> <span data-i18n="add_to_you">Add to You</span>
-            </button>
-            <button class="quick-add-btn add-them" id="detailAddThemBtn" style="padding: 0.6rem;">
-              <span class="icon-slot" data-icon="plus"></span> <span data-i18n="add_to_them">Add to Them</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="footer-content">
-      <div class="footer-title" data-i18n="footer_title"><span class="icon-slot" data-icon="anchor"></span> GRAND PIECE ONLINE TRADING VALUE HUB</div>
-      <p class="footer-desc" data-i18n="footer_text">
-        Created by the Grand Piece Online community in full accordance with GPO trading rules. All prices are synchronized with the official Trading Tier List document. Designed for player convenience and beginners to help understand real item values and make fair, profitable trades.
-      </p>
-      <div class="footer-links-row">
-        <a href="https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7doaq8566Sba1VbhPWQtpiY4/preview" target="_blank" class="footer-link-item" data-i18n="footer_link_doc"><span class="icon-slot" data-icon="file-text"></span> Official Google Doc Tier List</a>
-        <a href="https://www.roblox.com/games/1730877806/Grand-Piece-Online" target="_blank" class="footer-link-item" data-i18n="footer_link_roblox"><span class="icon-slot" data-icon="gamepad-2"></span> GPO Roblox Page</a>
-        <a href="https://grand-piece-online.fandom.com/wiki/Grand_Piece_Online_Wiki" target="_blank" class="footer-link-item" data-i18n="footer_link_wiki"><span class="icon-slot" data-icon="book-open"></span> Grand Piece Online Wiki</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Toast Notification Container -->
+  <dialog id="itemPickerModal" class="game-dialog" aria-labelledby="pickerModalTitle"><div class="dialog-content"><div class="dialog-header"><h2 id="pickerModalTitle" data-i18n="picker_title">Choose an item</h2><button class="quiet-button icon-button" data-action="close-dialog" aria-label="Close dialog"><span data-icon="x"></span></button></div><div class="dialog-filters"><div class="search-box"><span data-icon="search"></span><label class="sr-only" for="pickerSearchInput" data-i18n="search_label">Search items</label><input id="pickerSearchInput" type="search" name="picker-search" autocomplete="off" spellcheck="false" data-search="picker" data-placeholder="search_placeholder"><button class="search-clear-btn" data-action="clear-search" data-scope="picker" aria-label="Clear search" hidden><span data-icon="x"></span></button></div><div class="filter-pills-row" id="pickerCategoryPills" data-categories="picker"></div></div><div class="dialog-scroll"><div class="picker-grid" id="pickerItemsGrid"></div><button class="more-button game-button" data-action="more" data-scope="picker" hidden data-i18n="show_more">Show more items</button></div></div></dialog>
+  <dialog id="itemDetailModal" class="game-dialog detail-dialog" aria-labelledby="detailName"><div class="dialog-content"><div class="dialog-header"><span class="dialog-eyebrow" data-i18n="item_details">Item record</span><button class="quiet-button icon-button" data-action="close-dialog" aria-label="Close dialog"><span data-icon="x"></span></button></div><div class="detail-body" id="detailBody"></div></div></dialog>
+  <dialog id="shareModal" class="game-dialog share-dialog" aria-labelledby="shareTitle"><div class="dialog-content"><div class="dialog-header"><h2 id="shareTitle" data-i18n="copy_manually">Copy your trade</h2><button class="quiet-button icon-button" data-action="close-dialog" aria-label="Close dialog"><span data-icon="x"></span></button></div><label class="sr-only" for="shareText" data-i18n="share_text">Trade text or link</label><textarea id="shareText" name="shared-trade" autocomplete="off" readonly rows="7"></textarea></div></dialog>
   <div class="gpo-toast-container" id="gpoToastContainer" aria-live="polite"></div>
-
-  <!-- Scripts -->
-  <script src="icons.js?v=4"></script>
-  <script src="items_data.js?v=4"></script>
-  <script src="app.js?v=4"></script>
-
-  <!-- Yandex.RTB Floor Ad R-A-20264146-12 -->
-  <script>
-  window.yaContextCb.push(() => {
-      Ya.Context.AdvManager.render({
-          "blockId": "R-A-20264146-12",
-          "type": "floorAd",
-          "platform": "desktop"
-      })
-  })
-  </script>
+  <noscript><p class="noscript-note">Enable JavaScript to use the calculator. The official list is linked in the footer.</p></noscript>
 </body>
 </html>

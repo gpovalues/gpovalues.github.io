@@ -26,6 +26,7 @@ data/.prices_updated
 !robots.txt
 !ads.txt
 !requirements.txt
+!fonts/*-OFL.txt
 !package.json
 !package-lock.json
 !server.js
@@ -48,6 +49,8 @@ translation_helpers.js
 
 # Scratch Data & JSON Dumps
 *.json
+!package.json
+!package-lock.json
 !gpo_items.json
 !data/*.json
 blob_mappings.json
@@ -64,6 +67,7 @@ images/sample_*.png
 # Dependencies & OS Files
 # =====================================================================
 node_modules/
+.venv/
 .DS_Store
 Thumbs.db
 desktop.ini
@@ -75,3 +79,12 @@ steam*
 *.zip
 *.exe
 test_inspect/
+
+# Private collector state and generated site/test output
+.env
+.env.*
+!.env.example
+.state/
+dist/
+test-results/
+playwright-report/

@@ -1,2414 +1,779 @@
-// =====================================================================
-// GRAND PIECE ONLINE (GPO) TRADING VALUES & TRADE CALCULATOR
-// Interactive Application Logic & Multi-language Support (EN / RU)
-// =====================================================================
-
-(function (window, document) {
+(function () {
   'use strict';
 
-  // Safe storage helpers (immune to iframe sandbox / opaque origin SecurityError)
-  function getStored(key, fallback = null) {
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        const val = window.localStorage.getItem(key);
-        return val !== null ? val : fallback;
-      }
-    } catch (e) {}
-    return fallback;
+  const $ = id => document.getElementById(id);
+  const tabs = ['calculator', 'tierlist', 'forecasts', 'hourly-changes', 'guide', 'community'];
+  const categories = ['all', 'fruits', 'weapons', 'chests', 'accessories', 'outfits', 'boats', 'misc'];
+  const categoryIcons = { all: 'boxes', fruits: 'apple', weapons: 'swords', chests: 'package', accessories: 'crown', outfits: 'shirt', boats: 'ship', misc: 'sparkles' };
+  const inputs = { quick: 'quickSearchInput', catalog: 'searchInput', market: 'forecastSearchInput', changes: 'hourlySearchInput', picker: 'pickerSearchInput' };
+  const scopes = { calculator: 'quick', tierlist: 'catalog', forecasts: 'market', 'hourly-changes': 'changes' };
+  const tierColors = { Exclusive: '#e9ad97', 'Tier SS': '#ecb857', 'Tier S': '#d6b46f', 'Tier A+': '#c9abdb', 'Tier A': '#8cb8d2', 'Tier A-': '#83bea8', 'Tier B+': '#afd394', 'Tier B': '#82afb6', 'Tier B-': '#9faebd', 'Tier C': '#a2a3b8', 'Tier F': '#8b939e', 'Very Unstable': '#edb0ce', 'New Items': '#afd6e9' };
+  const batchSize = 24;
+  const filters = Object.fromEntries(Object.keys(inputs).map(scope => [scope, { query: '', category: 'all', limit: batchSize }]));
+  let data = null;
+  let byId = new Map();
+  let searchKeys = new Map();
+  let trade = { you: [], they: [] };
+  let tab = 'calculator';
+  let tier = 'all';
+  let timeframe = '1h';
+  let direction = 'all';
+  let pickerSide = 'you';
+  let detailId = null;
+  let pendingData = null;
+  let loading = false;
+  let lastCheck = 0;
+  let undoTrade = null;
+  let returnFocus = null;
+  let historyPromise = null;
+  const searchTimers = new Map();
+  const sounds = new Map();
+
+  function stored(key, fallback = null) {
+    try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; }
   }
-
-  function setStored(key, val) {
-    try {
-      if (typeof window !== 'undefined' && window.localStorage) {
-        window.localStorage.setItem(key, val);
-      }
-    } catch (e) {}
+  function store(key, value) {
+    try { localStorage.setItem(key, value); } catch { /* Storage is optional. */ }
   }
+  const initialLang = new URLSearchParams(location.search).get('lang') || stored('gpo_lang') || ((navigator.language || '').startsWith('ru') ? 'ru' : 'en');
+  let lang = initialLang === 'ru' ? 'ru' : 'en';
+  let audioEnabled = stored('gpo_audio') === 'true';
+  const t = (key, values = {}) => (window.GPO_TRANSLATIONS[lang][key] || key).replace(/\{(\w+)\}/g, (_, name) => String(values[name] ?? ''));
+  const nameOf = item => lang === 'ru' ? item.nameRu || item.name : item.name;
+  const number = (value, digits = 2) => value === null || !Number.isFinite(value) ? '—' : new Intl.NumberFormat(lang, { maximumFractionDigits: digits }).format(value);
+  const points = value => value === null || !Number.isFinite(value) ? '—' : `${number(value)} pts`;
+  const dateText = value => !value || !Number.isFinite(Date.parse(value)) ? '—' : new Intl.DateTimeFormat(lang, { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
+  const normalize = value => String(value || '').normalize('NFKC').toLowerCase().replace(/['’`"()\-–—]/g, '').replace(/\s+/g, ' ').trim();
 
-  // --- AUDIO SYNTHESIS ENGINE (Web Audio API) ---
-  let audioCtx = null;
-  let audioEnabled = getStored('gpo_audio') !== 'false';
-
-  function initAudio() {
-    if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        audioCtx = new AudioContext();
-      }
-    }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume().catch(() => {});
-    }
+  function element(tag, className = '', text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
   }
-
-  // --- AUDIO SYSTEM (Authentic High-Definition Studio Game Sound Effects) ---
-  const SOUND_FILES = {
-    click: 'audio/click.wav?v=2',
-    coin: 'audio/item_add.wav?v=2',
-    remove: 'audio/item_remove.wav?v=2',
-    win: 'audio/win.wav?v=2',
-    lose: 'audio/lose.wav?v=2',
-    modalOpen: 'audio/modal_open.wav?v=2',
-    modalClose: 'audio/modal_close.wav?v=2'
-  };
-
-  const audioBuffers = {};
-  const htmlAudioPool = {};
-
-  function preloadSounds() {
-    initAudio();
-    Object.keys(SOUND_FILES).forEach(key => {
-      const url = SOUND_FILES[key];
-      // HTML Audio fallback
-      const audio = new Audio(url);
-      audio.preload = 'auto';
-      htmlAudioPool[key] = audio;
-
-      // Web Audio pre-decode for 0ms latency
-      if (window.fetch && audioCtx) {
-        fetch(url)
-          .then(res => res.arrayBuffer())
-          .then(buf => audioCtx.decodeAudioData(buf))
-          .then(decoded => {
-            audioBuffers[key] = decoded;
-          })
-          .catch(() => {});
-      }
+  function icon(name) {
+    const node = element('span', 'icon');
+    node.setAttribute('aria-hidden', 'true');
+    node.innerHTML = window.getIcon ? window.getIcon(name) : '';
+    return node;
+  }
+  function decorateIcons(container = document) {
+    container.querySelectorAll('[data-icon]').forEach(node => {
+      node.innerHTML = window.getIcon ? window.getIcon(node.dataset.icon) : '';
+      node.setAttribute('aria-hidden', 'true');
     });
   }
-
-  // Pre-unlock Web Audio on first user interaction to prevent click delay
-  const unlockAudioListener = () => {
-    preloadSounds();
-    window.removeEventListener('pointerdown', unlockAudioListener);
-    window.removeEventListener('keydown', unlockAudioListener);
-  };
-  window.addEventListener('pointerdown', unlockAudioListener, { passive: true });
-  window.addEventListener('keydown', unlockAudioListener, { passive: true });
-
-  function playSound(key, volume = 0.5) {
+  function button(text, action, className = 'game-button', attributes = {}) {
+    const node = element('button', className, text);
+    node.type = 'button';
+    node.dataset.action = action;
+    Object.assign(node.dataset, attributes);
+    return node;
+  }
+  function image(item, size, className = '') {
+    const node = element('img', className);
+    node.src = /^images\/[\w/.-]+\.(?:webp|png|jpg|jpeg|svg)$/.test(item.image || '') ? item.image : 'images/placeholder.svg';
+    node.alt = nameOf(item);
+    node.width = node.height = size;
+    node.loading = 'lazy';
+    node.decoding = 'async';
+    node.addEventListener('error', () => { node.src = 'images/placeholder.svg'; }, { once: true });
+    return node;
+  }
+  function toast(message, undo = false) {
+    const container = $('gpoToastContainer');
+    const node = element('div', 'gpo-toast');
+    node.append(element('span', '', message));
+    if (undo) node.append(button(t('undo'), 'undo', ''));
+    const close = button('×', 'dismiss-toast', '');
+    close.setAttribute('aria-label', t('close'));
+    node.append(close);
+    while (container.children.length >= 3) container.firstElementChild.remove();
+    container.append(node);
+    setTimeout(() => node.remove(), undo ? 6500 : 3500);
+  }
+  function sound(kind = 'add') {
     if (!audioEnabled) return;
     try {
-      if (!audioCtx) initAudio();
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume().catch(() => {});
+      const files = { add: 'item_add.wav', remove: 'item_remove.wav', click: 'click.wav' };
+      if (!sounds.has(kind)) sounds.set(kind, new Audio(`audio/${files[kind] || files.click}`));
+      const audio = sounds.get(kind);
+      audio.volume = 0.2;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    } catch { /* Sound must never block a trade action. */ }
+  }
+
+  function validateSnapshot(snapshot) {
+    if (snapshot?.schema_version !== 2 || !Array.isArray(snapshot.items) || !snapshot.items.length || snapshot.items.length > 5000) throw new Error('Invalid snapshot');
+    const ids = new Set();
+    let lastRank = 0;
+    let lastValue = null;
+    for (const item of snapshot.items) {
+      if (!/^[a-zA-Z0-9_]+$/.test(item.id || '') || ids.has(item.id) || typeof item.name !== 'string' || item.name.length > 250) throw new Error('Invalid item');
+      ids.add(item.id);
+      if (item.value !== null && (!Number.isFinite(item.value) || item.value <= 0)) throw new Error('Invalid price');
+      if (!Number.isInteger(item.official_rank) || item.official_rank < 1) throw new Error('Invalid official rank');
+      if (item.rank_locked) {
+        if (item.official_rank <= lastRank) throw new Error('Official order mismatch');
+        lastRank = item.official_rank;
+        if (item.value !== null) {
+          if (lastValue !== null && lastValue <= item.value) throw new Error('Price order mismatch');
+          lastValue = item.value;
+        }
       }
+    }
+    const anchor = snapshot.items.find(item => item.id === snapshot.currency?.anchor_id);
+    if (!anchor || anchor.value !== 1) throw new Error('Invalid point anchor');
+    return snapshot;
+  }
 
-      // 1. Web Audio buffer (instantaneous, crystal clear, zero delay)
-      if (audioCtx && audioCtx.state === 'running' && audioBuffers[key]) {
-        const source = audioCtx.createBufferSource();
-        source.buffer = audioBuffers[key];
-        const gainNode = audioCtx.createGain();
-        gainNode.gain.setValueAtTime(volume, audioCtx.currentTime);
-        source.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        source.start(0);
-        return;
+  async function loadSnapshot(explicit = true) {
+    if (loading) return;
+    loading = true;
+    lastCheck = Date.now();
+    $('refreshDataBtn').disabled = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch('data/values.json', { cache: 'no-cache', signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const incoming = validateSnapshot(await response.json());
+      $('loadError').hidden = true;
+      if (data && incoming.revision !== data.revision && !explicit && (trade.you.length || trade.they.length)) {
+        pendingData = incoming;
+        $('newDataNotice').hidden = false;
+      } else if (!data || data.revision !== incoming.revision || explicit) {
+        applySnapshot(incoming);
       }
-
-      // 2. HTMLAudioElement clone fallback
-      if (htmlAudioPool[key] || SOUND_FILES[key]) {
-        const snd = new Audio(SOUND_FILES[key]);
-        snd.volume = Math.min(1, Math.max(0, volume));
-        snd.play().catch(() => {});
+    } catch {
+      $('loadError').hidden = false;
+      $('loadErrorText').textContent = t('load_error') + (data ? ` ${t('source_cached')}` : '');
+      if (!data) {
+        $('sourceStatus').textContent = t('source_unavailable');
+        $('sourceIndicator').className = 'source-indicator error';
       }
-    } catch (e) {
-      // Fallback silent
+    } finally {
+      clearTimeout(timeout);
+      loading = false;
+      $('refreshDataBtn').disabled = false;
+      $('main').setAttribute('aria-busy', 'false');
     }
   }
 
-  function playClickSound() {
-    playSound('click', 0.4);
+  function applySnapshot(snapshot) {
+    const firstLoad = !data;
+    data = snapshot;
+    byId = new Map(data.items.map(item => [item.id, item]));
+    searchKeys = new Map(data.items.map(item => [item.id, normalize(`${item.name} ${item.nameRu || ''} ${item.abbreviation || ''}`)]));
+    window.GPO_ITEMS = data.items;
+    pendingData = null;
+    historyPromise = null;
+    $('newDataNotice').hidden = true;
+    document.querySelectorAll('[data-requires-data]').forEach(node => { node.disabled = false; });
+    if (firstLoad) restoreTrade();
+    fillTierSelect();
+    renderCategories();
+    renderSource();
+    renderTrade();
+    renderCurrent();
+    if (detailId && $('itemDetailModal').open) renderDetail(detailId);
   }
 
-  function playCoinSound() {
-    playSound('coin', 0.55);
+  function renderSource() {
+    if (!data) return;
+    const source = data.discord_source || {};
+    const age = Date.now() - Date.parse(data.meta.updated_at_iso);
+    const failed = source.channels?.some(channel => channel.status === 'error');
+    let key = 'source_waiting';
+    let status = 'waiting';
+    if (source.mode !== 'offline' && source.complete) {
+      key = age > 2 * 3600000 ? 'source_stale' : 'source_live';
+      status = age > 2 * 3600000 ? 'waiting' : 'live';
+    } else if (failed) { key = 'source_error'; status = 'error'; }
+    else if (source.mode === 'scheduled') key = 'source_partial';
+    $('sourceStatus').textContent = t(key);
+    $('sourceIndicator').className = `source-indicator ${status}`;
+    $('sourceDescription').textContent = t('snapshot_at', { count: number(data.items.length), time: dateText(data.meta.updated_at_iso) });
+    $('heroLcValue').textContent = points(byId.get(data.currency.lc_id)?.value);
   }
 
-  function playRemoveSound() {
-    playSound('remove', 0.45);
-  }
-
-  function playWinFanfare() {
-    playSound('win', 0.65);
-  }
-
-  function playLoseSound() {
-    playSound('lose', 0.5);
-  }
-
-  function playModalOpen() {
-    playSound('modalOpen', 0.4);
-  }
-
-  function playModalClose() {
-    playSound('modalClose', 0.35);
-  }
-
-  // --- I18N DICTIONARY (Default: English) ---
-  let currentLang = getStored('gpo_lang', 'en');
-
-  const translations = {
-    en: {
-      brand_subtext: "Community Trade Calculator",
-      tab_calculator: "Trade Calculator",
-      tab_tierlist: "Tier List & Values",
-      tab_community: "Community & Chats",
-      tab_guide: "Trading Guide",
-      hero_title: "Grand Piece Online <span>Trading Hub</span>",
-      hero_desc: "All item values and demand synchronized with the official GPO tier list document. Calculate your trades, verify profits, and avoid bad trades!",
-      hero_callout_title: "Fair Trading & GPO Economy Rules:",
-      hero_callout_desc: "This entire site follows GPO rules. All values are taken directly from the official tier list. Created for player convenience and especially for beginners to understand approximate item prices and avoid bad trades!",
-      badge_updated: "Updated: 10/11/2026",
-      badge_items_count: "213 Items",
-      badge_official_doc: "Official GPO Doc",
-      badge_currency: "SP Reset = 1 pt | 1 LC = 310 pts",
-      label_demand_short: "Demand",
-      rec_badge_title: "WORTH TRADING?",
-      rec_status_empty: "ADD ITEMS",
-      rec_status_big_win: "BIG WIN! HIGHLY RECOMMENDED",
-      rec_status_win: "PROFITABLE! WORTH TRADING",
-      rec_status_upgrade: "GREAT UPGRADE! WORTH OVERPAYING",
-      rec_status_fair: "FAIR TRADE! BALANCED",
-      rec_status_trap: "DEMAND TRAP! DO NOT TRADE",
-      rec_status_lose: "NOT WORTH TRADING (LOSS)",
-      rec_status_big_lose: "HUGE LOSS! TERRIBLE TRADE",
-      rec_advice_empty: "Add items to both sides to evaluate nominal points profit and item demand / liquidity risk.",
-      rec_advice_big_win: "Great trade! You gain a solid value profit and receive items with strong liquidity. Highly recommended to accept!",
-      rec_advice_win: "Profitable trade! You gain points and the demand of offered items is good. Safe and worthy trade.",
-      rec_advice_upgrade: "Slight point overpay, but you are trading up for an elite high-demand item! In GPO trading, upgrading liquidity is considered a great move.",
-      rec_advice_fair: "Well-balanced trade in both value and demand. Accept if you want or need the offered items for your character.",
-      rec_advice_trap: "Warning! Even if nominal points look fair, you are giving away top-tier liquid items for hard-to-sell low-demand items. You will struggle to resell them!",
-      rec_advice_lose: "You are losing points and value. Not recommended unless you desperately need the item and are willing to overpay.",
-      rec_advice_big_lose: "Significant loss in value! You are severely overpaying. Decline this offer immediately!",
-      rec_your_demand: "Your Demand:",
-      rec_their_demand: "Their Demand:",
-      verdict_empty: "ADD ITEMS TO TRADE",
-      verdict_big_win: "BIG WIN!",
-      verdict_win: "WIN (PROFIT)!",
-      verdict_fair: "FAIR TRADE",
-      verdict_lose: "LOSE (LOSS)!",
-      verdict_big_lose: "HUGE LOSE!",
-      demand_neutral_note: "Equal demand on both sides",
-      demand_warning_you: "Warning: You are giving high demand items for low liquidity items!",
-      demand_bonus_them: "Great deal: They are offering highly liquid high-demand items!",
-      btn_swap: "Swap Sides",
-      btn_clear: "Clear All",
-      btn_share: "Share Trade",
-      you_give_title: "YOU GIVE (YOUR OFFER)",
-      they_offer_title: "THEY OFFER (THEIR OFFER)",
-      total_val_label: "Total Value",
-      click_to_add: "Click to add item",
-      btn_add_to_you: "Add Item (You)",
-      btn_add_to_them: "Add Item (Them)",
-      card_btn_you: "You",
-      card_btn_them: "Them",
-      card_title_add_you: "Add to You",
-      card_title_add_them: "Add to Them",
-      slot_btn_remove: "Remove",
-      search_placeholder: "Search item by name or abbreviation (BOS, ASE, CC, Mochi, Pika, Eye...)",
-      sort_tier_desc: "By Tier (Top to Bottom)",
-      sort_val_desc: "By Value: High -> Low",
-      sort_val_asc: "By Value: Low -> High",
-      sort_demand_desc: "By Demand (High Demand)",
-      sort_name_asc: "Alphabetical (A-Z)",
-      label_category: "Category:",
-      label_tier: "Tier:",
-      cat_all: "All (213)",
-      cat_fruits: "Fruits (25)",
-      cat_weapons: "Weapons (49)",
-      cat_chests: "Chests (6)",
-      cat_accessories: "Accessories (55)",
-      cat_outfits: "Outfits (27)",
-      cat_boats: "Boats (5)",
-      cat_misc: "Misc (46)",
-      tier_all: "All Tiers",
-      catalog_title: "ITEM CATALOG FOR TRADE (213 ITEMS)",
-      catalog_hint: "Click [+ You] or [+ Them] on any card for instant adding!",
-      no_items_found: "No items found",
-      no_items_sub: "Try adjusting your search query or filters",
-      community_title: "Community & Trading Chats",
-      community_desc: "Join our official Grand Piece Online trading channels, discuss values, find trade partners, and connect with other players!",
-      community_pill_active: "Active Trading & Discussions",
-      community_pill_rules: "Safe Trades & Moderation",
-      community_pill_giveaways: "Events & Giveaways",
-      chat_lang_badge: "Russian (Русский)",
-      chat_active_badge: "Active",
-      members_label: "Members",
-      online_label: "Online",
-      chat_desc: "Grand Piece Online chat: here you can chat, find profitable trades, check latest prices, and team up for bosses and dungeons! Respect server rules and good luck!",
-      chat_spec_lang_label: "Language:",
-      chat_spec_lang_val: "Russian (Русский язык)",
-      chat_spec_topic_label: "Focus:",
-      chat_spec_topic_val: "Trading, Values, Boss Raids & Co-op",
-      chat_spec_access_label: "Access:",
-      chat_spec_access_val: "Public & Free to Join",
-      btn_join_tg: "Join Telegram Chat (@GPOcHa)",
-      discord_lang_badge: "Russian & English",
-      discord_card_title: "Fruit Trilogy",
-      discord_card_feature: "Trading, Voice, Raids",
-      discord_card_desc: "Fruit Trilogy Grand Piece Online Discord community: here you can trade items, check latest prices, hang out in voice channels, and team up for bosses and dungeons! Respect server rules and good luck!",
-      discord_spec_lang_val: "Russian & English",
-      discord_spec_topic_val: "Trading, Values, Boss Raids & Voice",
-      discord_spec_access_val: "Public & Free to Join",
-      btn_join_discord: "Join Discord Server (Fruit Trilogy)",
-      drawer_discord_label: "DISCORD SERVER",
-      drawer_subtitle: "Navigation Menu",
-      drawer_nav_label: "TABS & SECTIONS",
-      drawer_calc_desc: "Calculate win/loss trades",
-      drawer_tier_desc: "213 items with abbreviations",
-      drawer_comm_desc: "Telegram @GPOcHa chat & trade",
-      drawer_guide_desc: "Rules & tips from official doc",
-      drawer_comm_label: "TELEGRAM CHAT",
-      drawer_btn_join: "Join",
-      drawer_sound: "Sound",
-      guide_title: "GPO Trading Rules & Guide",
-      guide_desc: "Official trading economy rules from the Grand Piece Online community document. How not to get scammed and what to watch out for.",
-      guide_mission_title: "Official GPO Rules & Beginner Trader Protection",
-      guide_mission_desc: "This entire site operates strictly in accordance with official Grand Piece Online trading rules. All values are sourced directly from the official trading tier list. Built for convenient use and designed to help novice traders understand realistic item pricing so they never make bad trades!",
-      guide_rule1_title: "1. Hierarchy & Ranking Order",
-      guide_rule1_desc: "An item's position within its tier strictly determines its value! Items placed higher in a tier are always worth more than those below. Being in the same tier does NOT guarantee equal value.",
-      guide_rule1_example: "Example: All Seeing Eye (ASE) is ranked higher than Troll Face and World Ender in the same A+ tier.",
-      guide_rule2_title: "2. The Unstable Items Trap",
-      guide_rule2_desc: "Items in the Very Unstable category (e.g. Valkyrie Helmets, Gift of Fruit, Clown Wig) do not have fixed values. Their price fluctuates heavily based on hype and individual buyers.",
-      guide_rule2_example: "Be careful: Do not trade stable liquid fruits (Mochi, Venom, Pika) for unstable items!",
-      guide_rule3_title: "3. Trading Currency: Chests (LC & MC)",
-      guide_rule3_desc: "Legendary Fruit Chest (LC) is the universally accepted standard currency in the game. Most traders express values in number of LC chests. A Mythical Chest (MC) is usually valued at 10-12 LC.",
-      guide_rule4_title: "4. Demand Over Nominal Value",
-      guide_rule4_desc: "An item with High Demand can easily be traded for an overpay (+20% value). Items with Low Demand often have to be traded at a discount.",
-      picker_title: "Select Item to Trade",
-      picker_title_you: "Select Item: YOU GIVE",
-      picker_title_they: "Select Item: THEY OFFER",
-      picker_search_placeholder: "Search item by name or abbreviation...",
-      detail_modal_title: "Item Details",
-      detail_value: "Value in points:",
-      detail_lc: "LC equivalent:",
-      detail_demand: "Demand:",
-      detail_trend: "Market trend:",
-      detail_wiki_btn: "Open page on GPO Fandom Wiki",
-      add_to_you: "Add to You",
-      add_to_them: "Add to Them",
-      footer_title: "GRAND PIECE ONLINE TRADING VALUE HUB",
-      footer_text: "This entire site follows GPO rules, with all prices taken directly from the official tier list. Created for convenient player use and beginner traders to help them understand approximate item values and avoid bad trades.",
-      footer_link_doc: "Official Google Doc Tier List",
-      footer_link_roblox: "GPO Roblox Page",
-      footer_link_wiki: "Grand Piece Online Wiki",
-      share_copied: "Trade link copied to clipboard!",
-      btn_discord_export: "Discord Export",
-      discord_copied: "Trade summary in Discord format copied to clipboard!",
-      item_added_toast: "Added to trade calculator!",
-      toast_trade_cleared: "Trade cleared!",
-      toast_sides_swapped: "Trade sides swapped!",
-      tab_forecasts: "Forecasts & Trends",
-      drawer_forecast_desc: "Hourly Discord analysis & alerts",
-      forecast_hero_title: "GPO Market Forecasts & <span class=\"text-gradient-purple\">AI Analytics</span>",
-      forecast_hero_desc: "Automated parsing of trading channel #966859339816124438 in Discord every hour (10,000 trades). Mathematically guaranteed strict official tier-list hierarchy with Isotonic Regression (PAVA) and calibrated 0.0–10.0 demand scores.",
-      forecast_badge_autonomous: "AUTONOMOUS DISCORD HOURLY ENGINE",
-      forecast_tf_title: "Market Analysis Timeframe:",
-      tf_btn_1h: "1 Hour (1h)",
-      tf_btn_24h: "24 Hours (24h)",
-      tf_btn_7d: "7 Days / Week (7d)",
-      tf_demand_rule_note: "Item Demand (★ 0-10) is calibrated from 7-day stable weekly market data across the entire site",
-      forecast_updated_label: "Last Analysis:",
-      forecast_trades_label: "Hourly Trades Analyzed:",
-      forecast_sentiment_label: "Market Sentiment:",
-      forecast_hierarchy_label: "Tier Hierarchy:",
-      forecast_card_rising_title: "Hyped & Rising Leaders",
-      forecast_card_rising_desc: "Items with highest buyer demand over supply (LF > Offer) in the last hour.",
-      forecast_badge_high_demand: "HIGH DEMAND",
-      forecast_card_falling_title: "Losing Value & High Supply",
-      forecast_card_falling_desc: "Items actively offloaded in trade offers with low buyer demand in the last hour.",
-      forecast_badge_high_supply: "HIGH SUPPLY",
-      forecast_card_alerts_title: "Tier List Promotion Candidates",
-      forecast_card_alerts_desc: "Real market price in Discord is testing the ceiling of the item above. Official order is preserved, but promotion chance in next doc is high.",
-      forecast_badge_tier_pressure: "TIER PRESSURE",
-      forecast_filter_all: "All Statuses (213)",
-      forecast_filter_rising: "Rising 📈",
-      forecast_filter_overpaid: "Overpaid 🔥",
-      forecast_filter_falling: "Falling 📉",
-      forecast_filter_stable: "Stable ➖",
-      forecast_filter_alert: "Alerts ⚠️",
-      forecast_search_placeholder: "Search item in forecasts by name or tag...",
-      fth_item: "Item",
-      fth_value: "Official Value (pts / LC)",
-      fth_demand: "Demand (0-10)",
-      fth_lf: "Demand (LF)",
-      fth_offer: "Offer (Supply)",
-      fth_pressure: "Market Pressure",
-      fth_forecast: "24–48h Forecast",
-      fth_alert: "Status / Tier Pressure",
-      demand_labels: {
-        "Extremely High": "Extremely High (10/10)",
-        "Very High": "Very High Demand",
-        "High": "High Demand",
-        "Medium": "Medium Demand",
-        "Low": "Low Demand",
-        "Very Low": "Very Low (0/10)",
-        "Unstable": "Unstable"
-      },
-      trend_labels: {
-        "Rising": "Rising",
-        "Stable": "Stable",
-        "Dropping": "Dropping",
-        "Fluctuating": "Fluctuating"
-      },
-      tab_hourly_changes: "Hourly Changes",
-      drawer_hourly_desc: "1h trade review deltas (UP & DOWN)",
-      hourly_badge_title: "1-HOUR TRADE STREAM DELTAS",
-      hourly_hero_title: "Hourly Market Changes & <span class=\"text-gradient-cyan\">Price Movements</span>",
-      hourly_hero_desc: "All price shifts recorded after the latest 1-hour Discord trade review (10,000 trades). Updated every hour — previous movements are discarded to highlight only current price action.",
-      hourly_meta_updated: "Last Cycle Update",
-      hourly_meta_trades: "Trades Reviewed",
-      hourly_meta_up: "Price Increases (UP)",
-      hourly_meta_down: "Price Drops (DOWN)",
-      hourly_tab_up: "UP (Price Increases)",
-      hourly_tab_down: "DOWN (Price Drops)",
-      hourly_tab_all: "ALL CHANGES",
-      hourly_search_placeholder: "Search item by name...",
-      hth_photo: "Photo",
-      hth_item: "Item",
-      hth_category: "Category",
-      hth_old_price: "Previous Price",
-      hth_new_price: "Current Price",
-      hth_delta_pts: "Change (Points)",
-      hth_delta_pct: "Change (%)",
-      hourly_empty_title: "No Price Movements Found",
-      hourly_empty_desc: "All item values in this category remained stable during the latest 1-hour trading cycle."
-    },
-    ru: {
-      brand_subtext: "Калькулятор Трейдов от Игроков",
-      tab_calculator: "Калькулятор Трейдов",
-      tab_tierlist: "Тир Лист & Цены",
-      tab_community: "Сообщество & Чаты",
-      tab_guide: "Гайд по Спросу",
-      hero_title: "Grand Piece Online <span>Трейдинг Хаб</span>",
-      hero_desc: "Все цены и деманд вещей синхронизированы с официальным тир-листом GPO. Рассчитывайте свои трейды, проверяйте выгоду и не попадайтесь на невыгодные сделки!",
-      hero_callout_title: "Честные трейды по правилам GPO:",
-      hero_callout_desc: "Весь этот сайт работает по правилам GPO, все цены взяты с официального тир-листа. Создано для удобного использования и игроков, которые только начинают трейдиться, чтобы понять примерные цены на вещи и не делать плохие трейды!",
-      badge_updated: "Обновление: 10/11/2026",
-      badge_items_count: "213 Предметов",
-      badge_official_doc: "Официальный GPO Doc",
-      badge_currency: "SP Reset = 1 pt | 1 LC = 310 pts",
-      label_demand_short: "Спрос",
-      rec_badge_title: "СТОИТ ЛИ ТРЕЙДИТЬСЯ?",
-      rec_status_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
-      rec_status_big_win: "ОТЛИЧНЫЙ ВИН! ОДНОЗНАЧНО ДА",
-      rec_status_win: "ВЫГОДНО! СТОИТ ТРЕЙДИТЬСЯ",
-      rec_status_upgrade: "ВЫГОДНЫЙ АПГРЕЙД! СТОИТ ПЕРЕПЛАТИТЬ",
-      rec_status_fair: "РАВНЫЙ ТРЕЙД! СБАЛАНСИРОВАНО",
-      rec_status_trap: "ЛОВУШКА СПРОСА! НЕ СТОИТ ТРЕЙДИТЬСЯ",
-      rec_status_lose: "НЕ СТОИТ ТРЕЙДИТЬСЯ (УБЫТОК)",
-      rec_status_big_lose: "ОГРОМНЫЙ СЛИВ! ОТКЛОНЯЙТЕ",
-      rec_advice_empty: "Добавьте предметы с обеих сторон, чтобы оценить прибыль по очкам и риски ликвидности / спроса.",
-      rec_advice_big_win: "Отличный трейд! Вы получаете солидный плюс по очкам и предметы с высоким спросом. Однозначно принимайте!",
-      rec_advice_win: "Выгодная сделка! Вы в плюсе по очкам, а спрос полученных предметов на хорошем уровне. Стоит соглашаться.",
-      rec_advice_upgrade: "Небольшая переплата по очкам, но вы получаете элитный предмет с максимальным спросом (Trade Up)! В GPO такая переплата полностью оправдана.",
-      rec_advice_fair: "Сбалансированная сделка по очкам и спросу. Трейдитесь, если вам нужен данный предмет для игры или билда.",
-      rec_advice_trap: "Осторожно! Хотя по очкам кажется честно, вы отдаете высоколиквидные ходовые вещи за тяжело продаваемый 'мертвый груз'. Не рекомендуется!",
-      rec_advice_lose: "Вы уходите в минус по очкам. Не стоит соглашаться, если только этот предмет не нужен вам любой ценой.",
-      rec_advice_big_lose: "Критический убыток! Вы сильно переплачиваете и теряете ценность. Отклоняйте этот трейд!",
-      rec_your_demand: "Ваш спрос:",
-      rec_their_demand: "Их спрос:",
-      verdict_empty: "ДОБАВЬТЕ ПРЕДМЕТЫ",
-      verdict_big_win: "ОГРОМНЫЙ ВИН!",
-      verdict_win: "ВИН (ВЫГОДНО)!",
-      verdict_fair: "РАВНЫЙ ТРЕЙД",
-      verdict_lose: "ЛУЗ (В УБЫТОК)!",
-      verdict_big_lose: "ОГРОМНЫЙ СЛИВ!",
-      demand_neutral_note: "Равновесный спрос по обе стороны",
-      demand_warning_you: "Предупреждение: вы отдаете предметы с очень высоким спросом за менее ликвидные вещи!",
-      demand_bonus_them: "Отличный трейд: вам предлагают высоколиквидные предметы с отличным спросом!",
-      btn_swap: "Поменять стороны",
-      btn_clear: "Очистить всё",
-      btn_share: "Поделиться трейдом",
-      you_give_title: "ТЫ ОТДАЕШЬ (ТВОЙ ПРЕДЛОГ)",
-      they_offer_title: "ДРУГОЙ ИГРОК ПРЕДЛАГАЕТ",
-      total_val_label: "Общая ценность",
-      click_to_add: "Нажми, чтобы добавить",
-      btn_add_to_you: "Добавить предмет (Ты)",
-      btn_add_to_them: "Добавить предмет (Другой игрок)",
-      card_btn_you: "Ты",
-      card_btn_them: "Игрок",
-      card_title_add_you: "Добавить себе",
-      card_title_add_them: "Добавить другому",
-      slot_btn_remove: "Удалить",
-      search_placeholder: "Поиск предмета по названию или аббревиатуре (BOS, ASE, CC, Mochi, Око, Леденец...)",
-      sort_tier_desc: "По тиру (Сверху вниз)",
-      sort_val_desc: "По ценности: Высокая -> Низкая",
-      sort_val_asc: "По ценности: Низкая -> Высокая",
-      sort_demand_desc: "По спросу (Высокий спрос)",
-      sort_name_asc: "По алфавиту (А-Я / A-Z)",
-      label_category: "Категория:",
-      label_tier: "Тир:",
-      cat_all: "Все (213)",
-      cat_fruits: "Фрукты (25)",
-      cat_weapons: "Оружие (49)",
-      cat_chests: "Сундуки (6)",
-      cat_accessories: "Аксессуары (55)",
-      cat_outfits: "Костюмы (27)",
-      cat_boats: "Лодки (5)",
-      cat_misc: "Разное (46)",
-      tier_all: "Все Тиры",
-      catalog_title: "КАТАЛОГ ПРЕДМЕТОВ ДЛЯ ТРЕЙДА (213 ШТ)",
-      catalog_hint: "Нажмите [+ Ты] или [+ Игрок] на любой карточке для мгновенного добавления!",
-      no_items_found: "Предметы не найдены",
-      no_items_sub: "Попробуйте изменить поисковый запрос или фильтры",
-      community_title: "Сообщество и Трейдинг Чаты GPO",
-      community_desc: "Присоединяйтесь к нашему официальному сообществу, трейдитесь с игроками, находите пати на рейды и следите за актуальными ценами!",
-      community_pill_active: "Активные трейды и общение",
-      community_pill_rules: "Безопасные сделки и правила",
-      community_pill_giveaways: "Ивенты и раздачи",
-      chat_lang_badge: "Русский язык",
-      chat_active_badge: "Активен",
-      members_label: "Участников",
-      online_label: "Онлайн",
-      chat_desc: "Чат по Grand Piece Online: здесь можно пообщаться, найти выгодный трейд, узнать свежие цены и собрать команду на боссов и данжи! Самое главное — соблюдать правила сервера.",
-      chat_spec_lang_label: "Язык:",
-      chat_spec_lang_val: "Русский язык",
-      chat_spec_topic_label: "Тематика:",
-      chat_spec_topic_val: "Трейдинг, Цены, Рейды на боссов и общение",
-      chat_spec_access_label: "Доступ:",
-      chat_spec_access_val: "Открытый чат для всех",
-      btn_join_tg: "Войти в Telegram Чат (@GPOcHa)",
-      discord_lang_badge: "Русский & English",
-      discord_card_title: "Fruit Trilogy",
-      discord_card_feature: "Трейды, общение, рейды",
-      discord_card_desc: "Discord-сервер Fruit Trilogy по Grand Piece Online: здесь можно пообщаться, найти выгодный трейд, узнать свежие цены и собрать команду на боссов и данжи! Самое главное — соблюдать правила сервера.",
-      discord_spec_lang_val: "Русский и Английский",
-      discord_spec_topic_val: "Трейдинг, Цены, Рейды на боссов и голосовые каналы",
-      discord_spec_access_val: "Открытый и бесплатный доступ",
-      btn_join_discord: "Войти в Discord (Fruit Trilogy)",
-      drawer_discord_label: "НАШ DISCORD",
-      drawer_subtitle: "Меню навигации",
-      drawer_nav_label: "ВКЛАДКИ И РАЗДЕЛЫ",
-      drawer_calc_desc: "Расчёт трейдов на выгоду",
-      drawer_tier_desc: "213 предметов с аббревиатурами",
-      drawer_comm_desc: "Чат и трейды @GPOcHa",
-      drawer_guide_desc: "Правила и советы из тир-листа",
-      drawer_comm_label: "НАШ ТЕЛЕГРАМ ЧАТ",
-      drawer_btn_join: "Войти",
-      drawer_sound: "Звук",
-      guide_title: "Правила и Советы по Трейдингу GPO",
-      guide_desc: "Официальные правила экономики Grand Piece Online из документа сообщества. Как не потерять ценные вещи и на что обращать внимание при обмене.",
-      guide_mission_title: "Официальные правила GPO и защита начинающих игроков",
-      guide_mission_desc: "Весь этот сайт работает по официальным правилам торговли Grand Piece Online, все цены взяты напрямую с официального тир-листа. Проект создан для максимального удобства и в помощь игрокам, которые только начинают трейдиться, чтобы они поняли примерные цены на вещи и не делали плохие трейды!",
-      guide_rule1_title: "1. Иерархия и Порядковый номер",
-      guide_rule1_desc: "Положение вещи в тире строго определяет её ценность! Первые предметы в тире всегда ценнее тех, что находятся ниже. Нахождение в одном тире НЕ гарантирует одинаковую цену.",
-      guide_rule1_example: "Пример: All Seeing Eye (ASE) стоит выше, чем Troll Face и World Ender в том же тире A+.",
-      guide_rule2_title: "2. Ловушка Нестабильных предметов (Unstable)",
-      guide_rule2_desc: "Предметы из категории Very Unstable (например, Valkyrie Helmets, Gift of Fruit, Clown Wig) не имеют фиксированной стоимости. Их цена колеблется в зависимости от хайпа и конкретного покупателя.",
-      guide_rule2_example: "Будьте осторожны: не отдавайте стабильные ликвидные фрукты (Mochi, Venom, Pika) за вещи с нестабильным спросом!",
-      guide_rule3_title: "3. Валюта Обмена: Сундуки (LC и MC)",
-      guide_rule3_desc: "Legendary Fruit Chest (LC) — общепринятая стандартная валюта в игре. Большинство трейдеров выражают стоимость предметов в количестве сундуков LC. Мифический сундук (MC) обычно приравнивается к 10-12 LC.",
-      guide_rule4_title: "4. Спрос (Demand) важнее номинала",
-      guide_rule4_desc: "Предмет с высоким спросом (High Demand) всегда можно легко продать с оверпеем (+20% к цене). Предметы с низким спросом (Low Demand) часто приходится отдавать со скидкой.",
-      picker_title: "Выберите предмет для трейда",
-      picker_title_you: "Выберите предмет: ТЫ ОТДАЕШЬ",
-      picker_title_they: "Выберите предмет: ДРУГОЙ ИГРОК",
-      picker_search_placeholder: "Поиск предмета по названию или аббревиатуре...",
-      detail_modal_title: "Информация о предмете",
-      detail_value: "Ценность в очках:",
-      detail_lc: "Эквивалент в LC:",
-      detail_demand: "Спрос (Demand):",
-      detail_trend: "Тренд на рынке:",
-      detail_wiki_btn: "Открыть страницу на GPO Fandom Wiki",
-      add_to_you: "Добавить Себе",
-      add_to_them: "Добавить Игроку",
-      footer_title: "GRAND PIECE ONLINE TRADING VALUE HUB",
-      footer_text: "Весь этот сайт работает по правилам GPO, все цены взяты с официального тир-листа. Создано для удобного использования и игроков, которые только начинают трейдиться, чтобы они поняли примерные цены на вещи и не делали плохие трейды.",
-      footer_link_doc: "Официальный Google Doc Tier List",
-      footer_link_roblox: "Страница GPO в Roblox",
-      footer_link_wiki: "Grand Piece Online Wiki",
-      share_copied: "Ссылка на трейд скопирована в буфер обмена!",
-      btn_discord_export: "Формат Discord",
-      discord_copied: "Трейд в формате Discord скопирован в буфер обмена!",
-      item_added_toast: "Добавлено в калькулятор!",
-      toast_trade_cleared: "Все слоты очищены!",
-      toast_sides_swapped: "Стороны трейда поменялись местами!",
-      tab_forecasts: "Прогнозы и Тренды",
-      drawer_forecast_desc: "Почасовой анализ Discord и алерты",
-      forecast_hero_title: "Прогнозы Рынка GPO & <span class=\"text-gradient-purple\">AI-Аналитика</span>",
-      forecast_hero_desc: "Автоматический парсинг канала #966859339816124438 в Discord каждый час (10 000 трейдов). Строгое сохранение официального порядка тир-листа и идеальная калибровка спроса от 10/10 до 0/10.",
-      forecast_badge_autonomous: "АВТОНОМНЫЙ DISCORD ДВИЖОК (1 ЧАС)",
-      forecast_tf_title: "Период аналитики рынка:",
-      tf_btn_1h: "1 Час (1h)",
-      tf_btn_24h: "24 Часа (24h)",
-      tf_btn_7d: "7 Дней / Неделя (7d)",
-      tf_demand_rule_note: "Спрос (Demand ★) везде на сайте откалиброван по стабильным данным за 7 дней (10/10 максимум, 0/10 минимум)",
-      forecast_updated_label: "Последний анализ:",
-      forecast_trades_label: "Сделок за час:",
-      forecast_sentiment_label: "Настроение рынка:",
-      forecast_hierarchy_label: "Иерархия тир-листа:",
-      forecast_card_rising_title: "Лидеры роста (Hyped / Rising)",
-      forecast_card_rising_desc: "Предметы с максимальным перевесом покупателей над продавцами (LF > Offer) за последний час.",
-      forecast_badge_high_demand: "ВЫСОКИЙ СПРОС",
-      forecast_card_falling_title: "Теряют в цене (Falling)",
-      forecast_card_falling_desc: "Предметы, которые активно сбрасывают в Trading, при пониженном количестве запросов на покупку за последний час.",
-      forecast_badge_high_supply: "ИЗБЫТОК СНАБЖЕНИЯ",
-      forecast_card_alerts_title: "Кандидаты на смену позиции в Офиц. Тир-Листе",
-      forecast_card_alerts_desc: "Рыночная цена в Discord вплотную приблизилась или обогнала соседа сверху. Официальный порядок сохранён, но шанс повышения в след. доке максимален.",
-      forecast_badge_tier_pressure: "TIER PRESSURE",
-      forecast_filter_all: "Все статусы (213)",
-      forecast_filter_rising: "Растут 📈",
-      forecast_filter_overpaid: "Оверпей 🔥",
-      forecast_filter_falling: "Падают 📉",
-      forecast_filter_stable: "Стабильно ➖",
-      forecast_filter_alert: "Алерты ⚠️",
-      forecast_search_placeholder: "Поиск предмета в прогнозах по названию или тегу...",
-      fth_item: "Предмет",
-      fth_value: "Офиц. Цена (pts / LC)",
-      fth_demand: "Спрос (0-10)",
-      fth_lf: "Спрос (LF)",
-      fth_offer: "Предлож. (Offer)",
-      fth_pressure: "Давление рынка",
-      fth_forecast: "Прогноз 24–48ч",
-      fth_alert: "Статус / Давление на тир",
-      demand_labels: {
-        "Extremely High": "Огромный спрос (10/10)",
-        "Very High": "Очень высокий спрос",
-        "High": "Высокий спрос",
-        "Medium": "Средний спрос",
-        "Low": "Низкий спрос",
-        "Very Low": "Очень низкий спрос (0/10)",
-        "Unstable": "Нестабильный"
-      },
-      trend_labels: {
-        "Rising": "Растет",
-        "Stable": "Стабилен",
-        "Dropping": "Падает",
-        "Fluctuating": "Колеблется"
-      },
-      tab_hourly_changes: "Изменения за час",
-      drawer_hourly_desc: "Срез цен за 1 час трейдов (UP и DOWN)",
-      hourly_badge_title: "ЧАСОВОЙ СРЕЗ ТРЕЙДОВ ДИСКОРДА",
-      hourly_hero_title: "Рыночные Изменения & <span class=\"text-gradient-cyan\">Сдвиги Цен за Час</span>",
-      hourly_hero_desc: "Все изменения стоимости предметов по итогам последнего часового анализа трейдов в Discord (10,000 сделок). Обновляется каждый час — старые данные сбрасываются, показывая только свежую динамику.",
-      hourly_meta_updated: "Время обновления:",
-      hourly_meta_trades: "Прочитано сделок:",
-      hourly_meta_up: "Выросли в цене (UP):",
-      hourly_meta_down: "Упали в цене (DOWN):",
-      hourly_tab_up: "UP (Повышение цен)",
-      hourly_tab_down: "DOWN (Снижение цен)",
-      hourly_tab_all: "ВСЕ ИЗМЕНЕНИЯ",
-      hourly_search_placeholder: "Поиск предмета в изменениях по названию...",
-      hth_photo: "Фото",
-      hth_item: "Предмет",
-      hth_category: "Категория",
-      hth_old_price: "Прошлая цена",
-      hth_new_price: "Нынешняя цена",
-      hth_delta_pts: "Сдвиг (поинты)",
-      hth_delta_pct: "Сдвиг (%)",
-      hourly_empty_title: "Изменений не найдено",
-      hourly_empty_desc: "Стоимость предметов в выбранной категории оставалась стабильной в течение последнего часового цикла трейдов."
+  function restoreTrade() {
+    if (!data) return;
+    const hash = location.hash;
+    if (hash && !hash.startsWith('#trade=')) return;
+    const restored = { you: [], they: [] };
+    let invalid = false;
+    if (hash.startsWith('#trade=')) {
+      try {
+        if (hash.length > 32000) throw new Error('Trade link is too long');
+        const decoded = atob(hash.slice(7).split('&')[0]);
+        const parsed = JSON.parse(decoded.startsWith('%') ? decodeURIComponent(decoded) : decoded);
+        if (!parsed || typeof parsed !== 'object') throw new Error('Invalid trade');
+        for (const [key, side] of [['y', 'you'], ['t', 'they']]) {
+          const entries = parsed[key] ?? [];
+          if (!Array.isArray(entries) || entries.length > 60) throw new Error('Invalid trade side');
+          const grouped = new Map();
+          for (const entry of entries) {
+            if (!Array.isArray(entry) || entry.length !== 2) { invalid = true; continue; }
+            const [id, qty] = entry;
+            if (!byId.has(id) || !Number.isSafeInteger(qty) || qty < 1 || qty > 100000) { invalid = true; continue; }
+            const total = (grouped.get(id) || 0) + qty;
+            if (total > 100000) { invalid = true; continue; }
+            grouped.set(id, total);
+          }
+          restored[side] = [...grouped].map(([id, qty]) => ({ id, qty }));
+        }
+      } catch { invalid = true; }
     }
-  };
-
-  function t(key) {
-    return translations[currentLang][key] || key;
+    trade = restored;
+    if (invalid) toast(t('invalid_trade'));
+    renderTrade();
   }
 
-  function renderIcons(container = document) {
-    if (!window.getIcon) return;
-    container.querySelectorAll('[data-icon]').forEach(el => {
-      const icon = el.getAttribute('data-icon');
-      const extraClass = el.getAttribute('data-icon-class') || '';
-      if (icon) {
-        el.innerHTML = window.getIcon(icon, extraClass);
-      }
-    });
+  function saveTrade() {
+    const url = new URL(location.href);
+    const payload = { y: trade.you.map(entry => [entry.id, entry.qty]), t: trade.they.map(entry => [entry.id, entry.qty]) };
+    url.hash = trade.you.length || trade.they.length ? `trade=${btoa(encodeURIComponent(JSON.stringify(payload)))}` : '';
+    history.replaceState(null, '', url);
   }
 
-  // --- TOAST NOTIFICATION SYSTEM ---
-  function showToast(message, type = 'info', duration = 3000) {
-    const container = document.getElementById('gpoToastContainer');
-    if (!container) return;
-
-    const toast = document.createElement('div');
-    toast.className = `gpo-toast toast-${type}`;
-
-    let iconName = 'info';
-    if (type === 'success') iconName = 'check';
-    else if (type === 'warning') iconName = 'alert-triangle';
-    else if (type === 'error') iconName = 'x-circle';
-
-    const iconSvg = window.getIcon ? window.getIcon(iconName) : '•';
-    const closeSvg = window.getIcon ? window.getIcon('x') : '×';
-
-    toast.innerHTML = `
-      <div class="gpo-toast-icon">${iconSvg}</div>
-      <div class="gpo-toast-body">${message}</div>
-      <button class="gpo-toast-close" type="button" aria-label="Close">${closeSvg}</button>
-    `;
-
-    const closeBtn = toast.querySelector('.gpo-toast-close');
-    const dismiss = () => {
-      toast.style.animation = 'gpoToastSlideOut 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-      setTimeout(() => {
-        if (toast.parentNode) toast.parentNode.removeChild(toast);
-      }, 200);
-    };
-
-    if (closeBtn) closeBtn.addEventListener('click', dismiss);
-    container.appendChild(toast);
-
-    if (duration > 0) {
-      setTimeout(dismiss, duration);
+  function sideTotal(side) {
+    let cents = 0;
+    let known = true;
+    let weight = 0;
+    for (const entry of trade[side]) {
+      const item = byId.get(entry.id);
+      if (!item || item.value === null) { known = false; continue; }
+      const subtotal = Math.round(item.value * 100) * entry.qty;
+      if (!Number.isSafeInteger(subtotal) || !Number.isSafeInteger(cents + subtotal)) { known = false; continue; }
+      cents += subtotal;
+      weight += subtotal * (item.confidence || 0);
     }
+    const lc = byId.get(data?.currency?.lc_id)?.value;
+    return { cents: known ? cents : null, value: known ? cents / 100 : null, lc: known && lc ? cents / 100 / lc : null, confidence: cents ? weight / cents : 0, count: trade[side].length };
   }
 
-  function getCategoryIcon(cat) {
-    const map = {
-      fruits: 'apple',
-      weapons: 'swords',
-      chests: 'package',
-      accessories: 'crown',
-      outfits: 'shirt',
-      boats: 'ship',
-      misc: 'sparkles'
-    };
-    return map[cat] || 'package';
-  }
-
-  function applyLanguage() {
-    document.documentElement.lang = currentLang;
-
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const k = el.getAttribute('data-i18n');
-      if (translations[currentLang][k]) {
-        el.innerHTML = translations[currentLang][k];
-      }
-    });
-
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const k = el.getAttribute('data-i18n-placeholder');
-      if (translations[currentLang][k]) {
-        el.placeholder = translations[currentLang][k];
-      }
-    });
-
-    const codeEl = document.getElementById('langCode');
-    if (codeEl) {
-      codeEl.textContent = currentLang.toUpperCase();
-    }
-
-    const drawerCodeEl = document.getElementById('drawerLangCode');
-    if (drawerCodeEl) {
-      drawerCodeEl.textContent = currentLang === 'ru' ? 'Русский' : 'English';
-    }
-
-    renderIcons();
-    renderItemsGrid();
-    renderQuickItemsGrid();
-    renderCalculatorSlots();
-    updateTradeVerdict();
-    renderForecastsSection();
-    renderHourlyChanges();
-  }
-
-  function toggleLanguage() {
-    currentLang = currentLang === 'en' ? 'ru' : 'en';
-    setStored('gpo_lang', currentLang);
-    playClickSound();
-    applyLanguage();
-  }
-
-  // --- TRADE CALCULATOR STATE ---
-  let tradeState = {
-    you: [],   // [ { item, qty } ]
-    they: []   // [ { item, qty } ]
-  };
-
-  let activePickerSide = 'you'; // 'you' or 'they'
-
-  // Helper to format points cleanly
-  function formatPts(pts) {
-    if (pts === undefined || pts === null) return '0';
-    if (pts % 1 === 0) return pts.toLocaleString();
-    return (+pts.toFixed(1)).toLocaleString();
-  }
-
-  function calculateSideTotal(side) {
-    let pts = 0;
-    let totalWeightedDemand = 0;
-    let totalItems = 0;
-
-    tradeState[side].forEach(entry => {
-      const itemVal = entry.item.value * entry.qty;
-      pts += itemVal;
-      const score = (entry.item.demandScore !== undefined && entry.item.demandScore !== null) ? entry.item.demandScore : 5.0;
-      totalWeightedDemand += score * itemVal;
-      totalItems += entry.qty;
-    });
-
-    const avgDemand = pts > 0 ? +(totalWeightedDemand / pts).toFixed(1) : (totalItems > 0 ? 5.0 : 0.0);
-    const lc = (pts / 310).toFixed(2);
-    return { pts, lc, avgDemand, count: totalItems };
-  }
-
-  function updateTradeVerdict() {
-    const you = calculateSideTotal('you');
-    const they = calculateSideTotal('they');
-
-    // Update UI numbers
-    document.getElementById('youTotalPts').textContent = formatPts(you.pts) + ' pts';
-    document.getElementById('youTotalLc').textContent = you.lc + ' LC';
-    document.getElementById('theyTotalPts').textContent = formatPts(they.pts) + ' pts';
-    document.getElementById('theyTotalLc').textContent = they.lc + ' LC';
-
-    // Update Side Demand Badges
-    const youPill = document.getElementById('youDemandPill');
-    const theyPill = document.getElementById('theyDemandPill');
-    const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
-    if (youPill) youPill.innerHTML = `${starIcon} ${t('label_demand_short')}: <strong>${you.count > 0 ? you.avgDemand : '0.0'}/10</strong>`;
-    if (theyPill) theyPill.innerHTML = `${starIcon} ${t('label_demand_short')}: <strong>${they.count > 0 ? they.avgDemand : '0.0'}/10</strong>`;
-
-    const stamp = document.getElementById('verdictStamp');
-    const icon = document.getElementById('verdictIcon');
-    const text = document.getElementById('verdictText');
-    const diffText = document.getElementById('verdictDiffText');
-    const demandNote = document.getElementById('verdictDemandNote');
-
-    // Recommendation card elements
-    const recBadge = document.getElementById('recVerdictBadge');
-    const recAdvice = document.getElementById('recVerdictAdvice');
-    const recYouText = document.getElementById('recYouDemandText');
-    const recTheyText = document.getElementById('recTheyDemandText');
-    const recYouBar = document.getElementById('recYouDemandBar');
-    const recTheyBar = document.getElementById('recTheyDemandBar');
-
-    if (recYouText) recYouText.textContent = `${you.count > 0 ? you.avgDemand : '0.0'} / 10`;
-    if (recTheyText) recTheyText.textContent = `${they.count > 0 ? they.avgDemand : '0.0'} / 10`;
-    if (recYouBar) recYouBar.style.width = `${Math.min(100, (you.avgDemand / 10) * 100)}%`;
-    if (recTheyBar) recTheyBar.style.width = `${Math.min(100, (they.avgDemand / 10) * 100)}%`;
-
-    // If both sides empty
-    if (you.count === 0 && they.count === 0) {
-      stamp.className = 'verdict-stamp fair';
-      if (icon) icon.innerHTML = window.getIcon('scale');
-      text.textContent = t('verdict_empty');
-      diffText.className = 'verdict-diff-text neutral';
-      diffText.textContent = '±0 pts (0%)';
-      demandNote.innerHTML = `${window.getIcon('scale')} <span>${t('demand_neutral_note')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-empty';
-        recBadge.textContent = t('rec_status_empty');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_empty');
-      return;
-    }
-
-    const diffPts = they.pts - you.pts;
-    let diffPct = 0;
-    if (you.pts > 0) {
-      diffPct = ((diffPts / you.pts) * 100);
-    } else if (they.pts > 0) {
-      diffPct = 100;
-    }
-
-    const sign = diffPts >= 0 ? '+' : '';
-    diffText.textContent = `${sign}${formatPts(diffPts)} pts (${sign}${diffPct.toFixed(1)}%)`;
-
-    // Verdict Stamp logic
-    if (diffPct >= 25) {
-      stamp.className = 'verdict-stamp win-huge';
-      if (icon) icon.innerHTML = window.getIcon('flame', 'icon-gold');
-      text.textContent = t('verdict_big_win');
-      diffText.className = 'verdict-diff-text positive';
-    } else if (diffPct >= 5) {
-      stamp.className = 'verdict-stamp win';
-      if (icon) icon.innerHTML = window.getIcon('check-circle-2', 'icon-green');
-      text.textContent = t('verdict_win');
-      diffText.className = 'verdict-diff-text positive';
-    } else if (diffPct <= -25) {
-      stamp.className = 'verdict-stamp lose-huge';
-      if (icon) icon.innerHTML = window.getIcon('skull', 'icon-crimson');
-      text.textContent = t('verdict_big_lose');
-      diffText.className = 'verdict-diff-text negative';
-    } else if (diffPct <= -5) {
-      stamp.className = 'verdict-stamp lose';
-      if (icon) icon.innerHTML = window.getIcon('x-circle', 'icon-crimson');
-      text.textContent = t('verdict_lose');
-      diffText.className = 'verdict-diff-text negative';
-    } else {
-      stamp.className = 'verdict-stamp fair';
-      if (icon) icon.innerHTML = window.getIcon('scale');
-      text.textContent = t('verdict_fair');
-      diffText.className = 'verdict-diff-text neutral';
-    }
-
-    // Audio fanfare on completion
-    if (you.count > 0 && they.count > 0) {
-      if (diffPct >= 10) playWinFanfare();
-      else if (diffPct <= -15) playLoseSound();
-    }
-
-    // Trade Worth & Demand Evaluation Logic
-    if (you.count === 0 || they.count === 0) {
-      demandNote.innerHTML = `${window.getIcon('scale')} <span>${t('demand_neutral_note')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-empty';
-        recBadge.textContent = t('rec_status_empty');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_empty');
-      return;
-    }
-
-    const diffDemand = they.avgDemand - you.avgDemand;
-
-    // 1. Demand Trap: You give high liquid items for low liquid junk, even if points look OK or slightly positive
-    if ((you.avgDemand >= 7.5 && they.avgDemand <= 5.2 && diffPct >= -5) || (diffDemand <= -2.5 && diffPct < 25)) {
-      demandNote.innerHTML = `${window.getIcon('alert-triangle', 'icon-crimson')} <span style="color: #f87171;">${t('demand_warning_you')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-trap';
-        recBadge.textContent = t('rec_status_trap');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_trap');
-    }
-    // 2. Big Win
-    else if (diffPct >= 12 && they.avgDemand >= 6.0) {
-      demandNote.innerHTML = `${window.getIcon('sparkles', 'icon-cyan')} <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-win-big';
-        recBadge.textContent = t('rec_status_big_win');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_big_win');
-    }
-    // 3. Trade Up / Upgrade to Meta
-    else if (diffPct >= -10 && diffPct < 5 && they.avgDemand >= 8.8 && diffDemand >= 1.5) {
-      demandNote.innerHTML = `${window.getIcon('zap', 'icon-cyan')} <span style="color: #7dd3fc;">${t('demand_bonus_them')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-upgrade';
-        recBadge.textContent = t('rec_status_upgrade');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_upgrade');
-    }
-    // 4. Solid Win
-    else if (diffPct >= 5 && diffDemand >= -1.5) {
-      demandNote.innerHTML = `${window.getIcon('check-circle-2', 'icon-green')} <span style="color: #34d399;">${t('demand_bonus_them')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-win';
-        recBadge.textContent = t('rec_status_win');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_win');
-    }
-    // 5. Fair Trade
-    else if (diffPct >= -6 && diffPct <= 6 && Math.abs(diffDemand) < 2.0) {
-      demandNote.innerHTML = `${window.getIcon('scale')} <span>${t('demand_neutral_note')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-fair';
-        recBadge.textContent = t('rec_status_fair');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_fair');
-    }
-    // 6. Huge Loss
-    else if (diffPct < -20) {
-      demandNote.innerHTML = `${window.getIcon('skull', 'icon-crimson')} <span style="color: #f87171;">${t('rec_status_big_lose')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-lose-big';
-        recBadge.textContent = t('rec_status_big_lose');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_big_lose');
-    }
-    // 7. Regular Loss
-    else {
-      demandNote.innerHTML = `${window.getIcon('x-circle', 'icon-crimson')} <span style="color: #fb923c;">${t('verdict_lose')}</span>`;
-      if (recBadge) {
-        recBadge.className = 'rec-verdict-badge rec-lose';
-        recBadge.textContent = t('rec_status_lose');
-      }
-      if (recAdvice) recAdvice.textContent = t('rec_advice_lose');
-    }
-  }
-
-  function addItemToTrade(side, item, qty = 1) {
-    const existing = tradeState[side].find(x => x.item.id === item.id);
-    if (existing) {
-      existing.qty += qty;
-    } else {
-      tradeState[side].push({ item, qty });
-    }
-    playCoinSound();
-    renderCalculatorSlots();
-    updateTradeVerdict();
-    saveTradeToUrl();
-  }
-
-  function removeItemFromTrade(side, itemId) {
-    tradeState[side] = tradeState[side].filter(x => x.item.id !== itemId);
-    playRemoveSound();
-    renderCalculatorSlots();
-    updateTradeVerdict();
-    saveTradeToUrl();
-  }
-
-  function changeItemQty(side, itemId, delta) {
-    const entry = tradeState[side].find(x => x.item.id === itemId);
-    if (entry) {
-      entry.qty += delta;
-      if (entry.qty <= 0) {
-        removeItemFromTrade(side, itemId);
-        return;
-      }
-      playClickSound();
-      renderCalculatorSlots();
-      updateTradeVerdict();
-      saveTradeToUrl();
-    }
-  }
-
-  function renderCalculatorSlots() {
-    ['you', 'they'].forEach(side => {
-      const container = document.getElementById(`${side}SlotsGrid`);
-      if (!container) return;
-
+  function renderTrade() {
+    const focus = document.activeElement;
+    const focusedQuantity = focus?.closest('.trade-slot-card') ? { ...focus.dataset, input: focus.classList.contains('qty-num') } : null;
+    for (const side of ['you', 'they']) {
       const fragment = document.createDocumentFragment();
+      for (const entry of trade[side]) {
+        const item = byId.get(entry.id) || { id: entry.id, name: t('unavailable_item'), image: 'images/placeholder.svg', value: null };
+        const card = element('div', 'trade-slot-card');
+        const remove = button('', 'remove', 'slot-remove-btn', { side, id: item.id });
+        remove.append(icon('x'));
+        remove.setAttribute('aria-label', t('remove', { name: nameOf(item) }));
+        const title = element('div', 'slot-item-name', nameOf(item));
+        title.title = nameOf(item);
+        const controls = element('div', 'slot-qty-controls');
+        const minus = button('−', 'quantity-step', 'qty-btn', { side, id: item.id, delta: '-1' });
+        minus.setAttribute('aria-label', t('decrease', { name: nameOf(item) }));
+        const input = element('input', 'qty-num');
+        Object.assign(input, { type: 'number', name: `quantity-${side}-${item.id}`, autocomplete: 'off', min: '1', max: '100000', step: '1', value: entry.qty, inputMode: 'numeric' });
+        input.dataset.side = side;
+        input.dataset.id = item.id;
+        input.setAttribute('aria-label', t('quantity', { name: nameOf(item) }));
+        const plus = button('+', 'quantity-step', 'qty-btn', { side, id: item.id, delta: '1' });
+        plus.setAttribute('aria-label', t('increase', { name: nameOf(item) }));
+        controls.append(minus, input, plus);
+        card.append(remove, image(item, 45, 'slot-item-img'), title, element('div', 'slot-item-val', points(item.value === null ? null : item.value * entry.qty)), controls);
+        fragment.append(card);
+      }
+      if (!trade[side].length) {
+        const empty = element('div', 'empty-offer');
+        empty.append(icon(side === 'you' ? 'package' : 'gift'), element('p', '', t('empty_offer')));
+        fragment.append(empty);
+      }
+      $(`${side}SlotsGrid`).replaceChildren(fragment);
+      const total = sideTotal(side);
+      $(`${side}TotalPts`).textContent = points(total.value);
+      $(`${side}TotalLc`).textContent = `${number(total.lc)} LC`;
+      $(`${side}Count`).textContent = number(trade[side].length);
+    }
+    $('btnClearTrade').disabled = !trade.you.length && !trade.they.length;
+    const you = sideTotal('you');
+    const they = sideTotal('they');
+    let verdict = 'empty';
+    let label = 'verdict_empty';
+    let advice = 'verdict_hint';
+    let difference = '—';
+    if (you.count && they.count) {
+      if (you.value === null || they.value === null) {
+        verdict = 'unknown'; label = 'verdict_unknown'; advice = 'verdict_unknown_hint';
+      } else {
+        const diff = (they.cents - you.cents) / 100;
+        const pct = (they.cents - you.cents) / you.cents * 100;
+        verdict = pct >= 5 ? 'win' : pct <= -5 ? 'lose' : 'fair';
+        label = `verdict_${verdict}`;
+        difference = `${diff >= 0 ? '+' : '−'}${points(Math.abs(diff))} (${pct >= 0 ? '+' : '−'}${number(Math.abs(pct), 1)}%)`;
+        advice = Math.min(you.confidence, they.confidence) < 0.35 ? 'weak_evidence' : 'good_evidence';
+      }
+    }
+    $('verdictStamp').className = `verdict-stamp ${verdict}`;
+    $('verdictStamp').dataset.state = verdict;
+    $('verdictText').textContent = t(label);
+    $('verdictDiffText').textContent = difference;
+    $('verdictAdvice').textContent = t(advice);
+    if (focusedQuantity) {
+      const selector = focusedQuantity.input ? '.qty-num' : `[data-action="${focusedQuantity.action}"]${focusedQuantity.delta ? `[data-delta="${focusedQuantity.delta}"]` : ''}`;
+      const target = document.querySelector(`${selector}[data-id="${focusedQuantity.id}"][data-side="${focusedQuantity.side}"]`) ||
+        document.querySelector(`[data-action="picker"][data-side="${focusedQuantity.side}"]`);
+      target?.focus({ preventScroll: true });
+    }
+  }
 
-      tradeState[side].forEach(entry => {
-        const it = entry.item;
-        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const slotEl = document.createElement('div');
-        slotEl.className = 'trade-slot-card';
-        const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
-        const xIcon = window.getIcon ? window.getIcon('x') : 'x';
-        slotEl.innerHTML = `
-          <button class="slot-remove-btn" title="${t('slot_btn_remove')}" onclick="window.GPO_APP.removeItem('${side}', '${it.id}')">${xIcon}</button>
-          <img src="${it.image}" alt="${name}" class="slot-item-img" loading="lazy" decoding="async">
-          <div class="slot-item-name" title="${name}">${name}</div>
-          <div class="slot-item-val">${formatPts(it.value * entry.qty)} pts <span style="color: var(--gold-glow); font-size: 0.74rem;">(${starIcon} ${it.demandScore})</span></div>
-          <div class="slot-qty-controls">
-            <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', -1)">-</button>
-            <span class="qty-num">x${entry.qty}</span>
-            <button class="qty-btn" onclick="window.GPO_APP.changeQty('${side}', '${it.id}', 1)">+</button>
-          </div>
-        `;
-        fragment.appendChild(slotEl);
-      });
+  function addItem(side, id) {
+    if (!['you', 'they'].includes(side) || !byId.has(id)) return;
+    const current = trade[side].find(entry => entry.id === id);
+    if (current?.qty >= 100000) return toast(t('quantity_error'));
+    if (!current && trade[side].length >= 60) return toast(t('limit_error'));
+    if (current) current.qty += 1;
+    else trade[side].push({ id, qty: 1 });
+    renderTrade(); saveTrade(); sound();
+    toast(t('added', { name: nameOf(byId.get(id)) }));
+  }
+  function removeItem(side, id) {
+    if (!['you', 'they'].includes(side)) return;
+    trade[side] = trade[side].filter(entry => entry.id !== id);
+    renderTrade(); saveTrade(); sound('remove');
+  }
+  function setQuantity(side, id, value) {
+    const entry = trade[side]?.find(entry => entry.id === id);
+    if (!entry) return;
+    if (!Number.isSafeInteger(value) || value < 1 || value > 100000) { toast(t('quantity_error')); renderTrade(); return; }
+    entry.qty = value;
+    renderTrade(); saveTrade();
+  }
+  function changeQuantity(side, id, delta) {
+    const entry = trade[side]?.find(entry => entry.id === id);
+    if (!entry || !Number.isSafeInteger(delta)) return;
+    if (entry.qty + delta <= 0) removeItem(side, id);
+    else setQuantity(side, id, entry.qty + delta);
+  }
 
-      // Add slot placeholder button
-      const addBtn = document.createElement('div');
-      addBtn.className = 'add-slot-placeholder';
-      addBtn.onclick = () => openPickerModal(side);
-      const plusIcon = window.getIcon ? window.getIcon('plus') : '+';
-      addBtn.innerHTML = `
-        <span class="add-slot-icon">${plusIcon}</span>
-        <span class="add-slot-text">${t('click_to_add')}</span>
-      `;
-      fragment.appendChild(addBtn);
-
+  function evidence(item) {
+    if (item.value === null) return t('price_unknown');
+    if (item.price_status === 'baseline') return t('price_baseline');
+    if (item.price_status === 'carried') return t('price_carried');
+    return t(item.confidence >= 0.7 ? 'evidence_high' : item.confidence >= 0.35 ? 'evidence_medium' : 'evidence_low');
+  }
+  function evidenceTag(item) {
+    const tag = element('span', `evidence-tag${item.confidence >= 0.7 ? ' strong' : ''}`);
+    tag.append(element('span', 'evidence-dot'), document.createTextNode(evidence(item)));
+    return tag;
+  }
+  function tierTag(item) {
+    const tag = element('span', 'tier-tag', item.tier.replace(/^Tier /, ''));
+    tag.style.setProperty('--tier-color', tierColors[item.tier] || '#91a8b4');
+    return tag;
+  }
+  function card(item) {
+    const node = element('article', 'item-comic-card');
+    node.style.setProperty('--tier-color', tierColors[item.tier] || '#91a8b4');
+    const top = element('div', 'item-card-top');
+    const rank = element('span', `rank-indicator${item.rank_locked ? '' : ' flexible'}`, `#${item.display_rank}`);
+    rank.prepend(icon(item.rank_locked ? 'shield-check' : 'trending-up'));
+    rank.title = t(item.rank_locked ? 'locked_order' : 'flexible_order');
+    top.append(tierTag(item), rank);
+    const open = button('', 'detail', 'item-open-button', { id: item.id });
+    const art = element('span', 'item-art');
+    art.append(image(item, 112));
+    open.append(art, element('span', 'item-name', nameOf(item)));
+    open.title = nameOf(item);
+    const values = element('div', 'card-values-row');
+    values.append(element('span', 'item-price', points(item.value)), element('span', 'item-lc', `${number(item.lcValue)} LC`));
+    const actions = element('div', 'card-actions-row');
+    actions.append(button(t('add_you'), 'add', 'quick-add-btn add-you', { id: item.id, side: 'you' }), button(t('add_they'), 'add', 'quick-add-btn add-them', { id: item.id, side: 'they' }));
+    node.append(top, open, element('div', 'item-abbr', item.abbreviation || (lang === 'ru' ? item.name : t(`cat_${item.category}`))), values, evidenceTag(item), actions);
+    return node;
+  }
+  function filtered(scope) {
+    const filter = filters[scope];
+    const words = normalize(filter.query).split(' ').filter(Boolean);
+    return (data?.items || []).filter(item => (filter.category === 'all' || item.category === filter.category) &&
+      (scope !== 'catalog' || tier === 'all' || item.tier === tier) && words.every(word => searchKeys.get(item.id)?.includes(word)));
+  }
+  function emptyResults() {
+    const node = element('div', 'empty-state');
+    node.append(icon('search'), element('h3', '', t('no_results')), element('p', '', t('no_results_hint')));
+    return node;
+  }
+  function moreState(scope, total) {
+    document.querySelector(`[data-action="more"][data-scope="${scope}"]`).hidden = total <= filters[scope].limit;
+  }
+  function renderCatalog(scope, start = 0) {
+    if (!data) return;
+    const list = filtered(scope);
+    const grid = $(scope === 'quick' ? 'quickItemsCardsGrid' : 'itemsCardsGrid');
+    const fragment = document.createDocumentFragment();
+    list.slice(start, filters[scope].limit).forEach(item => fragment.append(card(item)));
+    if (!list.length) fragment.append(emptyResults());
+    if (start) grid.append(fragment); else grid.replaceChildren(fragment);
+    $(`${scope === 'quick' ? 'quick' : 'catalog'}ResultCount`).textContent = t('results', { shown: Math.min(list.length, filters[scope].limit), total: list.length });
+    moreState(scope, list.length);
+  }
+  function renderCategories() {
+    if (!data) return;
+    const focused = document.activeElement?.closest('[data-action="category"]')?.dataset;
+    const counts = categoryCounts();
+    document.querySelectorAll('[data-categories]').forEach(container => {
+      const scope = container.dataset.categories;
+      const fragment = document.createDocumentFragment();
+      for (const category of categories) {
+        const active = filters[scope].category === category;
+        const node = button('', 'category', `filter-pill-btn${active ? ' active' : ''}`, { scope, category });
+        node.setAttribute('aria-pressed', String(active));
+        node.append(icon(categoryIcons[category]), element('span', '', t(`cat_${category}`)), element('span', 'category-count', number(counts[category] || 0)));
+        fragment.append(node);
+      }
       container.replaceChildren(fragment);
     });
+    if (focused) document.querySelector(`[data-categories="${focused.scope}"] [data-category="${focused.category}"]`)?.focus({ preventScroll: true });
   }
-
-  function swapTradeSides() {
-    const temp = tradeState.you;
-    tradeState.you = tradeState.they;
-    tradeState.they = temp;
-    playCoinSound();
-    renderCalculatorSlots();
-    updateTradeVerdict();
-    saveTradeToUrl();
-    showToast(t('toast_sides_swapped'), 'info');
+  function categoryCounts() {
+    const counts = { all: data.items.length };
+    data.items.forEach(item => { counts[item.category] = (counts[item.category] || 0) + 1; });
+    return counts;
   }
-
-  function clearAllTrade() {
-    tradeState.you = [];
-    tradeState.they = [];
-    playRemoveSound();
-    renderCalculatorSlots();
-    updateTradeVerdict();
-    saveTradeToUrl();
-    showToast(t('toast_trade_cleared'), 'info');
+  function fillTierSelect() {
+    const select = $('tierSelect');
+    select.replaceChildren(new Option(t('all_tiers'), 'all'));
+    [...new Set(data.items.slice().sort((a, b) => a.official_rank - b.official_rank).map(item => item.tier))].forEach(value => select.add(new Option(value, value)));
+    if (![...select.options].some(option => option.value === tier)) tier = 'all';
+    select.value = tier;
   }
-
-  function saveTradeToUrl() {
-    try {
-      if (tradeState.you.length === 0 && tradeState.they.length === 0) {
-        if (window.history && window.history.replaceState) {
-          window.history.replaceState(null, '', window.location.pathname + window.location.search);
-        } else {
-          window.location.hash = '';
-        }
-        return;
-      }
-      const data = {
-        y: tradeState.you.map(x => [x.item.id, x.qty]),
-        t: tradeState.they.map(x => [x.item.id, x.qty])
-      };
-      const json = JSON.stringify(data);
-      const b64 = btoa(encodeURIComponent(json));
-      if (window.history && window.history.replaceState) {
-        window.history.replaceState(null, '', `#trade=${b64}`);
-      } else {
-        window.location.hash = `trade=${b64}`;
-      }
-    } catch (e) {
-      // Hash state fallback
-    }
+  function tableItem(item) {
+    const open = button('', 'detail', 'table-item-button', { id: item.id });
+    const text = element('span');
+    text.append(element('strong', '', nameOf(item)), element('small', '', `${item.tier}${item.abbreviation ? ` · ${item.abbreviation}` : ''}`));
+    open.append(image(item, 44), text);
+    return open;
   }
-
-  function loadTradeFromUrl() {
-    try {
-      const hash = window.location.hash;
-      if (!hash || !hash.includes('trade=')) return;
-      const raw = hash.split('trade=')[1];
-      if (!raw) return;
-      const b64 = raw.split('&')[0];
-      const json = decodeURIComponent(atob(b64));
-      const data = JSON.parse(json);
-      const all = window.GPO_ITEMS || [];
-
-      if (data.y && Array.isArray(data.y)) {
-        tradeState.you = data.y.map(([id, qty]) => {
-          const it = all.find(x => x.id === id);
-          return it ? { item: it, qty: qty || 1 } : null;
-        }).filter(Boolean);
-      }
-
-      if (data.t && Array.isArray(data.t)) {
-        tradeState.they = data.t.map(([id, qty]) => {
-          const it = all.find(x => x.id === id);
-          return it ? { item: it, qty: qty || 1 } : null;
-        }).filter(Boolean);
-      }
-
-      renderCalculatorSlots();
-      updateTradeVerdict();
-
-      if (tradeState.you.length > 0 || tradeState.they.length > 0) {
-        switchTab('calculator');
-      }
-    } catch (e) {
-      console.warn('Could not parse trade from URL', e);
-    }
+  function cell(content, className = '') {
+    const node = element('td', className);
+    if (content instanceof Node) node.append(content); else node.textContent = content;
+    return node;
   }
-
-  function copyTradeShareLink() {
-    saveTradeToUrl();
-    const url = window.location.href;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(() => {
-        playCoinSound();
-        showToast(t('share_copied'), 'success');
-      }).catch(() => {
-        prompt("Copy trade URL:", url);
-      });
-    } else {
-      prompt("Copy trade URL:", url);
-    }
-  }
-
-  function copyDiscordTradeFormat() {
-    if (tradeState.you.length === 0 && tradeState.they.length === 0) {
-      showToast(t('rec_advice_empty'), 'warning');
-      return;
-    }
-    const you = calculateSideTotal('you');
-    const they = calculateSideTotal('they');
-    const diffPts = they.pts - you.pts;
-    let diffPct = you.pts > 0 ? ((diffPts / you.pts) * 100).toFixed(1) : (they.pts > 0 ? '100.0' : '0.0');
-    const sign = diffPts >= 0 ? '+' : '';
-
-    const youItemsStr = tradeState.you.map(x => {
-      const name = currentLang === 'ru' ? (x.item.nameRu || x.item.name) : x.item.name;
-      return `${name} (x${x.qty})`;
-    }).join(', ') || (currentLang === 'ru' ? 'Ничего' : 'Nothing');
-
-    const theyItemsStr = tradeState.they.map(x => {
-      const name = currentLang === 'ru' ? (x.item.nameRu || x.item.name) : x.item.name;
-      return `${name} (x${x.qty})`;
-    }).join(', ') || (currentLang === 'ru' ? 'Ничего' : 'Nothing');
-
-    saveTradeToUrl();
-    const url = window.location.href;
-    const vText = document.getElementById('verdictText') ? document.getElementById('verdictText').textContent : 'TRADE';
-
-    const discordText = [
-      `⚔️ **[Grand Piece Online Trade Calculator]** ⚔️`,
-      `🔹 **Offer (You):** ${youItemsStr} [${formatPts(you.pts)} pts | ${you.lc} LC] (Demand: ${you.avgDemand}/10)`,
-      `🔸 **Their Offer (Them):** ${theyItemsStr} [${formatPts(they.pts)} pts | ${they.lc} LC] (Demand: ${they.avgDemand}/10)`,
-      `⚖️ **Verdict:** ${vText} (${sign}${formatPts(diffPts)} pts / ${sign}${diffPct}%)`,
-      `🔗 **Calculator Link:** ${url}`
-    ].join('\n');
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(discordText).then(() => {
-        playCoinSound();
-        showToast(t('discord_copied'), 'success');
-      }).catch(() => {
-        prompt("Copy Discord Trade Text:", discordText);
-      });
-    } else {
-      prompt("Copy Discord Trade Text:", discordText);
-    }
-  }
-
-  function clearSearchInput(inputId) {
-    const input = document.getElementById(inputId);
-    if (!input) return;
-    input.value = '';
-    input.focus();
-    playClickSound();
-
-    if (inputId === 'searchInput') {
-      searchQuery = '';
-      renderItemsGrid();
-      const clearBtn = document.getElementById('searchClearBtn');
-      if (clearBtn) clearBtn.classList.remove('visible');
-    } else if (inputId === 'quickSearchInput') {
-      quickSearch = '';
-      renderQuickItemsGrid();
-      const clearBtn = document.getElementById('quickSearchClearBtn');
-      if (clearBtn) clearBtn.classList.remove('visible');
-    } else if (inputId === 'pickerSearchInput') {
-      filterPickerItems(true);
-      const clearBtn = document.getElementById('pickerSearchClearBtn');
-      if (clearBtn) clearBtn.classList.remove('visible');
-    } else if (inputId === 'forecastSearchInput') {
-      forecastSearch = '';
-      renderForecastsSection();
-      const clearBtn = document.getElementById('forecastSearchClearBtn');
-      if (clearBtn) clearBtn.classList.remove('visible');
-    }
-  }
-
-  // --- SMART BILINGUAL SEARCH HELPER ---
-  function normalizeSearchStr(str) {
-    if (!str) return '';
-    return str.toLowerCase()
-      .replace(/['’"`\-–—()]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
-  function matchItemQuery(it, rawQuery) {
-    if (!rawQuery || !rawQuery.trim()) return true;
-    const qRaw = rawQuery.toLowerCase().trim();
-    const qNorm = normalizeSearchStr(rawQuery);
-
-    const en = (it.name || '').toLowerCase();
-    const ru = (it.nameRu || '').toLowerCase();
-    const abbr = (it.abbreviation || '').toLowerCase();
-    const enNorm = normalizeSearchStr(it.name);
-    const ruNorm = normalizeSearchStr(it.nameRu);
-    const abbrNorm = normalizeSearchStr(it.abbreviation);
-
-    // 1. Direct matches
-    if (en.includes(qRaw) || ru.includes(qRaw) || abbr.includes(qRaw)) return true;
-    if (enNorm.includes(qNorm) || ruNorm.includes(qNorm) || abbrNorm.includes(qNorm)) return true;
-
-    // 2. Exact abbreviation check
-    if (abbr.toLowerCase() === qRaw || abbrNorm === qNorm) return true;
-
-    // 3. Multi-word token match
-    const tokens = qNorm.split(' ').filter(Boolean);
-    if (tokens.length > 1) {
-      const combined = `${enNorm} ${ruNorm} ${abbrNorm}`;
-      if (tokens.every(token => combined.includes(token))) return true;
-    }
-
-    return false;
-  }
-
-  // --- ITEM BROWSER & TIER LIST LOGIC ---
-  let currentCategory = 'all';
-  let currentTier = 'all';
-  let searchQuery = '';
-  let currentSort = 'tier_desc';
-
-  let quickCategory = 'all';
-  let quickSearch = '';
-  let quickSort = 'tier_desc';
-
-  function filterItemsList(items, q, cat, tier, sort) {
-    let result = (items || []).filter(it => it && it.id);
-
-    if (q && q.trim()) {
-      result = result.filter(it => matchItemQuery(it, q));
-    }
-
-    if (cat && cat !== 'all') {
-      result = result.filter(it => it && it.category === cat);
-    }
-
-    if (tier && tier !== 'all') {
-      result = result.filter(it => it && it.tier === tier);
-    }
-
-    if (sort === 'val_desc') {
-      result.sort((a, b) => b.value - a.value);
-    } else if (sort === 'val_asc') {
-      result.sort((a, b) => a.value - b.value);
-    } else if (sort === 'demand_desc') {
-      result.sort((a, b) => (b.demandScore || 0) - (a.demandScore || 0));
-    } else if (sort === 'name_asc') {
-      result.sort((a, b) => {
-        const nameA = currentLang === 'ru' ? (a.nameRu || a.name) : a.name;
-        const nameB = currentLang === 'ru' ? (b.nameRu || b.name) : b.name;
-        return nameA.localeCompare(nameB);
-      });
-    } else if (sort === 'tier_desc') {
-      result.sort((a, b) => (a.official_rank || 0) - (b.official_rank || 0));
-    }
-
-    return result;
-  }
-
-  function createCardElement(it) {
-    if (!it || !it.name) return document.createElement('div');
-    const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-    const tierClass = `tier-${(it.tier || '').replace(/[\s+]/g, '-')}`;
-    const demandClass = `demand-${(it.demand || '').replace(/[\s+]/g, '-')}`;
-    const demandLabel = (translations[currentLang].demand_labels && translations[currentLang].demand_labels[it.demand]) || it.demand;
-
-    const catShortNames = {
-      fruits: currentLang === 'ru' ? 'Фрукт' : 'Fruit',
-      weapons: currentLang === 'ru' ? 'Оружие' : 'Weapon',
-      chests: currentLang === 'ru' ? 'Сундук' : 'Chest',
-      accessories: currentLang === 'ru' ? 'Аксессуар' : 'Accessory',
-      outfits: currentLang === 'ru' ? 'Броня' : 'Armor',
-      boats: currentLang === 'ru' ? 'Лодка' : 'Boat',
-      misc: currentLang === 'ru' ? 'Разное' : 'Misc'
-    };
-    const catLabel = catShortNames[it.category] || it.category;
-    const catIcon = window.getIcon ? window.getIcon(getCategoryIcon(it.category), 'icon-sm') : '';
-    const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
-    const plusIcon = window.getIcon ? window.getIcon('plus') : '+';
-
-    const card = document.createElement('div');
-    card.className = 'item-comic-card';
-    card.innerHTML = `
-      <span class="card-tier-tag ${tierClass}">${it.tier}</span>
-      <span class="card-demand-tag ${demandClass}">${starIcon} ${it.demandScore}/10 • ${demandLabel}</span>
-
-      <div class="card-img-wrapper" onclick="window.GPO_APP.openDetail('${it.id}')">
-        <img src="${it.image}" alt="${name}" loading="lazy" decoding="async" width="90" height="90" onerror="this.src='https://static.wikia.nocookie.net/grand-piece-online/images/b/b3/Legendary_Chest.png/revision/latest'">
-      </div>
-
-      <h4 class="card-item-title" onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">${name}</h4>
-      <div class="card-meta-row">
-        ${it.abbreviation ? `<span class="card-abbr-badge">${window.getIcon ? window.getIcon('sparkles', 'icon-gold icon-sm') : ''} ${it.abbreviation}</span>` : ''}
-        <span class="card-cat-badge">${catIcon} ${catLabel}</span>
-      </div>
-
-      <div class="card-values-row">
-        <span class="val-pts-text">${formatPts(it.value)} pts</span>
-        <span class="val-lc-text">~${it.lcValue} LC</span>
-      </div>
-
-      <div class="card-actions-row">
-        <button class="quick-add-btn add-you" onclick="window.GPO_APP.quickAdd('you', '${it.id}')" title="${t('card_title_add_you')}">
-          ${plusIcon} <span>${t('card_btn_you')}</span>
-        </button>
-        <button class="quick-add-btn add-them" onclick="window.GPO_APP.quickAdd('they', '${it.id}')" title="${t('card_title_add_them')}">
-          ${plusIcon} <span>${t('card_btn_them')}</span>
-        </button>
-      </div>
-    `;
-    return card;
-  }
-
-  function renderItemsGrid() {
-    const grid = document.getElementById('itemsCardsGrid');
-    if (!grid) return;
-
-    const items = filterItemsList(window.GPO_ITEMS || [], searchQuery, currentCategory, currentTier, currentSort);
-
-    if (items.length === 0) {
-      grid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-          <h3>${t('no_items_found')}</h3>
-          <p>${t('no_items_sub')}</p>
-        </div>
-      `;
-      return;
-    }
-
+  function renderMarket(start = 0) {
+    if (!data) return;
+    const offers = data.meta[`total_trades_${timeframe}`] ?? 0;
+    $('marketOffersCount').textContent = number(offers);
+    $('marketSupportedCount').textContent = number(data.meta.supported_observations ?? 0);
+    const source = data.discord_source;
+    $('marketCoverage').textContent = t(source?.mode === 'offline' ? 'history_waiting' : source?.history_complete ? 'history_complete' : 'history_partial');
+    $('marketPeriodNote').textContent = t('period_note', { count: number(offers), period: t(`period_${timeframe}`) });
+    const list = filtered('market');
     const fragment = document.createDocumentFragment();
-    items.forEach(it => {
-      fragment.appendChild(createCardElement(it));
-    });
-    grid.replaceChildren(fragment);
-  }
-
-  function renderQuickItemsGrid() {
-    const grid = document.getElementById('quickItemsCardsGrid');
-    if (!grid) return;
-
-    const items = filterItemsList(window.GPO_ITEMS || [], quickSearch, quickCategory, 'all', quickSort);
-
-    if (items.length === 0) {
-      grid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem 1rem; color: var(--text-muted);">
-          <h3>${t('no_items_found')}</h3>
-        </div>
-      `;
-      return;
+    for (const item of list.slice(start, filters.market.limit)) {
+      const row = element('tr');
+      const value = element('span', 'table-number', points(item.value));
+      value.append(element('span', 'secondary-number', `${number(item.lcValue)} LC`));
+      const metrics = item.timeframes?.[timeframe];
+      row.append(cell(tableItem(item)), cell(value), cell(number(metrics?.demand_count ?? 0)), cell(number(metrics?.supply_count ?? 0)), cell(evidenceTag(item)));
+      fragment.append(row);
     }
-
+    if (!list.length) { const row = element('tr'); const td = cell(emptyResults()); td.colSpan = 5; row.append(td); fragment.append(row); }
+    if (start) $('forecastTableBody').append(fragment); else $('forecastTableBody').replaceChildren(fragment);
+    moreState('market', list.length);
+  }
+  function renderChanges(start = 0) {
+    if (!data) return;
+    const allowed = new Set(filtered('changes').map(item => item.id));
+    const changes = (data.changes || []).filter(change => allowed.has(change.id) &&
+      (direction === 'all' || (direction === 'up' ? change.delta_pts > 0 : change.delta_pts < 0)));
+    $('changesTime').textContent = dateText(data.meta.updated_at_iso);
+    $('changesTablePanel').hidden = !changes.length;
+    $('hourlyEmptyState').hidden = Boolean(changes.length);
     const fragment = document.createDocumentFragment();
-    items.forEach(it => {
-      fragment.appendChild(createCardElement(it));
-    });
-    grid.replaceChildren(fragment);
+    for (const change of changes.slice(start, filters.changes.limit)) {
+      const item = byId.get(change.id);
+      const row = element('tr');
+      const delta = element('span', change.delta_pts > 0 ? 'delta-positive' : 'delta-negative', `${change.delta_pts > 0 ? '+' : '−'}${points(Math.abs(change.delta_pts))}`);
+      delta.append(element('span', 'secondary-number', `${change.delta_pct > 0 ? '+' : '−'}${number(Math.abs(change.delta_pct), 1)}%`));
+      row.append(cell(tableItem(item)), cell(points(change.old_value)), cell(points(change.new_value), 'table-number'), cell(delta), cell(t(change.reason === 'official_order' ? 'reason_official' : 'reason_market'), 'reason-label'));
+      fragment.append(row);
+    }
+    if (start) $('hourlyTableBody').append(fragment); else $('hourlyTableBody').replaceChildren(fragment);
+    moreState('changes', changes.length);
   }
-
-  // --- ITEM PICKER MODAL LOGIC ---
-  let pickerCategory = 'all';
-
-  function openPickerModal(side) {
-    activePickerSide = side;
-    pickerCategory = 'all';
-    document.querySelectorAll('#pickerCategoryPills .filter-pill-btn').forEach(b => {
-      b.classList.toggle('active', b.getAttribute('data-pcat') === 'all');
-    });
-    const input = document.getElementById('pickerSearchInput');
-    if (input) input.value = '';
-    playModalOpen();
-    const modal = document.getElementById('itemPickerModal');
-    const title = document.getElementById('pickerModalTitle');
-    if (title) {
-      title.textContent = side === 'you' ? t('picker_title_you') : t('picker_title_they');
-    }
-    modal.classList.add('open');
-    filterPickerItems(true);
-    if (input) input.focus();
-  }
-
-  function closePickerModal() {
-    playModalClose();
-    document.getElementById('itemPickerModal').classList.remove('open');
-  }
-
-  let pickerDebounceTimer = null;
-  function filterPickerItems(immediate = false) {
-    if (!immediate) {
-      clearTimeout(pickerDebounceTimer);
-      pickerDebounceTimer = setTimeout(() => doFilterPickerItems(), 100);
-    } else {
-      clearTimeout(pickerDebounceTimer);
-      doFilterPickerItems();
-    }
-  }
-
-  function doFilterPickerItems() {
-    const q = (document.getElementById('pickerSearchInput').value || '').trim();
-    const grid = document.getElementById('pickerItemsGrid');
-    if (!grid) return;
-
-    let items = (window.GPO_ITEMS || []).filter(it => it && it.id);
-
-    if (q) {
-      items = items.filter(it => matchItemQuery(it, q));
-    }
-
-    if (pickerCategory !== 'all') {
-      items = items.filter(it => it.category === pickerCategory);
-    }
-
-    if (items.length === 0) {
-      grid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-muted);">
-          <h4>${t('no_items_found')}</h4>
-        </div>
-      `;
-      return;
-    }
-
-    const catShortNames = {
-      fruits: currentLang === 'ru' ? 'Фрукт' : 'Fruit',
-      weapons: currentLang === 'ru' ? 'Оружие' : 'Weapon',
-      chests: currentLang === 'ru' ? 'Сундук' : 'Chest',
-      accessories: currentLang === 'ru' ? 'Аксессуар' : 'Accessory',
-      outfits: currentLang === 'ru' ? 'Броня' : 'Armor',
-      boats: currentLang === 'ru' ? 'Лодка' : 'Boat',
-      misc: currentLang === 'ru' ? 'Разное' : 'Misc'
-    };
-
+  function renderPicker(start = 0) {
+    if (!data) return;
+    const list = filtered('picker');
     const fragment = document.createDocumentFragment();
-    items.forEach(it => {
-      const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-      const catLabel = catShortNames[it.category] || it.category;
-      const catIcon = window.getIcon ? window.getIcon(getCategoryIcon(it.category), 'icon-sm') : '';
-      const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
-      const btn = document.createElement('div');
-      btn.className = 'picker-item-btn';
-      btn.onclick = () => {
-        addItemToTrade(activePickerSide, it, 1);
-        closePickerModal();
-      };
-      btn.innerHTML = `
-        <img src="${it.image}" alt="${name}" class="picker-item-img" loading="lazy" decoding="async" width="64" height="64">
-        <div class="picker-item-name" title="${name}">${name}</div>
-        <div class="picker-item-cat">${catIcon} ${catLabel}</div>
-        <div class="picker-item-val">${formatPts(it.value)} pts <small style="color: var(--gold-glow); font-size: 0.72rem;">(${starIcon} ${it.demandScore})</small></div>
-      `;
-      fragment.appendChild(btn);
-    });
-    grid.replaceChildren(fragment);
-  }
-
-  // --- ITEM DETAIL MODAL ---
-  let currentDetailItem = null;
-
-  function openDetailModal(itemId) {
-    const it = (window.GPO_ITEMS || []).find(x => x.id === itemId);
-    if (!it) return;
-    currentDetailItem = it;
-    playModalOpen();
-
-    const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-    document.getElementById('detailImg').src = it.image;
-    document.getElementById('detailName').textContent = name;
-    document.getElementById('detailValuePts').textContent = formatPts(it.value) + ' pts';
-    document.getElementById('detailValueLc').textContent = it.lcValue + ' LC';
-
-    const demandLabel = translations[currentLang].demand_labels[it.demand] || it.demand;
-    const trendLabel = translations[currentLang].trend_labels[it.trend] || it.trend;
-    const starIcon = window.getIcon ? window.getIcon('star', 'icon-gold icon-sm') : '';
-
-    document.getElementById('detailDemandVal').innerHTML = `${demandLabel} (${starIcon} ${it.demandScore}/10)`;
-    document.getElementById('detailTrendVal').textContent = trendLabel;
-    document.getElementById('detailWikiLink').href = it.wikiUrl;
-
-    const catShortNames = {
-      fruits: currentLang === 'ru' ? 'Дьявольский Фрукт' : 'Devil Fruit',
-      weapons: currentLang === 'ru' ? 'Оружие' : 'Weapon',
-      chests: currentLang === 'ru' ? 'Сундук' : 'Chest',
-      accessories: currentLang === 'ru' ? 'Аксессуар' : 'Accessory',
-      outfits: currentLang === 'ru' ? 'Броня & Костюм' : 'Outfit & Armor',
-      boats: currentLang === 'ru' ? 'Лодка & Ховер' : 'Boat & Mount',
-      misc: currentLang === 'ru' ? 'Разное & Расходник' : 'Misc & Item'
-    };
-    const catLabel = catShortNames[it.category] || it.category;
-    const catIcon = window.getIcon ? window.getIcon(getCategoryIcon(it.category), 'icon-sm') : '';
-
-    const tagsBox = document.getElementById('detailTags');
-    tagsBox.innerHTML = `
-      <span class="hero-badge" style="background: #1e293b; color: #fff;">${it.tier}</span>
-      <span class="hero-badge" style="background: #090e1b; color: var(--gold-beli);">${it.subTier}</span>
-      <span class="hero-badge" style="background: rgba(14, 165, 233, 0.2); color: #38bdf8; border-color: #0284c7;">${catIcon} ${catLabel}</span>
-      ${it.abbreviation ? `<span class="card-abbr-badge">${window.getIcon ? window.getIcon('sparkles', 'icon-gold icon-sm') : ''} ${it.abbreviation}</span>` : ''}
-    `;
-
-    document.getElementById('detailAddYouBtn').onclick = () => {
-      addItemToTrade('you', it, 1);
-      closeDetailModal();
-      switchTab('calculator');
-      showToast(`${name}: ${t('item_added_toast')}`, 'success');
-    };
-
-    document.getElementById('detailAddThemBtn').onclick = () => {
-      addItemToTrade('they', it, 1);
-      closeDetailModal();
-      switchTab('calculator');
-      showToast(`${name}: ${t('item_added_toast')}`, 'success');
-    };
-
-    document.getElementById('itemDetailModal').classList.add('open');
-  }
-
-  function closeDetailModal() {
-    playModalClose();
-    document.getElementById('itemDetailModal').classList.remove('open');
-  }
-
-  // --- MOBILE DRAWER NAVIGATION ---
-  function openMobileDrawer() {
-    playModalOpen();
-    const drawer = document.getElementById('mobileNavDrawer');
-    const backdrop = document.getElementById('mobileNavBackdrop');
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    if (drawer) {
-      drawer.classList.add('open');
-      drawer.setAttribute('aria-hidden', 'false');
+    for (const item of list.slice(start, filters.picker.limit)) {
+      const node = button('', 'pick', 'picker-item-btn', { id: item.id });
+      node.append(image(item, 72), element('span', 'item-name', nameOf(item)), element('span', 'item-price', points(item.value)));
+      fragment.append(node);
     }
-    if (backdrop) backdrop.classList.add('open');
-    if (menuBtn) menuBtn.classList.add('active');
-    document.body.classList.add('drawer-open');
+    if (!list.length) fragment.append(emptyResults());
+    if (start) $('pickerItemsGrid').append(fragment); else $('pickerItemsGrid').replaceChildren(fragment);
+    moreState('picker', list.length);
   }
-
-  function closeMobileDrawer() {
-    const drawer = document.getElementById('mobileNavDrawer');
-    if (drawer && drawer.classList.contains('open')) {
-      playModalClose();
-    }
-    const backdrop = document.getElementById('mobileNavBackdrop');
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    if (drawer) {
-      drawer.classList.remove('open');
-      drawer.setAttribute('aria-hidden', 'true');
-    }
-    if (backdrop) backdrop.classList.remove('open');
-    if (menuBtn) menuBtn.classList.remove('active');
-    document.body.classList.remove('drawer-open');
+  function renderScope(scope, start = 0) {
+    if (scope === 'quick' || scope === 'catalog') renderCatalog(scope, start);
+    else if (scope === 'market') renderMarket(start);
+    else if (scope === 'changes') renderChanges(start);
+    else if (scope === 'picker') renderPicker(start);
   }
+  function renderCurrent() { if (scopes[tab]) renderScope(scopes[tab]); }
 
-  function toggleMobileDrawer() {
-    const drawer = document.getElementById('mobileNavDrawer');
-    if (drawer && drawer.classList.contains('open')) {
-      closeMobileDrawer();
-    } else {
-      openMobileDrawer();
-    }
+  function openDialog(id) {
+    returnFocus = document.activeElement;
+    document.querySelectorAll('dialog[open]').forEach(dialog => closeDialog(dialog));
+    const dialog = $(id);
+    document.body.classList.add('modal-open');
+    if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
   }
-
-  // --- TAB NAVIGATION ---
-  function switchTab(tabId) {
-    playClickSound();
-    document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.drawer-tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-section').forEach(s => s.style.display = 'none');
-
-    const btn = document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`);
-    if (btn) btn.classList.add('active');
-    const drawerBtn = document.querySelector(`.drawer-tab-btn[data-tab="${tabId}"]`);
-    if (drawerBtn) drawerBtn.classList.add('active');
-
-    if (tabId === 'calculator') {
-      document.getElementById('sectionCalculator').style.display = 'flex';
-    } else if (tabId === 'tierlist') {
-      document.getElementById('sectionTierlist').style.display = 'flex';
-      renderItemsGrid();
-    } else if (tabId === 'forecasts') {
-      document.getElementById('sectionForecasts').style.display = 'block';
-      renderForecastsSection();
-    } else if (tabId === 'hourly-changes') {
-      document.getElementById('sectionHourlyChanges').style.display = 'block';
-      renderHourlyChanges();
-    } else if (tabId === 'community') {
-      document.getElementById('sectionCommunity').style.display = 'flex';
-    } else if (tabId === 'guide') {
-      document.getElementById('sectionGuide').style.display = 'block';
-    }
-
-    closeMobileDrawer();
+  function closeDialog(dialog) {
+    if (!dialog) return;
+    if (typeof dialog.close === 'function') dialog.close(); else dialog.removeAttribute('open');
+    if (!document.querySelector('dialog[open]')) document.body.classList.remove('modal-open');
+    if (dialog.id === 'itemDetailModal') detailId = null;
+    if (returnFocus?.isConnected && !returnFocus.closest('[hidden]')) returnFocus.focus({ preventScroll: true });
   }
-
-  // --- INITIALIZATION ---
-  function initApp() {
-    preloadSounds();
-
-    // Nav Tabs click (Desktop)
-    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tab = btn.getAttribute('data-tab');
-        switchTab(tab);
-      });
-    });
-
-    // Mobile Drawer buttons
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    if (menuBtn) menuBtn.addEventListener('click', toggleMobileDrawer);
-
-    const drawerCloseBtn = document.getElementById('mobileDrawerCloseBtn');
-    if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeMobileDrawer);
-
-    const drawerBackdrop = document.getElementById('mobileNavBackdrop');
-    if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeMobileDrawer);
-
-    const drawerBrandHomeBtn = document.getElementById('drawerBrandHomeBtn');
-    if (drawerBrandHomeBtn) drawerBrandHomeBtn.addEventListener('click', () => switchTab('calculator'));
-
-    document.querySelectorAll('.drawer-tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tab = btn.getAttribute('data-tab');
-        switchTab(tab);
-      });
-    });
-
-    const drawerLangBtn = document.getElementById('drawerLangToggleBtn');
-    if (drawerLangBtn) drawerLangBtn.addEventListener('click', toggleLanguage);
-
-    const drawerAudioBtn = document.getElementById('drawerAudioToggleBtn');
-    if (drawerAudioBtn) {
-      drawerAudioBtn.addEventListener('click', () => {
-        audioEnabled = !audioEnabled;
-        setStored('gpo_audio', audioEnabled);
-        const iconSvg = window.getIcon ? window.getIcon(audioEnabled ? 'volume-2' : 'volume-x') : (audioEnabled ? 'ON' : 'OFF');
-        const audioBtn = document.getElementById('audioToggleBtn');
-        if (audioBtn) audioBtn.innerHTML = iconSvg;
-        const dIcon = document.getElementById('drawerAudioIcon');
-        if (dIcon) dIcon.innerHTML = iconSvg;
-        if (audioEnabled) playCoinSound();
-      });
-    }
-
-    document.getElementById('brandHomeBtn').addEventListener('click', () => switchTab('calculator'));
-
-    // Language toggle (Desktop Header)
-    document.getElementById('langToggleBtn').addEventListener('click', toggleLanguage);
-
-    // Audio toggle (Desktop Header)
-    document.getElementById('audioToggleBtn').addEventListener('click', () => {
-      audioEnabled = !audioEnabled;
-      setStored('gpo_audio', audioEnabled);
-      const iconSvg = window.getIcon ? window.getIcon(audioEnabled ? 'volume-2' : 'volume-x') : (audioEnabled ? 'ON' : 'OFF');
-      const audioBtn = document.getElementById('audioToggleBtn');
-      if (audioBtn) audioBtn.innerHTML = iconSvg;
-      const dIcon = document.getElementById('drawerAudioIcon');
-      if (dIcon) dIcon.innerHTML = iconSvg;
-      if (audioEnabled) playCoinSound();
-    });
-
-    // Trade actions
-    document.getElementById('btnSwapSides').addEventListener('click', swapTradeSides);
-    document.getElementById('btnClearTrade').addEventListener('click', clearAllTrade);
-    document.getElementById('btnShareTrade').addEventListener('click', copyTradeShareLink);
-    const discordBtn = document.getElementById('btnDiscordExport');
-    if (discordBtn) discordBtn.addEventListener('click', copyDiscordTradeFormat);
-
-    // Search input clear toggles
-    const setupSearchClear = (inputId, btnId) => {
-      const inp = document.getElementById(inputId);
-      const btn = document.getElementById(btnId);
-      if (inp && btn) {
-        inp.addEventListener('input', () => {
-          btn.classList.toggle('visible', inp.value.trim().length > 0);
-        });
-      }
-    };
-    setupSearchClear('searchInput', 'searchClearBtn');
-    setupSearchClear('quickSearchInput', 'quickSearchClearBtn');
-    setupSearchClear('pickerSearchInput', 'pickerSearchClearBtn');
-    setupSearchClear('forecastSearchInput', 'forecastSearchClearBtn');
-
-    // Keyboard Shortcuts (Escape to close modals, / to search)
-    const handleKeydown = (e) => {
-      if (e.key === 'Escape') {
-        const pickerModal = document.getElementById('itemPickerModal');
-        const detailModal = document.getElementById('itemDetailModal');
-        const mobileDrawer = document.getElementById('mobileNavDrawer');
-        if (pickerModal && pickerModal.classList.contains('open')) {
-          closePickerModal();
-        } else if (detailModal && detailModal.classList.contains('open')) {
-          closeDetailModal();
-        } else if (mobileDrawer && mobileDrawer.classList.contains('open')) {
-          closeMobileDrawer();
-        }
-      }
-      if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement ? document.activeElement.tagName : '')) {
-        e.preventDefault();
-        const activeSection = document.querySelector('.tab-section:not([style*="display: none"])');
-        if (activeSection && activeSection.id === 'sectionTierlist') {
-          const inp = document.getElementById('searchInput');
-          if (inp) inp.focus();
-        } else if (activeSection && activeSection.id === 'sectionForecasts') {
-          const inp = document.getElementById('forecastSearchInput');
-          if (inp) inp.focus();
-        } else {
-          const inp = document.getElementById('quickSearchInput');
-          if (inp) inp.focus();
-        }
-      }
-    };
-    document.addEventListener('keydown', handleKeydown);
-    if (typeof window !== 'undefined') window.addEventListener('keydown', handleKeydown);
-
-    // Hash change handler for live links
-    window.addEventListener('hashchange', () => {
-      loadTradeFromUrl();
-    });
-
-    // Search & Sort filters (Debounced for silky-smooth typing on weak devices)
-    let searchDebounceTimer = null;
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-      searchQuery = e.target.value;
-      clearTimeout(searchDebounceTimer);
-      searchDebounceTimer = setTimeout(() => {
-        renderItemsGrid();
-      }, 120);
-    });
-
-    document.getElementById('sortSelect').addEventListener('change', (e) => {
-      currentSort = e.target.value;
-      renderItemsGrid();
-    });
-
-    // Category pills
-    document.querySelectorAll('#categoryPillsRow .filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#categoryPillsRow .filter-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentCategory = btn.getAttribute('data-cat');
-        playClickSound();
-        renderItemsGrid();
-      });
-    });
-
-    // Tier pills
-    document.querySelectorAll('#tierPillsRow .tier-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#tierPillsRow .tier-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentTier = btn.getAttribute('data-tier');
-        playClickSound();
-        renderItemsGrid();
-      });
-    });
-
-    // Picker Category pills inside modal
-    document.querySelectorAll('#pickerCategoryPills .filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#pickerCategoryPills .filter-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        pickerCategory = btn.getAttribute('data-pcat');
-        playClickSound();
-        filterPickerItems();
-      });
-    });
-
-    // Close modals on clicking overlay outside card
-    document.querySelectorAll('.comic-modal-overlay').forEach(overlay => {
-      overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-          overlay.classList.remove('open');
-          playModalClose();
-        }
-      });
-    });
-
-    // Load from URL hash if present
-    loadTradeFromUrl();
-
-    // Quick Category pills in calculator
-    document.querySelectorAll('#quickCategoryPillsRow .filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#quickCategoryPillsRow .filter-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        quickCategory = btn.getAttribute('data-qcat');
-        playClickSound();
-        renderQuickItemsGrid();
-      });
-    });
-
-    // Forecast Search Input
-    let forecastSearchDebounceTimer = null;
-    const fSearchInput = document.getElementById('forecastSearchInput');
-    if (fSearchInput) {
-      fSearchInput.addEventListener('input', (e) => {
-        forecastSearch = e.target.value;
-        clearTimeout(forecastSearchDebounceTimer);
-        forecastSearchDebounceTimer = setTimeout(() => {
-          renderForecastsSection();
-        }, 120);
-      });
-    }
-
-    // Forecast Status Filter Pills
-    document.querySelectorAll('#forecastStatusPills .filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#forecastStatusPills .filter-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        forecastStatusFilter = btn.getAttribute('data-fstatus');
-        playClickSound();
-        renderForecastsSection();
-      });
-    });
-
-    // Forecast Category Filter Pills
-    document.querySelectorAll('#forecastCategoryPills .filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#forecastCategoryPills .filter-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        forecastCategoryFilter = btn.getAttribute('data-fcat');
-        playClickSound();
-        renderForecastsSection();
-      });
-    });
-
-    // Timeframe Period Switcher (1h / 24h / 7d)
-    document.querySelectorAll('#forecastTimeframeGroup .f-tf-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#forecastTimeframeGroup .f-tf-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentForecastTimeframe = btn.getAttribute('data-tf') || '1h';
-        playClickSound();
-        renderForecastsSection();
-      });
-    });
-
-    // Hourly Changes Subtabs (UP / DOWN / ALL)
-    document.querySelectorAll('.hourly-subtab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.hourly-subtab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentHourlySubTab = btn.getAttribute('data-subtab') || 'up';
-        playClickSound();
-        renderHourlyChanges();
-      });
-    });
-
-    // Hourly Changes Search Input
-    let hourlySearchDebounceTimer = null;
-    const hSearchInput = document.getElementById('hourlySearchInput');
-    if (hSearchInput) {
-      hSearchInput.addEventListener('input', (e) => {
-        hourlySearchQuery = e.target.value;
-        clearTimeout(hourlySearchDebounceTimer);
-        hourlySearchDebounceTimer = setTimeout(() => {
-          renderHourlyChanges();
-        }, 120);
-      });
-    }
-
-    // Hourly Changes Category Filter Pills
-    document.querySelectorAll('#hourlyCategoryPills .filter-pill-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#hourlyCategoryPills .filter-pill-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        hourlyCategoryFilter = btn.getAttribute('data-hcat') || 'all';
-        playClickSound();
-        renderHourlyChanges();
-      });
-    });
-
-    // Load live values and hourly changes (with cache-busting), then render
-    loadLiveValues().then(() => {
-      loadHourlyMarketData().then(() => {
-        applyLanguage();
-        renderItemsGrid();
-        renderQuickItemsGrid();
-        renderForecastsSection();
-        renderHourlyChanges();
-      });
-    });
+  function openPicker(side) {
+    if (!data || !['you', 'they'].includes(side)) return;
+    pickerSide = side;
+    filters.picker = { query: '', category: 'all', limit: batchSize };
+    $('pickerSearchInput').value = '';
+    $('pickerModalTitle').textContent = t(side === 'you' ? 'picker_you' : 'picker_they');
+    updateSearchClear('picker'); renderCategories(); renderPicker();
+    openDialog('itemPickerModal');
+    if (window.matchMedia?.('(pointer: fine)').matches) $('pickerSearchInput').focus();
   }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
-  } else {
-    initApp();
+  function openDetail(id) {
+    if (!byId.has(id)) return;
+    renderDetail(id);
+    openDialog('itemDetailModal');
+    detailId = id;
   }
-
-  // --- FORECASTS & MARKET ANALYTICS ENGINE ---
-  let liveMarketData = null;
-  let currentForecastTimeframe = '1h';
-  let forecastSearch = '';
-  let forecastStatusFilter = 'all';
-  let forecastCategoryFilter = 'all';
-
-  async function loadLiveValues() {
+  function renderDetail(id) {
+    const item = byId.get(id);
+    if (!item) return;
+    const body = $('detailBody');
+    const top = element('div', 'detail-top');
+    const text = element('div');
+    const title = element('h2', '', nameOf(item));
+    title.id = 'detailName';
+    const price = element('div', 'detail-price', points(item.value));
+    price.append(element('span', 'detail-lc', `${number(item.lcValue)} LC`));
+    const badges = element('div', 'detail-badges');
+    badges.append(tierTag(item), element('span', '', t(item.rank_locked ? 'locked_order' : 'flexible_order')));
+    text.append(badges, title, price, evidenceTag(item));
+    top.append(image(item, 135, 'detail-image'), text);
+    const facts = element('dl', 'detail-facts');
+    const entries = [
+      ['independent_traders', number(item.observation_authors ?? 0)],
+      ['quote_range', Array.isArray(item.quote_range) ? `${number(item.quote_range[0])}–${points(item.quote_range[1])}` : '—'],
+      ['last_observed', item.last_observed_at ? dateText(item.last_observed_at) : t('no_observations')],
+      ['price_updated', item.price_updated_at ? dateText(item.price_updated_at) : t('no_price_update')],
+      ['point_reference', item.id === data.currency.anchor_id ? t('currency_note') : t(`reference_${item.reference_basis || (item.value === null ? 'unknown' : 'historical')}`)],
+      ['weekly_demand', item.demandScore === null || item.demandScore === undefined ? '—' : `${number(item.demandScore, 1)} / 10`],
+      ['source_position', `#${item.official_rank} · ${item.tier}`],
+    ];
+    for (const [key, value] of entries) { const fact = element('div', 'detail-fact'); fact.append(element('dt', '', t(key)), element('dd', '', value)); facts.append(fact); }
+    const chart = element('div', 'history-block');
+    chart.id = 'detailHistory';
+    chart.append(element('h3', '', t('history_title')), element('p', 'history-empty', t('history_loading')));
+    const actions = element('div', 'detail-actions');
+    actions.append(button(t('picker_you'), 'detail-add', 'game-button', { id, side: 'you' }), button(t('picker_they'), 'detail-add', 'game-button gold-button', { id, side: 'they' }));
+    if (/^https:\/\/grand-piece-online\.fandom\.com\/wiki\//.test(item.wikiUrl || '')) {
+      const link = element('a', 'text-link', t('wiki_item'));
+      Object.assign(link, { href: item.wikiUrl, target: '_blank', rel: 'noopener noreferrer' });
+      actions.append(link);
+    }
+    body.replaceChildren(top, facts);
+    if (item.value === null) body.append(element('p', 'detail-note', t('unknown_note')));
+    else if ((item.observation_authors || 0) < 5) body.append(element('p', 'detail-note', t('preliminary_note')));
+    else if (item.constraint_applied) body.append(element('p', 'detail-note', t('rank_constraint')));
+    if (!item.rank_locked) body.append(element('p', 'fine-print', t('flexible_note')));
+    body.append(chart, actions);
+    loadHistory(item, chart);
+  }
+  async function loadHistory(item, container) {
     try {
-      const res = await fetch(`data/values.json?v=${Date.now()}`);
-      if (res.ok) {
-        liveMarketData = await res.json();
-        if (liveMarketData && Array.isArray(liveMarketData.items) && liveMarketData.items.length > 0) {
-          window.GPO_ITEMS = liveMarketData.items;
-        }
-      }
-    } catch (e) {
-      console.log('Using local embedded items database:', e);
+      if (!historyPromise) historyPromise = fetch('data/history.json', { cache: 'no-cache' }).then(response => { if (!response.ok) throw new Error(); return response.json(); });
+      const historyData = await historyPromise;
+      if (!container.isConnected) return;
+      const limit = Date.parse(data.meta.updated_at_iso);
+      const samples = (historyData.items?.[item.id] || []).filter(sample => Array.isArray(sample) && Number.isFinite(Date.parse(sample[0])) && Date.parse(sample[0]) <= limit && Number.isFinite(sample[1]) && sample[1] > 0).slice(-43);
+      const title = element('h3', '', t('history_title'));
+      container.replaceChildren(title);
+      if (samples.length < 2) { container.append(element('p', 'history-empty', t('history_empty'))); return; }
+      const min = Math.min(...samples.map(sample => sample[1]));
+      const max = Math.max(...samples.map(sample => sample[1]));
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 600 120'); svg.classList.add('history-chart'); svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', t('history_description', { name: nameOf(item) }));
+      const line = document.createElementNS(svg.namespaceURI, 'polyline');
+      line.setAttribute('points', samples.map((sample, i) => `${5 + i / (samples.length - 1) * 590},${max === min ? 60 : 110 - (sample[1] - min) / (max - min) * 100}`).join(' '));
+      line.setAttribute('fill', 'none'); line.setAttribute('stroke', '#ffc764'); line.setAttribute('stroke-width', '2.5'); line.setAttribute('vector-effect', 'non-scaling-stroke'); svg.append(line);
+      const caption = element('div', 'history-caption');
+      caption.append(element('span', '', `${dateText(samples[0][0])} · ${points(min)}`), element('span', '', `${dateText(samples.at(-1)[0])} · ${points(max)}`));
+      container.append(svg, caption);
+    } catch {
+      historyPromise = null;
+      if (container.isConnected) container.replaceChildren(element('h3', '', t('history_title')), element('p', 'history-empty', t('history_error')));
     }
   }
 
-  function renderForecastsSection() {
-    const items = window.GPO_ITEMS || [];
-    if (!items.length) return;
-
-    // 1. Resolve Timeframe Summary
-    const tfKey = currentForecastTimeframe || '1h';
-    const tfSummary = (liveMarketData && liveMarketData.forecast_summary && liveMarketData.forecast_summary[tfKey]) ||
-                      (liveMarketData && liveMarketData.forecast_summary) || {};
-
-    const tfLabel = tfKey === '1h' ? (currentLang === 'ru' ? 'за 1 час' : '1h') :
-                    tfKey === '24h' ? (currentLang === 'ru' ? 'за 24ч' : '24h') :
-                    (currentLang === 'ru' ? 'за 7 дней' : '7d');
-
-    // 2. Meta Pills
-    const updatedEl = document.getElementById('forecastLastUpdatedVal');
-    const tradesEl = document.getElementById('forecastTradesCountVal');
-    const sentimentEl = document.getElementById('forecastSentimentVal');
-
-    if (liveMarketData && liveMarketData.meta) {
-      if (updatedEl) updatedEl.textContent = liveMarketData.meta.updated_at || 'Live Hourly Sync';
-      const tradesCount = tfSummary.trades_analyzed || (tfKey === '1h' ? 10000 : tfKey === '24h' ? 25000 : 42000);
-      if (tradesEl) tradesEl.textContent = `${tradesCount.toLocaleString()} trades (${tfLabel})`;
-      if (sentimentEl) {
-        sentimentEl.textContent = tfSummary.market_sentiment || 'Bullish';
-        sentimentEl.style.color = (tfSummary.market_sentiment === 'Bullish') ? 'var(--green-glow)' : (tfSummary.market_sentiment === 'Bearish') ? 'var(--red-glow)' : 'var(--cyan-glow)';
-      }
-    } else {
-      if (updatedEl) updatedEl.textContent = 'Live Hourly Sync';
-      if (tradesEl) tradesEl.textContent = `10,000 trades (${tfLabel})`;
-      if (sentimentEl) sentimentEl.textContent = 'Active';
-    }
-
-    // 3. Highlights Lists for Selected Timeframe
-    const risingContainer = document.getElementById('forecastRisingList');
-    const fallingContainer = document.getElementById('forecastFallingList');
-    const alertsContainer = document.getElementById('forecastAlertsList');
-
-    const risingItems = (tfSummary.top_rising && tfSummary.top_rising.length > 0)
-      ? tfSummary.top_rising.slice(0, 4)
-      : [...items].filter(it => {
-          const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-          return tfd.trend === 'Rising' || tfd.trend === 'Overpaid' || (tfd.pressure_ratio || 1) >= 1.25;
-        }).sort((a, b) => {
-          const rA = ((a.timeframes && a.timeframes[tfKey]) || a).pressure_ratio || 1;
-          const rB = ((b.timeframes && b.timeframes[tfKey]) || b).pressure_ratio || 1;
-          return rB - rA;
-        }).slice(0, 4);
-
-    const fallingItems = (tfSummary.top_falling && tfSummary.top_falling.length > 0)
-      ? tfSummary.top_falling.slice(0, 4)
-      : [...items].filter(it => {
-          const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-          return tfd.trend === 'Falling' || (tfd.pressure_ratio || 1) <= 0.85;
-        }).sort((a, b) => {
-          const rA = ((a.timeframes && a.timeframes[tfKey]) || a).pressure_ratio || 1;
-          const rB = ((b.timeframes && b.timeframes[tfKey]) || b).pressure_ratio || 1;
-          return rA - rB;
-        }).slice(0, 4);
-
-    const alertItems = (tfSummary.tier_pressure_candidates && tfSummary.tier_pressure_candidates.length > 0)
-      ? tfSummary.tier_pressure_candidates.slice(0, 4)
-      : [...items].filter(it => {
-          const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-          return Boolean(tfd.tier_pressure_alert);
-        }).slice(0, 4);
-
-    if (risingContainer) {
-      risingContainer.innerHTML = risingItems.map(it => {
-        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-        const drift = tfd.predicted_change_pct ? (tfd.predicted_change_pct > 0 ? `+${tfd.predicted_change_pct}%` : `${tfd.predicted_change_pct}%`) : '+4.5%';
-        const ratio = tfd.pressure_ratio || 1.4;
-        return `
-          <div class="highlight-item-row" onclick="window.GPO_APP.openDetail('${it.id}')">
-            <div class="highlight-item-left">
-              <img src="${it.image}" alt="${name}" class="highlight-item-img" loading="lazy">
-              <div class="highlight-item-meta">
-                <span class="highlight-item-name">#${it.official_rank || 1} ${name}</span>
-                <span class="highlight-item-sub">
-                  <span style="color: var(--gold-glow); font-weight: 700;">★ ${it.demandScore}</span> • 
-                  <span>LF: ${tfd.demand_count !== undefined ? tfd.demand_count : 12} / Offer: ${tfd.supply_count !== undefined ? tfd.supply_count : 4}</span>
-                </span>
-              </div>
-            </div>
-            <div class="highlight-item-right">
-              <span class="badge-forecast-status badge-status-rising">${drift} 📈</span>
-              <small style="color: var(--cyan-glow); font-size: 0.7rem; font-weight: 700;">Ratio: ${ratio}x</small>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    if (fallingContainer) {
-      fallingContainer.innerHTML = fallingItems.map(it => {
-        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-        const drift = tfd.predicted_change_pct ? (tfd.predicted_change_pct > 0 ? `+${tfd.predicted_change_pct}%` : `${tfd.predicted_change_pct}%`) : '-3.5%';
-        const ratio = tfd.pressure_ratio || 0.7;
-        return `
-          <div class="highlight-item-row" onclick="window.GPO_APP.openDetail('${it.id}')">
-            <div class="highlight-item-left">
-              <img src="${it.image}" alt="${name}" class="highlight-item-img" loading="lazy">
-              <div class="highlight-item-meta">
-                <span class="highlight-item-name">#${it.official_rank || 1} ${name}</span>
-                <span class="highlight-item-sub">
-                  <span style="color: var(--gold-glow); font-weight: 700;">★ ${it.demandScore}</span> • 
-                  <span>LF: ${tfd.demand_count !== undefined ? tfd.demand_count : 3} / Offer: ${tfd.supply_count !== undefined ? tfd.supply_count : 14}</span>
-                </span>
-              </div>
-            </div>
-            <div class="highlight-item-right">
-              <span class="badge-forecast-status badge-status-falling">${drift} 📉</span>
-              <small style="color: #f87171; font-size: 0.7rem; font-weight: 700;">Ratio: ${ratio}x</small>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    if (alertsContainer) {
-      alertsContainer.innerHTML = alertItems.map(it => {
-        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-        const alertObj = it.alert || tfd.tier_pressure_alert;
-        const alertText = alertObj ? (currentLang === 'ru' ? alertObj.ru : alertObj.en) : (currentLang === 'ru' ? 'Высокий шанс повышения позиции в тир-листе' : 'High tier promotion momentum');
-        return `
-          <div class="highlight-item-row" onclick="window.GPO_APP.openDetail('${it.id}')" style="border-color: rgba(168, 85, 247, 0.45);">
-            <div class="highlight-item-left">
-              <img src="${it.image}" alt="${name}" class="highlight-item-img" loading="lazy">
-              <div class="highlight-item-meta">
-                <span class="highlight-item-name" style="color: #c084fc;">#${it.official_rank || it.current_rank || 1} ${name}</span>
-                <span style="font-size: 0.72rem; color: #e2e8f0; line-height: 1.25;">${alertText}</span>
-              </div>
-            </div>
-            <div class="highlight-item-right">
-              <span class="badge-forecast-status" style="background: rgba(168, 85, 247, 0.25); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.5);">ALERT ⚠️</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // 4. Main Analytics Table
-    const tbody = document.getElementById('forecastTableBody');
-    if (!tbody) return;
-
-    let filtered = [...items];
-
-    if (forecastSearch.trim()) {
-      filtered = filtered.filter(it => matchItemQuery(it, forecastSearch));
-    }
-
-    if (forecastCategoryFilter !== 'all') {
-      filtered = filtered.filter(it => it.category === forecastCategoryFilter);
-    }
-
-    if (forecastStatusFilter === 'Rising') {
-      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Rising'));
-    } else if (forecastStatusFilter === 'Overpaid') {
-      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Overpaid'));
-    } else if (forecastStatusFilter === 'Falling') {
-      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Falling'));
-    } else if (forecastStatusFilter === 'Stable') {
-      filtered = filtered.filter(it => (((it.timeframes && it.timeframes[tfKey]) || it).trend === 'Stable'));
-    } else if (forecastStatusFilter === 'Alert') {
-      filtered = filtered.filter(it => Boolean(((it.timeframes && it.timeframes[tfKey]) || it).tier_pressure_alert));
-    }
-
-    if (filtered.length === 0) {
-      tbody.innerHTML = `
-        <tr>
-          <td colspan="9" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
-            <h4>${t('no_items_found')}</h4>
-            <p>${t('no_items_sub')}</p>
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    tbody.innerHTML = filtered.map(it => {
-      const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-      const rank = it.official_rank || 1;
-      const tfd = (it.timeframes && it.timeframes[tfKey]) || it;
-      const ratio = tfd.pressure_ratio || 1.0;
-      const pct = tfd.predicted_change_pct ? (tfd.predicted_change_pct > 0 ? `+${tfd.predicted_change_pct}%` : `${tfd.predicted_change_pct}%`) : '0.0%';
-      const fillWidth = Math.min(100, Math.max(10, Math.round(ratio / 2.5 * 100)));
-      const fillColor = ratio >= 1.25 ? 'var(--green-glow)' : ratio <= 0.8 ? 'var(--red-glow)' : 'var(--cyan-glow)';
-
-      let statusBadge = '';
-      if (tfd.trend === 'Overpaid') {
-        statusBadge = `<span class="badge-forecast-status badge-status-overpaid">OVERPAY 🔥</span>`;
-      } else if (tfd.trend === 'Rising') {
-        statusBadge = `<span class="badge-forecast-status badge-status-rising">RISING 📈</span>`;
-      } else if (tfd.trend === 'Falling') {
-        statusBadge = `<span class="badge-forecast-status badge-status-falling">FALLING 📉</span>`;
-      } else {
-        statusBadge = `<span class="badge-forecast-status badge-status-stable">STABLE ➖</span>`;
-      }
-
-      const alertMarkup = tfd.tier_pressure_alert
-        ? `<div class="tier-pressure-note" title="${currentLang === 'ru' ? tfd.tier_pressure_alert.ru : tfd.tier_pressure_alert.en}">
-            <span>⚠️</span> <span>${currentLang === 'ru' ? tfd.tier_pressure_alert.ru : tfd.tier_pressure_alert.en}</span>
-          </div>`
-        : statusBadge;
-
-      return `
-        <tr onclick="window.GPO_APP.openDetail('${it.id}')">
-          <td class="table-rank-cell">#${rank}</td>
-          <td>
-            <div class="table-item-cell">
-              <img src="${it.image}" alt="${name}" class="table-item-img" loading="lazy">
-              <div>
-                <div class="table-item-title">${name}</div>
-                <div class="table-item-tier">
-                  <span style="color: var(--cyan-glow);">${it.tier}</span> • ${it.category}
-                  ${it.abbreviation ? ` • <span style="color: var(--gold-glow); font-weight: 700;">[${it.abbreviation}]</span>` : ''}
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div style="font-weight: 700; color: var(--gold-beli);">${formatPts(it.value)} pts</div>
-            <div style="font-size: 0.74rem; color: var(--cyan-glow);">${it.lcValue} LC</div>
-          </td>
-          <td>
-            <div style="display: flex; align-items: center; gap: 0.3rem; font-weight: 700; color: var(--gold-glow);">
-              <span>★</span> <span>${it.demandScore}</span><small style="color: var(--text-muted); font-size: 0.7rem;">/10</small>
-            </div>
-            <div style="font-size: 0.72rem; color: var(--text-muted);">${(translations[currentLang].demand_labels && translations[currentLang].demand_labels[it.demand]) || it.demand}</div>
-          </td>
-          <td>
-            <span style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.76rem;">
-              ${tfd.demand_count !== undefined ? tfd.demand_count : 5} LF
-            </span>
-          </td>
-          <td>
-            <span style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.76rem;">
-              ${tfd.supply_count !== undefined ? tfd.supply_count : 4} Offer
-            </span>
-          </td>
-          <td>
-            <div class="pressure-meter-box">
-              <div class="pressure-meter-label">
-                <span style="color: ${fillColor};">${ratio}x</span>
-                <span style="color: var(--text-muted); font-size: 0.68rem;">${ratio >= 1.0 ? 'Buyer Dominant' : 'Seller Dominant'}</span>
-              </div>
-              <div class="pressure-meter-track">
-                <div class="pressure-meter-fill" style="width: ${fillWidth}%; background: ${fillColor};"></div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div style="font-weight: 800; font-size: 0.88rem; color: ${tfd.predicted_change_pct >= 0 ? 'var(--green-glow)' : 'var(--red-glow)'};">
-              ${pct}
-            </div>
-            <small style="color: var(--text-muted); font-size: 0.7rem;">drift</small>
-          </td>
-          <td>
-            ${alertMarkup}
-          </td>
-        </tr>
-      `;
-    }).join('');
-
-    renderIcons(document.getElementById('sectionForecasts'));
+  function updateSearchClear(scope) {
+    const clear = document.querySelector(`[data-action="clear-search"][data-scope="${scope}"]`);
+    if (clear) { clear.hidden = !filters[scope].query.trim(); clear.setAttribute('aria-label', t('clear_search')); }
   }
-
-  // --- HOURLY TRADE STREAM CHANGES (UP & DOWN TABLES) ---
-  let hourlyMarketData = null;
-  let currentHourlySubTab = 'up'; // 'up', 'down', 'all'
-  let hourlySearchQuery = '';
-  let hourlyCategoryFilter = 'all';
-
-  async function loadHourlyMarketData() {
-    try {
-      const res = await fetch(`data/hourly_changes.json?v=${Date.now()}`);
-      if (res.ok) {
-        hourlyMarketData = await res.json();
-      }
-    } catch (e) {
-      console.log('Hourly market changes data not yet available from fetch:', e);
-    }
-    renderHourlyChanges();
+  function clearSearch(scope) {
+    if (!filters[scope]) return;
+    clearTimeout(searchTimers.get(scope));
+    filters[scope].query = '';
+    filters[scope].limit = batchSize;
+    $(inputs[scope]).value = '';
+    updateSearchClear(scope); renderScope(scope); writeFilters();
+    $(inputs[scope]).focus();
   }
-
-  function getHourlyChangesDataset() {
-    if (hourlyMarketData && (Array.isArray(hourlyMarketData.up) || Array.isArray(hourlyMarketData.down))) {
-      return hourlyMarketData;
+  function writeFilters(push = false) {
+    const url = new URL(location.href);
+    url.searchParams.set('tab', tab);
+    const filter = filters[scopes[tab]];
+    for (const [key, value] of Object.entries({ q: filter?.query || '', category: filter?.category === 'all' ? '' : filter?.category || '', tier: tab === 'tierlist' && tier !== 'all' ? tier : '', direction: tab === 'hourly-changes' && direction !== 'all' ? direction : '' })) {
+      if (value) url.searchParams.set(key, value); else url.searchParams.delete(key);
     }
-    // Fallback: derive dynamic 1h changes from window.GPO_ITEMS or liveMarketData
-    const items = window.GPO_ITEMS || [];
-    const up = [];
-    const down = [];
-    items.forEach(it => {
-      const tfd = (it.timeframes && it.timeframes['1h']) || it;
-      const pct = typeof tfd.predicted_change_pct === 'number' ? tfd.predicted_change_pct : 0;
-      const val = parseFloat(it.value || 0);
-      if (Math.abs(pct) >= 1.0 && val > 0) {
-        const oldVal = Math.round((val / (1.0 + pct / 100.0)) * 100) / 100;
-        const delta = Math.round((val - oldVal) * 100) / 100;
-        const entry = {
-          id: it.id,
-          name: it.name,
-          nameRu: it.nameRu || it.name,
-          category: it.category || 'misc',
-          tier: it.tier || '',
-          subTier: it.subTier || '',
-          image: it.image || `images/${it.id}.png`,
-          old_value: oldVal,
-          new_value: val,
-          delta_pts: delta,
-          delta_pct: Math.round(pct * 100) / 100,
-          demand: it.demand || 'Medium',
-          trend: it.trend || 'Stable'
-        };
-        if (delta > 0) up.push(entry);
-        else if (delta < 0) down.push(entry);
-      }
+    history[push ? 'pushState' : 'replaceState'](null, '', url);
+  }
+  function readRoute() {
+    const params = new URLSearchParams(location.search);
+    tab = tabs.includes(params.get('tab')) ? params.get('tab') : 'calculator';
+    if (scopes[tab]) {
+      const filter = filters[scopes[tab]];
+      filter.query = (params.get('q') || '').slice(0, 200);
+      filter.category = categories.includes(params.get('category')) ? params.get('category') : 'all';
+      filter.limit = batchSize;
+      $(inputs[scopes[tab]]).value = filter.query;
+      updateSearchClear(scopes[tab]);
+    }
+    tier = params.get('tier') || 'all';
+    direction = ['up', 'down'].includes(params.get('direction')) ? params.get('direction') : 'all';
+    showTab();
+  }
+  function showTab() {
+    document.querySelectorAll('[data-section]').forEach(section => { section.hidden = section.dataset.section !== tab; });
+    document.querySelectorAll('.main-nav [data-tab]').forEach(link => {
+      const active = link.dataset.tab === tab;
+      link.classList.toggle('active', active);
+      if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
     });
-
-    up.sort((a, b) => (b.delta_pct - a.delta_pct) || (b.delta_pts - a.delta_pts));
-    down.sort((a, b) => (a.delta_pct - b.delta_pct) || (a.delta_pts - b.delta_pts));
-
-    return {
-      updated_at: (liveMarketData && liveMarketData.meta && liveMarketData.meta.updated_at) || 'Live Hourly Cycle',
-      total_trades_analyzed: 10000,
-      total_changes: up.length + down.length,
-      up_count: up.length,
-      down_count: down.length,
-      up: up,
-      down: down
-    };
+    document.querySelectorAll('[data-action="change-filter"]').forEach(node => { const active = node.dataset.direction === direction; node.classList.toggle('active', active); node.setAttribute('aria-pressed', String(active)); });
+    if (data) { fillTierSelect(); renderCategories(); renderCurrent(); }
+  }
+  function switchTab(next, push = true) {
+    if (!tabs.includes(next)) return;
+    tab = next;
+    writeFilters(push);
+    showTab();
+  }
+  function translate() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(node => { node.textContent = t(node.dataset.i18n); });
+    document.querySelectorAll('[data-placeholder]').forEach(node => { node.placeholder = t(node.dataset.placeholder); });
+    $('langCode').textContent = lang.toUpperCase();
+    $('audioToggleBtn').setAttribute('aria-label', t(audioEnabled ? 'sound_on' : 'sound_off'));
+    $('audioToggleBtn').setAttribute('aria-pressed', String(audioEnabled));
+    $('audioToggleBtn').replaceChildren(icon(audioEnabled ? 'volume-2' : 'volume-x'));
+    document.querySelectorAll('[data-action="close-dialog"]').forEach(node => node.setAttribute('aria-label', t('close')));
+    $('hourlySubTabUp').setAttribute('aria-label', t('increases'));
+    $('hourlySubTabDown').setAttribute('aria-label', t('decreases'));
+    Object.keys(inputs).forEach(updateSearchClear);
+    if (data) { renderSource(); renderCategories(); fillTierSelect(); renderTrade(); renderCurrent(); }
+    if (detailId && $('itemDetailModal').open) renderDetail(detailId);
+  }
+  async function share(discord = false) {
+    saveTrade();
+    let text = location.href;
+    if (discord) {
+      const describe = side => trade[side].map(entry => `${nameOf(byId.get(entry.id) || { name: t('unavailable_item') })} ×${entry.qty}`).join(', ') || '—';
+      text = `GPO Values\n${t('export_you')}: ${describe('you')} — ${points(sideTotal('you').value)}\n${t('export_they')}: ${describe('they')} — ${points(sideTotal('they').value)}\n${t('export_note', { time: dateText(data.meta.updated_at_iso) })}\n${location.href}`;
+    }
+    try { await navigator.clipboard.writeText(text); toast(t('copied')); }
+    catch { $('shareText').value = text; openDialog('shareModal'); $('shareText').focus(); $('shareText').select(); }
   }
 
-  function renderHourlyChanges() {
-    const section = document.getElementById('sectionHourlyChanges');
-    if (!section) return;
-
-    const dataset = getHourlyChangesDataset();
-    const upItems = dataset.up || [];
-    const downItems = dataset.down || [];
-    const allItems = [...upItems, ...downItems];
-
-    // Meta stats
-    const updatedEl = document.getElementById('hourlyLastUpdatedVal');
-    const tradesEl = document.getElementById('hourlyTradesCountVal');
-    const metaUpEl = document.getElementById('hourlyMetaUpCount');
-    const metaDownEl = document.getElementById('hourlyMetaDownCount');
-
-    if (updatedEl) updatedEl.textContent = dataset.updated_at || 'Live Hourly Sync';
-    if (tradesEl) tradesEl.textContent = `${(dataset.total_trades_analyzed || 10000).toLocaleString()} trades / 1h`;
-    if (metaUpEl) metaUpEl.textContent = `${upItems.length} ${currentLang === 'ru' ? 'предметов' : 'items'}`;
-    if (metaDownEl) metaDownEl.textContent = `${downItems.length} ${currentLang === 'ru' ? 'предметов' : 'items'}`;
-
-    // Subtab counts
-    const subTabUpCount = document.getElementById('hourlySubTabUpCount');
-    const subTabDownCount = document.getElementById('hourlySubTabDownCount');
-    const subTabAllCount = document.getElementById('hourlySubTabAllCount');
-    if (subTabUpCount) subTabUpCount.textContent = upItems.length;
-    if (subTabDownCount) subTabDownCount.textContent = downItems.length;
-    if (subTabAllCount) subTabAllCount.textContent = allItems.length;
-
-    // Filter items based on active subtab, category, and search query
-    let baseList = [];
-    if (currentHourlySubTab === 'up') {
-      baseList = upItems;
-    } else if (currentHourlySubTab === 'down') {
-      baseList = downItems;
-    } else {
-      baseList = allItems;
-    }
-
-    const filtered = baseList.filter(it => {
-      if (hourlyCategoryFilter !== 'all' && it.category !== hourlyCategoryFilter) {
-        return false;
-      }
-      if (hourlySearchQuery) {
-        const q = hourlySearchQuery.toLowerCase().trim();
-        const n1 = (it.name || '').toLowerCase();
-        const n2 = (it.nameRu || '').toLowerCase();
-        const cid = (it.id || '').toLowerCase();
-        if (!n1.includes(q) && !n2.includes(q) && !cid.includes(q)) {
-          return false;
-        }
-      }
-      return true;
+  function bindEvents() {
+    document.addEventListener('click', event => {
+      const link = event.target.closest('a[data-tab]');
+      if (link && !event.ctrlKey && !event.metaKey && !event.shiftKey && event.button === 0) { event.preventDefault(); switchTab(link.dataset.tab); return; }
+      const node = event.target.closest('[data-action]');
+      if (!node || node.disabled) return;
+      const { action, side, id, scope } = node.dataset;
+      if (action === 'add') addItem(side, id);
+      else if (action === 'remove') removeItem(side, id);
+      else if (action === 'quantity-step') changeQuantity(side, id, Number(node.dataset.delta));
+      else if (action === 'picker') openPicker(side);
+      else if (action === 'detail') openDetail(id);
+      else if (action === 'pick') { addItem(pickerSide, id); closeDialog($('itemPickerModal')); }
+      else if (action === 'detail-add') { addItem(side, id); closeDialog($('itemDetailModal')); switchTab('calculator'); }
+      else if (action === 'close-dialog') closeDialog(node.closest('dialog'));
+      else if (action === 'swap') { [trade.you, trade.they] = [trade.they, trade.you]; renderTrade(); saveTrade(); toast(t('swapped')); }
+      else if (action === 'clear') { undoTrade = structuredClone(trade); trade = { you: [], they: [] }; renderTrade(); saveTrade(); toast(t('cleared'), true); sound('remove'); }
+      else if (action === 'undo' && undoTrade) { trade = undoTrade; undoTrade = null; renderTrade(); saveTrade(); node.closest('.gpo-toast')?.remove(); }
+      else if (action === 'dismiss-toast') node.closest('.gpo-toast')?.remove();
+      else if (action === 'share') share();
+      else if (action === 'export') share(true);
+      else if (action === 'refresh') loadSnapshot();
+      else if (action === 'apply-update' && pendingData) applySnapshot(pendingData);
+      else if (action === 'language') { lang = lang === 'en' ? 'ru' : 'en'; store('gpo_lang', lang); const url = new URL(location.href); url.searchParams.set('lang', lang); history.replaceState(null, '', url); translate(); }
+      else if (action === 'audio') { audioEnabled = !audioEnabled; store('gpo_audio', String(audioEnabled)); translate(); if (audioEnabled) sound('click'); }
+      else if (action === 'clear-search') clearSearch(scope);
+      else if (action === 'category') { filters[scope].category = node.dataset.category; filters[scope].limit = batchSize; renderCategories(); renderScope(scope); if (scope !== 'picker') writeFilters(); }
+      else if (action === 'more') { const start = filters[scope].limit; filters[scope].limit += batchSize; renderScope(scope, start); }
+      else if (action === 'timeframe') { timeframe = node.dataset.tf; filters.market.limit = batchSize; document.querySelectorAll('[data-action="timeframe"]').forEach(button => { const active = button.dataset.tf === timeframe; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); }); renderMarket(); }
+      else if (action === 'change-filter') { direction = node.dataset.direction; filters.changes.limit = batchSize; writeFilters(); showTab(); }
     });
-
-    const tbody = document.getElementById('hourlyTableBody');
-    const emptyState = document.getElementById('hourlyEmptyState');
-    const table = document.getElementById('hourlyChangesTable');
-
-    if (!filtered.length) {
-      if (table) table.style.display = 'none';
-      if (emptyState) emptyState.style.display = 'flex';
-      return;
-    }
-
-    if (table) table.style.display = 'table';
-    if (emptyState) emptyState.style.display = 'none';
-
-    if (tbody) {
-      tbody.innerHTML = filtered.map(it => {
-        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        const isUp = it.delta_pts >= 0;
-        const deltaPtsStr = isUp ? `+${it.delta_pts.toFixed(2)} pts` : `${it.delta_pts.toFixed(2)} pts`;
-        const deltaPctStr = isUp ? `+${it.delta_pct.toFixed(1)}%` : `${it.delta_pct.toFixed(1)}%`;
-        const deltaBadgeClass = isUp ? 'delta-badge-up' : 'delta-badge-down';
-        const pctBadgeClass = isUp ? 'pct-badge-up' : 'pct-badge-down';
-        const iconName = isUp ? 'trending-up' : 'trending-down';
-        const oldLc = (it.old_value / 310.0).toFixed(2);
-        const newLc = (it.new_value / 310.0).toFixed(2);
-
-        return `
-          <tr onclick="window.GPO_APP.openDetail('${it.id}')" title="${name}">
-            <td>
-              <div class="hourly-img-box">
-                <img src="${it.image || 'images/' + it.id + '.png'}" alt="${it.name}" loading="lazy" onerror="this.src='images/placeholder.png'"/>
-              </div>
-            </td>
-            <td>
-              <div class="hourly-item-cell">
-                <div class="hourly-item-title-row">
-                  <span class="hourly-item-name">${name}</span>
-                </div>
-                <div class="hourly-item-badges">
-                  ${it.tier ? `<span class="hourly-badge-tier">${it.tier}</span>` : ''}
-                  ${it.subTier ? `<span class="hourly-badge-cat">${it.subTier}</span>` : ''}
-                </div>
-              </div>
-            </td>
-            <td>
-              <span class="hourly-badge-cat">${it.category || 'misc'}</span>
-            </td>
-            <td>
-              <div class="price-box">
-                <span class="price-main price-old-val">${formatPts(it.old_value)} pts</span>
-                <span class="price-lc">${oldLc} LC</span>
-              </div>
-            </td>
-            <td>
-              <div class="price-box">
-                <span class="price-main" style="color: var(--gold-beli);">${formatPts(it.new_value)} pts</span>
-                <span class="price-lc" style="color: var(--cyan-ocean);">${newLc} LC</span>
-              </div>
-            </td>
-            <td>
-              <span class="delta-badge ${deltaBadgeClass}">
-                <span class="icon-slot" data-icon="${iconName}"></span>
-                ${deltaPtsStr}
-              </span>
-            </td>
-            <td>
-              <span class="pct-badge ${pctBadgeClass}">
-                ${deltaPctStr}
-              </span>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    renderIcons(document.getElementById('sectionHourlyChanges'));
+    document.addEventListener('input', event => {
+      const scope = event.target.dataset.search;
+      if (!filters[scope]) return;
+      filters[scope].query = event.target.value.slice(0, 200);
+      filters[scope].limit = batchSize;
+      updateSearchClear(scope);
+      if (scope !== 'picker') writeFilters();
+      clearTimeout(searchTimers.get(scope));
+      searchTimers.set(scope, setTimeout(() => renderScope(scope), 90));
+    });
+    document.addEventListener('change', event => {
+      if (event.target.classList.contains('qty-num')) setQuantity(event.target.dataset.side, event.target.dataset.id, Number(event.target.value));
+      if (event.target.id === 'tierSelect') { tier = event.target.value; filters.catalog.limit = batchSize; renderCatalog('catalog'); writeFilters(); }
+    });
+    document.querySelectorAll('dialog').forEach(dialog => {
+      dialog.addEventListener('click', event => { if (event.target === dialog) closeDialog(dialog); });
+      dialog.addEventListener('close', () => { if (!document.querySelector('dialog[open]')) document.body.classList.remove('modal-open'); });
+    });
+    document.addEventListener('keydown', event => {
+      const dialog = document.querySelector('dialog[open]');
+      if (event.key === 'Escape' && dialog) { event.preventDefault(); closeDialog(dialog); }
+      if (event.key === 'Tab' && dialog) {
+        const focusable = [...dialog.querySelectorAll('button:not(:disabled):not([hidden]), input, textarea, a[href]')].filter(node => !node.closest('[hidden]'));
+        const first = focusable[0], last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
+      if (event.key === '/' && !dialog && !event.target.matches('input,textarea,select,[contenteditable]') && scopes[tab]) { event.preventDefault(); $(inputs[scopes[tab]]).focus(); }
+    });
+    window.addEventListener('popstate', () => { readRoute(); restoreTrade(); });
+    window.addEventListener('hashchange', restoreTrade);
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Date.now() - lastCheck > 60000) loadSnapshot(false); });
   }
 
-  let quickSearchDebounceTimer = null;
-  function handleQuickSearch(e) {
-    quickSearch = e.target.value;
-    clearTimeout(quickSearchDebounceTimer);
-    quickSearchDebounceTimer = setTimeout(() => {
-      renderQuickItemsGrid();
-    }, 120);
+  function init() {
+    decorateIcons();
+    translate();
+    bindEvents();
+    readRoute();
+    loadSnapshot();
   }
-
-  function handleQuickSort(e) {
-    quickSort = e.target.value;
-    renderQuickItemsGrid();
-  }
-
-  // Export globally for HTML onclick handlers
   window.GPO_APP = {
-    removeItem: (side, id) => removeItemFromTrade(side, id),
-    changeQty: (side, id, delta) => changeItemQty(side, id, delta),
-    quickAdd: (side, id) => {
-      const it = (window.GPO_ITEMS || []).find(x => x.id === id);
-      if (it) {
-        addItemToTrade(side, it, 1);
-        const name = currentLang === 'ru' ? (it.nameRu || it.name) : it.name;
-        showToast(`${name}: ${t('item_added_toast')}`, 'success');
-      }
-    },
-    openDetail: (id) => openDetailModal(id),
-    openPicker: (side) => openPickerModal(side),
-    showToast: (msg, type) => showToast(msg, type),
-    renderHourlyChanges: () => renderHourlyChanges()
+    quickAdd: addItem, removeItem, changeQty: changeQuantity, openDetail, openPicker,
+    renderHourlyChanges: renderChanges,
   };
-
-  window.openPickerModal = openPickerModal;
-  window.closePickerModal = closePickerModal;
-  window.closeDetailModal = closeDetailModal;
-  window.filterPickerItems = filterPickerItems;
-  window.handleQuickSearch = handleQuickSearch;
-  window.handleQuickSort = handleQuickSort;
-  window.clearSearchInput = clearSearchInput;
-  window.showToast = showToast;
-  window.copyDiscordTradeFormat = copyDiscordTradeFormat;
-  window.renderHourlyChanges = renderHourlyChanges;
-
-})(typeof window !== 'undefined' ? window : this, typeof document !== 'undefined' ? document : (typeof window !== 'undefined' ? window.document : null));
+  window.clearSearchInput = inputId => { const scope = Object.keys(inputs).find(key => inputs[key] === inputId); if (scope) clearSearch(scope); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
+})();

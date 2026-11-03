@@ -1,544 +1,371 @@
-"""
-Mathematical Pricing & Forecasting Engine for Grand Piece Online (GPO).
-Implements:
-1. Raw Implied Value & IQR Outlier Filtering with EMA Clamping (+-10% max per 12h cycle).
-2. Strict Monotonic Constraint: PAVA (Pool Adjacent Violators Algorithm) enforcing Price(rank_i) > Price(rank_{i+1}).
-3. Smooth Spacing Regularization: guarantees min_gap between neighbors so no items collapse into identical values.
-4. 24-48h Forecasting Engine: Demand Scores (1-10), Market Pressure Ratio, Trend Flags, and Tier Pressure Alerts.
-"""
+"""Robust, anchored barter estimates with an immutable ordinary-tier subsequence.
 
+Observations are asking prices, not completed trades. Unknown portions are excluded.
+The optimization shares one variable per physical unit, including all chest packs.
+"""
+import datetime as dt
+import hashlib
 import json
 import math
-import os
-import logging
-from typing import List, Dict, Any, Tuple, Optional
+from collections import Counter, defaultdict
 
-logger = logging.getLogger("PriceEngine")
+import numpy as np
+from scipy.optimize import LinearConstraint, minimize
+
+from scripts.market_data import load_catalog, utc_time, validate_snapshot
 
 
-def pava_decreasing(y: List[float], weights: Optional[List[float]] = None) -> List[float]:
-    """
-    Pool Adjacent Violators Algorithm (PAVA) for isotonic regression.
-    Enforces monotonically non-increasing values: y_hat[0] >= y_hat[1] >= ... >= y_hat[n-1].
-    """
-    n = len(y)
-    if n <= 1:
-        return list(y)
-
-    w = [1.0] * n if weights is None else list(weights)
-    y_hat = list(y)
-
-    # Blocks: list of (start_idx, end_idx, weighted_sum, total_weight)
-    blocks: List[List[float]] = []
-    for i in range(n):
-        blocks.append([i, i, y_hat[i] * w[i], w[i]])
-
-    i = 0
-    while i < len(blocks) - 1:
-        val_curr = blocks[i][2] / blocks[i][3]
-        val_next = blocks[i + 1][2] / blocks[i + 1][3]
-
-        # For decreasing monotonicity, violation occurs when curr < next
-        if val_curr < val_next:
-            # Merge blocks[i] and blocks[i+1]
-            blocks[i][1] = blocks[i + 1][1]
-            blocks[i][2] += blocks[i + 1][2]
-            blocks[i][3] += blocks[i + 1][3]
-            del blocks[i + 1]
-
-            # Backtrack to check if this merge violated previous blocks
-            while i > 0:
-                prev_val = blocks[i - 1][2] / blocks[i - 1][3]
-                curr_val = blocks[i][2] / blocks[i][3]
-                if prev_val < curr_val:
-                    blocks[i - 1][1] = blocks[i][1]
-                    blocks[i - 1][2] += blocks[i][2]
-                    blocks[i - 1][3] += blocks[i][3]
-                    del blocks[i]
-                    i -= 1
-                else:
-                    break
-        else:
-            i += 1
-
-    # Unpack fitted values
-    result = [0.0] * n
-    for start, end, w_sum, t_weight in blocks:
-        block_avg = w_sum / t_weight
-        for idx in range(int(start), int(end) + 1):
-            result[idx] = block_avg
-
-    return result
+MIN_AUTHORS = 5
+HALF_LIFE_HOURS = 48
 
 
 class GPOPriceEngine:
-    """
-    Core mathematical engine calculating ideal GPO economy prices.
-    Preserves official tier-list ranking without exception.
-    """
-    LC_POINT_BASE = 233.33  # Standard GPO Tier List: 1 Legendary Chest ≈ 233.33 pts
+    def __init__(self, items_path=None):
+        self.catalog = load_catalog(items_path)
+        self.items = self.catalog["items"]
+        self.by_id = {item["id"]: item for item in self.items}
+        self.locked = sorted((item for item in self.items if item["rank_locked"]),
+                             key=lambda item: item["official_rank"])
+        self.anchor = next((item["unit_id"] for item in self.items if item["name"] == "SP Reset Essence"), None)
+        if not self.anchor:
+            raise ValueError("Catalogue is missing the SP Reset anchor")
 
-    def __init__(self, items_path: Optional[str] = None):
-        self.items_path = items_path or os.path.join(os.path.dirname(__file__), "..", "gpo_items.json")
-        self.items: List[Dict[str, Any]] = []
-        self._load_items()
+    def _side(self, entries):
+        result = defaultdict(float)
+        for entry in entries:
+            if not isinstance(entry, (list, tuple)) or len(entry) != 2:
+                raise ValueError("Malformed trade item")
+            iid, quantity = entry
+            if iid not in self.by_id or isinstance(quantity, bool) or not isinstance(quantity, (int, float)):
+                raise ValueError("Unknown trade item")
+            if not math.isfinite(quantity) or quantity != int(quantity) or not 1 <= quantity <= 100000:
+                raise ValueError("Invalid trade quantity")
+            item = self.by_id[iid]
+            multiplier = item["unit_quantity"] if iid != item["unit_id"] else 1
+            result[item["unit_id"]] += quantity * multiplier
+        return dict(result)
 
-    def _load_items(self):
-        if not os.path.exists(self.items_path):
-            raise FileNotFoundError(f"Items database not found at {self.items_path}")
-        with open(self.items_path, "r", encoding="utf-8") as f:
-            self.items = json.load(f)
+    def _observations(self, trades, now):
+        latest = {}
+        for trade in trades:
+            try:
+                stamp = utc_time(trade.get("timestamp"))
+                age = (now - stamp).total_seconds() / 3600
+                if not 0 <= age <= 168 or not trade.get("author_id") or not trade.get("counts_eligible", True):
+                    continue
+                offer, want = self._side(trade.get("offer_items", [])), self._side(trade.get("want_items", []))
+            except (ValueError, TypeError, OverflowError):
+                continue
+            signature = json.dumps([sorted(offer.items()), sorted(want.items()), trade.get("issues", [])])
+            key = (str(trade["author_id"]), signature)
+            record = {"author": key[0], "signature": signature, "stamp": stamp, "age": age,
+                      "offer": offer, "want": want,
+                      "eligible": bool(offer and want and trade.get("pricing_eligible", True))}
+            if key not in latest or stamp > latest[key]["stamp"]:
+                latest[key] = record
+        return list(latest.values())
 
-        # Sort items strictly by official tier hierarchy and canonical value
-        self._assign_official_ranks()
-
-    def _assign_official_ranks(self):
-        """
-        Sorts all items by their canonical tier list value descending.
-        Assigns unambiguous official_rank from 1 (Cool Shades) to N (Epic Banana / SP Reset).
-        """
-        # Sort descending by value; break ties with original rankInTier or id
-        self.items.sort(key=lambda x: (
-            -float(x.get("value", 0)),
-            int(x.get("rankInTier", 99)),
-            x.get("id", "")
-        ))
-
-        for idx, it in enumerate(self.items):
-            it["official_rank"] = idx + 1
+    def _baseline(self, previous):
+        old = {item["id"]: item for item in (previous or {}).get("items", [])}
+        candidates = defaultdict(list)
+        minimum_pack = {}
+        for item in self.items:
+            unit = item["unit_id"]
+            quantity = item["unit_quantity"]
+            minimum_pack[unit] = min(minimum_pack.get(unit, quantity), quantity)
+            value = old.get(item["id"], {}).get("value", item.get("seed_value", item.get("value")))
+            if isinstance(value, (int, float)) and math.isfinite(value) and value > 0:
+                # A ranked pack is a better initial reference than a formerly unconstrained single.
+                priority = (bool(item["rank_locked"]), quantity == 1)
+                candidates[unit].append((priority, value / quantity))
+        base = {unit: max(values, key=lambda candidate: candidate[0])[1] for unit, values in candidates.items()}
+        base[self.anchor] = 1.0
+        quantum = {unit: 0.01 / quantity for unit, quantity in minimum_pack.items()}
+        return base, quantum, old
 
     @staticmethod
-    def filter_outliers_iqr(values: List[float]) -> List[float]:
-        """Filters extreme offers using Interquartile Range (IQR)."""
-        if len(values) < 4:
-            return values
-        sorted_v = sorted(values)
-        q1_idx = int(0.25 * len(sorted_v))
-        q3_idx = int(0.75 * len(sorted_v))
-        q1 = sorted_v[q1_idx]
-        q3 = sorted_v[q3_idx]
-        iqr = q3 - q1
-        lower = q1 - 1.5 * iqr
-        upper = q3 + 1.5 * iqr
-        filtered = [v for v in sorted_v if lower <= v <= upper]
-        return filtered if filtered else sorted_v
+    def _vector(observation):
+        units = observation["offer"].keys() | observation["want"].keys()
+        return {unit: observation["offer"].get(unit, 0) - observation["want"].get(unit, 0)
+                for unit in units if observation["offer"].get(unit, 0) != observation["want"].get(unit, 0)}
 
-    def calculate_market_metrics(self, trades: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
-        """
-        Aggregates supply (offers) and demand (LF) counts and implied price observations.
-        """
-        metrics: Dict[str, Dict[str, Any]] = {}
-        for it in self.items:
-            iid = it["id"]
-            metrics[iid] = {
-                "demand_count": 0,
-                "supply_count": 0,
-                "implied_values": [],
-                "base_value": float(it.get("value", 10.0))
-            }
+    def _infer_new_units(self, quotes, base):
+        """Only identify unknown prices when the observed equations determine them."""
+        authors = defaultdict(set)
+        vectors = [self._vector(quote) for quote in quotes]
+        for quote, vector in zip(quotes, vectors):
+            for unit in vector:
+                authors[unit].add(quote["author"])
+        unknown = sorted(unit for unit in authors if unit not in base and len(authors[unit]) >= MIN_AUTHORS)
+        # Iteration also handles chains such as A↔LC followed by B↔A.
+        while unknown:
+            progress = False
+            for unit in list(unknown):
+                rows = [(quote, vector) for quote, vector in zip(quotes, vectors)
+                        if unit in vector and all(other == unit or other in base for other in vector)]
+                if len({quote["author"] for quote, _ in rows}) < MIN_AUTHORS:
+                    continue
+                estimates = [-sum(base[other] * coefficient for other, coefficient in vector.items() if other != unit) / vector[unit]
+                             for _, vector in rows]
+                estimates = [value for value in estimates if math.isfinite(value) and value > 0]
+                if len(estimates) >= MIN_AUTHORS:
+                    base[unit] = float(np.median(estimates))
+                    unknown.remove(unit)
+                    progress = True
+            if not progress:
+                break
+        if unknown:
+            rows = [vector for vector in vectors if all(unit in base or unit in unknown for unit in vector)]
+            if rows:
+                a = np.array([[row.get(unit, 0) for unit in unknown] for row in rows], dtype=float)
+                b = np.array([-sum(coefficient * base[unit] for unit, coefficient in row.items() if unit in base) for row in rows])
+                scales = np.maximum(np.linalg.norm(a, axis=1), 1)
+                a, b = a / scales[:, None], b / scales
+                if np.linalg.matrix_rank(a) == len(unknown):
+                    fitted = np.linalg.lstsq(a, b, rcond=None)[0]
+                    if np.all(np.isfinite(fitted)) and np.all(fitted > 0):
+                        base.update(zip(unknown, map(float, fitted)))
 
-        # Value map for trade valuation
-        item_val_map = {it["id"]: float(it.get("value", 10.0)) for it in self.items}
+    def _ordered_prices_valid(self, units):
+        values = [units[item["unit_id"]] * item["unit_quantity"] for item in self.locked if item["unit_id"] in units]
+        return all(a > b for a, b in zip(values, values[1:]))
 
-        for tr in trades:
-            offers = tr.get("offer_items", [])
-            wants = tr.get("want_items", [])
+    def _reference_strength(self, supporters, base):
+        groups = [(units, min(1, sum(math.exp(-math.log(2) * age / HALF_LIFE_HOURS)
+                                    for age in authors.values()) / 30))
+                  for units, authors in supporters.items() if len(authors) >= MIN_AUTHORS and units <= base.keys()]
+        strength = {self.anchor: 1.0}
+        changed = True
+        while changed:
+            changed = False
+            for units, support in groups:
+                # A chain cannot establish a stronger point reference than its weakest link.
+                linked = min(support, max(strength.get(unit, 0) for unit in units))
+                for unit in units:
+                    if linked > strength.get(unit, 0):
+                        strength[unit] = linked
+                        changed = True
+        return strength
 
-            for iid, qty in offers:
-                if iid in metrics:
-                    metrics[iid]["supply_count"] += qty
-
-            for iid, qty in wants:
-                if iid in metrics:
-                    metrics[iid]["demand_count"] += qty
-
-            # If trade has clear offer side and want side, compute implied unit valuation
-            if offers and wants:
-                offer_nominal = sum(item_val_map.get(iid, 10.0) * qty for iid, qty in offers)
-                want_nominal = sum(item_val_map.get(iid, 10.0) * qty for iid, qty in wants)
-
-                # For single-item wants: implied value = offer_nominal / qty
-                if len(wants) == 1:
-                    w_id, w_qty = wants[0]
-                    if w_qty > 0 and w_id in metrics:
-                        implied = offer_nominal / w_qty
-                        metrics[w_id]["implied_values"].append(implied)
-
-                # For single-item offers: implied value = want_nominal / qty
-                if len(offers) == 1:
-                    o_id, o_qty = offers[0]
-                    if o_qty > 0 and o_id in metrics:
-                        implied = want_nominal / o_qty
-                        metrics[o_id]["implied_values"].append(implied)
-
-        return metrics
-
-    def compute_min_gap(self, value: float) -> float:
-        """
-        Calculates harmonic minimum spacing between adjacent items in the tier list
-        proportional to their value tier.
-        """
-        if value > 1_000_000:
-            return max(5000.0, value * 0.005)
-        elif value > 100_000:
-            return max(1000.0, value * 0.004)
-        elif value > 10_000:
-            return max(150.0, value * 0.003)
-        elif value > 1_000:
-            return max(25.0, value * 0.002)
-        elif value > 100:
-            return max(5.0, value * 0.002)
-        elif value > 10:
-            return max(0.5, value * 0.002)
-        else:
-            return 0.1
-
-    def run_pipeline(self, trades: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Executes the multi-timeframe mathematical pipeline:
-        1. Segregates trade stream into 1-hour, 24-hour, and 7-day rolling windows.
-        2. Calculates universal demand scores (0.0 to 10.0) from the stable 7-day dataset.
-        3. Enforces strict monotonic ranking constraint (PAVA + spacing gap): sequence never changes.
-        4. Produces multi-timeframe forecast summaries and item metrics for 1h, 24h, and 7d.
-        """
-        import datetime
-        now_utc = datetime.datetime.now(datetime.timezone.utc)
-        n = len(self.items)
-
-        # -------------------------------------------------------------
-        # STEP 1: Segregate Trades by Timeframe (1h, 24h, 7d)
-        # -------------------------------------------------------------
-        trades_1h: List[Dict[str, Any]] = []
-        trades_24h: List[Dict[str, Any]] = []
-        trades_7d: List[Dict[str, Any]] = []
-
-        for tr in trades:
-            ts_str = tr.get("timestamp")
-            m_dt = None
-            if ts_str:
-                try:
-                    m_dt = datetime.datetime.fromisoformat(ts_str.replace("Z", "+00:00"))
-                except Exception:
-                    pass
-            if not m_dt:
-                m_dt = now_utc
-
-            diff_sec = max(0.0, (now_utc - m_dt).total_seconds())
-            if diff_sec <= 3600.0:     # Last 1 Hour
-                trades_1h.append(tr)
-            if diff_sec <= 86400.0:    # Last 24 Hours
-                trades_24h.append(tr)
-            if diff_sec <= 604800.0:   # Last 7 Days (168h)
-                trades_7d.append(tr)
-
-        # Fallbacks if buffer was freshly populated
-        if not trades_1h:
-            trades_1h = trades[-min(10000, len(trades)):]
-        if not trades_24h:
-            trades_24h = trades[-min(25000, len(trades)):]
-        if not trades_7d:
-            trades_7d = trades
-
-        metrics_1h = self.calculate_market_metrics(trades_1h)
-        metrics_24h = self.calculate_market_metrics(trades_24h)
-        metrics_7d = self.calculate_market_metrics(trades_7d)
-
-        # -------------------------------------------------------------
-        # STEP 2: Hourly Price Revaluation Based on Previous Price
-        # -------------------------------------------------------------
-        # Every hour, each item updates its price directly from its previous price
-        # (e.g. -5% in hour 1, -5% in hour 2 = -10% total drop, prices do not revert)
-        raw_items_with_val: List[Tuple[Dict[str, Any], float, float]] = []
-
-        for it in self.items:
-            iid = it["id"]
-            curr_val = float(it.get("value", 10.0))
-            m = metrics_1h[iid]
-
-            filtered_obs = self.filter_outliers_iqr(m["implied_values"])
-            if filtered_obs:
-                sorted_obs = sorted(filtered_obs)
-                obs_median = sorted_obs[len(sorted_obs) // 2]
-                raw_market_est = obs_median
-            else:
-                ratio = (m["demand_count"] + 1.0) / (m["supply_count"] + 1.0)
-                drift_factor = math.tanh((ratio - 1.0) * 0.4) * 0.2  # smooth -5% to +5%
-                raw_market_est = curr_val * (1.0 + drift_factor)
-
-            # Clamp hourly change to at most +-5% of previous price to ensure gradual stability
-            clamped = max(curr_val * 0.95, min(curr_val * 1.05, raw_market_est))
-
-            # Cumulative hourly update directly based on previous price (no EMA regression)
-            updated_val = clamped
-
-            # Preserve baseline for anchor currency (SP Reset ≈ 1)
-            if it.get("name") == "SP Reset Essence":
-                updated_val = 1.0
-
-            # Kraken Azure Armor and Blade: keep strictly in 2-3 LC range (1 LC ≈ 233.33)
-            if iid == "item_92":  # Kraken Armor Set (Azure)
-                updated_val = max(466.0, min(700.0, updated_val))
-            elif iid == "item_93":  # Kraken Blade (Azure)
-                updated_val = max(466.0, min(700.0, updated_val))
-
-            raw_items_with_val.append((it, updated_val, raw_market_est))
-
-        # -------------------------------------------------------------
-        # STEP 3: Strict Monotonic Ordering & Spacing
-        # -------------------------------------------------------------
-        # Sort items strictly by their newly calculated prices descending
-        raw_items_with_val.sort(key=lambda x: (
-            -float(x[1]),
-            int(x[0].get("rankInTier", 99)),
-            x[0].get("id", "")
-        ))
-
-        self.items = [x[0] for x in raw_items_with_val]
-        raw_market_estimates = [x[2] for x in raw_items_with_val]
-        raw_values = [x[1] for x in raw_items_with_val]
-
-        spaced_values = list(raw_values)
-        for i in range(n - 1):
-            curr_v = spaced_values[i]
-            next_v = spaced_values[i + 1]
-            min_gap = self.compute_min_gap(curr_v)
-
-            if curr_v - next_v < min_gap:
-                spaced_values[i + 1] = max(0.1, curr_v - min_gap)
-
-        final_values: List[float] = []
-        for v in spaced_values:
-            if v >= 100:
-                final_values.append(float(round(v)))
-            elif v >= 10:
-                final_values.append(round(v, 1))
-            else:
-                final_values.append(round(v, 2))
-
-        # Guarantee strict decreasing monotonicity without identical neighboring values
-        for i in range(n - 1):
-            if final_values[i] <= final_values[i + 1]:
-                gap = 1.0 if final_values[i] >= 100 else 0.1
-                final_values[i + 1] = max(0.1, round(final_values[i] - gap, 2 if final_values[i] < 10 else 1 if final_values[i] < 100 else 0))
-
-        # -------------------------------------------------------------
-        # STEP 4: Universal 7-Day Weekly Demand Calibration (0.0 to 10.0)
-        # "но чтобы спрос показывался недельным везде(demand)"
-        # -------------------------------------------------------------
-        raw_demand_intensities_7d: List[float] = []
-        for idx, it in enumerate(self.items):
-            iid = it["id"]
-            m = metrics_7d[iid]
-            d_cnt = float(m["demand_count"])
-            s_cnt = float(m["supply_count"])
-            ratio = (d_cnt + 1.0) / (s_cnt + 1.0)
-
-            # Net demand + market pressure
-            net_demand = max(0.0, d_cnt - s_cnt)
-            intensity = d_cnt * 2.0 + net_demand * 1.5 + (ratio - 1.0) * 3.0
-            raw_intensity = max(0.0, intensity)
-            log_intensity = math.log1p(raw_intensity)
-            raw_demand_intensities_7d.append(log_intensity)
-
-        min_d7 = min(raw_demand_intensities_7d)
-        max_d7 = max(raw_demand_intensities_7d)
-
-        weekly_scaled_scores: List[float] = []
-        if max_d7 > min_d7:
-            for val in raw_demand_intensities_7d:
-                score = 10.0 * (val - min_d7) / (max_d7 - min_d7)
-                weekly_scaled_scores.append(round(score, 1))
-        else:
-            weekly_scaled_scores = [5.0] * n
-
-        # Strict rule: Highest weekly demand = 10.0/10, Lowest weekly demand = 0.0/10
-        max_idx = max(range(n), key=lambda k: raw_demand_intensities_7d[k])
-        min_idx = min(range(n), key=lambda k: raw_demand_intensities_7d[k])
-        weekly_scaled_scores[max_idx] = 10.0
-        weekly_scaled_scores[min_idx] = 0.0
-
-        def get_demand_label(score: float) -> str:
-            if score >= 9.0:
-                return "Extremely High"
-            elif score >= 7.5:
-                return "Very High"
-            elif score >= 5.5:
-                return "High"
-            elif score >= 3.5:
-                return "Medium"
-            elif score >= 1.5:
-                return "Low"
-            else:
-                return "Very Low"
-
-        # -------------------------------------------------------------
-        # STEP 5: Build Multi-Timeframe Forecasts (1h, 24h, 7d)
-        # -------------------------------------------------------------
-        timeframe_metrics_map = {
-            "1h": (metrics_1h, 4.0),
-            "24h": (metrics_24h, 5.5),
-            "7d": (metrics_7d, 7.0)
-        }
-
-        # Item records container
-        processed_items: List[Dict[str, Any]] = []
-
-        # Containers for summaries per timeframe
-        tf_summaries: Dict[str, Dict[str, Any]] = {}
-        for tf_key in ("1h", "24h", "7d"):
-            tf_summaries[tf_key] = {
-                "top_rising": [],
-                "top_falling": [],
-                "tier_pressure_candidates": []
-            }
-
-        for idx, it in enumerate(self.items):
-            iid = it["id"]
-            new_val = final_values[idx]
-            lc_val = round(new_val / self.LC_POINT_BASE, 2) if new_val > 1.0 else 0.0
-            weekly_score = weekly_scaled_scores[idx]
-            weekly_demand_label = get_demand_label(weekly_score)
-
-            item_tf_data: Dict[str, Any] = {}
-
-            for tf_key, (tf_metrics, drift_mult) in timeframe_metrics_map.items():
-                m = tf_metrics[iid]
-                demand_cnt = m["demand_count"]
-                supply_cnt = m["supply_count"]
-                pressure_ratio = round((demand_cnt + 1.0) / (supply_cnt + 1.0), 2)
-
-                pct_drift = round((pressure_ratio - 1.0) * drift_mult, 1)
-                pct_drift = max(-10.0, min(12.0, pct_drift))
-
-                if pressure_ratio >= 1.80 and weekly_score >= 7.5:
-                    trend = "Overpaid"
-                elif pressure_ratio >= 1.25 or pct_drift >= 2.5:
-                    trend = "Rising"
-                elif pressure_ratio <= 0.78 or pct_drift <= -2.5:
-                    trend = "Falling"
+    def _fit(self, quotes, base, quantum, previous, now, repair, new_units):
+        keys = sorted(base)
+        positions = {unit: index for index, unit in enumerate(keys)}
+        scale = np.array([base[unit] for unit in keys])
+        vectors = [self._vector(quote) for quote in quotes]
+        authors = defaultdict(set)
+        for quote, vector in zip(quotes, vectors):
+            for unit in vector:
+                authors[unit].add(quote["author"])
+        old = {item["id"]: item for item in (previous or {}).get("items", [])}
+        inserting_ranked = any(self.by_id[unit]["rank_locked"] for unit in new_units)
+        bounds = []
+        for unit, reference in zip(keys, scale):
+            if unit == self.anchor:
+                bounds.append((1.0, 1.0))
+            elif repair:
+                bounds.append((max(quantum[unit], 0.000001) / reference, None))
+            elif unit in new_units:
+                bounds.append((max(quantum[unit], 0.000001) / reference, None))
+            elif len(authors[unit]) < MIN_AUTHORS:
+                if inserting_ranked and self.by_id[unit]["rank_locked"]:
+                    spacing = 0.04 * len(self.locked)
+                    bounds.append((max(quantum[unit], reference - spacing) / reference, (reference + spacing) / reference))
                 else:
-                    trend = "Stable"
+                    bounds.append((1.0, 1.0))
+            else:
+                source_item = self.by_id[unit]
+                prior = old.get(unit, {})
+                last_update = prior.get("price_updated_at") or (previous or {}).get("meta", {}).get("price_updated_at")
+                hours = max(0, (now - utc_time(last_update)).total_seconds() / 3600) if last_update else 24
+                daily_limit = 0.30 if source_item["rank_locked"] else 0.60
+                movement = min(0.75, math.expm1(math.log1p(daily_limit) * min(hours, 72) / 24))
+                bounds.append((max(quantum[unit] / reference, 1 - movement), 1 + movement))
+        movable = {unit for unit, (low, high) in zip(keys, bounds) if high is None or high > low}
+        if not movable:
+            return base.copy(), base.copy(), authors
 
-                # Tier pressure check for this timeframe
-                tier_pressure_alert: Optional[Dict[str, str]] = None
-                if idx > 0:
-                    neighbor_above = self.items[idx - 1]
-                    above_val = final_values[idx - 1]
-                    raw_est = raw_market_estimates[idx]
-                    if raw_est >= above_val * 0.98 and pressure_ratio >= 1.3:
-                        alert_en = f"High chance of tier promotion (trading on par with {neighbor_above['name']})"
-                        alert_ru = f"Высокий шанс повышения (торгуется на уровне {neighbor_above.get('nameRu', neighbor_above['name'])})"
-                        tier_pressure_alert = {"en": alert_en, "ru": alert_ru}
+        author_counts = Counter(quote["author"] for quote in quotes)
+        rows, weights = [], []
+        for quote, vector in zip(quotes, vectors):
+            nominal = (sum(base[unit] * count for unit, count in quote["offer"].items()) +
+                       sum(base[unit] * count for unit, count in quote["want"].items())) / 2
+            if nominal <= 0:
+                continue
+            rows.append([vector.get(unit, 0) * base[unit] / nominal for unit in keys])
+            weights.append(math.exp(-math.log(2) * quote["age"] / HALF_LIFE_HOURS) / author_counts[quote["author"]])
+        matrix = np.array(rows) if rows else np.empty((0, len(keys)))
+        weights = np.array(weights)
+        prior_strength = np.full(len(keys), 0.03 if quotes else 1.0)
 
-                tf_record = {
-                    "demand_count": demand_cnt,
-                    "supply_count": supply_cnt,
-                    "pressure_ratio": pressure_ratio,
-                    "predicted_change_pct": pct_drift,
-                    "trend": trend,
-                    "tier_pressure_alert": tier_pressure_alert
-                }
-                item_tf_data[tf_key] = tf_record
+        def objective(x):
+            residual = matrix @ x
+            clipped = np.clip(residual, -0.15, 0.15)
+            loss = np.where(np.abs(residual) <= 0.15, residual ** 2 / 2, 0.15 * (np.abs(residual) - 0.075))
+            prior = x - 1
+            return float(weights @ loss + np.sum(prior_strength * prior ** 2) / 2), matrix.T @ (weights * clipped) + prior_strength * prior
 
-            # Root fields default to active 1h stream for momentum, while DEMAND is strictly 7d weekly everywhere
-            active_1h = item_tf_data["1h"]
-            item_record = {
-                **it,
-                "value": int(new_val) if new_val >= 100 else new_val,
-                "lcValue": lc_val,
-                "demand": weekly_demand_label,          # 100% Weekly Demand Everywhere
-                "demandScore": weekly_score,            # 100% Weekly Demand Score (0.0 - 10.0) Everywhere
-                "trend": active_1h["trend"],
-                "official_rank": idx + 1,
-                "demand_count": active_1h["demand_count"],
-                "supply_count": active_1h["supply_count"],
-                "pressure_ratio": active_1h["pressure_ratio"],
-                "predicted_change_pct": active_1h["predicted_change_pct"],
-                "tier_pressure_alert": active_1h["tier_pressure_alert"],
-                "timeframes": item_tf_data
-            }
-            processed_items.append(item_record)
+        constraints, lower = [], []
+        priced = [item for item in self.locked if item["unit_id"] in base]
+        for above, below in zip(priced, priced[1:]):
+            if above["unit_id"] not in movable and below["unit_id"] not in movable:
+                continue
+            row = np.zeros(len(keys))
+            row[positions[above["unit_id"]]] += above["unit_quantity"] * base[above["unit_id"]]
+            row[positions[below["unit_id"]]] -= below["unit_quantity"] * base[below["unit_id"]]
+            normalizer = max(abs(row).max(), 1)
+            # Leave enough space for both prices to be rounded, including packs.
+            gap = 2 * (above["unit_quantity"] * quantum[above["unit_id"]] + below["unit_quantity"] * quantum[below["unit_id"]])
+            constraints.append(row / normalizer)
+            lower.append(gap / normalizer)
 
-        # Sequence invariance check: items order NEVER changes
-        for i in range(len(processed_items) - 1):
-            assert processed_items[i]["official_rank"] == i + 1, "Rank sequence invariant violated"
-            assert processed_items[i]["value"] >= processed_items[i + 1]["value"], "Price monotonicity violated"
+        options = {"maxiter": 500, "ftol": 1e-12}
+        raw = minimize(objective, np.ones(len(keys)), jac=True, bounds=bounds, method="SLSQP", options=options)
+        if not raw.success:
+            raise ValueError(f"Market fit did not converge: {raw.message}")
+        linear = [LinearConstraint(np.array(constraints), np.array(lower), np.inf)] if constraints else []
+        fitted = minimize(objective, raw.x, jac=True, bounds=bounds, constraints=linear, method="SLSQP", options=options)
+        if not fitted.success:
+            raise ValueError(f"Constrained price fit did not converge: {fitted.message}")
+        return dict(zip(keys, map(float, fitted.x * scale))), dict(zip(keys, map(float, raw.x * scale))), authors
 
-        # Populate highlight summaries for each timeframe
-        for tf_key in ("1h", "24h", "7d"):
-            top_rising = sorted(
-                [it for it in processed_items if it["timeframes"][tf_key]["trend"] in ("Rising", "Overpaid")],
-                key=lambda x: -x["timeframes"][tf_key]["pressure_ratio"]
-            )[:6]
+    def run_pipeline(self, trades, previous=None, as_of=None, allow_updates=True):
+        now = utc_time(as_of) if as_of else dt.datetime.now(dt.timezone.utc)
+        observations = self._observations(trades, now)
+        quotes = []
+        for quote in observations:
+            vector = self._vector(quote)
+            if quote["eligible"] and any(count > 0 for count in vector.values()) and any(count < 0 for count in vector.values()):
+                quotes.append(quote)
+        base, quantum, old_items = self._baseline(previous)
+        existing_units = set(base)
+        repair = not self._ordered_prices_valid(base)
+        supporters = defaultdict(dict)
+        for quote in quotes:
+            ages = supporters[frozenset(self._vector(quote))]
+            ages[quote["author"]] = min(quote["age"], ages.get(quote["author"], quote["age"]))
+        # Support belongs to the barter relationship, not to an item's other markets.
+        supported_quotes = [quote for quote in quotes
+                            if len(supporters[frozenset(self._vector(quote))]) >= MIN_AUTHORS]
+        if allow_updates:
+            self._infer_new_units(supported_quotes, base)
+        new_units = set(base) - existing_units
+        quotes = [quote for quote in quotes if all(unit in base for unit in quote["offer"].keys() | quote["want"].keys())]
+        supported_quotes = [quote for quote in supported_quotes
+                            if all(unit in base for unit in quote["offer"].keys() | quote["want"].keys())]
+        reference_strength = self._reference_strength(supporters, base)
+        evidence_hash = hashlib.sha256(json.dumps(sorted((quote["author"], quote["signature"]) for quote in supported_quotes)).encode()).hexdigest()
+        previous_meta = (previous or {}).get("meta", {})
+        same_evidence = evidence_hash == previous_meta.get("evidence_hash")
+        last_price_time = previous_meta.get("price_updated_at")
+        fresh = not last_price_time or any(quote["stamp"] > utc_time(last_price_time) for quote in supported_quotes)
+        active_quotes = supported_quotes if fresh and not same_evidence and allow_updates else []
+        if repair or active_quotes or new_units:
+            units, raw_units, authors = self._fit(active_quotes, base, quantum, previous, now, repair, new_units)
+        else:
+            units, raw_units, authors = base.copy(), base.copy(), defaultdict(set)
+        observation_ages = defaultdict(list)
+        for quote in supported_quotes:
+            for unit in self._vector(quote):
+                authors[unit].add(quote["author"])
+                observation_ages[unit].append(quote["age"])
+        units = {unit: round(value / quantum[unit]) * quantum[unit] for unit, value in units.items()}
+        units[self.anchor] = 1.0
 
-            top_falling = sorted(
-                [it for it in processed_items if it["timeframes"][tf_key]["trend"] == "Falling"],
-                key=lambda x: x["timeframes"][tf_key]["pressure_ratio"]
-            )[:6]
+        implied = defaultdict(lambda: defaultdict(list))
+        for quote in supported_quotes:
+            vector = self._vector(quote)
+            residual = sum(units[unit] * count for unit, count in vector.items())
+            for unit, count in vector.items():
+                estimate = units[unit] - residual / count
+                if math.isfinite(estimate) and estimate > 0:
+                    implied[unit][quote["author"]].append(estimate)
 
-            alerts: List[Dict[str, Any]] = []
-            for it in processed_items:
-                alert = it["timeframes"][tf_key]["tier_pressure_alert"]
-                if alert:
-                    above_item = self.items[it["official_rank"] - 2]
-                    alerts.append({
-                        "id": it["id"],
-                        "name": it["name"],
-                        "nameRu": it.get("nameRu", it["name"]),
-                        "image": it.get("image", ""),
-                        "current_rank": it["official_rank"],
-                        "pressure_type": "UP",
-                        "target_neighbor": above_item["name"],
-                        "target_neighbor_ru": above_item.get("nameRu", above_item["name"]),
-                        "pressure_ratio": it["timeframes"][tf_key]["pressure_ratio"],
-                        "alert": alert
-                    })
+        metrics = {}
+        for label, hours in (("1h", 1), ("24h", 24), ("7d", 168)):
+            supplied, demanded = defaultdict(set), defaultdict(set)
+            for observation in observations:
+                if observation["age"] <= hours:
+                    for unit in observation["offer"]:
+                        supplied[unit].add(observation["author"])
+                    for unit in observation["want"]:
+                        demanded[unit].add(observation["author"])
+            metrics[label] = (supplied, demanded)
 
-            tf_count = len(trades_1h) if tf_key == "1h" else len(trades_24h) if tf_key == "24h" else len(trades_7d)
-            tf_summaries[tf_key] = {
-                "timeframe_label": "1 Hour" if tf_key == "1h" else "24 Hours" if tf_key == "24h" else "7 Days (Weekly)",
-                "trades_analyzed": tf_count,
-                "market_sentiment": "Bullish" if len(top_rising) > len(top_falling) else "Neutral",
-                "top_rising": top_rising,
-                "top_falling": top_falling,
-                "tier_pressure_candidates": alerts
-            }
+        records = []
+        changes = []
+        for item in self.items:
+            iid, unit, pack = item["id"], item["unit_id"], item["unit_quantity"]
+            value = round(units[unit] * pack, 2) if unit in units else None
+            old = old_items.get(iid, {})
+            old_value = old.get("value")
+            changed = old_value is not None and value is not None and abs(value - old_value) >= 0.005
+            tf = {}
+            for label, (supplied, demanded) in metrics.items():
+                s, d = len(supplied[unit]), len(demanded[unit])
+                tf[label] = {"supply_count": s, "demand_count": d,
+                             "pressure_ratio": round((d + 2) / (s + 2), 2) if s + d else None}
+            s, d = tf["7d"]["supply_count"], tf["7d"]["demand_count"]
+            sample_count = len(authors[unit])
+            ages = observation_ages[unit]
+            latest_age = min(ages) if ages else None
+            confidence = round(min(1, sample_count / 30) * math.exp(-math.log(2) * (latest_age or 0) / HALF_LIFE_HOURS), 2) if sample_count else 0
+            per_author = [float(np.median(values)) for values in implied[unit].values()]
+            quote_range = None
+            if len(per_author) >= MIN_AUTHORS:
+                q25, median, q75 = map(float, np.percentile(per_author, [25, 50, 75]))
+                quote_range = [round(float(q25) * pack, 2), round(float(q75) * pack, 2)]
+                confidence = round(confidence / (1 + 4 * (q75 - q25) / max(median, 0.000001)), 2)
+            confidence = round(min(confidence, reference_strength.get(unit, 0.3)), 2)
+            raw_value = round(raw_units[unit] * pack, 2) if unit in raw_units else None
+            constrained = value is not None and raw_value is not None and abs(value - raw_value) > 0.02
+            price_status = "unknown" if value is None else "estimated" if sample_count >= MIN_AUTHORS else "carried" if old.get("price_status") in ("estimated", "carried") else "baseline"
+            record = {key: val for key, val in item.items() if key not in ("seed_value", "value", "lcValue")}
+            record.update({
+                "value": value, "price_status": price_status,
+                "price_updated_at": now.isoformat() if changed or (value is not None and not old and active_quotes and sample_count >= MIN_AUTHORS) else old.get("price_updated_at"),
+                "confidence": confidence, "observation_authors": sample_count,
+                "reference_basis": "unknown" if value is None else "sp" if unit in reference_strength else "historical",
+                "quote_range": quote_range,
+                "last_observed_at": (now - dt.timedelta(hours=latest_age)).isoformat() if latest_age is not None else None,
+                "demandScore": round(10 * (d + 2) / (d + s + 4), 1) if d + s else None,
+                "timeframes": tf, "constraint_applied": constrained,
+                "market_estimate": raw_value if sample_count >= MIN_AUTHORS else None,
+                "trend": "Rising" if changed and value > old_value else "Falling" if changed else "Stable",
+            })
+            records.append(record)
+            if changed:
+                changes.append({"id": iid, "old_value": old_value, "new_value": value,
+                                "delta_pts": round(value - old_value, 2),
+                                "delta_pct": round((value / old_value - 1) * 100, 2),
+                                "reason": "official_order" if repair or (new_units and sample_count < MIN_AUTHORS) else "market"})
 
-        output = {
-            "meta": {
-                "updated_at": "auto",
-                "total_trades_analyzed": len(trades_7d),
-                "total_trades_1h": len(trades_1h),
-                "total_trades_24h": len(trades_24h),
-                "total_trades_7d": len(trades_7d),
-                "total_items": len(processed_items),
-                "market_sentiment": tf_summaries["1h"]["market_sentiment"]
-            },
-            "forecast_summary": {
-                "active_timeframe": "1h",
-                "1h": tf_summaries["1h"],
-                "24h": tf_summaries["24h"],
-                "7d": tf_summaries["7d"],
-                # Root level backward compatibility
-                "top_rising": tf_summaries["1h"]["top_rising"],
-                "top_falling": tf_summaries["1h"]["top_falling"],
-                "tier_pressure_candidates": tf_summaries["1h"]["tier_pressure_candidates"]
-            },
-            "items": processed_items
+        by_id = {item["id"]: item for item in records}
+        ordered = [by_id[item["id"]] for item in self.locked]
+        flexible = sorted((item for item in records if not item["rank_locked"]),
+                          key=lambda item: (-(item["value"] or 0), item["official_rank"]))
+        for item in flexible:
+            position = next((i for i, other in enumerate(ordered) if item["value"] is not None and
+                             other["value"] is not None and other["value"] < item["value"]), len(ordered))
+            ordered.insert(position, item)
+        lc = next((item for item in records if item["name"] == "Legendary Fruit Chest"), None)
+        for rank, item in enumerate(ordered, 1):
+            item["display_rank"] = rank
+            item["lcValue"] = round(item["value"] / lc["value"], 4) if lc and lc["value"] and item["value"] is not None else None
+        meta = {
+            "updated_at_iso": now.isoformat(), "updated_at": now.isoformat(),
+            "price_updated_at": now.isoformat() if changes or (active_quotes and not previous and any(len(group) >= MIN_AUTHORS for group in authors.values())) else previous_meta.get("price_updated_at"),
+            "catalog_revision": self.catalog["source"]["revision"],
+            "evidence_hash": evidence_hash if allow_updates else previous_meta.get("evidence_hash", evidence_hash),
+            "updates_paused": not allow_updates,
+            "total_items": len(ordered), "total_trades_analyzed": len(observations),
+            "price_observations": len(quotes), "supported_observations": len(supported_quotes),
+            "pricing_method": "robust_offer_estimate_v1",
+            **{f"total_trades_{label}": sum(q["age"] <= hours for q in observations)
+               for label, hours in (("1h", 1), ("24h", 24), ("7d", 168))},
         }
-
-        return output
-
-
-if __name__ == "__main__":
-    engine = GPOPriceEngine()
-    print(f"Loaded {len(engine.items)} items for price engine.")
-    print("Top 3 ranked items:")
-    for it in engine.items[:3]:
-        print(f" - #{it['official_rank']} {it['name']} ({it['value']} pts)")
-
-    # Test PAVA
-    test_y = [100.0, 110.0, 90.0, 85.0, 95.0, 40.0]
-    fitted = pava_decreasing(test_y)
-    print("Test PAVA input :", test_y)
-    print("Test PAVA output:", fitted)
+        snapshot = {"schema_version": 2, "meta": meta, "official_source": self.catalog["source"],
+                    "currency": {"anchor_id": self.anchor, "lc_id": lc["id"] if lc else None},
+                    "items": ordered, "changes": changes}
+        validate_snapshot(snapshot, self.catalog)
+        snapshot["revision"] = hashlib.sha256(json.dumps(snapshot, sort_keys=True, allow_nan=False).encode()).hexdigest()[:20]
+        return snapshot
