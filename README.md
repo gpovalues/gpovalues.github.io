@@ -24,6 +24,7 @@ The [official document](https://docs.google.com/document/d/1pmF1jHksUPuQ95OMWnf7
 - **SP Reset = 1 point.** LC equivalents use the current estimated value of one Legendary Fruit Chest.
 - Chest packs share a physical unit: ten chests always equal ten singles.
 - Complete barter offers are fitted together. A relationship needs at least five independent authors before it affects prices; repeated posts do not add influence.
+- The bounded Huber fit uses diagonally scaled L-BFGS-B so heavily traded and rarely quoted items remain numerically balanced. A separate constrained fit enforces ordinary-tier order when needed. Failed fits are never published as successful price updates.
 - Confidence reflects recent evidence and the strength of the connection to SP. An unanchored market remains on a historical point scale with limited confidence.
 - Initial references and retained prices are marked explicitly. Unpriced items stay unpriced. These are estimates from offers, not proof of completed trades or guaranteed profit.
 

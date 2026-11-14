@@ -251,10 +251,23 @@ class GPOPriceEngine:
             constraints.append(row / normalizer)
             lower.append(gap / normalizer)
 
-        options = {"maxiter": 500, "ftol": 1e-12}
-        raw = minimize(objective, np.ones(len(free)), jac=True, bounds=free_bounds, method="SLSQP", options=options)
+        # Frequent and rarely observed items can differ by orders of magnitude
+        # in curvature. Rescale coordinates, not the market/prior loss balance.
+        curvature = prior_strength + np.einsum("ij,i,ij->j", matrix, weights, matrix)
+        raw_scale = np.sqrt(curvature[free] / loss_scale)
+        raw_bounds = [(low * factor, high * factor if high is not None else None)
+                      for (low, high), factor in zip(free_bounds, raw_scale)]
+
+        def raw_objective(x):
+            loss, gradient = objective(x / raw_scale)
+            return loss, gradient / raw_scale
+
+        raw = minimize(raw_objective, raw_scale.copy(), jac=True, bounds=raw_bounds,
+                       method="L-BFGS-B", options={"maxiter": 4000, "maxcor": 20,
+                                                  "maxls": 50, "ftol": 1e-12, "gtol": 1e-10})
         if not raw.success:
             raise ValueError(f"Market fit did not converge: {raw.message}")
+        raw_point = raw.x / raw_scale
         linear = []
         if constraints:
             ordered_matrix = np.array(constraints)
@@ -262,11 +275,17 @@ class GPOPriceEngine:
             fixed[free] = 0
             # Keep fixed prices as constants, rather than degenerate optimizer bounds.
             linear = [LinearConstraint(ordered_matrix[:, free], np.array(lower) - ordered_matrix @ fixed, np.inf)]
-        initial = np.ones(len(free)) if not repair and not inserting_ranked else raw.x
-        fitted = minimize(objective, initial, jac=True, bounds=free_bounds, constraints=linear, method="SLSQP", options=options)
-        if not fitted.success:
-            raise ValueError(f"Constrained price fit did not converge: {fitted.message}")
-        return dict(zip(keys, map(float, expand(fitted.x) * scale))), dict(zip(keys, map(float, expand(raw.x) * scale))), authors
+        fitted_point = raw_point
+        # A box optimum that already satisfies every rank gap is also the
+        # constrained optimum; do not repeat an unconstrained solve with SLSQP.
+        if linear and np.any(ordered_matrix @ expand(raw_point) < np.array(lower)):
+            initial = np.ones(len(free)) if not repair and not inserting_ranked else raw_point
+            fitted = minimize(objective, initial, jac=True, bounds=free_bounds, constraints=linear,
+                              method="SLSQP", options={"maxiter": 2000, "ftol": 1e-12})
+            if not fitted.success:
+                raise ValueError(f"Constrained price fit did not converge: {fitted.message}")
+            fitted_point = fitted.x
+        return dict(zip(keys, map(float, expand(fitted_point) * scale))), dict(zip(keys, map(float, expand(raw_point) * scale))), authors
 
     def _read_trades(self, observations, supporters, active_quotes, units, allow_updates):
         active = {(quote["author"], quote["signature"]) for quote in active_quotes}

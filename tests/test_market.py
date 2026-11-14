@@ -2,10 +2,12 @@
 import copy
 import datetime as dt
 import json
+import math
 import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.discord_reader import DiscordTradeReader
 from scripts.market_data import validate_snapshot
@@ -399,6 +401,44 @@ class PriceRegressionTests(unittest.TestCase):
         self.assertEqual(items["A"]["observation_authors"], 3000)
         self.assertEqual(result["meta"]["supported_observations"], 3000)
         validate_snapshot(result, engine.catalog)
+
+    def test_large_sparse_market_matches_the_analytic_solution(self):
+        items = [{"id": f"F{index:03}", "name": f"Flexible {index}", "value": 100,
+                  "tier": "Very Unstable", "official_rank": index + 1, "rank_locked": False}
+                 for index in range(160)]
+        items.append({**self.items[-1], "official_rank": 161})
+        self.path.write_text(json.dumps(items), encoding="utf-8")
+        engine = GPOPriceEngine(self.path)
+        base, quantum, _, _ = engine._baseline(None)
+        quotes, expected = [], {}
+        for index in range(160):
+            unit = f"F{index:03}"
+            count = 20000 if index == 0 else 5 + index % 50
+            price, age = 80 + index % 41, index % 169
+            quotes.extend({"author": f"{unit}-author-{number}", "age": age,
+                           "offer": {unit: 1}, "want": {"SP": price}}
+                          for number in range(count))
+            coefficient = 200 / (100 + price)
+            weight = count * math.exp(-math.log(2) * age / 48)
+            curvature = weight * coefficient ** 2
+            expected[unit] = 100 * (curvature * price / 100 + 0.03) / (curvature + 0.03)
+        fitted, raw, authors = engine._fit(quotes, base, quantum, None,
+                                         dt.datetime.now(dt.timezone.utc), False, set())
+        self.assertEqual(fitted["SP"], 1)
+        self.assertEqual(len(authors["F000"]), 20000)
+        for unit, price in expected.items():
+            with self.subTest(unit=unit):
+                self.assertAlmostEqual(raw[unit], price, delta=0.005)
+                self.assertAlmostEqual(fitted[unit], price, delta=0.005)
+
+    def test_an_unconverged_market_fit_is_still_rejected(self):
+        trades = [{**message("", author=str(index)), "offer_items": [("F", 1)],
+                   "want_items": [("SP", 1000)]} for index in range(6)]
+        with patch("scripts.price_engine.minimize") as minimize:
+            minimize.return_value.success = False
+            minimize.return_value.message = "Iteration limit reached"
+            with self.assertRaisesRegex(ValueError, "Market fit did not converge: Iteration limit reached"):
+                self.run_prices(trades)
 
     def test_unknown_counterpart_cannot_be_assigned_a_default_price(self):
         trade = {**message(""), "offer_items": [("unknown", 1)], "want_items": [("F", 1)],
