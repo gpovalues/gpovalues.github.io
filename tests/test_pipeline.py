@@ -1,14 +1,49 @@
+import io
 import json
 import os
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
-from scripts.update_values import run_cycle
+from scripts.update_values import _report_collection, main, run_cycle
 
 
 class PipelineTests(unittest.TestCase):
+    def test_cli_uses_the_extended_collection_budget(self):
+        with patch("sys.argv", ["update_values"]), patch("scripts.update_values.run_cycle") as cycle:
+            main()
+        self.assertEqual(cycle.call_args.args[-1], 1000)
+
+    def test_collection_report_explains_a_page_limit_without_claiming_a_source_error(self):
+        source = {"mode": "scheduled", "complete": False, "history_complete": False,
+                  "messages_read": 100000, "pages_read": 1000, "channels": [{"status": "catching_up"}]}
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _report_collection(source, 1000)
+        self.assertIn("100000 messages this run; 1000/1000 pages", output.getvalue())
+        self.assertIn("page limit reached", output.getvalue())
+        self.assertNotIn("Discord source error", output.getvalue())
+
+    def test_collection_report_prioritizes_source_errors_over_page_limits(self):
+        source = {"mode": "scheduled", "complete": False, "history_complete": False,
+                  "messages_read": 100000, "pages_read": 1000, "channels": [{"status": "error"}]}
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _report_collection(source, 1000)
+        self.assertIn("Discord source error", output.getvalue())
+        self.assertNotIn("page limit reached", output.getvalue())
+
+    def test_backfill_does_not_pause_a_successful_forward_collection(self):
+        source = {"mode": "scheduled", "complete": True, "history_complete": False,
+                  "messages_read": 100000, "pages_read": 1000, "channels": [{"status": "backfilling"}]}
+        output = io.StringIO()
+        with redirect_stdout(output):
+            _report_collection(source, 1000)
+        self.assertIn("history_complete=False", output.getvalue())
+        self.assertNotIn("repricing paused", output.getvalue())
+
     def test_failed_price_fit_keeps_a_restorable_collector_checkpoint(self):
         with tempfile.TemporaryDirectory(prefix="gpo-pipeline-", dir=os.environ.get("GPO_TEST_TMP")) as folder:
             root = Path(folder)

@@ -43,6 +43,36 @@ class ReaderTests(unittest.TestCase):
         self.assertEqual(len(self.store.messages_since(self.now - dt.timedelta(hours=1))), 1)
         self.assertTrue(status["complete"])
 
+    def test_default_budget_catches_up_beyond_120_pages_without_skipping_messages(self):
+        self.store.save_page(CHANNEL, [], cursor=str(123456789012345000), backfill_complete=True)
+
+        def batch(channel_id, params):
+            if "after" not in params:
+                return []
+            first = int(params["after"]) - 123456789012345000 + 1
+            return [self.raw(n) for n in range(first, min(first + 100, 12101))]
+
+        with patch.object(self.reader, "_request_batch", side_effect=batch):
+            status = self.reader.collect(self.store)
+        self.assertTrue(status["complete"])
+        self.assertEqual(status["pages_read"], 123)
+        self.assertEqual(self.store.channel(CHANNEL)["cursor"], str(123456789012357100))
+        self.assertEqual(len(self.store.messages_since(self.now - dt.timedelta(hours=1))), 12100)
+
+    def test_page_limit_keeps_source_incomplete_until_a_later_run_catches_up(self):
+        self.store.save_page(CHANNEL, [], cursor=str(123456789012345000), backfill_complete=True)
+        with patch.object(self.reader, "_request_batch", return_value=[self.raw(n) for n in range(1, 101)]):
+            first = self.reader.collect(self.store, max_pages=1)
+        self.assertFalse(first["complete"])
+        self.assertEqual(self.store.channel(CHANNEL)["status"], "catching_up")
+        with patch.object(self.reader, "_request_batch", side_effect=[
+            [self.raw(n) for n in range(101, 151)], [],
+        ]) as request:
+            second = self.reader.collect(self.store, max_pages=2)
+        self.assertEqual(request.call_args_list[0].args[1], {"after": str(123456789012345100)})
+        self.assertTrue(second["complete"])
+        self.assertEqual(len(self.store.messages_since(self.now - dt.timedelta(hours=1))), 150)
+
     def test_access_failure_does_not_mark_the_source_as_successfully_read(self):
         old = (self.now - dt.timedelta(days=1)).isoformat()
         self.store.save_page(CHANNEL, [], cursor=str(123456789012345000), last_success_at=old)

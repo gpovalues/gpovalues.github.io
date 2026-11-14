@@ -28,6 +28,7 @@ class ReadOnlyDiscordSession:
 
 class DiscordTradeReader:
     DEFAULT_CHANNEL_ID = "966859339816124438"
+    DEFAULT_MAX_PAGES = 1000
     DISCORD_API_BASE = "https://discord.com/api/v10"
 
     def __init__(self, token=None, channel_ids=None):
@@ -92,7 +93,7 @@ class DiscordTradeReader:
                             "edited_at": edited, "has_attachments": bool(raw.get("attachments"))})
         return records
 
-    def collect(self, store, max_pages=120):
+    def collect(self, store, max_pages=DEFAULT_MAX_PAGES):
         if not isinstance(max_pages, int) or not 1 <= max_pages <= 1000:
             raise ValueError("max_pages must be between 1 and 1000")
         now = dt.datetime.now(dt.timezone.utc)

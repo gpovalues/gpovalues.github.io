@@ -12,7 +12,27 @@ from scripts.trade_parser import GPOTradeParser
 from scripts.trade_store import TradeStore
 
 
-def run_cycle(catalog_path=None, state_path=None, output_dir=None, offline=False, max_pages=120):
+def _report_collection(source, max_pages):
+    if source["mode"] == "offline":
+        return
+    statuses = ", ".join(sorted({channel["status"] for channel in source["channels"]})) or "pending"
+    print(f"Discord collection: {source['messages_read']} messages this run; "
+          f"{source['pages_read']}/{max_pages} pages; history_complete={source['history_complete']}; "
+          f"status={statuses}")
+    if source["complete"]:
+        return
+    if any(channel["status"] == "error" for channel in source["channels"]):
+        print("Market repricing paused: Discord source error. Checkpoint retained; check access and retry.")
+    elif source["pages_read"] >= max_pages:
+        print("Market repricing paused: page limit reached before forward collection caught up. "
+              "Checkpoint retained; remaining messages resume next run.")
+    else:
+        print("Market repricing paused: forward collection is incomplete. "
+              "Checkpoint retained; remaining messages resume next run.")
+
+
+def run_cycle(catalog_path=None, state_path=None, output_dir=None, offline=False,
+              max_pages=DiscordTradeReader.DEFAULT_MAX_PAGES):
     catalog_path = Path(catalog_path or ROOT / "data/catalog.json")
     state_path = Path(state_path or ROOT / ".state/market.sqlite3")
     output_dir = Path(output_dir or ROOT / "data")
@@ -36,6 +56,7 @@ def run_cycle(catalog_path=None, state_path=None, output_dir=None, offline=False
             finally:
                 if reader.session:
                     reader.session.close()
+        _report_collection(source, max_pages)
         now = dt.datetime.now(dt.timezone.utc)
         store.prune(now)
         messages = store.messages_since(now - dt.timedelta(days=7))
@@ -61,7 +82,8 @@ def run_cycle(catalog_path=None, state_path=None, output_dir=None, offline=False
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--offline", action="store_true", help="Use retained observations without contacting Discord")
-    parser.add_argument("--max-pages", type=int, default=120, help="Maximum Discord pages per run; remaining history resumes next time")
+    parser.add_argument("--max-pages", type=int, default=DiscordTradeReader.DEFAULT_MAX_PAGES,
+                        help="Maximum Discord pages per run (default: 1000); remaining history resumes next time")
     parser.add_argument("--catalog", type=Path, default=ROOT / "data/catalog.json")
     parser.add_argument("--state", type=Path, default=ROOT / ".state/market.sqlite3")
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data")

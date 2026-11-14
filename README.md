@@ -77,7 +77,9 @@ npm run build                 # Validate and package only public files in dist/
 
 For live collection, provide `DISCORD_TOKEN` through the environment and optionally `DISCORD_CHANNEL_IDS` (comma- or whitespace-separated; default `966859339816124438`), then run `npm run prices`. The Discord identity needs access to the channels and message history. Collection uses GET requests only.
 
-`npm run prices -- --max-pages 120` limits work per cycle. Forward collection and seven-day backfill resume from saved cursors; failures retain the checkpoint and pause market repricing. `npm run bot` runs the same cycle repeatedly on a machine that stays online.
+Local and scheduled collection defaults to at most **1,000 pages / 100,000 Discord messages per cycle**, with a ten-minute collection deadline. `npm run prices -- --max-pages 120` lowers this budget when needed. Forward collection and seven-day backfill resume from saved cursors; failures retain the checkpoint and pause market repricing. `npm run bot` runs the same cycle repeatedly on a machine that stays online.
+
+`complete=False` with `status=catching_up` means the forward cursor has not reached the latest messages yet; it is not necessarily an access error. Prices remain paused until forward collection catches up, even if many older offers are already stored. The log reports the per-run page/message counts and the reason for the pause. Seven-day backfill has a separate `history_complete` flag and does not itself block a successful forward collection.
 
 | Path | Purpose |
 | --- | --- |
