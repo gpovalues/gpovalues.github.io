@@ -92,7 +92,9 @@ For live collection, provide `DISCORD_TOKEN` through the environment and optiona
 
 ## GitHub Pages and Scheduled Updates
 
-In repository **Settings → Pages**, select **GitHub Actions** as the build source. Set the Actions secret `DISCORD_TOKEN` and, if needed, repository variable `DISCORD_CHANNEL_IDS`.
+The canonical repository is [gpovalues/gpovalues.github.io](https://github.com/gpovalues/gpovalues.github.io), publishing to https://gpovalues.github.io/. The publisher only runs on `main` in this repository; copies and forks cannot collect or deploy through this workflow. The obsolete `wazafab/gpovalues` repository is not used by this pipeline.
+
+In **gpovalues/gpovalues.github.io → Settings → Pages**, select **GitHub Actions** as the build source. Set the Actions secret `DISCORD_TOKEN` and, if needed, repository variable `DISCORD_CHANNEL_IDS` in this repository, not in a copy.
 
 `.github/workflows/update_prices.yml` runs on pushes to `main`, manual dispatch, and hourly at minute 17 (UTC):
 
