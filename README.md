@@ -105,6 +105,8 @@ In **gpovalues/gpovalues.github.io → Settings → Pages**, select **GitHub Act
 3. Validate the new snapshot and save a restorable checkpoint, including when publication fails.
 4. Run regression checks, build `dist/`, run browser checks, and deploy to Pages.
 
+If forward collection still has a backlog after making progress, the publisher immediately queues another run from its saved checkpoint instead of waiting for the next hourly trigger. A chain permits at most three extra runs; it stops as soon as forward collection catches up, on source errors, or when no messages were read. Normal pushes, scheduled runs, and manual runs start a new chain at `catch_up_attempt=0`. This does not bypass the incomplete-source pricing guard.
+
 The `gpo-market-state` artifact holds both checkpoint files; the three newest backups are retained, with a 30-day expiry. Keep this checkpoint when moving the collector. The workflow publishes generated data as a Pages artifact rather than making hourly Git commits. A missing token or unavailable source is shown on the site instead of fabricated market activity.
 
 Pull requests and pushes also run `.github/workflows/checks.yml` against the committed snapshot.

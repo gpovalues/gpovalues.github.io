@@ -7,10 +7,36 @@ from contextlib import redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
 
-from scripts.update_values import _report_collection, main, run_cycle
+from scripts.update_values import _report_collection, main, next_catch_up_attempt, run_cycle
 
 
 class PipelineTests(unittest.TestCase):
+    def test_immediate_catch_up_continuations_are_bounded(self):
+        source = {"mode": "scheduled", "complete": False, "pages_read": 1000,
+                  "messages_read": 100000, "channels": [{"status": "catching_up"}]}
+        for attempt in range(3):
+            self.assertEqual(next_catch_up_attempt(source, str(attempt)), attempt + 1)
+        self.assertIsNone(next_catch_up_attempt(source, "3"))
+
+    def test_continuation_requires_progress_and_a_healthy_forward_collection(self):
+        source = {"mode": "scheduled", "complete": False, "pages_read": 1000,
+                  "messages_read": 100000, "channels": [{"status": "catching_up"}]}
+        for change in (
+            {"mode": "offline"}, {"complete": True}, {"complete": None},
+            {"pages_read": 0}, {"messages_read": 0}, {"channels": []},
+            {"channels": [{"status": "backfilling"}]},
+            {"channels": [{"status": "catching_up"}, {"status": "error"}]},
+            {"channels": [{"status": "unknown"}, {"status": "catching_up"}]},
+        ):
+            with self.subTest(change=change):
+                self.assertIsNone(next_catch_up_attempt({**source, **change}, "0"))
+
+    def test_invalid_continuation_input_is_rejected_before_dispatch(self):
+        for attempt in ("-1", "4", "1.5", "1; command", "", None, False):
+            with self.subTest(attempt=attempt):
+                with self.assertRaises(ValueError):
+                    next_catch_up_attempt({}, attempt)
+
     def test_cli_uses_the_extended_collection_budget(self):
         with patch("sys.argv", ["update_values"]), patch("scripts.update_values.run_cycle") as cycle:
             main()

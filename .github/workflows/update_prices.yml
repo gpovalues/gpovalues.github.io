@@ -6,6 +6,12 @@ on:
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
+    inputs:
+      catch_up_attempt:
+        description: 'Automatic catch-up continuation (at most three extra runs)'
+        type: choice
+        options: ['0', '1', '2', '3']
+        default: '0'
 
 permissions:
   contents: read
@@ -119,3 +125,25 @@ jobs:
           path: dist
       - uses: actions/deploy-pages@v4
         id: deployment
+
+      - name: Continue unfinished forward collection without waiting for the schedule
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CATCH_UP_ATTEMPT: ${{ inputs.catch_up_attempt || '0' }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          from scripts.update_values import MAX_CATCH_UP_CONTINUATIONS, next_catch_up_attempt
+          source = json.loads(Path('data/values.json').read_text(encoding='utf-8'))['discord_source']
+          attempt = next_catch_up_attempt(source, os.environ['CATCH_UP_ATTEMPT'])
+          if attempt is None:
+              print('No immediate continuation: collection caught up, source failed, made no progress, or reached the retry cap.')
+          else:
+              subprocess.run([
+                  'gh', 'workflow', 'run', 'update_prices.yml',
+                  '--repo', os.environ['GITHUB_REPOSITORY'], '--ref', 'main',
+                  '-f', f'catch_up_attempt={attempt}',
+              ], check=True)
+              print(f'Queued immediate catch-up continuation {attempt}/{MAX_CATCH_UP_CONTINUATIONS}; using the saved checkpoint.')
+          PY

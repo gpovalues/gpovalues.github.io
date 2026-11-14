@@ -12,6 +12,24 @@ from scripts.trade_parser import GPOTradeParser
 from scripts.trade_store import TradeStore
 
 
+MAX_CATCH_UP_CONTINUATIONS = 3
+
+
+def next_catch_up_attempt(source, attempt):
+    """Continue healthy forward progress, without an unbounded Actions loop."""
+    if str(attempt) not in {str(number) for number in range(MAX_CATCH_UP_CONTINUATIONS + 1)}:
+        raise ValueError("Catch-up attempt must be an integer between 0 and 3")
+    attempt = int(attempt)
+    if (attempt >= MAX_CATCH_UP_CONTINUATIONS or source.get("mode") != "scheduled"
+            or source.get("complete") is not False or source.get("pages_read", 0) <= 0
+            or source.get("messages_read", 0) <= 0):
+        return None
+    statuses = {channel.get("status") for channel in source.get("channels", [])}
+    if "catching_up" not in statuses or not statuses <= {"ok", "backfilling", "catching_up", "pending"}:
+        return None
+    return attempt + 1
+
+
 def _report_collection(source, max_pages):
     if source["mode"] == "offline":
         return
